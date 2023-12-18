@@ -1,0 +1,10 @@
+/node_modules
+/src
+.prettierrc
+builder.js
+dtsconfig.json
+index.test.js
+package-lock.json
+tsconfig.json
+tslint.json
+index.ts
