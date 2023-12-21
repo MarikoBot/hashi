@@ -1,6 +1,1 @@
 /node_modules
-index.test.js
-
-# Project exclude paths
-/src/strings/En.js
-/src/strings/Fr.js
