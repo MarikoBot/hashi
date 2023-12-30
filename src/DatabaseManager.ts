@@ -2,14 +2,12 @@
 
 import { HashiClient } from './HashiClient';
 import { connect, ConnectOptions } from 'mongoose';
-import { DataMap, PossibleDataMapStored, DB_TECHNOLOGY } from './DataMap';
-import { DBSQLite } from './DBSQLite';
-import { DBMongo } from './DBMongo';
+import { DataMap, PossibleDataMapStored } from './DataMap';
 
 /**
  * The type that includes all the data maps of the database.
  */
-export type DataMapsMap = { [dmName: string]: DBMongo<PossibleDataMapStored> | DBSQLite };
+export type DataMapsObj = { [dmName: string]: DataMap<any> };
 
 /**
  * The class who manages the database of the project.
@@ -36,9 +34,9 @@ export class DatabaseManager {
   #dbName: string = 'main';
 
   /**
-   * The list of dataMaps (MongoDB and SQLite mixed).
+   * The list of dataMaps (MongoDB).
    */
-  #dataMaps: DataMapsMap = {};
+  #dataMaps: DataMapsObj = {};
 
   /**
    * Get the connection URI.
@@ -68,19 +66,18 @@ export class DatabaseManager {
    * Get the data maps.
    * @returns The data maps.
    */
-  get dataMaps(): DataMapsMap {
+  get dataMaps(): DataMapsObj {
     return this.#dataMaps;
   }
 
   /**
    * Build and save a data map.
    * @param name The name of the collection.
-   * @param technology The technology to use.
    */
-  public createDataMap(name: string, technology: DB_TECHNOLOGY = DB_TECHNOLOGY.SQLITE): DataMap<PossibleDataMapStored> {
+  public createDataMap(name: string): DataMap<PossibleDataMapStored> {
     let dataMap: DataMap<PossibleDataMapStored>;
 
-    if (technology === DB_TECHNOLOGY.SQLITE) dataMap = new DBSQLite(name);
+    dataMap = new DataMap<PossibleDataMapStored>(name);
 
     dataMap.setClient(this.client);
     this.dataMaps[name] = dataMap;
@@ -127,7 +124,7 @@ export class DatabaseManager {
   }
 
   /**
-   * Connect the data base to the mongodb cluster.
+   * Connect the database to the mongodb cluster.
    * @param connectionURI The connection URI.
    * @param connectOptions The connection options.
    */
@@ -151,11 +148,10 @@ export class DatabaseManager {
   public ensure(
     dataMapName: string,
     force: boolean = false,
-    technology: DB_TECHNOLOGY = DB_TECHNOLOGY.SQLITE,
-  ): DBSQLite | DBMongo<PossibleDataMapStored> {
+  ): DataMap<PossibleDataMapStored> {
     if (dataMapName in this.dataMaps) return this.dataMaps[dataMapName];
 
-    if (force) return this.createDataMap(dataMapName, technology);
+    if (force) return this.createDataMap(dataMapName);
     return null;
   }
 }

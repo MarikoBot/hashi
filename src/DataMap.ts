@@ -2,7 +2,6 @@
 
 import { model, Model, Schema, SchemaDefinition, Document } from 'mongoose';
 import { HashiClient } from './HashiClient';
-import Enmap from 'enmap';
 
 /**
  * The type that represents a document for the hashi data map.
@@ -32,20 +31,6 @@ export type PossibleDataMapStored =
   | PossibleDataMapStored[]
   | { [key: string]: PossibleDataMapStored }
   | undefined;
-
-/**
- * The technology used for the data map.
- */
-export enum DB_TECHNOLOGY {
-  /**
-   * If the used techno is SQLite (packages: better-sqlite3 + enmap).
-   */
-  SQLITE = 0,
-  /**
-   * If the used techno is MongoDB (packages: mongoose + mongodb).
-   */
-  MONGODB = 1,
-}
 
 /**
  * The list of flags for the data map intents.
@@ -87,11 +72,6 @@ export class DataMap<DataStructure extends PossibleDataMapStored> {
   };
 
   /**
-   * Used technology.
-   */
-  #technology: DB_TECHNOLOGY = DB_TECHNOLOGY.SQLITE;
-
-  /**
    * Intents for the database. Be careful! Those intents MUST BE set before the launch of the process.
    */
   #intents: DATAMAP_INTENTS[] = [];
@@ -99,7 +79,7 @@ export class DataMap<DataStructure extends PossibleDataMapStored> {
   /**
    * The collection/model or the schema.
    */
-  readonly #collection: Enmap | Model<DataMapDefinition<SchemaDefinition>>;
+  readonly #collection: Model<DataMapDefinition<SchemaDefinition>>;
 
   /**
    * Get the client.
@@ -134,14 +114,6 @@ export class DataMap<DataStructure extends PossibleDataMapStored> {
   }
 
   /**
-   * Get the technology.
-   * @returns The technology.
-   */
-  get technology(): DB_TECHNOLOGY {
-    return this.#technology;
-  }
-
-  /**
    * Get the intents.
    * @returns The intents.
    */
@@ -153,17 +125,8 @@ export class DataMap<DataStructure extends PossibleDataMapStored> {
    * Get the data map.
    * @returns The data map.
    */
-  get collection(): Enmap | Model<DataMapDefinition<SchemaDefinition>> {
+  get collection(): Model<DataMapDefinition<SchemaDefinition>> {
     return this.#collection;
-  }
-
-  /**
-   * Get the data map as enmap.
-   * @returns The data map as enmap.
-   */
-  get enmap(): Enmap {
-    const data: this['collection'] = this.collection;
-    return <Enmap>data;
   }
 
   /**
@@ -177,18 +140,11 @@ export class DataMap<DataStructure extends PossibleDataMapStored> {
   /**
    * The constructor of a data map.
    * @param name The name of the collection.
-   * @param technology The technology to use.
    */
-  constructor(name: string, technology: DB_TECHNOLOGY = DB_TECHNOLOGY.SQLITE) {
+  constructor(name: string) {
     this.#name = name;
-    this.#technology = technology;
-    console.log('3', name, technology);
 
-    if (this.technology === DB_TECHNOLOGY.MONGODB) {
-      this.#definition.model = model<SchemaDefinition & Document>(this.name, <Schema>this.#definition.schema);
-    } else if (this.technology === DB_TECHNOLOGY.SQLITE) {
-      this.#collection = new (require('enmap'))({ name: this.name });
-    }
+    this.#definition.model = model<SchemaDefinition & Document>(this.name, <Schema>this.#definition.schema);
   }
 
   /**
@@ -234,16 +190,6 @@ export class DataMap<DataStructure extends PossibleDataMapStored> {
   }
 
   /**
-   * Set the technology.
-   * @param technology The technology to set.
-   * @returns The data map.
-   */
-  public setTechnology(technology: DB_TECHNOLOGY): DataMap<DataStructure> {
-    if (technology === 0 || technology === 1) this.#technology = technology;
-    return this;
-  }
-
-  /**
    * Add an intent.
    * @param intent The intent to add.
    * @returns The data map.
@@ -261,8 +207,6 @@ export class DataMap<DataStructure extends PossibleDataMapStored> {
   public async getRaw(key: string = this.definition.defaultValues[this.primaryKey]): Promise<PossibleDataMapStored> {
     let value: PossibleDataMapStored = null;
 
-    if (this.technology === DB_TECHNOLOGY.SQLITE) return this.enmap.get(key);
-
     return value;
   }
 
@@ -274,12 +218,6 @@ export class DataMap<DataStructure extends PossibleDataMapStored> {
     if (!this.intents.includes(DATAMAP_INTENTS.CORE)) return;
 
     const currentData: PossibleDataMapStored = await this.getRaw(this.definition.defaultValues[this.primaryKey]);
-
-    if (this.technology === DB_TECHNOLOGY.SQLITE) {
-      if (!currentData) this.enmap.set(this.definition.defaultValues[this.primaryKey], this.definition.defaultValues);
-
-      await this.update(this.definition.defaultValues[this.primaryKey], currentData);
-    }
   }
 
   /**
@@ -294,7 +232,7 @@ export class DataMap<DataStructure extends PossibleDataMapStored> {
     data: PossibleDataMapStored,
     path?: string,
   ): Promise<void> {
-    if (this.technology === DB_TECHNOLOGY.SQLITE) this.enmap.set(key, data, path ?? '');
+
   }
 
   /**
