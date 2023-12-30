@@ -24,14 +24,12 @@
 /// <reference types="mongoose/types/inferschematype" />
 import { HashiClient } from './HashiClient';
 import { ConnectOptions } from 'mongoose';
-import { DataMap, PossibleDataMapStored, DB_TECHNOLOGY } from './DataMap';
-import { DBSQLite } from './DBSQLite';
-import { DBMongo } from './DBMongo';
+import { DataMap, PossibleDataMapStored } from './DataMap';
 /**
  * The type that includes all the data maps of the database.
  */
-export type DataMapsMap = {
-    [dmName: string]: DBMongo<PossibleDataMapStored> | DBSQLite;
+export type DataMapsObj = {
+    [dmName: string]: DataMap<any>;
 };
 /**
  * The class who manages the database of the project.
@@ -61,13 +59,12 @@ export declare class DatabaseManager {
      * Get the data maps.
      * @returns The data maps.
      */
-    get dataMaps(): DataMapsMap;
+    get dataMaps(): DataMapsObj;
     /**
      * Build and save a data map.
      * @param name The name of the collection.
-     * @param technology The technology to use.
      */
-    createDataMap(name: string, technology?: DB_TECHNOLOGY): DataMap<PossibleDataMapStored>;
+    createDataMap(name: string): DataMap<PossibleDataMapStored>;
     /**
      * The constructor of the class.
      * @param client The client instance.
@@ -92,7 +89,7 @@ export declare class DatabaseManager {
      */
     setDbName(dbName: string): DatabaseManager;
     /**
-     * Connect the data base to the mongodb cluster.
+     * Connect the database to the mongodb cluster.
      * @param connectionURI The connection URI.
      * @param connectOptions The connection options.
      */
@@ -104,5 +101,5 @@ export declare class DatabaseManager {
      * @param technology The technology to use for the data map.
      * @returns The [created] data map
      */
-    ensure(dataMapName: string, force?: boolean, technology?: DB_TECHNOLOGY): DBSQLite | DBMongo<PossibleDataMapStored>;
+    ensure(dataMapName: string, force?: boolean): DataMap<PossibleDataMapStored>;
 }

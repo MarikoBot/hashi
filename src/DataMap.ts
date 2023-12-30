@@ -231,9 +231,7 @@ export class DataMap<DataStructure extends PossibleDataMapStored> {
     key: string = this.definition.defaultValues[this.primaryKey],
     data: PossibleDataMapStored,
     path?: string,
-  ): Promise<void> {
-
-  }
+  ): Promise<void> {}
 
   /**
    * Refresh the data in the database if the structure is detected to be different.

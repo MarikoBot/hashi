@@ -24,7 +24,6 @@
 /// <reference types="mongoose/types/inferschematype" />
 import { Model, Schema, SchemaDefinition, Document } from 'mongoose';
 import { HashiClient } from './HashiClient';
-import Enmap from 'enmap';
 /**
  * The type that represents a document for the hashi data map.
  */
@@ -48,19 +47,6 @@ export interface DataMapDefinition<IStructure extends SchemaDefinition> {
 export type PossibleDataMapStored = number | string | boolean | PossibleDataMapStored[] | {
     [key: string]: PossibleDataMapStored;
 } | undefined;
-/**
- * The technology used for the data map.
- */
-export declare enum DB_TECHNOLOGY {
-    /**
-     * If the used techno is SQLite (packages: better-sqlite3 + enmap).
-     */
-    SQLITE = 0,
-    /**
-     * If the used techno is MongoDB (packages: mongoose + mongodb).
-     */
-    MONGODB = 1
-}
 /**
  * The list of flags for the data map intents.
  */
@@ -96,11 +82,6 @@ export declare class DataMap<DataStructure extends PossibleDataMapStored> {
      */
     get definition(): DataMapDefinition<SchemaDefinition>;
     /**
-     * Get the technology.
-     * @returns The technology.
-     */
-    get technology(): DB_TECHNOLOGY;
-    /**
      * Get the intents.
      * @returns The intents.
      */
@@ -109,12 +90,7 @@ export declare class DataMap<DataStructure extends PossibleDataMapStored> {
      * Get the data map.
      * @returns The data map.
      */
-    get collection(): Enmap | Model<DataMapDefinition<SchemaDefinition>>;
-    /**
-     * Get the data map as enmap.
-     * @returns The data map as enmap.
-     */
-    get enmap(): Enmap;
+    get collection(): Model<DataMapDefinition<SchemaDefinition>>;
     /**
      * Get the data map as mongo model.
      * @returns The data map as mongo model.
@@ -123,9 +99,8 @@ export declare class DataMap<DataStructure extends PossibleDataMapStored> {
     /**
      * The constructor of a data map.
      * @param name The name of the collection.
-     * @param technology The technology to use.
      */
-    constructor(name: string, technology?: DB_TECHNOLOGY);
+    constructor(name: string);
     /**
      * Set the client.
      * @param client The client to set.
@@ -150,12 +125,6 @@ export declare class DataMap<DataStructure extends PossibleDataMapStored> {
      * @returns The data map.
      */
     setDefinition<IStructure extends SchemaDefinition>(definition: DataMapDefinition<IStructure>): DataMap<DataStructure>;
-    /**
-     * Set the technology.
-     * @param technology The technology to set.
-     * @returns The data map.
-     */
-    setTechnology(technology: DB_TECHNOLOGY): DataMap<DataStructure>;
     /**
      * Add an intent.
      * @param intent The intent to add.

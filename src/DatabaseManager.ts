@@ -145,10 +145,7 @@ export class DatabaseManager {
    * @param technology The technology to use for the data map.
    * @returns The [created] data map
    */
-  public ensure(
-    dataMapName: string,
-    force: boolean = false,
-  ): DataMap<PossibleDataMapStored> {
+  public ensure(dataMapName: string, force: boolean = false): DataMap<PossibleDataMapStored> {
     if (dataMapName in this.dataMaps) return this.dataMaps[dataMapName];
 
     if (force) return this.createDataMap(dataMapName);

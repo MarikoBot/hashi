@@ -5,8 +5,6 @@ export * from './CoolDownManager';
 
 export * from './DatabaseManager';
 export * from './DataMap';
-export * from './DBMongo';
-export * from './DBSQLite';
 
 export * from './EventManager';
 

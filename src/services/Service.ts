@@ -2,9 +2,7 @@
 
 import { HashiClient } from '../HashiClient';
 import { ClientEvents } from 'discord.js';
-import { DBSQLite } from '../DBSQLite';
-import { DBMongo } from '../DBMongo';
-import { DataMapDefinition, DB_TECHNOLOGY, PossibleDataMapStored } from '../DataMap';
+import { DataMap, DataMapDefinition, PossibleDataMapStored } from '../DataMap';
 import { SchemaDefinition } from 'mongoose';
 
 /**
@@ -64,10 +62,6 @@ export interface ServiceManagementPrivateAttributes {
    * The data map name associated with the service.
    */
   dataMapName: string;
-  /**
-   * The data map technology.
-   */
-  dataMapTechno: DB_TECHNOLOGY;
 }
 
 /**
@@ -128,10 +122,6 @@ export class Service<
      * The data map name associated with the service.
      */
     dataMapName: 'default',
-    /**
-     * The data map technology.
-     */
-    dataMapTechno: DB_TECHNOLOGY.SQLITE,
   };
 
   /**
@@ -157,7 +147,7 @@ export class Service<
     this.m = methods;
     this.a = attributes;
 
-    const dataMap: DBSQLite | DBMongo<PossibleDataMapStored> = this.dataMap;
+    const dataMap: DataMap<PossibleDataMapStored> = this.dataMap;
     dataMap.setDefinition(serviceDataStructure);
   }
 
@@ -165,8 +155,8 @@ export class Service<
    * Returns the linked data map.
    * @returns The data map.
    */
-  get dataMap(): DBSQLite | DBMongo<PossibleDataMapStored> {
-    return this.client.DatabaseManager.ensure(this.prv.dataMapName, true, this.prv.dataMapTechno);
+  get dataMap(): DataMap<PossibleDataMapStored> {
+    return this.client.DatabaseManager.ensure(this.prv.dataMapName, true);
   }
 
   /**
