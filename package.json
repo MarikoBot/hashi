@@ -34,12 +34,10 @@
     "tslint-config-prettier": "^1.18.0"
   },
   "dependencies": {
-    "better-sqlite3": "^9.1.1",
     "chalk": "^4.1.2",
     "discord-api-types": "^0.37.38",
     "discord.js": "^14.14.1",
     "dotenv": "^16.3.1",
-    "enmap": "^5.9.8",
     "mongoose": "^7.2.2"
   },
   "repository": {
