@@ -1,0 +1,13 @@
+.git
+.idea
+data
+node_modules
+src
+
+.gitignore
+.prettierrc
+builder.js
+lab.test.js
+package-lock.json
+tsconfig.json
+tslint.json
