@@ -31,13 +31,13 @@ export class EventManager {
    * @returns Nothing.
    */
   public async loadEvents(): Promise<void> {
-    const files: string[] = fs.readdirSync(this.client.eventsDir);
+    const files: string[] = fs.readdirSync(`lib/${this.client.eventsDir}`);
     const events: HashiEvent[] = [];
 
     let i: number = -1;
     let eventData: HashiEvent;
     while (++i < files.length) {
-      eventData = require(path.join(__dirname, `../${this.client.eventsDir}/${files[i]}`));
+      eventData = require(path.join(__dirname, `../../../../lib/${this.client.eventsDir}/${files[i]}`));
 
       this.client.EventManager.eventsList.set(files[i].replace('.js', ''), eventData);
       events.push(eventData);

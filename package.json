@@ -1,6 +1,6 @@
 {
   "name": "@elouannh/hashi",
-  "version": "0.1.4",
+  "version": "0.2.6",
   "description": "A cool discord.js assistant to create bots in another way.",
   "main": "lib/index.js",
   "types": "types/index.d.ts",
@@ -12,6 +12,7 @@
     "build": "npm run run-builder && npm run prettier && tsc && npm run save",
     "prepublish": "npm run build && git commit -m \"[AUTO] Build\"",
     "test": "npm run build && node lab.test.js",
+    "dev-patch": "npm run prepublish && npm run publish-patch",
     "publish-patch": "npm version patch && git push && npm publish && git push --tags",
     "publish-minor": "npm version minor && git push && npm publish && git push --tags",
     "publish-major": "npm version major && git push && npm publish && git push --tags"
@@ -44,7 +45,7 @@
     "type": "git",
     "url": "git+https://github.com/elouannh/hashi.git"
   },
-  "homepage": "https://github.com/elouannh/hashisource#readme",
+  "homepage": "https://github.com/MarikoBot/hashi#readme",
   "directories": {
     "lib": "lib"
   }

@@ -114,7 +114,7 @@ export class HashiClient {
    *
    * export default command;
    */
-  public readonly commandsDir: string;
+  public readonly commandsDir: string = 'commands';
 
   /**
    * The events folder directory. How to export your events?
@@ -128,7 +128,7 @@ export class HashiClient {
    *
    * export default event;
    */
-  public readonly eventsDir: string;
+  public readonly eventsDir: string = 'events';
 
   /**
    * The constructor for the HashiClient class.
