@@ -1,6 +1,6 @@
 {
   "name": "@elouannh/hashi",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "A cool discord.js assistant to create bots in another way.",
   "main": "lib/index.js",
   "types": "types/index.d.ts",
