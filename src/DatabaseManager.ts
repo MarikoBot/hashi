@@ -2,7 +2,7 @@
 
 import { HashiClient } from './HashiClient';
 import { connect, ConnectOptions } from 'mongoose';
-import { DataMap, DataMapEntry, TypedDataMapStored } from './DataMap';
+import { DataMap, TypedDataMapStored } from './DataMap';
 
 /**
  * The type that includes all the data maps of the database.

@@ -39,7 +39,7 @@ export declare class InterferingManager {
      * @param commands The names of the commands to filter by.
      * @returns The full list of the user cool downs.
      */
-    interfering(userId: Snowflake, ...commands: string[]): InterferingQueueElement[];
+    values(userId: Snowflake, ...commands: string[]): InterferingQueueElement[];
     /**
      * Removes an interfering commands. If a name is passed, remove all the commands with that name.
      * If an id is passed, remove the command with the same interaction id.

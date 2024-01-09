@@ -37,7 +37,7 @@ export class InterferingManager {
    * @returns Nothing.
    */
   public registerInterfering(userId: Snowflake, commandName: string, interaction: ChatInputCommandInteraction): void {
-    const currentCoolDowns: InterferingQueueElement[] = this.interfering(userId);
+    const currentCoolDowns: InterferingQueueElement[] = this.values(userId);
 
     currentCoolDowns.push([commandName, interaction]);
 
@@ -50,7 +50,7 @@ export class InterferingManager {
    * @param commands The names of the commands to filter by.
    * @returns The full list of the user cool downs.
    */
-  public interfering(userId: Snowflake, ...commands: string[]): InterferingQueueElement[] {
+  public values(userId: Snowflake, ...commands: string[]): InterferingQueueElement[] {
     const currentInterfering: InterferingQueueElement[] | [] = this.queue.get(userId) || [];
 
     if (commands.length > 0) {
@@ -69,7 +69,7 @@ export class InterferingManager {
    * @returns Nothing.
    */
   public removeInterfering(userId: Snowflake, key: string | Snowflake): void {
-    const currentInterfering: InterferingQueueElement[] = this.interfering(userId);
+    const currentInterfering: InterferingQueueElement[] = this.values(userId);
 
     this.queue.set(
       userId,

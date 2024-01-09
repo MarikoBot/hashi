@@ -24,6 +24,7 @@
 /// <reference types="mongoose/types/inferschematype" />
 import { Model, Schema, SchemaDefinition, Document } from 'mongoose';
 import { HashiClient } from './HashiClient';
+import { DataMapEntry } from './DataMapEntry';
 /**
  * The type that represents a document for the hashi data map.
  */
@@ -40,29 +41,6 @@ export interface DataMapDefinition<IStructure extends SchemaDefinition> {
      * The default values.
      */
     defaultValues: TypedDataMapStored;
-}
-/**
- * The base class that represents a data map class object.
- * Every object into the data map will be passed in this class to improve manipulation.
- */
-export declare class DataMapEntry<DataStructure extends TypedDataMapStored> {
-    #private;
-    /**
-     * Get the data map.
-     * @returns The data map.
-     */
-    get dataMap(): DataMap<DataStructure, typeof DataMapEntry>;
-    /**
-     * Get the data.
-     * @returns The data.
-     */
-    get data(): DataStructure;
-    /**
-     * The constructor of a data map entry.
-     * @param dataMap The data map.
-     * @param data The data.
-     */
-    constructor(dataMap: DataMap<DataStructure, typeof DataMapEntry>, data: DataStructure);
 }
 /**
  * The possible value to store in.
