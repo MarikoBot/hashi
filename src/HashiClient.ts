@@ -11,7 +11,7 @@ import { COMMAND_END } from './HashiSlashBaseCommand';
 import { HashiSlashCommand } from './HashiSlashCommand';
 import { DatabaseManager } from './DatabaseManager';
 import { ServiceManager } from './ServiceManager';
-import { DATAMAP_INTENTS, DataMap, PossibleDataMapStored } from './DataMap';
+import { DATAMAP_INTENTS, DataMap, TypedDataMapStored } from './DataMap';
 
 dotenv.config();
 
@@ -59,47 +59,47 @@ export class HashiClient {
   /**
    * The Discord Client instance.
    */
-  public readonly src: Client;
+  readonly #src: Client;
 
   /**
    * The logger for the HashiClient.
    */
-  public readonly Logger: Logger;
+  readonly #logger: Logger;
 
   /**
    * The command manager instance.
    */
-  public readonly CommandManager: CommandManager = new CommandManager(this);
+  readonly #commandManager: CommandManager = new CommandManager(this);
 
   /**
    * The event manager instance.
    */
-  public readonly EventManager: EventManager = new EventManager(this);
+  readonly #eventManager: EventManager = new EventManager(this);
 
   /**
    * The language manager for accessing strings.
    */
-  public readonly LanguageManager: LanguageManager = new LanguageManager(this);
+  readonly #languageManager: LanguageManager = new LanguageManager(this);
 
   /**
    * The database manager for accessing data maps/lakes.
    */
-  public readonly DatabaseManager: DatabaseManager = new DatabaseManager(this);
+  readonly #databaseManager: DatabaseManager = new DatabaseManager(this);
 
   /**
    * The services manager for accessing different services (automatic roles, etc).
    */
-  public readonly ServiceManager: ServiceManager = new ServiceManager(this);
+  readonly #serviceManager: ServiceManager = new ServiceManager(this);
 
   /**
    * The language manager for accessing strings.
    */
-  public readonly Constants: Constants = new Constants();
+  readonly #constants: Constants = new Constants();
 
   /**
    * The name of the project/process you're in.
    */
-  public readonly processName: string;
+  readonly #processName: string;
 
   /**
    * The commands folder directory. How to export your commands?
@@ -114,7 +114,7 @@ export class HashiClient {
    *
    * export default command;
    */
-  public readonly commandsDir: string = 'commands';
+  readonly #commandsDir: string = 'commands';
 
   /**
    * The events folder directory. How to export your events?
@@ -128,14 +128,102 @@ export class HashiClient {
    *
    * export default event;
    */
-  public readonly eventsDir: string = 'events';
+  readonly #eventsDir: string = 'events';
+
+  /**
+   * Get the Discord Client instance.
+   * @returns The Discord Client instance.
+   */
+  get src(): Client {
+    return this.#src;
+  }
+
+  /**
+   * Get the logger for the HashiClient.
+   * @returns The logger for the HashiClient.
+   */
+  get logger(): Logger {
+    return this.#logger;
+  }
+
+  /**
+   * Get the command manager instance.
+   * @returns The command manager instance.
+   */
+  get commandManager(): CommandManager {
+    return this.#commandManager;
+  }
+
+  /**
+   * Get the event manager instance.
+   * @returns The event manager instance.
+   */
+  get eventManager(): EventManager {
+    return this.#eventManager;
+  }
+
+  /**
+   * Get the language manager for accessing strings.
+   * @returns The language manager for accessing strings.
+   */
+  get languageManager(): LanguageManager {
+    return this.#languageManager;
+  }
+
+  /**
+   * Get the database manager for accessing data maps/lakes.
+   * @returns The database manager for accessing data maps/lakes.
+   */
+  get databaseManager(): DatabaseManager {
+    return this.#databaseManager;
+  }
+
+  /**
+   * Get the services manager for accessing different services (automatic roles, etc).
+   * @returns The services manager for accessing different services (automatic roles, etc).
+   */
+  get serviceManager(): ServiceManager {
+    return this.#serviceManager;
+  }
+
+  /**
+   * Get the constants.
+   * @returns The constants.
+   */
+  get constants(): Constants {
+    return this.#constants;
+  }
+
+  /**
+   * Get the name of the project/process you're in.
+   * @returns The name of the project/process you're in.
+   */
+  get processName(): string {
+    return this.#processName;
+  }
+
+  /**
+   * Get the commands folder directory.
+   * @returns The commands folder directory.
+   */
+  get commandsDir(): string {
+    return this.#commandsDir;
+  }
+
+  /**
+   * Get the events folder directory.
+   * @returns The events folder directory.
+   */
+  get eventsDir(): string {
+    return this.#eventsDir;
+  }
 
   /**
    * The constructor for the HashiClient class.
    * @param options The options for the HashiClient.
    */
   constructor(options: HashiClientOptions) {
-    this.src = new Client({
+    this.#src = new Client({
       intents: options.intents || 3276799,
       failIfNotExists: options.failIfNotExists || false,
       presence:
@@ -151,10 +239,10 @@ export class HashiClient {
         },
     });
 
-    this.processName = options.processName || '`Who I am ?`';
-    this.Logger = new Logger(this.processName);
-    this.commandsDir = options.commandsDir;
-    this.eventsDir = options.eventsDir;
+    this.#processName = options.processName || '`Who I am ?`';
+    this.#logger = new Logger(this.processName);
+    this.#commandsDir = options.commandsDir;
+    this.#eventsDir = options.eventsDir;
   }
 
   /**
@@ -163,19 +251,19 @@ export class HashiClient {
    * @returns Nothing.
    */
   public async login(token: string = process.env.TOKEN || process.env.token || process.env.Token): Promise<string> {
-    await this.EventManager.loadEvents();
+    await this.eventManager.loadEvents();
 
     await this.src.login(token);
-    await this.CommandManager.loadCommands();
+    await this.commandManager.loadCommands();
 
     let i: number = -1;
-    let dataMap: DataMap<PossibleDataMapStored>;
-    while (++i < Object.keys(this.DatabaseManager.dataMaps).length) {
-      dataMap = Object.values(this.DatabaseManager.dataMaps)[i];
+    let dataMap: DataMap<TypedDataMapStored>;
+    while (++i < Object.keys(this.databaseManager.dataMaps).length) {
+      dataMap = Object.values(this.databaseManager.dataMaps)[i];
       if (dataMap.intents.includes(DATAMAP_INTENTS.CORE)) await dataMap.refreshCore();
     }
 
-    this.Logger.info(`The client is successfully launched on Discord as ${this.src.user.tag}`);
+    this.logger.info(`The client is successfully launched on Discord as ${this.src.user.tag}`);
 
     return '0';
   }
@@ -186,7 +274,7 @@ export class HashiClient {
    * @returns The issue of the command.
    */
   public async detectAndLaunchCommand(interaction: ChatInputCommandInteraction): Promise<COMMAND_END> {
-    const commandBlock: CommandBlock = this.CommandManager.getCommand(interaction);
+    const commandBlock: CommandBlock = this.commandManager.getCommand(interaction);
     if (commandBlock.command) return HashiSlashCommand.launch(this, interaction, commandBlock);
     return COMMAND_END.SUCCESS;
   }

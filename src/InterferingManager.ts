@@ -22,7 +22,7 @@ export class InterferingManager {
   /**
    * The collection of the current cool downs.
    */
-  private readonly queue: Collection<Snowflake, InterferingQueueElement[]> = new Collection();
+  readonly #queue: Collection<Snowflake, InterferingQueueElement[]> = new Collection();
 
   /**
    * The constructor of the interfering manager.
@@ -37,11 +37,11 @@ export class InterferingManager {
    * @returns Nothing.
    */
   public registerInterfering(userId: Snowflake, commandName: string, interaction: ChatInputCommandInteraction): void {
-    const currentCoolDowns: InterferingQueueElement[] = this.interfering(userId);
+    const currentCoolDowns: InterferingQueueElement[] = this.values(userId);
 
     currentCoolDowns.push([commandName, interaction]);
 
-    this.queue.set(userId, currentCoolDowns);
+    this.#queue.set(userId, currentCoolDowns);
   }
 
   /**
@@ -50,8 +50,8 @@ export class InterferingManager {
    * @param commands The names of the commands to filter by.
    * @returns The full list of the user cool downs.
    */
-  public interfering(userId: Snowflake, ...commands: string[]): InterferingQueueElement[] {
-    const currentInterfering: InterferingQueueElement[] | [] = this.queue.get(userId) || [];
+  public values(userId: Snowflake, ...commands: string[]): InterferingQueueElement[] {
+    const currentInterfering: InterferingQueueElement[] | [] = this.#queue.get(userId) || [];
 
     if (commands.length > 0) {
       return currentInterfering.filter((queueElement: InterferingQueueElement): boolean =>
@@ -69,9 +69,9 @@ export class InterferingManager {
    * @returns Nothing.
    */
   public removeInterfering(userId: Snowflake, key: string | Snowflake): void {
-    const currentInterfering: InterferingQueueElement[] = this.interfering(userId);
+    const currentInterfering: InterferingQueueElement[] = this.values(userId);
 
-    this.queue.set(
+    this.#queue.set(
       userId,
       currentInterfering.filter((queueElement: InterferingQueueElement): boolean => {
         return queueElement[1].id !== key;

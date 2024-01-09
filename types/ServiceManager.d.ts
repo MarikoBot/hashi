@@ -25,9 +25,10 @@ export type ServicesMapValue = ServicesMap[ServicesMapKey];
 export declare class ServiceManager {
     #private;
     /**
-     * The client instance.
+     * Get the client instance.
+     * @returns The client instance.
      */
-    readonly client: HashiClient;
+    get client(): HashiClient;
     /**
      * Get the services.
      * @returns The services.

@@ -24,7 +24,7 @@
 /// <reference types="mongoose/types/inferschematype" />
 import { HashiClient } from '../HashiClient';
 import { ClientEvents } from 'discord.js';
-import { DataMap, DataMapDefinition, PossibleDataMapStored } from '../DataMap';
+import { DataMap, DataMapDefinition, TypedDataMapStored } from '../DataMap';
 import { SchemaDefinition } from 'mongoose';
 /**
  * A function included in the service instance.
@@ -125,7 +125,7 @@ export declare class Service<Types extends ServiceTypesBase, ServiceDataStructur
      * Returns the linked data map.
      * @returns The data map.
      */
-    get dataMap(): DataMap<PossibleDataMapStored>;
+    get dataMap(): DataMap<TypedDataMapStored>;
     /**
      * Add a new function to an event if the event has to be executed.
      * @param eventName The name of the event to bind to.

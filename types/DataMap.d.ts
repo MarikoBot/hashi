@@ -24,6 +24,7 @@
 /// <reference types="mongoose/types/inferschematype" />
 import { Model, Schema, SchemaDefinition, Document } from 'mongoose';
 import { HashiClient } from './HashiClient';
+import { DataMapEntry } from './DataMapEntry';
 /**
  * The type that represents a document for the hashi data map.
  */
@@ -39,13 +40,13 @@ export interface DataMapDefinition<IStructure extends SchemaDefinition> {
     /**
      * The default values.
      */
-    defaultValues: PossibleDataMapStored;
+    defaultValues: TypedDataMapStored;
 }
 /**
  * The possible value to store in.
  */
-export type PossibleDataMapStored = number | string | boolean | PossibleDataMapStored[] | {
-    [key: string]: PossibleDataMapStored;
+export type TypedDataMapStored = number | string | boolean | TypedDataMapStored[] | {
+    [key: string]: TypedDataMapStored;
 } | undefined;
 /**
  * The list of flags for the data map intents.
@@ -59,7 +60,7 @@ export declare enum DATAMAP_INTENTS {
 /**
  * The main class. Represents a data map technology.
  */
-export declare class DataMap<DataStructure extends PossibleDataMapStored> {
+export declare class DataMap<DataStructure extends TypedDataMapStored, EntryClass extends new (...args: any[]) => DataMapEntry<DataStructure> = typeof DataMapEntry> {
     #private;
     /**
      * Get the client.
@@ -71,6 +72,11 @@ export declare class DataMap<DataStructure extends PossibleDataMapStored> {
      * @returns The name.
      */
     get name(): string;
+    /**
+     * Get the entry class.
+     * @returns The entry class.
+     */
+    get entryClass(): EntryClass;
     /**
      * Get the primary key.
      * @returns The primary key.
@@ -99,44 +105,51 @@ export declare class DataMap<DataStructure extends PossibleDataMapStored> {
     /**
      * The constructor of a data map.
      * @param name The name of the collection.
+     * @param entryClass The entry class.
      */
-    constructor(name: string);
+    constructor(name: string, entryClass?: EntryClass);
     /**
      * Set the client.
      * @param client The client to set.
      * @returns The class instance.
      */
-    setClient(client: HashiClient): DataMap<DataStructure>;
+    setClient(client: HashiClient): DataMap<DataStructure, EntryClass>;
     /**
      * Set the data map name.
      * @param name The data map name to set.
      * @returns The class instance.
      */
-    setName(name: string): DataMap<DataStructure>;
+    setName(name: string): DataMap<DataStructure, EntryClass>;
+    /**
+     * Set the entry class.
+     * @param entryClass the entry class to set.
+     * @returns The class instance.
+     */
+    setEntryClass(entryClass: EntryClass): DataMap<DataStructure, EntryClass>;
     /**
      * Set the primary key.
      * @param primaryKey The primary key to set.
      * @returns The class instance.
      */
-    setPrimaryKey(primaryKey: string): DataMap<DataStructure>;
+    setPrimaryKey(primaryKey: string): DataMap<DataStructure, EntryClass>;
     /**
      * Set the definition data.
      * @param definition The definition data to set.
      * @returns The data map.
      */
-    setDefinition<IStructure extends SchemaDefinition>(definition: DataMapDefinition<IStructure>): DataMap<DataStructure>;
+    setDefinition<IStructure extends SchemaDefinition>(definition: DataMapDefinition<IStructure>): DataMap<DataStructure, EntryClass>;
     /**
      * Add an intent.
      * @param intent The intent to add.
      * @returns The data map.
      */
-    addIntent(intent: DATAMAP_INTENTS): DataMap<DataStructure>;
+    addIntent(intent: DATAMAP_INTENTS): DataMap<DataStructure, EntryClass>;
     /**
      * Get some data from the data map.
      * @param key The key to look for.
      * @returns The data if found.
      */
-    getRaw(key?: string): Promise<PossibleDataMapStored>;
+    getRaw(key?: string): Promise<TypedDataMapStored>;
     /**
      * Automatically refreshes the data map if the data is core flagged.
      * @returns Nothing.
@@ -149,11 +162,11 @@ export declare class DataMap<DataStructure extends PossibleDataMapStored> {
      * @param path The path if the data is SQLite.
      * @returns Nothing.
      */
-    update(key: string, data: PossibleDataMapStored, path?: string): Promise<void>;
+    update(key: string, data: TypedDataMapStored, path?: string): Promise<void>;
     /**
      * Refresh the data in the database if the structure is detected to be different.
      * @param key The key to look who applies changes on.
      * @returns The player data.
      */
-    protected get(key?: string): Promise<PossibleDataMapStored>;
+    protected get(key?: string): Promise<TypedDataMapStored | DataMapEntry<DataStructure>>;
 }

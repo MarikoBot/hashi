@@ -20,10 +20,7 @@ export type CoolDownsQueueElement = [
  * The main class who manages the active cool downs for commands.
  */
 export declare class CoolDownManager {
-    /**
-     * The collection of the current cool downs.
-     */
-    private readonly queue;
+    #private;
     /**
      * The constructor of the cool down manager.
      */
@@ -42,5 +39,5 @@ export declare class CoolDownManager {
      * @param commandName The name of the command to filter by.
      * @returns The full list of the user cool downs.
      */
-    coolDowns(userId: Snowflake, commandName?: string): CoolDownsQueueElement[];
+    values(userId: Snowflake, commandName?: string): CoolDownsQueueElement[];
 }

@@ -17,10 +17,7 @@ export type InterferingQueueElement = [
  * The main class who manages the active cool downs for commands.
  */
 export declare class InterferingManager {
-    /**
-     * The collection of the current cool downs.
-     */
-    private readonly queue;
+    #private;
     /**
      * The constructor of the interfering manager.
      */
@@ -39,7 +36,7 @@ export declare class InterferingManager {
      * @param commands The names of the commands to filter by.
      * @returns The full list of the user cool downs.
      */
-    interfering(userId: Snowflake, ...commands: string[]): InterferingQueueElement[];
+    values(userId: Snowflake, ...commands: string[]): InterferingQueueElement[];
     /**
      * Removes an interfering commands. If a name is passed, remove all the commands with that name.
      * If an id is passed, remove the command with the same interaction id.

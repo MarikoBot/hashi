@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, Collection } from 'discord.js';
+import { ChatInputCommandInteraction } from 'discord.js';
 import { HashiSlashCommand } from './HashiSlashCommand';
 import { CoolDownManager } from './CoolDownManager';
 import { InterferingManager } from './InterferingManager';
@@ -30,22 +30,22 @@ export type CommandBlockValue = CommandBlock[keyof CommandBlock];
  * Represents the command manager of the client.
  */
 export declare class CommandManager {
+    #private;
     /**
-     * The client instance.
+     * Get the client instance.
+     * @returns The client instance.
      */
-    readonly client: HashiClient;
+    get client(): HashiClient;
     /**
-     * The cool down manager instance, to get access to the different delays of the current command.
+     * Get the cool down manager instance.
+     * @returns The cool down manager instance.
      */
-    readonly CoolDowns: CoolDownManager;
+    get coolDowns(): CoolDownManager;
     /**
-     * The interfering manager instance, to have access to the different executing commands.
+     * Get the interfering manager instance.
+     * @returns The interfering manager instance.
      */
-    readonly Interfering: InterferingManager;
-    /**
-     * The collection of the commands.
-     */
-    readonly commandsList: Collection<string, HashiSlashCommand>;
+    get interfering(): InterferingManager;
     /**
      * The constructor of the command manager.
      * @param client The client instance.

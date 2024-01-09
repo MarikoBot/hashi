@@ -353,7 +353,7 @@ export class HashiSlashBaseCommand extends SlashCommandBuilder {
    * @returns The exit code of the command.
    */
   public end(): COMMAND_END {
-    this.client.CommandManager.Interfering.removeInterfering(
+    this.client.commandManager.interfering.removeInterfering(
       this.context.interaction.user.id,
       this.context.interaction.id,
     );
@@ -474,11 +474,11 @@ export class HashiSlashBaseCommand extends SlashCommandBuilder {
   ): Promise<boolean> {
     const command: CommandBlockValue = ctx.command;
 
-    const activeCoolDowns: CoolDownsQueueElement[] = client.CommandManager.CoolDowns.coolDowns(
+    const activeCoolDowns: CoolDownsQueueElement[] = client.commandManager.coolDowns.values(
       interaction.user.id,
       command.fullName,
     );
-    const activeInterfering: InterferingQueueElement[] = client.CommandManager.Interfering.interfering(
+    const activeInterfering: InterferingQueueElement[] = client.commandManager.interfering.values(
       interaction.user.id,
       ...(command.interferingCommands || []),
     );
@@ -516,12 +516,12 @@ export class HashiSlashBaseCommand extends SlashCommandBuilder {
     interaction: ChatInputCommandInteraction,
     commandBlock: CommandBlock,
   ): Promise<void> {
-    client.CommandManager.Interfering.registerInterfering(
+    client.commandManager.interfering.registerInterfering(
       interaction.user.id,
       commandBlock.subcommand?.fullName || commandBlock.command?.fullName,
       interaction,
     );
-    client.CommandManager.CoolDowns.registerCoolDown(
+    client.commandManager.coolDowns.registerCoolDown(
       interaction.user.id,
       commandBlock.subcommand?.fullName || commandBlock.command?.fullName,
       commandBlock.subcommand?.coolDown ||

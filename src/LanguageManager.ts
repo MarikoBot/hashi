@@ -30,14 +30,22 @@ export class LanguageManager {
   /**
    * The client instance.
    */
-  public readonly client: HashiClient;
+  readonly #client: HashiClient;
+
+  /**
+   * Get the client instance.
+   * @returns The client instance.
+   */
+  get client(): HashiClient {
+    return this.#client;
+  }
 
   /**
    * The constructor of the language manager.
    * @param client The client instance.
    */
   constructor(client: HashiClient) {
-    this.client = client;
+    this.#client = client;
   }
 
   /**

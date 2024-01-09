@@ -5,11 +5,12 @@ export * from './CoolDownManager';
 
 export * from './DatabaseManager';
 export * from './DataMap';
+export * from './DataMapEntry';
 
 export * from './EventManager';
 
-export * from './HashiEvent';
 export * from './HashiClient';
+export * from './HashiEvent';
 export * from './HashiSlashBaseCommand';
 export * from './HashiSlashCommand';
 export * from './HashiSlashSubcommand';

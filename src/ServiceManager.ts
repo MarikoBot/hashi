@@ -40,7 +40,7 @@ export class ServiceManager {
   /**
    * The client instance.
    */
-  public readonly client: HashiClient;
+  readonly #client: HashiClient;
 
   /**
    * The list of services.
@@ -51,6 +51,14 @@ export class ServiceManager {
      */
     AutomaticRole: null,
   };
+
+  /**
+   * Get the client instance.
+   * @returns The client instance.
+   */
+  get client(): HashiClient {
+    return this.#client;
+  }
 
   /**
    * Get the services.
@@ -65,7 +73,7 @@ export class ServiceManager {
    * @param client The client instance.
    */
   constructor(client: HashiClient) {
-    this.client = client;
+    this.#client = client;
   }
 
   /**

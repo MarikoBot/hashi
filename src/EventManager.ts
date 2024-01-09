@@ -11,19 +11,35 @@ export class EventManager {
   /**
    * The client instance.
    */
-  public readonly client: HashiClient;
+  readonly #client: HashiClient;
 
   /**
    * The collection of the events.
    */
-  private readonly eventsList: Collection<string, HashiEvent> = new Collection();
+  readonly #eventsList: Collection<string, HashiEvent> = new Collection();
+
+  /**
+   * Get the client instance.
+   * @returns The client instance.
+   */
+  get client(): HashiClient {
+    return this.#client;
+  }
+
+  /**
+   * Get the events list.
+   * @returns The events list.
+   */
+  get eventsList(): Collection<string, HashiEvent> {
+    return this.#eventsList;
+  }
 
   /**
    * The constructor of the event manager.
    * @param client The client instance.
    */
   constructor(client: HashiClient) {
-    this.client = client;
+    this.#client = client;
   }
 
   /**
@@ -39,7 +55,7 @@ export class EventManager {
     while (++i < files.length) {
       eventData = require(path.join(__dirname, `../../../../lib/${this.client.eventsDir}/${files[i]}`));
 
-      this.client.EventManager.eventsList.set(files[i].replace('.js', ''), eventData);
+      this.client.eventManager.eventsList.set(files[i].replace('.js', ''), eventData);
       events.push(eventData);
     }
 

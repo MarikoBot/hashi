@@ -2,10 +2,12 @@
  * The Logger class. Contains multiple functions to log data.
  */
 export declare class Logger {
+    #private;
     /**
-     * The name of the project.
+     * Get the name of the project.
+     * @returns The name of the project.
      */
-    readonly projectName: string;
+    get projectName(): string;
     /**
      * The constructor of the Logger class.
      * @param name The name of the project.

@@ -47,69 +47,62 @@ export interface HashiClientOptions extends ClientOptions {
  * The HashiClient class. It extends the Client class from discord.js and implements extra methods for the Hashi module.
  */
 export declare class HashiClient {
+    #private;
     /**
-     * The Discord Client instance.
+     * Get the Discord Client instance.
+     * @returns The Discord Client instance.
      */
-    readonly src: Client;
+    get src(): Client;
     /**
-     * The logger for the HashiClient.
+     * Get the logger for the HashiClient.
+     * @returns The logger for the HashiClient.
      */
-    readonly Logger: Logger;
+    get logger(): Logger;
     /**
-     * The command manager instance.
+     * Get the command manager instance.
+     * @returns The command manager instance.
      */
-    readonly CommandManager: CommandManager;
+    get commandManager(): CommandManager;
     /**
-     * The event manager instance.
+     * Get the event manager instance.
+     * @returns The event manager instance.
      */
-    readonly EventManager: EventManager;
+    get eventManager(): EventManager;
     /**
-     * The language manager for accessing strings.
+     * Get the language manager for accessing strings.
+     * @returns The language manager for accessing strings.
      */
-    readonly LanguageManager: LanguageManager;
+    get languageManager(): LanguageManager;
     /**
-     * The database manager for accessing data maps/lakes.
+     * Get the database manager for accessing data maps/lakes.
+     * @returns The database manager for accessing data maps/lakes.
      */
-    readonly DatabaseManager: DatabaseManager;
+    get databaseManager(): DatabaseManager;
     /**
-     * The services manager for accessing different services (automatic roles, etc).
+     * Get the services manager for accessing different services (automatic roles, etc).
+     * @returns The services manager for accessing different services (automatic roles, etc).
      */
-    readonly ServiceManager: ServiceManager;
+    get serviceManager(): ServiceManager;
     /**
-     * The language manager for accessing strings.
+     * Get the constants.
+     * @returns The constants.
      */
-    readonly Constants: Constants;
+    get constants(): Constants;
     /**
-     * The name of the project/process you're in.
+     * Get the name of the project/process you're in.
+     * @returns The name of the project/process you're in.
      */
-    readonly processName: string;
+    get processName(): string;
     /**
-     * The commands folder directory. How to export your commands?
-     * @example
-     * // If the events directory has been set to "commands":
-     * // File ./commands/ping.ts
-     * import {HashiSlashCommand} from '@elouannh/hashi';
-     *
-     * const command: HashiSlashCommand = new HashiSlashCommand('ping')
-     *   .setDescription('Replies "pong"!')
-     *   .callbackFunction(async (client, interaction, context) => context.reply('pong'));
-     *
-     * export default command;
+     * Get the commands folder directory.
+     * @returns The commands folder directory.
      */
-    readonly commandsDir: string;
+    get commandsDir(): string;
     /**
-     * The events folder directory. How to export your events?
-     * @example
-     * // If the events directory has been set to "events":
-     * // File ./events/ready.ts
-     * import {Event} from '@elouannh/hashi';
-     *
-     * const event: Event = new Event('ready')
-     *   .callbackFunction(async (client) => console.log('client is ready!'));
-     *
-     * export default event;
+     * Get the events folder directory.
+     * @returns The events folder directory.
      */
-    readonly eventsDir: string;
+    get eventsDir(): string;
     /**
      * The constructor for the HashiClient class.
      * @param options The options for the HashiClient.
