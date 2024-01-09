@@ -19,10 +19,12 @@ export declare const Languages: Record<Language, LanguageContent>;
  * The class who manages the translations in the project.
  */
 export declare class LanguageManager {
+    #private;
     /**
-     * The client instance.
+     * Get the client instance.
+     * @returns The client instance.
      */
-    readonly client: HashiClient;
+    get client(): HashiClient;
     /**
      * The constructor of the language manager.
      * @param client The client instance.

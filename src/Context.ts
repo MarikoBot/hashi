@@ -237,12 +237,12 @@ export class Context {
     let message: void | InteractionResponse | Message;
 
     try {
-      if (!interaction.deferred) message = await interaction.reply(messageData).catch(this.command.client.Logger.clean);
-      else message = await interaction.followUp(messageData).catch(this.command.client.Logger.clean);
+      if (!interaction.deferred) message = await interaction.reply(messageData).catch(this.command.client.logger.clean);
+      else message = await interaction.followUp(messageData).catch(this.command.client.logger.clean);
 
       if (!message) return null;
     } catch (error: unknown) {
-      this.command.client.Logger.clean(error);
+      this.command.client.logger.clean(error);
       return null;
     }
 
@@ -256,7 +256,7 @@ export class Context {
    * @returns The translated string.
    */
   public translate(key: LanguageContentKey, ...vars: any[]): string {
-    const str: string[] = (<string>this.command.client.LanguageManager.getStr(this.languageId, key)).split('[[]]');
+    const str: string[] = (<string>this.command.client.languageManager.getStr(this.languageId, key)).split('[[]]');
     let finalStr: string = str[0];
 
     if (vars.length > 0) {

@@ -22,7 +22,7 @@ export class InterferingManager {
   /**
    * The collection of the current cool downs.
    */
-  private readonly queue: Collection<Snowflake, InterferingQueueElement[]> = new Collection();
+  readonly #queue: Collection<Snowflake, InterferingQueueElement[]> = new Collection();
 
   /**
    * The constructor of the interfering manager.
@@ -41,7 +41,7 @@ export class InterferingManager {
 
     currentCoolDowns.push([commandName, interaction]);
 
-    this.queue.set(userId, currentCoolDowns);
+    this.#queue.set(userId, currentCoolDowns);
   }
 
   /**
@@ -51,7 +51,7 @@ export class InterferingManager {
    * @returns The full list of the user cool downs.
    */
   public values(userId: Snowflake, ...commands: string[]): InterferingQueueElement[] {
-    const currentInterfering: InterferingQueueElement[] | [] = this.queue.get(userId) || [];
+    const currentInterfering: InterferingQueueElement[] | [] = this.#queue.get(userId) || [];
 
     if (commands.length > 0) {
       return currentInterfering.filter((queueElement: InterferingQueueElement): boolean =>
@@ -71,7 +71,7 @@ export class InterferingManager {
   public removeInterfering(userId: Snowflake, key: string | Snowflake): void {
     const currentInterfering: InterferingQueueElement[] = this.values(userId);
 
-    this.queue.set(
+    this.#queue.set(
       userId,
       currentInterfering.filter((queueElement: InterferingQueueElement): boolean => {
         return queueElement[1].id !== key;

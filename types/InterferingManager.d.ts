@@ -17,10 +17,7 @@ export type InterferingQueueElement = [
  * The main class who manages the active cool downs for commands.
  */
 export declare class InterferingManager {
-    /**
-     * The collection of the current cool downs.
-     */
-    private readonly queue;
+    #private;
     /**
      * The constructor of the interfering manager.
      */

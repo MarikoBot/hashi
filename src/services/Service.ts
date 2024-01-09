@@ -156,7 +156,7 @@ export class Service<
    * @returns The data map.
    */
   get dataMap(): DataMap<TypedDataMapStored> {
-    return this.client.DatabaseManager.ensure(this.prv.dataMapName, true);
+    return this.client.databaseManager.ensure(this.prv.dataMapName, true);
   }
 
   /**

@@ -7,14 +7,22 @@ export class Logger {
   /**
    * The name of the project.
    */
-  public readonly projectName: string;
+  readonly #projectName: string;
+
+  /**
+   * Get the name of the project.
+   * @returns The name of the project.
+   */
+  get projectName(): string {
+    return this.#projectName;
+  }
 
   /**
    * The constructor of the Logger class.
    * @param name The name of the project.
    */
   constructor(name: string) {
-    this.projectName = name;
+    this.#projectName = name;
   }
 
   /**

@@ -5,10 +5,12 @@ import { HashiSlashSubcommand } from './HashiSlashSubcommand';
  * The main class who represents a subcommand group for the Hashi package. [Extends the SlashCommandBuilder class from Discord.js.]
  */
 export declare class HashiSlashSubcommandGroup extends HashiSlashBaseCommand {
+    #private;
     /**
-     * The list of hashi subcommands.
+     * Get the list of hashi subcommands.
+     * @returns The list of hashi subcommands.
      */
-    readonly hashiSubcommands: HashiSlashSubcommand[];
+    get hashiSubcommands(): HashiSlashSubcommand[];
     /**
      * The constructor for the HashiSlashCommand.
      * @param name The subcommand group name.

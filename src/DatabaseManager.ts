@@ -16,7 +16,7 @@ export class DatabaseManager {
   /**
    * The client instance.
    */
-  public readonly client: HashiClient;
+  readonly #client: HashiClient;
 
   /**
    * The connection URI if needed for the MongoDB technology.
@@ -37,6 +37,14 @@ export class DatabaseManager {
    * The list of dataMaps (MongoDB).
    */
   #dataMaps: DataMapsObj = {};
+
+  /**
+   * Get the client instance.
+   * @returns The client instance.
+   */
+  get client(): HashiClient {
+    return this.#client;
+  }
 
   /**
    * Get the connection URI.
@@ -90,7 +98,7 @@ export class DatabaseManager {
    * @param client The client instance.
    */
   constructor(client: HashiClient) {
-    this.client = client;
+    this.#client = client;
   }
 
   /**

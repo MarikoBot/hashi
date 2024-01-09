@@ -37,9 +37,10 @@ export type DataMapsObj = {
 export declare class DatabaseManager {
     #private;
     /**
-     * The client instance.
+     * Get the client instance.
+     * @returns The client instance.
      */
-    readonly client: HashiClient;
+    get client(): HashiClient;
     /**
      * Get the connection URI.
      * @returns The connection URI.

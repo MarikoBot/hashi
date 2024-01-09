@@ -1,16 +1,21 @@
+import { Collection } from 'discord.js';
+import { HashiEvent } from './HashiEvent';
 import { HashiClient } from './HashiClient';
 /**
  * Represents the event manager for the client service.
  */
 export declare class EventManager {
+    #private;
     /**
-     * The client instance.
+     * Get the client instance.
+     * @returns The client instance.
      */
-    readonly client: HashiClient;
+    get client(): HashiClient;
     /**
-     * The collection of the events.
+     * Get the events list.
+     * @returns The events list.
      */
-    private readonly eventsList;
+    get eventsList(): Collection<string, HashiEvent>;
     /**
      * The constructor of the event manager.
      * @param client The client instance.

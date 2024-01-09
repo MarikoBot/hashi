@@ -9,7 +9,15 @@ export class HashiSlashSubcommandGroup extends HashiSlashBaseCommand {
   /**
    * The list of hashi subcommands.
    */
-  public readonly hashiSubcommands: HashiSlashSubcommand[] = [];
+  readonly #hashiSubcommands: HashiSlashSubcommand[] = [];
+
+  /**
+   * Get the list of hashi subcommands.
+   * @returns The list of hashi subcommands.
+   */
+  get hashiSubcommands(): HashiSlashSubcommand[] {
+    return this.#hashiSubcommands;
+  }
 
   /**
    * The constructor for the HashiSlashCommand.

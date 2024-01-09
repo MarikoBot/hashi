@@ -155,7 +155,7 @@ export class CommandManager {
       commandData = require(path.join(__dirname, `../../../../lib/${this.client.commandsDir}/${files[i]}`));
       commandData.setClient(this.client);
 
-      this.client.CommandManager.#commandsList.set(files[i].replace('.js', ''), commandData);
+      this.client.commandManager.#commandsList.set(files[i].replace('.js', ''), commandData);
 
       const discordDataOnly: HashiSlashCommand = Object.assign(new HashiSlashCommand('default'), commandData);
       discordDataOnly.clearClient();
