@@ -98,8 +98,7 @@ export declare class DatabaseManager {
     /**
      * Get a data map with the possibility to create it if it doesn't exist.
      * @param dataMapName The data map name.
-     * @param force If the data map should be created if doesn't exist.
-     * @param technology The technology to use for the data map.
+     * @param force If the data map should be created if it doesn't exist.
      * @returns The [created] data map
      */
     ensure(dataMapName: string, force?: boolean): DataMap<TypedDataMapStored>;
