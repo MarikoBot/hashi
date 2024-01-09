@@ -30,6 +30,7 @@ export type CommandBlockValue = CommandBlock[keyof CommandBlock];
  * Represents the command manager of the client.
  */
 export declare class CommandManager {
+    #private;
     /**
      * The client instance.
      */

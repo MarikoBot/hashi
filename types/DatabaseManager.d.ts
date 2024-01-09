@@ -24,7 +24,7 @@
 /// <reference types="mongoose/types/inferschematype" />
 import { HashiClient } from './HashiClient';
 import { ConnectOptions } from 'mongoose';
-import { DataMap, PossibleDataMapStored } from './DataMap';
+import { DataMap, TypedDataMapStored } from './DataMap';
 /**
  * The type that includes all the data maps of the database.
  */
@@ -64,7 +64,7 @@ export declare class DatabaseManager {
      * Build and save a data map.
      * @param name The name of the collection.
      */
-    createDataMap(name: string): DataMap<PossibleDataMapStored>;
+    createDataMap(name: string): DataMap<TypedDataMapStored>;
     /**
      * The constructor of the class.
      * @param client The client instance.
@@ -101,5 +101,5 @@ export declare class DatabaseManager {
      * @param technology The technology to use for the data map.
      * @returns The [created] data map
      */
-    ensure(dataMapName: string, force?: boolean): DataMap<PossibleDataMapStored>;
+    ensure(dataMapName: string, force?: boolean): DataMap<TypedDataMapStored>;
 }

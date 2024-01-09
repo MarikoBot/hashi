@@ -38,6 +38,10 @@ export class CommandManager {
   /**
    * The client instance.
    */
+  readonly #client: HashiClient;
+  /**
+   * The client instance.
+   */
   public readonly client: HashiClient;
 
   /**

@@ -2,7 +2,7 @@
 
 import { HashiClient } from '../HashiClient';
 import { ClientEvents } from 'discord.js';
-import { DataMap, DataMapDefinition, PossibleDataMapStored } from '../DataMap';
+import { DataMap, DataMapDefinition, TypedDataMapStored } from '../DataMap';
 import { SchemaDefinition } from 'mongoose';
 
 /**
@@ -147,7 +147,7 @@ export class Service<
     this.m = methods;
     this.a = attributes;
 
-    const dataMap: DataMap<PossibleDataMapStored> = this.dataMap;
+    const dataMap: DataMap<TypedDataMapStored> = this.dataMap;
     dataMap.setDefinition(serviceDataStructure);
   }
 
@@ -155,7 +155,7 @@ export class Service<
    * Returns the linked data map.
    * @returns The data map.
    */
-  get dataMap(): DataMap<PossibleDataMapStored> {
+  get dataMap(): DataMap<TypedDataMapStored> {
     return this.client.DatabaseManager.ensure(this.prv.dataMapName, true);
   }
 

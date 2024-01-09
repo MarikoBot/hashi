@@ -11,7 +11,7 @@ import { COMMAND_END } from './HashiSlashBaseCommand';
 import { HashiSlashCommand } from './HashiSlashCommand';
 import { DatabaseManager } from './DatabaseManager';
 import { ServiceManager } from './ServiceManager';
-import { DATAMAP_INTENTS, DataMap, PossibleDataMapStored } from './DataMap';
+import { DATAMAP_INTENTS, DataMap, TypedDataMapStored } from './DataMap';
 
 dotenv.config();
 
@@ -169,7 +169,7 @@ export class HashiClient {
     await this.CommandManager.loadCommands();
 
     let i: number = -1;
-    let dataMap: DataMap<PossibleDataMapStored>;
+    let dataMap: DataMap<TypedDataMapStored>;
     while (++i < Object.keys(this.DatabaseManager.dataMaps).length) {
       dataMap = Object.values(this.DatabaseManager.dataMaps)[i];
       if (dataMap.intents.includes(DATAMAP_INTENTS.CORE)) await dataMap.refreshCore();

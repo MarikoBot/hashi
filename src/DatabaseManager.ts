@@ -2,7 +2,7 @@
 
 import { HashiClient } from './HashiClient';
 import { connect, ConnectOptions } from 'mongoose';
-import { DataMap, PossibleDataMapStored } from './DataMap';
+import { DataMap, DataMapEntry, TypedDataMapStored } from './DataMap';
 
 /**
  * The type that includes all the data maps of the database.
@@ -74,10 +74,10 @@ export class DatabaseManager {
    * Build and save a data map.
    * @param name The name of the collection.
    */
-  public createDataMap(name: string): DataMap<PossibleDataMapStored> {
-    let dataMap: DataMap<PossibleDataMapStored>;
+  public createDataMap(name: string): DataMap<TypedDataMapStored> {
+    let dataMap: DataMap<TypedDataMapStored>;
 
-    dataMap = new DataMap<PossibleDataMapStored>(name);
+    dataMap = new DataMap<TypedDataMapStored>(name);
 
     dataMap.setClient(this.client);
     this.dataMaps[name] = dataMap;
@@ -145,7 +145,7 @@ export class DatabaseManager {
    * @param technology The technology to use for the data map.
    * @returns The [created] data map
    */
-  public ensure(dataMapName: string, force: boolean = false): DataMap<PossibleDataMapStored> {
+  public ensure(dataMapName: string, force: boolean = false): DataMap<TypedDataMapStored> {
     if (dataMapName in this.dataMaps) return this.dataMaps[dataMapName];
 
     if (force) return this.createDataMap(dataMapName);

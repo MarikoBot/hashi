@@ -18,18 +18,60 @@ export interface DataMapDefinition<IStructure extends SchemaDefinition> {
   /**
    * The default values.
    */
-  defaultValues: PossibleDataMapStored;
+  defaultValues: TypedDataMapStored;
+}
+
+/**
+ * The base class that represents a data map class object.
+ * Every object into the data map will be passed in this class to improve manipulation.
+ */
+export class DataMapEntry<DataStructure extends TypedDataMapStored> {
+  /**
+   * The data map.
+   */
+  readonly #dataMap: DataMap<DataStructure, typeof DataMapEntry>;
+
+  /**
+   * The data.
+   */
+  readonly #data: DataStructure;
+
+  /**
+   * Get the data map.
+   * @returns The data map.
+   */
+  get dataMap(): DataMap<DataStructure, typeof DataMapEntry> {
+    return this.#dataMap;
+  }
+
+  /**
+   * Get the data.
+   * @returns The data.
+   */
+  get data(): DataStructure {
+    return this.#data;
+  }
+
+  /**
+   * The constructor of a data map entry.
+   * @param dataMap The data map.
+   * @param data The data.
+   */
+  constructor(dataMap: DataMap<DataStructure, typeof DataMapEntry>, data: DataStructure) {
+    this.#dataMap = dataMap;
+    this.#data = data;
+  }
 }
 
 /**
  * The possible value to store in.
  */
-export type PossibleDataMapStored =
+export type TypedDataMapStored =
   | number
   | string
   | boolean
-  | PossibleDataMapStored[]
-  | { [key: string]: PossibleDataMapStored }
+  | TypedDataMapStored[]
+  | { [key: string]: TypedDataMapStored }
   | undefined;
 
 /**
@@ -45,7 +87,10 @@ export enum DATAMAP_INTENTS {
 /**
  * The main class. Represents a data map technology.
  */
-export class DataMap<DataStructure extends PossibleDataMapStored> {
+export class DataMap<
+  DataStructure extends TypedDataMapStored,
+  EntryClass extends new (...args: any[]) => DataMapEntry<DataStructure> = typeof DataMapEntry,
+> {
   /**
    * The client instance.
    */
@@ -55,6 +100,11 @@ export class DataMap<DataStructure extends PossibleDataMapStored> {
    * The name of the data map.
    */
   #name: string = 'default';
+
+  /**
+   * The entry class to use while using the data.
+   */
+  #entryClass: EntryClass;
 
   /**
    * The primary key(s). Separate it with a '+' sign.
@@ -95,6 +145,14 @@ export class DataMap<DataStructure extends PossibleDataMapStored> {
    */
   get name(): string {
     return this.#name;
+  }
+
+  /**
+   * Get the entry class.
+   * @returns The entry class.
+   */
+  get entryClass(): EntryClass {
+    return this.#entryClass;
   }
 
   /**
@@ -140,9 +198,11 @@ export class DataMap<DataStructure extends PossibleDataMapStored> {
   /**
    * The constructor of a data map.
    * @param name The name of the collection.
+   * @param entryClass The entry class.
    */
-  constructor(name: string) {
+  constructor(name: string, entryClass: EntryClass = <EntryClass>(<unknown>DataMapEntry<DataStructure>)) {
     this.#name = name;
+    this.#entryClass = entryClass;
 
     this.#definition.model = model<SchemaDefinition & Document>(this.name, <Schema>this.#definition.schema);
   }
@@ -152,7 +212,7 @@ export class DataMap<DataStructure extends PossibleDataMapStored> {
    * @param client The client to set.
    * @returns The class instance.
    */
-  public setClient(client: HashiClient): DataMap<DataStructure> {
+  public setClient(client: HashiClient): DataMap<DataStructure, EntryClass> {
     if (client instanceof HashiClient) this.#client = client;
     return this;
   }
@@ -162,8 +222,18 @@ export class DataMap<DataStructure extends PossibleDataMapStored> {
    * @param name The data map name to set.
    * @returns The class instance.
    */
-  public setName(name: string): DataMap<DataStructure> {
+  public setName(name: string): DataMap<DataStructure, EntryClass> {
     if (typeof name === 'string') this.#name = name;
+    return this;
+  }
+
+  /**
+   * Set the entry class.
+   * @param entryClass the entry class to set.
+   * @returns The class instance.
+   */
+  public setEntryClass(entryClass: EntryClass): DataMap<DataStructure, EntryClass> {
+    if (typeof entryClass === 'object') this.#entryClass = entryClass;
     return this;
   }
 
@@ -172,7 +242,7 @@ export class DataMap<DataStructure extends PossibleDataMapStored> {
    * @param primaryKey The primary key to set.
    * @returns The class instance.
    */
-  public setPrimaryKey(primaryKey: string): DataMap<DataStructure> {
+  public setPrimaryKey(primaryKey: string): DataMap<DataStructure, EntryClass> {
     if (typeof primaryKey === 'string') this.#primaryKey = primaryKey;
     return this;
   }
@@ -184,7 +254,7 @@ export class DataMap<DataStructure extends PossibleDataMapStored> {
    */
   public setDefinition<IStructure extends SchemaDefinition>(
     definition: DataMapDefinition<IStructure>,
-  ): DataMap<DataStructure> {
+  ): DataMap<DataStructure, EntryClass> {
     if (typeof definition === 'object') this.#definition = definition;
     return this;
   }
@@ -194,7 +264,7 @@ export class DataMap<DataStructure extends PossibleDataMapStored> {
    * @param intent The intent to add.
    * @returns The data map.
    */
-  public addIntent(intent: DATAMAP_INTENTS): DataMap<DataStructure> {
+  public addIntent(intent: DATAMAP_INTENTS): DataMap<DataStructure, EntryClass> {
     if (intent === DATAMAP_INTENTS.CORE) this.#intents.push(intent);
     return this;
   }
@@ -204,8 +274,8 @@ export class DataMap<DataStructure extends PossibleDataMapStored> {
    * @param key The key to look for.
    * @returns The data if found.
    */
-  public async getRaw(key: string = this.definition.defaultValues[this.primaryKey]): Promise<PossibleDataMapStored> {
-    let value: PossibleDataMapStored = null;
+  public async getRaw(key: string = this.definition.defaultValues[this.primaryKey]): Promise<TypedDataMapStored> {
+    let value: TypedDataMapStored = null;
 
     return value;
   }
@@ -217,7 +287,7 @@ export class DataMap<DataStructure extends PossibleDataMapStored> {
   public async refreshCore(): Promise<void> {
     if (!this.intents.includes(DATAMAP_INTENTS.CORE)) return;
 
-    const currentData: PossibleDataMapStored = await this.getRaw(this.definition.defaultValues[this.primaryKey]);
+    const currentData: TypedDataMapStored = await this.getRaw(this.definition.defaultValues[this.primaryKey]);
   }
 
   /**
@@ -229,7 +299,7 @@ export class DataMap<DataStructure extends PossibleDataMapStored> {
    */
   public async update(
     key: string = this.definition.defaultValues[this.primaryKey],
-    data: PossibleDataMapStored,
+    data: TypedDataMapStored,
     path?: string,
   ): Promise<void> {}
 
@@ -238,8 +308,10 @@ export class DataMap<DataStructure extends PossibleDataMapStored> {
    * @param key The key to look who applies changes on.
    * @returns The player data.
    */
-  protected async get(key: string = this.definition.defaultValues[this.primaryKey]): Promise<PossibleDataMapStored> {
-    const data: PossibleDataMapStored = await this.getRaw(key);
+  protected async get(
+    key: string = this.definition.defaultValues[this.primaryKey],
+  ): Promise<TypedDataMapStored | DataMapEntry<DataStructure>> {
+    const data: TypedDataMapStored = await this.getRaw(key);
     if (!data) return data;
 
     const structure: this['definition']['defaultValues'] = this.definition.defaultValues;
@@ -267,6 +339,6 @@ export class DataMap<DataStructure extends PossibleDataMapStored> {
 
     finalStructure = compareObj(<object>structure, <object>data, {});
     if (refreshIsRequired) await this.update(key, finalStructure);
-    return finalStructure;
+    return new this.entryClass(this, <DataStructure>finalStructure);
   }
 }
