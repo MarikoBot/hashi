@@ -1,10 +1,51 @@
 {
+  "scope": "@elouannh",
   "name": "@elouannh/hashi",
-  "version": "0.2.7",
+  "version": "0.3.0",
   "description": "A cool discord.js assistant to create bots in another way.",
+  "keywords": [
+    "discord",
+    "bot",
+    "package",
+    "discord.js",
+    "wrapper"
+  ],
+  "homepage": "https://github.com/MarikoBot/hashi#readme",
+  "bugs": {
+    "url": "https://github.com/MarikoBot/hashi/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Elouann Panda",
+    "email": "elouannpro@proton.me"
+  },
+  "contributors": [
+    {
+      "name": "Elouann Panda",
+      "email": "elouannpro@proton.me"
+    }
+  ],
+  "funding": [
+    {
+      "type": "individual",
+      "url": "https://paypal.me/elouannpanda?country.x=FR&locale.x=fr_FR"
+    }
+  ],
+  "files": [
+    "lib",
+    "package.json",
+    "README.md",
+    "types"
+  ],
   "main": "lib/index.js",
   "types": "types/index.d.ts",
-  "scope": "@elouannh",
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elouannh/hashi.git"
+  },
   "scripts": {
     "run-builder": "node builder.js",
     "prettier": "prettier -w src",
@@ -17,23 +58,6 @@
     "publish-minor": "npm version minor && git push && npm publish && git push --tags",
     "publish-major": "npm version major && git push && npm publish && git push --tags"
   },
-  "keywords": [
-    "discord",
-    "bot"
-  ],
-  "files": [
-    "lib",
-    "package.json",
-    "README.md",
-    "types"
-  ],
-  "author": "Elouann Hosta",
-  "license": "MIT",
-  "devDependencies": {
-    "eslint": "^8.53.0",
-    "prettier": "^2.8.4",
-    "tslint-config-prettier": "^1.18.0"
-  },
   "dependencies": {
     "chalk": "^4.1.2",
     "discord-api-types": "^0.37.38",
@@ -41,12 +65,13 @@
     "dotenv": "^16.3.1",
     "mongoose": "^7.2.2"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/elouannh/hashi.git"
+  "devDependencies": {
+    "eslint": "^8.53.0",
+    "prettier": "^2.8.4",
+    "tslint-config-prettier": "^1.18.0"
   },
-  "homepage": "https://github.com/MarikoBot/hashi#readme",
-  "directories": {
-    "lib": "lib"
+  "engines": {
+    "node": ">=21.1.0",
+    "npm": ">=10.2.0"
   }
 }
