@@ -131,6 +131,11 @@ export declare class HashiClient {
      */
     get eventsDir(): string;
     /**
+     * Get the services folder directory.
+     * @returns The services folder directory.
+     */
+    get servicesDir(): string;
+    /**
      * The constructor for the HashiClient class.
      * @param options The options for the HashiClient.
      */

@@ -10,7 +10,7 @@ export interface ServicesMap {
     /**
      * The class that includes all the required tools to create an automatic role system.
      */
-    AutomaticRole: Classes.AutomaticRoleInstance;
+    AutomaticRole: Classes.AutomaticRole;
 }
 /**
  * A key for the service map.
@@ -36,12 +36,23 @@ export declare class ServiceManager extends Base {
      */
     constructor(client: HashiClient);
     /**
-     * Create a new instance of a service. Methods and attributes initializing possible.
+     * Create a new instance of a service.
      * @param serviceName The name of the service.
      * @param dataMapName The name of the data map.
      * @returns A service instance.
      */
     create(serviceName: string, dataMapName: string): Service;
+    /**
+     * Link an instance of Service.
+     * @param service The service to link.
+     * @returns A service instance.
+     */
+    bindService(service: Service): Service;
+    /**
+     * Synchronize the services created by the coder into their own repository.
+     * @returns The class instance.
+     */
+    loadServices(): ServiceManager;
     /**
      * Enable a predefined service.
      * @param serviceNames The name of the service to enable.

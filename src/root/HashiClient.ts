@@ -115,6 +115,11 @@ export class HashiClient {
   readonly #eventsDir: string = 'events';
 
   /**
+   * The services folder directory.
+   */
+  readonly #servicesDir: string = 'services';
+
+  /**
    * Get the Discord Client instance.
    * @returns The Discord Client instance.
    */
@@ -203,6 +208,14 @@ export class HashiClient {
   }
 
   /**
+   * Get the services folder directory.
+   * @returns The services folder directory.
+   */
+  get servicesDir(): string {
+    return this.#servicesDir;
+  }
+
+  /**
    * The constructor for the HashiClient class.
    * @param options The options for the HashiClient.
    */
@@ -227,6 +240,11 @@ export class HashiClient {
     this.#logger = new Logger(this.processName);
     this.#commandsDir = options.commandsDir || 'commands';
     this.#eventsDir = options.eventsDir || 'events';
+    this.#servicesDir = options.servicesDir || 'services';
+
+    this.databaseManager.setDbName(options.mongoose.dbName || 'main');
+    this.databaseManager.setConnectOptions(options.mongoose.connectOptions || { dbName: this.databaseManager.dbName });
+    if (options.mongoose.connectionURI) this.databaseManager.setConnectionURI(options.mongoose.connectionURI);
   }
 
   /**
@@ -235,6 +253,7 @@ export class HashiClient {
    * @returns Nothing.
    */
   public async login(token: string = process.env.TOKEN || process.env.token || process.env.Token): Promise<string> {
+    this.serviceManager.loadServices();
     await this.eventManager.loadEvents();
 
     await this.src.login(token);

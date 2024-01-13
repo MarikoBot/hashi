@@ -25,7 +25,7 @@ export class AutomaticRoleEntry extends DataMapEntry<AutomaticRoleType> {
 /**
  * The class that includes all the required tools to create an automatic role system.
  */
-export class AutomaticRoleInstance extends Service {
+export class AutomaticRole extends Service {
   /**
    * The guild targeted by the service.
    */
@@ -54,7 +54,7 @@ export class AutomaticRoleInstance extends Service {
    * Set the guild.
    * @param guild The guild to set.
    */
-  public setGuild(guild: Guild): AutomaticRoleInstance {
+  public setGuild(guild: Guild): AutomaticRole {
     if (guild instanceof Guild) this.#guild = guild;
     return this;
   }
@@ -76,7 +76,7 @@ export class AutomaticRoleInstance extends Service {
    * @param service The service instance.
    * @returns Nothing.
    */
-  static async main(service: AutomaticRoleInstance, member: GuildMember): Promise<void> {
+  static async main(service: AutomaticRole, member: GuildMember): Promise<void> {
     if (member.guild.id !== service.guild.id) return;
 
     let i: number = -1;
