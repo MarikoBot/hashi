@@ -23,11 +23,11 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 import { Guild, GuildMember, Snowflake } from 'discord.js';
-import { Service } from '../Service';
-import { DataMap, DataMapDefinition } from '../DataMap';
-import { HashiClient } from '../HashiClient';
+import { Service } from '../base/Service';
+import { DataMap, DataMapDefinition } from '../base/DataMap';
+import { HashiClient } from '../root/HashiClient';
 import { Schema, Types } from 'mongoose';
-import { DataMapEntry } from '../DataMapEntry';
+import { DataMapEntry } from '../root/DataMapEntry';
 /**
  * The automatic-role type.
  */
