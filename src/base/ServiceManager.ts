@@ -87,6 +87,8 @@ export class ServiceManager extends Base {
    * @returns The class instance.
    */
   public loadServices(): ServiceManager {
+    if (!fs.existsSync(`lib/${this.client.servicesDir}/classes`)) return;
+
     const files: string[] = fs.readdirSync(`lib/${this.client.servicesDir}/classes`);
 
     let i: number = -1;
