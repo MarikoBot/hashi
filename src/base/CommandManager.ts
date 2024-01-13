@@ -146,7 +146,7 @@ export class CommandManager extends Base {
     let i: number = -1;
     let commandData: HashiSlashCommand;
     while (++i < files.length) {
-      commandData = require(path.join(__dirname, `../../../../lib/${this.client.commandsDir}/${files[i]}`));
+      commandData = require(path.join(__dirname, `../../../../../lib/${this.client.commandsDir}/${files[i]}`));
       commandData.setClient(this.client);
 
       this.client.commandManager.commandsList.set(files[i].replace('.js', ''), commandData);

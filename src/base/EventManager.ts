@@ -41,7 +41,7 @@ export class EventManager extends Base {
     let i: number = -1;
     let eventData: HashiEvent;
     while (++i < files.length) {
-      eventData = require(path.join(__dirname, `../../../../lib/${this.client.eventsDir}/${files[i]}`));
+      eventData = require(path.join(__dirname, `../../../../../lib/${this.client.eventsDir}/${files[i]}`));
 
       this.client.eventManager.eventsList.set(files[i].replace('.js', ''), eventData);
       events.push(eventData);
