@@ -8,8 +8,6 @@ export * from './DataMap';
 
 export * from './EventManager';
 
-export * from './HashiEvent';
-
 export * from './LanguageManager';
 
 export * from './Service';

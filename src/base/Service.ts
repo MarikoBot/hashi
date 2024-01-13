@@ -1,6 +1,6 @@
 // noinspection JSUnusedGlobalSymbols
 
-import { HashiClient } from '../root/HashiClient';
+import { HashiClient } from '../root/';
 import { ClientEvents } from 'discord.js';
 import { DataMap, DataMapDefinition, TypedDataMapStored } from './DataMap';
 import { SchemaDefinition } from 'mongoose';
@@ -64,7 +64,7 @@ export class Service<
   /**
    * The version of the service.
    */
-  readonly #version: string = '0.0.0';
+  readonly #version: string = '0.1.0';
 
   /**
    * The object including all the resources of the service.
@@ -115,18 +115,20 @@ export class Service<
    * The constructor of the class. You can pass here the attributes and the functions you need.
    * @param client The client instance.
    * @param name The name of the service.
+   * @param version The version of the service.
    * @param dataMapName The name of the data map.
    * @param serviceDataStructure The data object structure to set. Extends the DataMapDefinition.
    */
   constructor(
     client: HashiClient,
     name: string,
+    version: string,
     dataMapName: string,
     serviceDataStructure: ServiceDataStructure = null,
   ) {
     super(client);
     this.#name = name;
-
+    this.#version = version || '0.1.0';
     this.client.databaseManager.ensure(dataMapName, true);
     const dataMap: DataMap<TypedDataMapStored> = this.dataMap;
     dataMap.setDefinition(serviceDataStructure);

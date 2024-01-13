@@ -1,4 +1,4 @@
-import { HashiClient } from '../root/HashiClient';
+import { HashiClient } from '../root/';
 import { Base } from './Base';
 
 /**

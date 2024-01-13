@@ -3,15 +3,16 @@
 import { ActivityType, ChatInputCommandInteraction, Client, ClientOptions, PresenceData } from 'discord.js';
 import { Logger } from './Logger';
 import * as dotenv from 'dotenv';
-import { CommandBlock, CommandManager } from '../base/CommandManager';
-import { EventManager } from '../base/EventManager';
-import { LanguageManager } from '../base/LanguageManager';
+import { CommandBlock, CommandManager } from '../base/';
+import { EventManager } from '../base/';
+import { LanguageManager } from '../base/';
 import { Constants } from './Constants';
 import { COMMAND_END } from './HashiSlashBaseCommand';
 import { HashiSlashCommand } from './HashiSlashCommand';
-import { DatabaseManager } from '../base/DatabaseManager';
-import { ServiceManager } from '../base/ServiceManager';
-import { DATAMAP_INTENTS, DataMap, TypedDataMapStored } from '../base/DataMap';
+import { DatabaseManager } from '../base/';
+import { ServiceManager } from '../base/';
+import { DATAMAP_INTENTS, DataMap, TypedDataMapStored } from '../base/';
+import { ConnectOptions } from 'mongoose';
 
 dotenv.config();
 
@@ -24,32 +25,34 @@ export interface HashiClientOptions extends ClientOptions {
    */
   processName: string;
   /**
-   * The commands folder directory. How to export your commands?
-   * @example
-   * // If the events directory has been set to "commands":
-   * // File ./commands/ping.ts
-   * import {HashiSlashCommand} from '@elouannh/hashi';
-   *
-   * const command: HashiSlashCommand = new HashiSlashCommand('ping')
-   *   .setDescription('Replies "pong"!')
-   *   .callbackFunction(async (client, interaction, context) => context.reply('pong'));
-   *
-   * export default command;
+   * The commands folder directory.
    */
-  commandsDir: string;
+  commandsDir?: string;
   /**
-   * The events folder directory. How to export your events?
-   * @example
-   * // If the events directory has been set to "events":
-   * // File ./events/ready.ts
-   * import {Event} from '@elouannh/hashi';
-   *
-   * const event: Event = new Event('ready')
-   *   .callbackFunction(async (client) => console.log('client is ready!'));
-   *
-   * export default event;
+   * The events folder directory.
    */
-  eventsDir: string;
+  eventsDir?: string;
+  /**
+   * The services folder directory.
+   */
+  servicesDir?: string;
+  /**
+   * The mongoose connection information.
+   */
+  mongoose: {
+    /**
+     * The database name. Not useful to change it (only for MongoDB). Default: main.
+     */
+    dbName?: string;
+    /**
+     * The connection URI.
+     */
+    connectionURI: string;
+    /**
+     * The options for the connection.
+     */
+    connectOptions: ConnectOptions;
+  };
 }
 
 /**
@@ -87,7 +90,7 @@ export class HashiClient {
   readonly #databaseManager: DatabaseManager = new DatabaseManager(this);
 
   /**
-   * The services manager for accessing different services (automatic roles, etc).
+   * The services manager for accessing different services (automatic roles, etc.).
    */
   readonly #serviceManager: ServiceManager = new ServiceManager(this);
 
@@ -110,6 +113,11 @@ export class HashiClient {
    * The events folder directory.
    */
   readonly #eventsDir: string = 'events';
+
+  /**
+   * The services folder directory.
+   */
+  readonly #servicesDir: string = 'services';
 
   /**
    * Get the Discord Client instance.
@@ -160,8 +168,8 @@ export class HashiClient {
   }
 
   /**
-   * Get the services manager for accessing different services (automatic roles, etc).
-   * @returns The services manager for accessing different services (automatic roles, etc).
+   * Get the services manager for accessing different services (automatic roles, etc.).
+   * @returns The services manager for accessing different services (automatic roles, etc.).
    */
   get serviceManager(): ServiceManager {
     return this.#serviceManager;
@@ -200,6 +208,14 @@ export class HashiClient {
   }
 
   /**
+   * Get the services folder directory.
+   * @returns The services folder directory.
+   */
+  get servicesDir(): string {
+    return this.#servicesDir;
+  }
+
+  /**
    * The constructor for the HashiClient class.
    * @param options The options for the HashiClient.
    */
@@ -222,8 +238,13 @@ export class HashiClient {
 
     this.#processName = options.processName || '`Who I am ?`';
     this.#logger = new Logger(this.processName);
-    this.#commandsDir = options.commandsDir;
-    this.#eventsDir = options.eventsDir;
+    this.#commandsDir = options.commandsDir || 'commands';
+    this.#eventsDir = options.eventsDir || 'events';
+    this.#servicesDir = options.servicesDir || 'services';
+
+    this.databaseManager.setDbName(options.mongoose.dbName || 'main');
+    this.databaseManager.setConnectOptions(options.mongoose.connectOptions || { dbName: this.databaseManager.dbName });
+    if (options.mongoose.connectionURI) this.databaseManager.setConnectionURI(options.mongoose.connectionURI);
   }
 
   /**
@@ -232,6 +253,7 @@ export class HashiClient {
    * @returns Nothing.
    */
   public async login(token: string = process.env.TOKEN || process.env.token || process.env.Token): Promise<string> {
+    this.serviceManager.loadServices();
     await this.eventManager.loadEvents();
 
     await this.src.login(token);

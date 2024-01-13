@@ -1,6 +1,7 @@
 export * from './Constants';
 export * from './CoolDownManager';
 export * from './DataMapEntry';
+export * from './HashiEvent';
 export * from './HashiClient';
 export * from './HashiSlashBaseCommand';
 export * from './HashiSlashCommand';

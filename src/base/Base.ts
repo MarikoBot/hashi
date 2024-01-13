@@ -1,4 +1,4 @@
-import { HashiClient } from '../root/HashiClient';
+import { HashiClient } from '../root/';
 
 /**
  * Represents the base class for each class of the package.

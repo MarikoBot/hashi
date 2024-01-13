@@ -1,7 +1,7 @@
 {
   "scope": "@elouannh",
   "name": "@elouannh/hashi",
-  "version": "0.3.0",
+  "version": "0.3.7",
   "description": "A cool discord.js assistant to create bots in another way.",
   "keywords": [
     "discord",
@@ -44,14 +44,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/elouannh/hashi.git"
+    "url": "git+https://github.com/MarikoBot/hashi.git"
   },
   "scripts": {
     "run-builder": "node builder.js",
     "prettier": "prettier -w src",
     "save": "git add ./",
     "build": "npm run run-builder && npm run prettier && tsc && npm run save",
-    "prepublish": "npm run build && git commit -m \"[AUTO] Build\"",
+    "prepublish": "npm run build && git commit -m \"[AUTO] dev build\"",
     "test": "npm run build && node lab.test.js",
     "dev-patch": "npm run prepublish && npm run publish-patch",
     "publish-patch": "npm version patch && git push && npm publish && git push --tags",

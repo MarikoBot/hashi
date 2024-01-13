@@ -11,12 +11,12 @@ import {
   SlashCommandSubcommandBuilder,
   SlashCommandSubcommandGroupBuilder,
 } from 'discord.js';
-import { Context } from '../base/Context';
+import { Context } from '../base/';
 import { HashiClient } from './HashiClient';
 import { HashiSlashCommand } from './HashiSlashCommand';
 import { CoolDownsQueueElement } from './CoolDownManager';
 import { InterferingQueueElement } from './InterferingManager';
-import { CommandBlock, CommandBlockValue } from '../base/CommandManager';
+import { CommandBlock, CommandBlockValue } from '../base/';
 import { HashiSlashSubcommand } from './HashiSlashSubcommand';
 import { HashiSlashSubcommandGroup } from './HashiSlashSubcommandGroup';
 

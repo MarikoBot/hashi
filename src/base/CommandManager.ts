@@ -1,10 +1,10 @@
 import { ChatInputCommandInteraction, Collection } from 'discord.js';
-import { HashiSlashCommand } from '../root/HashiSlashCommand';
-import { CoolDownManager } from '../root/CoolDownManager';
-import { InterferingManager } from '../root/InterferingManager';
-import { HashiClient } from '../root/HashiClient';
-import { HashiSlashSubcommand } from '../root/HashiSlashSubcommand';
-import { HashiSlashSubcommandGroup } from '../root/HashiSlashSubcommandGroup';
+import { HashiSlashCommand } from '../root/';
+import { CoolDownManager } from '../root/';
+import { InterferingManager } from '../root/';
+import { HashiClient } from '../root/';
+import { HashiSlashSubcommand } from '../root/';
+import { HashiSlashSubcommandGroup } from '../root/';
 import { Base } from './Base';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -146,7 +146,7 @@ export class CommandManager extends Base {
     let i: number = -1;
     let commandData: HashiSlashCommand;
     while (++i < files.length) {
-      commandData = require(path.join(__dirname, `../../../../lib/${this.client.commandsDir}/${files[i]}`));
+      commandData = require(path.join(__dirname, `../../../../../lib/${this.client.commandsDir}/${files[i]}`));
       commandData.setClient(this.client);
 
       this.client.commandManager.commandsList.set(files[i].replace('.js', ''), commandData);

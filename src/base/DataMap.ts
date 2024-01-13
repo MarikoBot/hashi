@@ -1,8 +1,8 @@
 // noinspection JSUnusedGlobalSymbols
 
 import { model, Model, Schema, SchemaDefinition, Document, Types } from 'mongoose';
-import { HashiClient } from '../root/HashiClient';
-import { DataMapEntry } from '../root/DataMapEntry';
+import { HashiClient } from '../root/';
+import { DataMapEntry } from '../root/';
 import { Base } from './Base';
 
 /**

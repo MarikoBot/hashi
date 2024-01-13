@@ -1,32 +1,12 @@
 // noinspection JSUnusedGlobalSymbols
 
 import { Guild, GuildMember, Snowflake } from 'discord.js';
-import { Service } from '../base/Service';
-import { DataMap, DataMapDefinition } from '../base/DataMap';
-import { HashiClient } from '../root/HashiClient';
-import { Schema, Types } from 'mongoose';
-import { DataMapEntry } from '../root/DataMapEntry';
-
-/**
- * The automatic-role type.
- */
-export type AutomaticRoleType = { _id: Types.ObjectId; discordId: string; roles: string[] };
-
-/**
- * The automatic-role definition.
- */
-export const AutomaticRoleSchema = {
-  _id: {
-    type: Schema.Types.ObjectId,
-    default: () => new Types.ObjectId(),
-    unique: true,
-  },
-  discordId: {
-    type: String,
-    unique: true,
-  },
-  roles: { type: [String] },
-};
+import { Service } from '../../base/';
+import { DataMap } from '../../base/';
+import { HashiClient } from '../../root/';
+import { DataMapEntry } from '../../root/';
+import { AutomaticRoleType } from '../types';
+import { AutomaticRoleDefinition } from '../definitions';
 
 /**
  * The automatic-role entry class.
@@ -43,21 +23,9 @@ export class AutomaticRoleEntry extends DataMapEntry<AutomaticRoleType> {
 }
 
 /**
- * The interface that includes all the properties of an automatic roles system.
- */
-export const AutomaticRoleDefinition: DataMapDefinition<typeof AutomaticRoleSchema> = {
-  schema: new Schema<typeof AutomaticRoleSchema>(AutomaticRoleSchema),
-  defaultValues: {
-    _id: new Types.ObjectId(),
-    discordId: '0',
-    roles: [],
-  },
-};
-
-/**
  * The class that includes all the required tools to create an automatic role system.
  */
-export class AutomaticRoleInstance extends Service {
+export class AutomaticRole extends Service {
   /**
    * The guild targeted by the service.
    */
@@ -76,7 +44,7 @@ export class AutomaticRoleInstance extends Service {
    * @param client The client instance.
    */
   constructor(client: HashiClient) {
-    super(client, 'automaticRole', 'automaticRole');
+    super(client, 'AutomaticRole', '0.1.0', 'automaticRole');
     this.dataMap.setDefinition(AutomaticRoleDefinition);
 
     this.link('guildMemberAdd', [, []]);
@@ -86,7 +54,7 @@ export class AutomaticRoleInstance extends Service {
    * Set the guild.
    * @param guild The guild to set.
    */
-  public setGuild(guild: Guild): AutomaticRoleInstance {
+  public setGuild(guild: Guild): AutomaticRole {
     if (guild instanceof Guild) this.#guild = guild;
     return this;
   }
@@ -108,7 +76,7 @@ export class AutomaticRoleInstance extends Service {
    * @param service The service instance.
    * @returns Nothing.
    */
-  static async main(service: AutomaticRoleInstance, member: GuildMember): Promise<void> {
+  static async main(service: AutomaticRole, member: GuildMember): Promise<void> {
     if (member.guild.id !== service.guild.id) return;
 
     let i: number = -1;

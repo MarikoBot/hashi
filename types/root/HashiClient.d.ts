@@ -1,12 +1,37 @@
+/// <reference types="mongoose/types/aggregate" />
+/// <reference types="mongoose/types/callback" />
+/// <reference types="mongoose/types/collection" />
+/// <reference types="mongoose/types/connection" />
+/// <reference types="mongoose/types/cursor" />
+/// <reference types="mongoose/types/document" />
+/// <reference types="mongoose/types/error" />
+/// <reference types="mongoose/types/expressions" />
+/// <reference types="mongoose/types/helpers" />
+/// <reference types="mongoose/types/middlewares" />
+/// <reference types="mongoose/types/indexes" />
+/// <reference types="mongoose/types/models" />
+/// <reference types="mongoose/types/mongooseoptions" />
+/// <reference types="mongoose/types/pipelinestage" />
+/// <reference types="mongoose/types/populate" />
+/// <reference types="mongoose/types/query" />
+/// <reference types="mongoose/types/schemaoptions" />
+/// <reference types="mongoose/types/schematypes" />
+/// <reference types="mongoose/types/session" />
+/// <reference types="mongoose/types/types" />
+/// <reference types="mongoose/types/utility" />
+/// <reference types="mongoose/types/validation" />
+/// <reference types="mongoose/types/virtuals" />
+/// <reference types="mongoose/types/inferschematype" />
 import { ChatInputCommandInteraction, Client, ClientOptions } from 'discord.js';
 import { Logger } from './Logger';
-import { CommandManager } from '../base/CommandManager';
-import { EventManager } from '../base/EventManager';
-import { LanguageManager } from '../base/LanguageManager';
+import { CommandManager } from '../base/';
+import { EventManager } from '../base/';
+import { LanguageManager } from '../base/';
 import { Constants } from './Constants';
 import { COMMAND_END } from './HashiSlashBaseCommand';
-import { DatabaseManager } from '../base/DatabaseManager';
-import { ServiceManager } from '../base/ServiceManager';
+import { DatabaseManager } from '../base/';
+import { ServiceManager } from '../base/';
+import { ConnectOptions } from 'mongoose';
 /**
  * The options for the HashiClient. It extends the ClientOptions from discord.js and implements extra options for the Hashi module.
  */
@@ -16,32 +41,34 @@ export interface HashiClientOptions extends ClientOptions {
      */
     processName: string;
     /**
-     * The commands folder directory. How to export your commands?
-     * @example
-     * // If the events directory has been set to "commands":
-     * // File ./commands/ping.ts
-     * import {HashiSlashCommand} from '@elouannh/hashi';
-     *
-     * const command: HashiSlashCommand = new HashiSlashCommand('ping')
-     *   .setDescription('Replies "pong"!')
-     *   .callbackFunction(async (client, interaction, context) => context.reply('pong'));
-     *
-     * export default command;
+     * The commands folder directory.
      */
-    commandsDir: string;
+    commandsDir?: string;
     /**
-     * The events folder directory. How to export your events?
-     * @example
-     * // If the events directory has been set to "events":
-     * // File ./events/ready.ts
-     * import {Event} from '@elouannh/hashi';
-     *
-     * const event: Event = new Event('ready')
-     *   .callbackFunction(async (client) => console.log('client is ready!'));
-     *
-     * export default event;
+     * The events folder directory.
      */
-    eventsDir: string;
+    eventsDir?: string;
+    /**
+     * The services folder directory.
+     */
+    servicesDir?: string;
+    /**
+     * The mongoose connection information.
+     */
+    mongoose: {
+        /**
+         * The database name. Not useful to change it (only for MongoDB). Default: main.
+         */
+        dbName?: string;
+        /**
+         * The connection URI.
+         */
+        connectionURI: string;
+        /**
+         * The options for the connection.
+         */
+        connectOptions: ConnectOptions;
+    };
 }
 /**
  * The HashiClient class. It extends the Client class from discord.js and implements extra methods for the Hashi module.
@@ -79,8 +106,8 @@ export declare class HashiClient {
      */
     get databaseManager(): DatabaseManager;
     /**
-     * Get the services manager for accessing different services (automatic roles, etc).
-     * @returns The services manager for accessing different services (automatic roles, etc).
+     * Get the services manager for accessing different services (automatic roles, etc.).
+     * @returns The services manager for accessing different services (automatic roles, etc.).
      */
     get serviceManager(): ServiceManager;
     /**
@@ -103,6 +130,11 @@ export declare class HashiClient {
      * @returns The events folder directory.
      */
     get eventsDir(): string;
+    /**
+     * Get the services folder directory.
+     * @returns The services folder directory.
+     */
+    get servicesDir(): string;
     /**
      * The constructor for the HashiClient class.
      * @param options The options for the HashiClient.

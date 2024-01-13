@@ -1,9 +1,11 @@
 // noinspection JSUnusedGlobalSymbols
 
-import { HashiClient } from '../root/HashiClient';
-import { ClientEventsKey, OnEventEmittedMethods, Service, ServiceFunctionPackage } from './Service';
-import { AutomaticRoleInstance } from '../services';
+import { HashiClient, HashiEvent } from '../root/';
+import { ClientEventsKey, Service } from './Service';
+import { Classes } from '../services';
 import { Base } from './Base';
+import * as fs from 'fs';
+import * as path from 'path';
 
 /**
  * The object of all the services.
@@ -14,7 +16,7 @@ export interface ServicesMap {
   /**
    * The class that includes all the required tools to create an automatic role system.
    */
-  AutomaticRole: AutomaticRoleInstance;
+  AutomaticRole: Classes.AutomaticRole;
 }
 
 /**
@@ -58,16 +60,43 @@ export class ServiceManager extends Base {
   }
 
   /**
-   * Create a new instance of a service. Methods and attributes initializing possible.
+   * Create a new instance of a service.
    * @param serviceName The name of the service.
    * @param dataMapName The name of the data map.
    * @returns A service instance.
    */
   public create(serviceName: string, dataMapName: string): Service {
-    const service: Service = new Service(this.client, serviceName, dataMapName);
+    const service: Service = new Service(this.client, '0.1.0-experimental', serviceName, dataMapName);
     this.#services[serviceName] = service;
 
     return service;
+  }
+
+  /**
+   * Link an instance of Service.
+   * @param service The service to link.
+   * @returns A service instance.
+   */
+  public bindService(service: Service): Service {
+    this.#services[service.name] = service;
+    return service;
+  }
+
+  /**
+   * Synchronize the services created by the coder into their own repository.
+   * @returns The class instance.
+   */
+  public loadServices(): ServiceManager {
+    const files: string[] = fs.readdirSync(`lib/${this.client.servicesDir}/classes`);
+
+    let i: number = -1;
+    let serviceData: Service;
+    while (++i < files.length) {
+      serviceData = require(path.join(__dirname, `../../../../../lib/${this.client.servicesDir}/classes/${files[i]}`));
+
+      this.bindService(serviceData[files[i]]);
+    }
+    return this;
   }
 
   /**
@@ -84,7 +113,7 @@ export class ServiceManager extends Base {
 
       switch (serviceName) {
         case 'AutomaticRole':
-          this.services.AutomaticRole = new AutomaticRoleInstance(this.client);
+          this.services.AutomaticRole = new Classes.AutomaticRole(this.client);
           return this.services.AutomaticRole;
         default:
           return null;
@@ -97,7 +126,7 @@ export class ServiceManager extends Base {
    * @returns Nothing.
    */
   public launchLinkedEvents(): void {
-    let clientEventsList: ClientEventsKey[];
+    let clientEventsList: ClientEventsKey[] = [];
 
     let i: number = -1;
     let j: number = -1;

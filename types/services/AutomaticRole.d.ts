@@ -71,7 +71,7 @@ export declare const AutomaticRoleDefinition: DataMapDefinition<typeof Automatic
 /**
  * The class that includes all the required tools to create an automatic role system.
  */
-export declare class AutomaticRoleInstance extends Service {
+export declare class AutomaticRole extends Service {
     #private;
     /**
      * Get the guild.
@@ -87,7 +87,7 @@ export declare class AutomaticRoleInstance extends Service {
      * Set the guild.
      * @param guild The guild to set.
      */
-    setGuild(guild: Guild): AutomaticRoleInstance;
+    setGuild(guild: Guild): AutomaticRole;
     /**
      * Get the roles from the database.
      * @param guildId The guild id to get the data from.
@@ -102,5 +102,5 @@ export declare class AutomaticRoleInstance extends Service {
      * @param service The service instance.
      * @returns Nothing.
      */
-    static main(service: AutomaticRoleInstance, member: GuildMember): Promise<void>;
+    static main(service: AutomaticRole, member: GuildMember): Promise<void>;
 }

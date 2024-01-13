@@ -23,8 +23,8 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 import { Model, Schema, SchemaDefinition, Document, Types } from 'mongoose';
-import { HashiClient } from '../root/HashiClient';
-import { DataMapEntry } from '../root/DataMapEntry';
+import { HashiClient } from '../root/';
+import { DataMapEntry } from '../root/';
 import { Base } from './Base';
 /**
  * The type that represents a document for the hashi data map.

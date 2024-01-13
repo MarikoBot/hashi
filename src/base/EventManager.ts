@@ -1,6 +1,6 @@
 import { Collection } from 'discord.js';
-import { HashiEvent } from './HashiEvent';
-import { HashiClient } from '../root/HashiClient';
+import { HashiEvent } from '../root/';
+import { HashiClient } from '../root/';
 import * as fs from 'fs';
 import * as path from 'path';
 import { Base } from './Base';
@@ -41,7 +41,7 @@ export class EventManager extends Base {
     let i: number = -1;
     let eventData: HashiEvent;
     while (++i < files.length) {
-      eventData = require(path.join(__dirname, `../../../../lib/${this.client.eventsDir}/${files[i]}`));
+      eventData = require(path.join(__dirname, `../../../../../lib/${this.client.eventsDir}/${files[i]}`));
 
       this.client.eventManager.eventsList.set(files[i].replace('.js', ''), eventData);
       events.push(eventData);
