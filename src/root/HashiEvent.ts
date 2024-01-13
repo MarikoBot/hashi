@@ -1,7 +1,7 @@
 // noinspection JSUnusedGlobalSymbols
 
-import { HashiClient } from '../root/HashiClient';
-import { Base } from './Base';
+import { HashiClient } from './HashiClient';
+import { Base } from '../base/Base';
 
 /**
  * The model of a callback function for an event.
@@ -20,7 +20,12 @@ export async function defaultEventCallback(): Promise<void> {
 /**
  * Represents an Event on client service.
  */
-export class HashiEvent extends Base {
+export class HashiEvent {
+  /**
+   * The client instance.
+   */
+  #client: HashiClient;
+
   /**
    * The event name.
    */
@@ -30,6 +35,14 @@ export class HashiEvent extends Base {
    * The callback function.
    */
   #callback: HashiEventCallbackFunction = defaultEventCallback;
+
+  /**
+   * Get the client instance.
+   * @returns The client instance.
+   */
+  get client(): HashiClient {
+    return this.#client;
+  }
 
   /**
    * Get the name.
@@ -49,11 +62,9 @@ export class HashiEvent extends Base {
 
   /**
    * The constructor of the event.
-   * @param client The client instance.
    * @param name The event name.
    */
-  constructor(client: HashiClient, name: string) {
-    super(client);
+  constructor(name: string) {
     this.#name = name;
   }
 
@@ -74,6 +85,16 @@ export class HashiEvent extends Base {
    */
   public setCallbackFunction(callback: HashiEventCallbackFunction): HashiEvent {
     if (typeof callback === 'function') this.#callback = callback;
+    return this;
+  }
+
+  /**
+   * Set the client instance.
+   * @param client The client instance to set.
+   * @returns The class instance.
+   */
+  public setClient(client: HashiClient): HashiEvent {
+    if (client instanceof HashiClient) this.#client = client;
     return this;
   }
 }

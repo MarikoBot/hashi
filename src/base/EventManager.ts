@@ -1,5 +1,5 @@
 import { Collection } from 'discord.js';
-import { HashiEvent } from './HashiEvent';
+import { HashiEvent } from '../root/HashiEvent';
 import { HashiClient } from '../root/HashiClient';
 import * as fs from 'fs';
 import * as path from 'path';
