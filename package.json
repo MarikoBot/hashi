@@ -1,7 +1,7 @@
 {
   "scope": "@elouannh",
   "name": "@elouannh/hashi",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A cool discord.js assistant to create bots in another way.",
   "keywords": [
     "discord",
