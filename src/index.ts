@@ -1,3 +1,5 @@
+export * from './Base';
+
 export * from './CommandManager';
 export * from './Constants';
 export * from './Context';
@@ -21,4 +23,5 @@ export * from './InterferingManager';
 export * from './LanguageManager';
 export * from './Logger';
 
+export * from './Service';
 export * from './ServiceManager';
