@@ -1,6 +1,6 @@
 import { HashiClient } from '../root/';
 import { Service } from './Service';
-import { AutomaticRoleInstance } from '../services';
+import { Classes } from '../services';
 import { Base } from './Base';
 /**
  * The object of all the services.
@@ -10,7 +10,7 @@ export interface ServicesMap {
     /**
      * The class that includes all the required tools to create an automatic role system.
      */
-    AutomaticRole: AutomaticRoleInstance;
+    AutomaticRole: Classes.AutomaticRoleInstance;
 }
 /**
  * A key for the service map.

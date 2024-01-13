@@ -12,6 +12,7 @@ import { HashiSlashCommand } from './HashiSlashCommand';
 import { DatabaseManager } from '../base/';
 import { ServiceManager } from '../base/';
 import { DATAMAP_INTENTS, DataMap, TypedDataMapStored } from '../base/';
+import { ConnectOptions } from 'mongoose';
 
 dotenv.config();
 
@@ -31,6 +32,27 @@ export interface HashiClientOptions extends ClientOptions {
    * The events folder directory.
    */
   eventsDir?: string;
+  /**
+   * The services folder directory.
+   */
+  servicesDir?: string;
+  /**
+   * The mongoose connection information.
+   */
+  mongoose: {
+    /**
+     * The database name. Not useful to change it (only for MongoDB). Default: main.
+     */
+    dbName?: string;
+    /**
+     * The connection URI.
+     */
+    connectionURI: string;
+    /**
+     * The options for the connection.
+     */
+    connectOptions: ConnectOptions;
+  };
 }
 
 /**
@@ -68,7 +90,7 @@ export class HashiClient {
   readonly #databaseManager: DatabaseManager = new DatabaseManager(this);
 
   /**
-   * The services manager for accessing different services (automatic roles, etc).
+   * The services manager for accessing different services (automatic roles, etc.).
    */
   readonly #serviceManager: ServiceManager = new ServiceManager(this);
 
@@ -141,8 +163,8 @@ export class HashiClient {
   }
 
   /**
-   * Get the services manager for accessing different services (automatic roles, etc).
-   * @returns The services manager for accessing different services (automatic roles, etc).
+   * Get the services manager for accessing different services (automatic roles, etc.).
+   * @returns The services manager for accessing different services (automatic roles, etc.).
    */
   get serviceManager(): ServiceManager {
     return this.#serviceManager;

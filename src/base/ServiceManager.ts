@@ -1,8 +1,8 @@
 // noinspection JSUnusedGlobalSymbols
 
 import { HashiClient } from '../root/';
-import { ClientEventsKey, OnEventEmittedMethods, Service, ServiceFunctionPackage } from './Service';
-import { AutomaticRoleInstance } from '../services';
+import { ClientEventsKey, Service } from './Service';
+import { Classes } from '../services';
 import { Base } from './Base';
 
 /**
@@ -14,7 +14,7 @@ export interface ServicesMap {
   /**
    * The class that includes all the required tools to create an automatic role system.
    */
-  AutomaticRole: AutomaticRoleInstance;
+  AutomaticRole: Classes.AutomaticRoleInstance;
 }
 
 /**
@@ -64,7 +64,7 @@ export class ServiceManager extends Base {
    * @returns A service instance.
    */
   public create(serviceName: string, dataMapName: string): Service {
-    const service: Service = new Service(this.client, serviceName, dataMapName);
+    const service: Service = new Service(this.client, '0.1.0-experimental', serviceName, dataMapName);
     this.#services[serviceName] = service;
 
     return service;
@@ -84,7 +84,7 @@ export class ServiceManager extends Base {
 
       switch (serviceName) {
         case 'AutomaticRole':
-          this.services.AutomaticRole = new AutomaticRoleInstance(this.client);
+          this.services.AutomaticRole = new Classes.AutomaticRoleInstance(this.client);
           return this.services.AutomaticRole;
         default:
           return null;
@@ -97,7 +97,7 @@ export class ServiceManager extends Base {
    * @returns Nothing.
    */
   public launchLinkedEvents(): void {
-    let clientEventsList: ClientEventsKey[];
+    let clientEventsList: ClientEventsKey[] = [];
 
     let i: number = -1;
     let j: number = -1;
