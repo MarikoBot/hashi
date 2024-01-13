@@ -203,8 +203,8 @@ export class HashiClient {
 
     this.#processName = options.processName || '`Who I am ?`';
     this.#logger = new Logger(this.processName);
-    this.#commandsDir = options.commandsDir;
-    this.#eventsDir = options.eventsDir;
+    this.#commandsDir = options.commandsDir || 'commands';
+    this.#eventsDir = options.eventsDir || 'events';
   }
 
   /**
