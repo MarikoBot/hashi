@@ -5,6 +5,7 @@ import { InterferingManager } from './InterferingManager';
 import { HashiClient } from './HashiClient';
 import { HashiSlashSubcommand } from './HashiSlashSubcommand';
 import { HashiSlashSubcommandGroup } from './HashiSlashSubcommandGroup';
+import { Base } from './Base';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -13,10 +14,6 @@ import * as path from 'path';
  */
 export interface CommandBlock {
   /**
-   * The command.
-   */
-  command: HashiSlashCommand;
-  /**
    * The subcommand group if there is one.
    */
   subcommandGroup: HashiSlashSubcommandGroup;
@@ -24,6 +21,10 @@ export interface CommandBlock {
    * The subcommand if there is one.
    */
   subcommand: HashiSlashSubcommand;
+  /**
+   * The command.
+   */
+  command: HashiSlashCommand;
 }
 
 /**
@@ -34,49 +35,44 @@ export type CommandBlockValue = CommandBlock[keyof CommandBlock];
 /**
  * Represents the command manager of the client.
  */
-export class CommandManager {
+export class CommandManager extends Base {
   /**
-   * The client instance.
+   * The cool downs' manager instance, to get access to the different delays of the current command.
    */
-  readonly #client: HashiClient;
-
-  /**
-   * The cool down manager instance, to get access to the different delays of the current command.
-   */
-  readonly #coolDowns: CoolDownManager;
+  readonly #coolDowns: CoolDownManager = new CoolDownManager();
 
   /**
    * The interfering manager instance, to have access to the different executing commands.
    */
-  readonly #interfering: InterferingManager;
+  readonly #interfering: InterferingManager = new InterferingManager();
 
   /**
-   * The collection of the commands.
+   * The list of commands.
    */
-  readonly #commandsList: Collection<string, HashiSlashCommand> = new Collection();
+  readonly #commandsList: Collection<string, HashiSlashCommand> = new Collection<string, HashiSlashCommand>();
 
   /**
-   * Get the client instance.
-   * @returns The client instance.
-   */
-  get client(): HashiClient {
-    return this.#client;
-  }
-
-  /**
-   * Get the cool down manager instance.
-   * @returns The cool down manager instance.
+   * Get the cool downs' manager.
+   * @returns The cool downs' manager.
    */
   get coolDowns(): CoolDownManager {
     return this.#coolDowns;
   }
 
   /**
-   * Get the interfering manager instance.
-   * @returns The interfering manager instance.
+   * Get the interfering manager.
+   * @returns The interfering manager.
    */
   get interfering(): InterferingManager {
     return this.#interfering;
+  }
+
+  /**
+   * Get the list of commands.
+   * @returns The list of commands.
+   */
+  get commandsList(): Collection<string, HashiSlashCommand> {
+    return this.#commandsList;
   }
 
   /**
@@ -84,9 +80,7 @@ export class CommandManager {
    * @param client The client instance.
    */
   constructor(client: HashiClient) {
-    this.#client = client;
-    this.#coolDowns = new CoolDownManager();
-    this.#interfering = new InterferingManager();
+    super(client);
   }
 
   /**
@@ -95,8 +89,8 @@ export class CommandManager {
    * @param commandData The options passed (name, command options, command instance).
    * @returns The command manager instance (this).
    */
-  public add(commandData: HashiSlashCommand): CommandManager {
-    this.#commandsList.set(commandData.name, commandData);
+  public addCommand(commandData: HashiSlashCommand): CommandManager {
+    this.commandsList.set(commandData.name, commandData);
     return this;
   }
 
@@ -106,7 +100,7 @@ export class CommandManager {
    * @returns The found command instance, or undefined.
    */
   public getCommand(interaction: ChatInputCommandInteraction): CommandBlock {
-    let command: HashiSlashCommand = this.#commandsList.get(interaction.commandName);
+    let command: HashiSlashCommand = this.commandsList.get(interaction.commandName);
 
     const commandSubcommandGroupOption: string = command.hashiSubcommandsGroups.length
       ? interaction.options.getSubcommandGroup()
@@ -155,7 +149,7 @@ export class CommandManager {
       commandData = require(path.join(__dirname, `../../../../lib/${this.client.commandsDir}/${files[i]}`));
       commandData.setClient(this.client);
 
-      this.client.commandManager.#commandsList.set(files[i].replace('.js', ''), commandData);
+      this.client.commandManager.commandsList.set(files[i].replace('.js', ''), commandData);
 
       const discordDataOnly: HashiSlashCommand = Object.assign(new HashiSlashCommand('default'), commandData);
       discordDataOnly.clearClient();

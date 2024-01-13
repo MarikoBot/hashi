@@ -25,6 +25,7 @@
 import { Model, Schema, SchemaDefinition, Document } from 'mongoose';
 import { HashiClient } from './HashiClient';
 import { DataMapEntry } from './DataMapEntry';
+import { Base } from './Base';
 /**
  * The type that represents a document for the hashi data map.
  */
@@ -60,13 +61,8 @@ export declare enum DATAMAP_INTENTS {
 /**
  * The main class. Represents a data map technology.
  */
-export declare class DataMap<DataStructure extends TypedDataMapStored, EntryClass extends new (...args: any[]) => DataMapEntry<DataStructure> = typeof DataMapEntry> {
+export declare class DataMap<DataStructure extends TypedDataMapStored, EntryClass extends new (...args: any[]) => DataMapEntry<DataStructure> = typeof DataMapEntry> extends Base {
     #private;
-    /**
-     * Get the client.
-     * @returns The client.
-     */
-    get client(): HashiClient;
     /**
      * Get the data map name.
      * @returns The name.
@@ -96,24 +92,14 @@ export declare class DataMap<DataStructure extends TypedDataMapStored, EntryClas
      * Get the data map.
      * @returns The data map.
      */
-    get collection(): Model<DataMapDefinition<SchemaDefinition>>;
-    /**
-     * Get the data map as mongo model.
-     * @returns The data map as mongo model.
-     */
-    get model(): DataMapDefinition<SchemaDefinition>['model'];
+    get model(): Model<DataMapDefinition<SchemaDefinition>>;
     /**
      * The constructor of a data map.
+     * @param client The client instance.
      * @param name The name of the collection.
      * @param entryClass The entry class.
      */
-    constructor(name: string, entryClass?: EntryClass);
-    /**
-     * Set the client.
-     * @param client The client to set.
-     * @returns The class instance.
-     */
-    setClient(client: HashiClient): DataMap<DataStructure, EntryClass>;
+    constructor(client: HashiClient, name: string, entryClass?: EntryClass);
     /**
      * Set the data map name.
      * @param name The data map name to set.

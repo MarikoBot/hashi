@@ -1,5 +1,5 @@
 import { Guild, Snowflake } from 'discord.js';
-import { Service } from './Service';
+import { Service } from '../Service';
 import { DataMapDefinition } from '../DataMap';
 import { HashiClient } from '../HashiClient';
 /**
@@ -23,7 +23,7 @@ export declare const AutomaticRoleConfiguration: DataMapDefinition<typeof Automa
 /**
  * The class that includes all the required tools to create an automatic role system.
  */
-export declare class AutomaticRoleInstance extends Service<[any]> {
+export declare class AutomaticRoleInstance extends Service {
     #private;
     /**
      * Get the guild.

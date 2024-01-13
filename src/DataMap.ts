@@ -3,6 +3,7 @@
 import { model, Model, Schema, SchemaDefinition, Document } from 'mongoose';
 import { HashiClient } from './HashiClient';
 import { DataMapEntry } from './DataMapEntry';
+import { Base } from './Base';
 
 /**
  * The type that represents a document for the hashi data map.
@@ -49,12 +50,7 @@ export enum DATAMAP_INTENTS {
 export class DataMap<
   DataStructure extends TypedDataMapStored,
   EntryClass extends new (...args: any[]) => DataMapEntry<DataStructure> = typeof DataMapEntry,
-> {
-  /**
-   * The client instance.
-   */
-  #client: HashiClient;
-
+> extends Base {
   /**
    * The name of the data map.
    */
@@ -86,17 +82,9 @@ export class DataMap<
   #intents: DATAMAP_INTENTS[] = [];
 
   /**
-   * The collection/model or the schema.
+   * The collection/model of the schema.
    */
-  readonly #collection: Model<DataMapDefinition<SchemaDefinition>>;
-
-  /**
-   * Get the client.
-   * @returns The client.
-   */
-  get client(): HashiClient {
-    return this.#client;
-  }
+  readonly #model: Model<DataMapDefinition<SchemaDefinition>>;
 
   /**
    * Get the data map name.
@@ -142,38 +130,26 @@ export class DataMap<
    * Get the data map.
    * @returns The data map.
    */
-  get collection(): Model<DataMapDefinition<SchemaDefinition>> {
-    return this.#collection;
-  }
-
-  /**
-   * Get the data map as mongo model.
-   * @returns The data map as mongo model.
-   */
-  get model(): DataMapDefinition<SchemaDefinition>['model'] {
-    return this.definition.model;
+  get model(): Model<DataMapDefinition<SchemaDefinition>> {
+    return this.#model;
   }
 
   /**
    * The constructor of a data map.
+   * @param client The client instance.
    * @param name The name of the collection.
    * @param entryClass The entry class.
    */
-  constructor(name: string, entryClass: EntryClass = <EntryClass>(<unknown>DataMapEntry<DataStructure>)) {
+  constructor(
+    client: HashiClient,
+    name: string,
+    entryClass: EntryClass = <EntryClass>(<unknown>DataMapEntry<DataStructure>),
+  ) {
+    super(client);
     this.#name = name;
     this.#entryClass = entryClass;
 
     this.#definition.model = model<SchemaDefinition & Document>(this.name, <Schema>this.#definition.schema);
-  }
-
-  /**
-   * Set the client.
-   * @param client The client to set.
-   * @returns The class instance.
-   */
-  public setClient(client: HashiClient): DataMap<DataStructure, EntryClass> {
-    if (client instanceof HashiClient) this.#client = client;
-    return this;
   }
 
   /**

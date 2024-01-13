@@ -3,28 +3,16 @@ import { HashiEvent } from './HashiEvent';
 import { HashiClient } from './HashiClient';
 import * as fs from 'fs';
 import * as path from 'path';
+import { Base } from './Base';
 
 /**
  * Represents the event manager for the client service.
  */
-export class EventManager {
-  /**
-   * The client instance.
-   */
-  readonly #client: HashiClient;
-
+export class EventManager extends Base {
   /**
    * The collection of the events.
    */
   readonly #eventsList: Collection<string, HashiEvent> = new Collection();
-
-  /**
-   * Get the client instance.
-   * @returns The client instance.
-   */
-  get client(): HashiClient {
-    return this.#client;
-  }
 
   /**
    * Get the events list.
@@ -39,7 +27,7 @@ export class EventManager {
    * @param client The client instance.
    */
   constructor(client: HashiClient) {
-    this.#client = client;
+    super(client);
   }
 
   /**

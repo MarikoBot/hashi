@@ -1,21 +1,14 @@
 // noinspection JSUnusedGlobalSymbols
 
 import { HashiClient } from './HashiClient';
-import {
-  ClientEventsKey,
-  Service,
-  ServiceFunctionPackage,
-  ServicePublicAttributesRecord,
-  ServicePublicMethodsRecord,
-  ServiceTypesBase,
-} from './services/Service';
+import { ClientEventsKey, Service, ServiceFunctionPackage } from './Service';
 import { AutomaticRoleInstance } from './services';
 
 /**
  * The object of all the services.
  */
 export interface ServicesMap {
-  [serviceName: string]: Service<ServiceTypesBase>;
+  [serviceName: string]: Service;
 
   /**
    * The class that includes all the required tools to create an automatic role system.
@@ -80,23 +73,10 @@ export class ServiceManager {
    * Create a new instance of a service. Methods and attributes initializing possible.
    * @param serviceName The name of the service.
    * @param dataMapName The name of the data map.
-   * @param methods The list of methods for the class.
-   * @param attributes The list of attributes for the class.
    * @returns A service instance.
    */
-  public create<CreationTypes extends ServiceTypesBase>(
-    serviceName: string,
-    dataMapName: string,
-    methods: ServicePublicMethodsRecord<CreationTypes> = {},
-    attributes: ServicePublicAttributesRecord<CreationTypes> = {},
-  ): Service<CreationTypes> {
-    const service: Service<CreationTypes> = new Service<CreationTypes>(
-      this.client,
-      serviceName,
-      dataMapName,
-      methods,
-      attributes,
-    );
+  public create(serviceName: string, dataMapName: string): Service {
+    const service: Service = new Service(this.client, serviceName, dataMapName);
     this.#services[serviceName] = service;
 
     return service;
@@ -104,16 +84,23 @@ export class ServiceManager {
 
   /**
    * Enable a predefined service.
-   * @param serviceName The name of the service to enable.
+   * @param serviceNames The name of the service to enable.
    * @returns The service instance.
    */
-  public enable(serviceName: ServicesMapKey): ServicesMapValue {
-    switch (serviceName) {
-      case 'AutomaticRole':
-        this.services.AutomaticRole = new AutomaticRoleInstance(this.client);
-        return this.services.AutomaticRole;
-      default:
-        return null;
+  public enable(...serviceNames: ServicesMapKey[]): ServicesMapValue {
+    let i: number = -1;
+    let serviceName: ServicesMapKey;
+
+    while (++i < serviceNames.length) {
+      serviceName = serviceNames[i];
+
+      switch (serviceName) {
+        case 'AutomaticRole':
+          this.services.AutomaticRole = new AutomaticRoleInstance(this.client);
+          return this.services.AutomaticRole;
+        default:
+          return null;
+      }
     }
   }
 
@@ -128,7 +115,7 @@ export class ServiceManager {
     let i: number = -1;
     let j: number = -1;
     let serviceKey: string;
-    let service: Service<ServiceTypesBase>;
+    let service: Service;
 
     while (++i < serviceKeys.length) {
       serviceKey = serviceKeys[i];

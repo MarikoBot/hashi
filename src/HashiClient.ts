@@ -102,31 +102,12 @@ export class HashiClient {
   readonly #processName: string;
 
   /**
-   * The commands folder directory. How to export your commands?
-   * @example
-   * // If the events directory has been set to "commands":
-   * // File ./commands/ping.ts
-   * import {HashiSlashCommand} from '@elouannh/hashi';
-   *
-   * const command: HashiSlashCommand = new HashiSlashCommand('ping')
-   *   .setDescription('Replies "pong"!')
-   *   .callbackFunction(async (client, interaction, context) => context.reply('pong'));
-   *
-   * export default command;
+   * The commands folder directory.
    */
   readonly #commandsDir: string = 'commands';
 
   /**
-   * The events folder directory. How to export your events?
-   * @example
-   * // If the events directory has been set to "events":
-   * // File ./events/ready.ts
-   * import {Event} from '@elouannh/hashi';
-   *
-   * const event: Event = new Event('ready')
-   *   .callbackFunction(async (client) => console.log('client is ready!'));
-   *
-   * export default event;
+   * The events folder directory.
    */
   readonly #eventsDir: string = 'events';
 

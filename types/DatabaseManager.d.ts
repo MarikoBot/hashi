@@ -25,6 +25,7 @@
 import { HashiClient } from './HashiClient';
 import { ConnectOptions } from 'mongoose';
 import { DataMap, TypedDataMapStored } from './DataMap';
+import { Base } from './Base';
 /**
  * The type that includes all the data maps of the database.
  */
@@ -34,13 +35,13 @@ export type DataMapsObj = {
 /**
  * The class who manages the database of the project.
  */
-export declare class DatabaseManager {
+export declare class DatabaseManager extends Base {
     #private;
     /**
-     * Get the client instance.
-     * @returns The client instance.
+     * Get the database name.
+     * @returns The database name.
      */
-    get client(): HashiClient;
+    get dbName(): string;
     /**
      * Get the connection URI.
      * @returns The connection URI.
@@ -52,25 +53,21 @@ export declare class DatabaseManager {
      */
     get connectOptions(): ConnectOptions;
     /**
-     * Get the database name.
-     * @returns The database name.
-     */
-    get dbName(): string;
-    /**
      * Get the data maps.
      * @returns The data maps.
      */
     get dataMaps(): DataMapsObj;
     /**
-     * Build and save a data map.
-     * @param name The name of the collection.
-     */
-    createDataMap(name: string): DataMap<TypedDataMapStored>;
-    /**
      * The constructor of the class.
      * @param client The client instance.
      */
     constructor(client: HashiClient);
+    /**
+     * Set the database name.
+     * @param dbName The database name to set.
+     * @returns The class instance.
+     */
+    setDbName(dbName: string): DatabaseManager;
     /**
      * Set the connection URI.
      * @param connectionURI The connection URI to set.
@@ -84,11 +81,10 @@ export declare class DatabaseManager {
      */
     setConnectOptions(connectOptions: ConnectOptions): DatabaseManager;
     /**
-     * Set the database name.
-     * @param dbName The database name to set.
-     * @returns The class instance.
+     * Build and save a data map.
+     * @param name The name of the collection.
      */
-    setDbName(dbName: string): DatabaseManager;
+    createDataMap(name: string): DataMap<TypedDataMapStored>;
     /**
      * Connect the database to the mongodb cluster.
      * @param connectionURI The connection URI.

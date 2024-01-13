@@ -1,4 +1,5 @@
 import { HashiClient } from './HashiClient';
+import { Base } from './Base';
 /**
  * The model of a callback function for an event.
  * @param args The command args.
@@ -12,13 +13,8 @@ export declare function defaultEventCallback(): Promise<void>;
 /**
  * Represents an Event on client service.
  */
-export declare class HashiEvent {
+export declare class HashiEvent extends Base {
     #private;
-    /**
-     * Get the client.
-     * @returns The client.
-     */
-    get client(): HashiClient;
     /**
      * Get the name.
      * @returns The name.
@@ -31,15 +27,10 @@ export declare class HashiEvent {
     get callback(): HashiEventCallbackFunction;
     /**
      * The constructor of the event.
+     * @param client The client instance.
      * @param name The event name.
      */
-    constructor(name: string);
-    /**
-     * Set the client for the event to be successfully executed.
-     * @param client The client instance.
-     * @returns The class instance.
-     */
-    setClient(client: HashiClient): HashiEvent;
+    constructor(client: HashiClient, name: string);
     /**
      * Set the name.
      * @param name The name to set.

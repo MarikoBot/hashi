@@ -1,7 +1,7 @@
 // noinspection JSUnusedGlobalSymbols
 
 import { Guild, GuildMember, Snowflake } from 'discord.js';
-import { Service } from './Service';
+import { Service } from '../Service';
 import { DataMapDefinition } from '../DataMap';
 import { HashiClient } from '../HashiClient';
 import { Schema } from 'mongoose';
@@ -46,7 +46,7 @@ async function main(member: GuildMember, service: AutomaticRoleInstance): Promis
 /**
  * The class that includes all the required tools to create an automatic role system.
  */
-export class AutomaticRoleInstance extends Service<[any]> {
+export class AutomaticRoleInstance extends Service {
   /**
    * The guild targeted by the service.
    */

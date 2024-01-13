@@ -1,4 +1,5 @@
 import { HashiClient } from './HashiClient';
+import { Base } from './Base';
 
 /**
  * The id of a language.
@@ -26,26 +27,13 @@ export const Languages: Record<Language, LanguageContent> = {
 /**
  * The class who manages the translations in the project.
  */
-export class LanguageManager {
-  /**
-   * The client instance.
-   */
-  readonly #client: HashiClient;
-
-  /**
-   * Get the client instance.
-   * @returns The client instance.
-   */
-  get client(): HashiClient {
-    return this.#client;
-  }
-
+export class LanguageManager extends Base {
   /**
    * The constructor of the language manager.
    * @param client The client instance.
    */
   constructor(client: HashiClient) {
-    this.#client = client;
+    super(client);
   }
 
   /**

@@ -547,7 +547,7 @@ export class HashiSlashBaseCommand extends SlashCommandBuilder {
     if (!commandBlock.subcommand && !commandBlock.command) return COMMAND_END.ERROR;
     const command: HashiSlashSubcommand | HashiSlashCommand = commandBlock.subcommand || commandBlock.command;
 
-    let ctx: Context = new Context({
+    let ctx: Context = new Context(client, {
       channel: interaction.channel,
       command,
       interaction,

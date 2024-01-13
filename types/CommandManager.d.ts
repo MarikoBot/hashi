@@ -1,18 +1,15 @@
-import { ChatInputCommandInteraction } from 'discord.js';
+import { ChatInputCommandInteraction, Collection } from 'discord.js';
 import { HashiSlashCommand } from './HashiSlashCommand';
 import { CoolDownManager } from './CoolDownManager';
 import { InterferingManager } from './InterferingManager';
 import { HashiClient } from './HashiClient';
 import { HashiSlashSubcommand } from './HashiSlashSubcommand';
 import { HashiSlashSubcommandGroup } from './HashiSlashSubcommandGroup';
+import { Base } from './Base';
 /**
  * A triplet returned when the client transforms an interaction into a callable class group.
  */
 export interface CommandBlock {
-    /**
-     * The command.
-     */
-    command: HashiSlashCommand;
     /**
      * The subcommand group if there is one.
      */
@@ -21,6 +18,10 @@ export interface CommandBlock {
      * The subcommand if there is one.
      */
     subcommand: HashiSlashSubcommand;
+    /**
+     * The command.
+     */
+    command: HashiSlashCommand;
 }
 /**
  * The type that represents an element of CommandBlock.
@@ -29,23 +30,23 @@ export type CommandBlockValue = CommandBlock[keyof CommandBlock];
 /**
  * Represents the command manager of the client.
  */
-export declare class CommandManager {
+export declare class CommandManager extends Base {
     #private;
     /**
-     * Get the client instance.
-     * @returns The client instance.
-     */
-    get client(): HashiClient;
-    /**
-     * Get the cool down manager instance.
-     * @returns The cool down manager instance.
+     * Get the cool downs' manager.
+     * @returns The cool downs' manager.
      */
     get coolDowns(): CoolDownManager;
     /**
-     * Get the interfering manager instance.
-     * @returns The interfering manager instance.
+     * Get the interfering manager.
+     * @returns The interfering manager.
      */
     get interfering(): InterferingManager;
+    /**
+     * Get the list of commands.
+     * @returns The list of commands.
+     */
+    get commandsList(): Collection<string, HashiSlashCommand>;
     /**
      * The constructor of the command manager.
      * @param client The client instance.
@@ -57,7 +58,7 @@ export declare class CommandManager {
      * @param commandData The options passed (name, command options, command instance).
      * @returns The command manager instance (this).
      */
-    add(commandData: HashiSlashCommand): CommandManager;
+    addCommand(commandData: HashiSlashCommand): CommandManager;
     /**
      * Get a command from the cache with the name.
      * @param interaction The interaction.

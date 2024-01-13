@@ -1,6 +1,8 @@
 import { BaseGuildTextChannel, BaseGuildVoiceChannel, ButtonInteraction, ChatInputCommandInteraction, InteractionReplyOptions, InteractionResponse, Message, ThreadChannel, User } from 'discord.js';
 import { Language, LanguageContentKey } from './LanguageManager';
 import { CommandBlockValue } from './CommandManager';
+import { Base } from './Base';
+import { HashiClient } from './HashiClient';
 /**
  * The data extracted structure.
  */
@@ -23,13 +25,17 @@ export interface ContextOptions {
      */
     languageId?: Language;
     /**
-     * The channel where the action occurs.
-     */
-    channel: ContextChannel;
-    /**
      * The command associated with the context.
      */
     command: CommandBlockValue;
+    /**
+     * The users implicated in the context/action.
+     */
+    users: User[];
+    /**
+     * The channel where the action occurs.
+     */
+    channel: ContextChannel;
     /**
      * The interaction, if there is one.
      */
@@ -37,16 +43,12 @@ export interface ContextOptions {
     /**
      * The interaction button, if there is one.
      */
-    button?: ButtonInteraction;
-    /**
-     * The users implicated in the context/action.
-     */
-    users: User[];
+    buttonInteraction?: ButtonInteraction;
 }
 /**
  * The class who manages the front part of an interaction with Discord and the user.
  */
-export declare class Context {
+export declare class Context extends Base {
     #private;
     /**
      * Get the language id.
@@ -54,15 +56,20 @@ export declare class Context {
      */
     get languageId(): Language;
     /**
-     * Get the channel.
-     * @returns The channel.
-     */
-    get channel(): ContextChannel;
-    /**
      * Get the command.
      * @returns The command.
      */
     get command(): CommandBlockValue;
+    /**
+     * Get the users.
+     * @returns The users.
+     */
+    get users(): User[];
+    /**
+     * Get the channel.
+     * @returns The channel.
+     */
+    get channel(): ContextChannel;
     /**
      * Get the interaction.
      * @returns The interaction.
@@ -74,15 +81,11 @@ export declare class Context {
      */
     get buttonInter(): ButtonInteraction;
     /**
-     * Get the users.
-     * @returns The users.
-     */
-    get users(): User[];
-    /**
      * The constructor of the context.
+     * @param client The client instance.
      * @param options The context options.
      */
-    constructor(options: ContextOptions);
+    constructor(client: HashiClient, options: ContextOptions);
     /**
      * Set the language id.
      * @param languageId The language id to set.
@@ -90,29 +93,11 @@ export declare class Context {
      */
     setLanguageId(languageId: Language): Context;
     /**
-     * Set the channel.
-     * @param channel The channel to set.
-     * @returns The class instance.
-     */
-    setChannel(channel: ContextChannel): Context;
-    /**
      * Set the command.
-     * @param command The command to set.
+     * @param commandBlock The command block to set.
      * @returns The class instance.
      */
-    setCommand(command: CommandBlockValue): Context;
-    /**
-     * Set the interaction.
-     * @param interaction The interaction to set.
-     * @returns The class instance.
-     */
-    setInteraction(interaction: ChatInputCommandInteraction): Context;
-    /**
-     * Set the button interaction.
-     * @param buttonInter The button interaction to set.
-     * @returns The class instance.
-     */
-    setButtonInter(buttonInter: ButtonInteraction): Context;
+    setCommand(commandBlock: CommandBlockValue): Context;
     /**
      * Add a user.
      * @param user The user to add.
@@ -125,6 +110,30 @@ export declare class Context {
      * @returns The class instance.
      */
     removeUser(user: User): Context;
+    /**
+     * Set the users.
+     * @param users The users to set.
+     * @returns The class instance.
+     */
+    setUsers(users: User[]): Context;
+    /**
+     * Set the channel.
+     * @param channel The channel to set.
+     * @returns The class instance.
+     */
+    setChannel(channel: ContextChannel): Context;
+    /**
+     * Set the interaction.
+     * @param interaction The interaction to set.
+     * @returns The class instance.
+     */
+    setInteraction(interaction: ChatInputCommandInteraction): Context;
+    /**
+     * Set the button interaction.
+     * @param buttonInter The button interaction to set.
+     * @returns The class instance.
+     */
+    setButtonInteraction(buttonInter: ButtonInteraction): Context;
     /**
      * Reply to an interaction.
      * @param messageData The message data to send (Discord.<BaseMessageOptions>).

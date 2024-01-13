@@ -3,6 +3,7 @@
 import { HashiClient } from './HashiClient';
 import { connect, ConnectOptions } from 'mongoose';
 import { DataMap, TypedDataMapStored } from './DataMap';
+import { Base } from './Base';
 
 /**
  * The type that includes all the data maps of the database.
@@ -12,38 +13,33 @@ export type DataMapsObj = { [dmName: string]: DataMap<any> };
 /**
  * The class who manages the database of the project.
  */
-export class DatabaseManager {
-  /**
-   * The client instance.
-   */
-  readonly #client: HashiClient;
-
-  /**
-   * The connection URI if needed for the MongoDB technology.
-   */
-  #connectionURI: string;
-
-  /**
-   * The options for the MongoDB technology if needed.
-   */
-  #connectOptions: ConnectOptions;
-
+export class DatabaseManager extends Base {
   /**
    * The database name. Not useful to change it (only for MongoDB). Default: main.
    */
   #dbName: string = 'main';
 
   /**
-   * The list of dataMaps (MongoDB).
+   * The connection URI.
+   */
+  #connectionURI: string;
+
+  /**
+   * The options for the connection.
+   */
+  #connectOptions: ConnectOptions;
+
+  /**
+   * The list of dataMaps.
    */
   #dataMaps: DataMapsObj = {};
 
   /**
-   * Get the client instance.
-   * @returns The client instance.
+   * Get the database name.
+   * @returns The database name.
    */
-  get client(): HashiClient {
-    return this.#client;
+  get dbName(): string {
+    return this.#dbName;
   }
 
   /**
@@ -63,14 +59,6 @@ export class DatabaseManager {
   }
 
   /**
-   * Get the database name.
-   * @returns The database name.
-   */
-  get dbName(): string {
-    return this.#dbName;
-  }
-
-  /**
    * Get the data maps.
    * @returns The data maps.
    */
@@ -79,26 +67,21 @@ export class DatabaseManager {
   }
 
   /**
-   * Build and save a data map.
-   * @param name The name of the collection.
-   */
-  public createDataMap(name: string): DataMap<TypedDataMapStored> {
-    let dataMap: DataMap<TypedDataMapStored>;
-
-    dataMap = new DataMap<TypedDataMapStored>(name);
-
-    dataMap.setClient(this.client);
-    this.dataMaps[name] = dataMap;
-
-    return dataMap;
-  }
-
-  /**
    * The constructor of the class.
    * @param client The client instance.
    */
   constructor(client: HashiClient) {
-    this.#client = client;
+    super(client);
+  }
+
+  /**
+   * Set the database name.
+   * @param dbName The database name to set.
+   * @returns The class instance.
+   */
+  public setDbName(dbName: string): DatabaseManager {
+    if (typeof dbName === 'string') this.#dbName = dbName;
+    return this;
   }
 
   /**
@@ -122,13 +105,13 @@ export class DatabaseManager {
   }
 
   /**
-   * Set the database name.
-   * @param dbName The database name to set.
-   * @returns The class instance.
+   * Build and save a data map.
+   * @param name The name of the collection.
    */
-  public setDbName(dbName: string): DatabaseManager {
-    if (typeof dbName === 'string') this.#dbName = dbName;
-    return this;
+  public createDataMap(name: string): DataMap<TypedDataMapStored> {
+    const dataMap: DataMap<TypedDataMapStored> = new DataMap<TypedDataMapStored>(this.client, name);
+    this.dataMaps[name] = dataMap;
+    return dataMap;
   }
 
   /**
