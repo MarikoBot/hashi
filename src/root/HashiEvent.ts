@@ -1,7 +1,6 @@
 // noinspection JSUnusedGlobalSymbols
 
 import { HashiClient } from './HashiClient';
-import { Base } from '../base/Base';
 
 /**
  * The model of a callback function for an event.

@@ -1,4 +1,4 @@
-import { HashiClient } from '../root/HashiClient';
+import { HashiClient } from '../root/';
 import { Service } from './Service';
 import { AutomaticRoleInstance } from '../services';
 import { Base } from './Base';

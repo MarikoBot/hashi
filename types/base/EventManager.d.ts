@@ -1,6 +1,6 @@
 import { Collection } from 'discord.js';
-import { HashiEvent } from '../root/HashiEvent';
-import { HashiClient } from '../root/HashiClient';
+import { HashiEvent } from '../root/';
+import { HashiClient } from '../root/';
 import { Base } from './Base';
 /**
  * Represents the event manager for the client service.

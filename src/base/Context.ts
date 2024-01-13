@@ -14,7 +14,7 @@ import {
 import { Language, LanguageContentKey } from './LanguageManager';
 import { CommandBlockValue } from './CommandManager';
 import { Base } from './Base';
-import { HashiClient } from '../root/HashiClient';
+import { HashiClient } from '../root';
 
 /**
  * The data extracted structure.

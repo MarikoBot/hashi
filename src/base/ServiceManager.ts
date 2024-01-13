@@ -1,6 +1,6 @@
 // noinspection JSUnusedGlobalSymbols
 
-import { HashiClient } from '../root/HashiClient';
+import { HashiClient } from '../root/';
 import { ClientEventsKey, OnEventEmittedMethods, Service, ServiceFunctionPackage } from './Service';
 import { AutomaticRoleInstance } from '../services';
 import { Base } from './Base';

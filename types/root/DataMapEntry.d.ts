@@ -1,4 +1,4 @@
-import { DataMap, TypedDataMapStored } from '../base/DataMap';
+import { DataMap, TypedDataMapStored } from '../base/';
 /**
  * The base class that represents a data map class object.
  * Every object into the data map will be passed in this class to improve manipulation.

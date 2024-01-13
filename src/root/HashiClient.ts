@@ -3,15 +3,15 @@
 import { ActivityType, ChatInputCommandInteraction, Client, ClientOptions, PresenceData } from 'discord.js';
 import { Logger } from './Logger';
 import * as dotenv from 'dotenv';
-import { CommandBlock, CommandManager } from '../base/CommandManager';
-import { EventManager } from '../base/EventManager';
-import { LanguageManager } from '../base/LanguageManager';
+import { CommandBlock, CommandManager } from '../base/';
+import { EventManager } from '../base/';
+import { LanguageManager } from '../base/';
 import { Constants } from './Constants';
 import { COMMAND_END } from './HashiSlashBaseCommand';
 import { HashiSlashCommand } from './HashiSlashCommand';
-import { DatabaseManager } from '../base/DatabaseManager';
-import { ServiceManager } from '../base/ServiceManager';
-import { DATAMAP_INTENTS, DataMap, TypedDataMapStored } from '../base/DataMap';
+import { DatabaseManager } from '../base/';
+import { ServiceManager } from '../base/';
+import { DATAMAP_INTENTS, DataMap, TypedDataMapStored } from '../base/';
 
 dotenv.config();
 

@@ -22,7 +22,7 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { HashiClient } from '../root/HashiClient';
+import { HashiClient } from '../root/';
 import { ClientEvents } from 'discord.js';
 import { DataMap, DataMapDefinition, TypedDataMapStored } from './DataMap';
 import { SchemaDefinition } from 'mongoose';

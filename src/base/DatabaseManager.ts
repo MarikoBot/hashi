@@ -1,6 +1,6 @@
 // noinspection JSUnusedGlobalSymbols
 
-import { HashiClient } from '../root/HashiClient';
+import { HashiClient } from '../root/';
 import { connect, ConnectOptions } from 'mongoose';
 import { DataMap, TypedDataMapStored } from './DataMap';
 import { Base } from './Base';

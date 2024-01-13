@@ -22,7 +22,7 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { HashiClient } from '../root/HashiClient';
+import { HashiClient } from '../root/';
 import { ConnectOptions } from 'mongoose';
 import { DataMap, TypedDataMapStored } from './DataMap';
 import { Base } from './Base';

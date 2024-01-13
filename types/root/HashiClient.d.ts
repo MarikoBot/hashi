@@ -1,12 +1,12 @@
 import { ChatInputCommandInteraction, Client, ClientOptions } from 'discord.js';
 import { Logger } from './Logger';
-import { CommandManager } from '../base/CommandManager';
-import { EventManager } from '../base/EventManager';
-import { LanguageManager } from '../base/LanguageManager';
+import { CommandManager } from '../base/';
+import { EventManager } from '../base/';
+import { LanguageManager } from '../base/';
 import { Constants } from './Constants';
 import { COMMAND_END } from './HashiSlashBaseCommand';
-import { DatabaseManager } from '../base/DatabaseManager';
-import { ServiceManager } from '../base/ServiceManager';
+import { DatabaseManager } from '../base/';
+import { ServiceManager } from '../base/';
 /**
  * The options for the HashiClient. It extends the ClientOptions from discord.js and implements extra options for the Hashi module.
  */
