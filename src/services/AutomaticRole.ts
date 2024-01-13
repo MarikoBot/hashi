@@ -2,46 +2,57 @@
 
 import { Guild, GuildMember, Snowflake } from 'discord.js';
 import { Service } from '../Service';
-import { DataMapDefinition } from '../DataMap';
+import { DataMap, DataMapDefinition } from '../DataMap';
 import { HashiClient } from '../HashiClient';
-import { Schema } from 'mongoose';
+import { Schema, Types } from 'mongoose';
+import { DataMapEntry } from '../DataMapEntry';
+
+/**
+ * The automatic-role type.
+ */
+export type AutomaticRoleType = { _id: Types.ObjectId; discordId: string; roles: string[] };
 
 /**
  * The automatic-role definition.
  */
-export const AutomaticRoleDefinition = { roles: { type: [String] } };
+export const AutomaticRoleSchema = {
+  _id: {
+    type: Schema.Types.ObjectId,
+    default: () => new Types.ObjectId(),
+    unique: true,
+  },
+  discordId: {
+    type: String,
+    unique: true,
+  },
+  roles: { type: [String] },
+};
 
 /**
- * The automatic-role structure.
+ * The automatic-role entry class.
  */
-export type AutomaticRoleStructure = { roles: string[] };
+export class AutomaticRoleEntry extends DataMapEntry<AutomaticRoleType> {
+  /**
+   * The constructor for each entry of the automatic role system.
+   * @param dataMap The data map associated with the service.
+   * @param data The data encapsulated into the entry class.
+   */
+  constructor(dataMap: DataMap<AutomaticRoleType>, data: AutomaticRoleType) {
+    super(dataMap, data);
+  }
+}
 
 /**
  * The interface that includes all the properties of an automatic roles system.
  */
-export const AutomaticRoleConfiguration: DataMapDefinition<typeof AutomaticRoleDefinition> = {
-  schema: new Schema<typeof AutomaticRoleDefinition>({ roles: { type: [String] } }),
+export const AutomaticRoleDefinition: DataMapDefinition<typeof AutomaticRoleSchema> = {
+  schema: new Schema<typeof AutomaticRoleSchema>(AutomaticRoleSchema),
   defaultValues: {
+    _id: new Types.ObjectId(),
+    discordId: '0',
     roles: [],
   },
 };
-
-/**
- * The main function.
- * Add a role automatically when a user join.
- * @param member The guild member.
- * @param service The service instance.
- * @returns Nothing.
- */
-async function main(member: GuildMember, service: AutomaticRoleInstance): Promise<void> {
-  if (member.guild.id !== service.guild.id) return;
-
-  let i: number = -1;
-  const roles: Snowflake[] = await service.getRoles(member.guild.id);
-  while (++i < roles.length) {
-    await member.roles.add(roles[i]);
-  }
-}
 
 /**
  * The class that includes all the required tools to create an automatic role system.
@@ -66,9 +77,9 @@ export class AutomaticRoleInstance extends Service {
    */
   constructor(client: HashiClient) {
     super(client, 'automaticRole', 'automaticRole');
-    this.dataMap.setDefinition(AutomaticRoleConfiguration);
+    this.dataMap.setDefinition(AutomaticRoleDefinition);
 
-    this.link('guildMemberAdd', [main, []]);
+    this.link('guildMemberAdd', [, []]);
   }
 
   /**
@@ -86,6 +97,23 @@ export class AutomaticRoleInstance extends Service {
    * @returns The roles id list.
    */
   public async getRoles(guildId: Snowflake): Promise<Snowflake[]> {
-    return <AutomaticRoleStructure['roles']>await this.dataMap.getRaw(guildId);
+    return (<AutomaticRoleType>await this.dataMap.getRaw(guildId)).roles;
+  }
+
+  /**
+   * The main function.
+   * Add a role automatically when a user joins.
+   * @param service The service instance.
+   * @param member The guild member.
+   * @param service The service instance.
+   * @returns Nothing.
+   */
+  static async main(service: AutomaticRoleInstance, member: GuildMember): Promise<void> {
+    if (member.guild.id !== service.guild.id) return;
+
+    let i: number = -1;
+    const roles: Snowflake[] = await service.getRoles(member.guild.id);
+
+    while (++i < roles.length) await member.roles.add(roles[i]);
   }
 }

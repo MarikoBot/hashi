@@ -1,6 +1,6 @@
 // noinspection JSUnusedGlobalSymbols
 
-import { model, Model, Schema, SchemaDefinition, Document } from 'mongoose';
+import { model, Model, Schema, SchemaDefinition, Document, Types } from 'mongoose';
 import { HashiClient } from './HashiClient';
 import { DataMapEntry } from './DataMapEntry';
 import { Base } from './Base';
@@ -32,7 +32,8 @@ export type TypedDataMapStored =
   | boolean
   | TypedDataMapStored[]
   | { [key: string]: TypedDataMapStored }
-  | undefined;
+  | undefined
+  | Types.ObjectId;
 
 /**
  * The list of flags for the data map intents.
@@ -64,7 +65,7 @@ export class DataMap<
   /**
    * The primary key(s). Separate it with a '+' sign.
    */
-  #primaryKey: string = 'id';
+  #primaryKey: string = 'discordId';
 
   /**
    * The default data for the data map.

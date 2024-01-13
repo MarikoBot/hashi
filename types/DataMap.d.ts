@@ -22,7 +22,7 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { Model, Schema, SchemaDefinition, Document } from 'mongoose';
+import { Model, Schema, SchemaDefinition, Document, Types } from 'mongoose';
 import { HashiClient } from './HashiClient';
 import { DataMapEntry } from './DataMapEntry';
 import { Base } from './Base';
@@ -48,7 +48,7 @@ export interface DataMapDefinition<IStructure extends SchemaDefinition> {
  */
 export type TypedDataMapStored = number | string | boolean | TypedDataMapStored[] | {
     [key: string]: TypedDataMapStored;
-} | undefined;
+} | undefined | Types.ObjectId;
 /**
  * The list of flags for the data map intents.
  */

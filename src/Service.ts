@@ -14,7 +14,7 @@ export type ClientEventsKey = keyof ClientEvents;
 /**
  * A duet including a function and a list of parameters to make accomplished the on-event emitted function.
  */
-export type ServiceFunctionPackage = [(...arg: any[]) => any | Promise<any>, any[]];
+export type ServiceFunctionPackage = [(service: Service, ...arg: any[]) => any | Promise<any>, any[]];
 
 /**
  * The type representing the list of methods called on an event triggered moment.
@@ -25,8 +25,20 @@ export type OnEventEmittedMethods = Partial<Record<ClientEventsKey, ServiceFunct
  * The default value for the 'event ready' function.
  */
 export const defaultOnEventEmittedMethods: OnEventEmittedMethods = {
-  ready: [[(client: HashiClient): void => client.logger.info('Unknown service online.'), []]],
+  ready: [
+    [
+      (service: Service): void => {
+        return service.client.logger.info(`Service ${service.name} v${service.version} ready.`);
+      },
+      [],
+    ],
+  ],
 };
+
+/**
+ * The type that represents an object with all the resources of the service.
+ */
+export type ServiceResources = { [resourceName: string]: ServiceResources | any };
 
 /**
  * The class that represents a service.
@@ -53,6 +65,11 @@ export class Service<
    * The version of the service.
    */
   readonly #version: string = '0.0.0';
+
+  /**
+   * The object including all the resources of the service.
+   */
+  #resources: ServiceResources;
 
   /**
    * The name of the service.
@@ -87,6 +104,14 @@ export class Service<
   }
 
   /**
+   * The resources for the service.
+   * @returns The resources.
+   */
+  get resources(): ServiceResources {
+    return this.#resources;
+  }
+
+  /**
    * The constructor of the class. You can pass here the attributes and the functions you need.
    * @param client The client instance.
    * @param name The name of the service.
@@ -105,6 +130,17 @@ export class Service<
     this.client.databaseManager.ensure(dataMapName, true);
     const dataMap: DataMap<TypedDataMapStored> = this.dataMap;
     dataMap.setDefinition(serviceDataStructure);
+  }
+
+  /**
+   * Set the resources with all the objects/classes linked to the service.
+   * Regroup all in this property.
+   * @param resources The resources object.
+   * @returns The class instance.
+   */
+  public setResources(resources: ServiceResources): Service {
+    this.#resources = resources;
+    return this;
   }
 
   /**

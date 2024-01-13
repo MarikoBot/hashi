@@ -1,7 +1,7 @@
 // noinspection JSUnusedGlobalSymbols
 
 import { HashiClient } from './HashiClient';
-import { ClientEventsKey, Service, ServiceFunctionPackage } from './Service';
+import { ClientEventsKey, OnEventEmittedMethods, Service, ServiceFunctionPackage } from './Service';
 import { AutomaticRoleInstance } from './services';
 
 /**
@@ -109,17 +109,45 @@ export class ServiceManager {
    * @returns Nothing.
    */
   public launchLinkedEvents(): void {
-    let functionPackages: Record<ClientEventsKey, ServiceFunctionPackage[]>;
-    const serviceKeys: string[] = Object.keys(this.services);
+    let clientEventsList: ClientEventsKey[];
 
     let i: number = -1;
     let j: number = -1;
+
     let serviceKey: string;
     let service: Service;
+    let eventKey: ClientEventsKey;
 
-    while (++i < serviceKeys.length) {
-      serviceKey = serviceKeys[i];
+    while (++i < Object.keys(this.services).length) {
+      serviceKey = Object.keys(this.services)[i];
       service = this.services[serviceKey];
+
+      while (++j < Object.keys(service.onEmitted).length) {
+        eventKey = <ClientEventsKey>Object.keys(service.onEmitted)[j];
+        if (!clientEventsList.includes(eventKey)) clientEventsList.push(eventKey);
+      }
+
+      j = -1;
     }
+    i = -1;
+
+    let k: number = -1;
+    while (++i < clientEventsList.length) {
+      eventKey = clientEventsList[i];
+
+      while (++j < Object.keys(this.services).length) {
+        serviceKey = Object.keys(this.services)[j];
+        service = this.services[serviceKey];
+
+        this.client[eventKey === 'ready' ? 'once' : 'on'](eventKey, (...args: any[]): void => {
+          while (++k < service.onEmitted[eventKey].length)
+            service.onEmitted[eventKey][k][0](service, ...service.onEmitted[eventKey][k][1]);
+          k = -1;
+        });
+      }
+      j = -1;
+    }
+
+    return;
   }
 }
