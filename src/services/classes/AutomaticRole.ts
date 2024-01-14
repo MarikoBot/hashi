@@ -28,8 +28,6 @@ export class AutomaticRole extends Service {
    */
   constructor(client: HashiClient) {
     super(client, 'AutomaticRole', '0.1.0', 'automaticRole');
-
-    this.link('guildMemberAdd', [(service: Service) => console.log(`${service.name} launched`), []]);
   }
 
   /**

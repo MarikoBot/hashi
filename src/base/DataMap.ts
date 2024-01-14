@@ -221,7 +221,6 @@ export class DataMap<
    * @returns The retrieved data.
    */
   public async content(): Promise<Query<any, any>> {
-    console.log(this.model);
     const documents: DataMapDefinition<SchemaDefinition>['model'][] = await this.model.find({});
     return documents;
   }

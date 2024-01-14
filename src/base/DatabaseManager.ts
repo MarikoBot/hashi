@@ -138,8 +138,6 @@ export class DatabaseManager extends Base {
       },
     );
 
-    console.log(definitions, models);
-
     let definition: DataMapDefinition<any>;
     let model: Model<any>;
     let dataMap: DataMap<any, any>;
@@ -148,7 +146,6 @@ export class DatabaseManager extends Base {
     while (++i < definitions.length) {
       definition = definitions[i][1][definitions[i][0]];
       model = models[i][1][models[i][0]];
-      console.log(definition.name, model);
 
       dataMap = this.createDataMap(definition.name);
       dataMap.setDefinition({ ...definition, model });

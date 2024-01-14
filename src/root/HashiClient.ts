@@ -288,7 +288,7 @@ export class HashiClient {
     await this.databaseManager.connect();
     this.databaseManager.loadDataMaps();
 
-    this.serviceManager.loadServices();
+    this.serviceManager.loadServices().launchLinkedEvents();
 
     await this.eventManager.loadEvents();
 

@@ -117,7 +117,6 @@ export class Service<
    * @param name The name of the service.
    * @param version The version of the service.
    * @param dataMapName The name of the data map.
-   * @param serviceDataStructure The data object structure to set. Extends the DataMapDefinition.
    */
   constructor(client: HashiClient, name: string, version: string, dataMapName: string) {
     super(client);

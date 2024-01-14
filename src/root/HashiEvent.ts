@@ -4,9 +4,10 @@ import { HashiClient } from './HashiClient';
 
 /**
  * The model of a callback function for an event.
+ * @param client The client instance.
  * @param args The command args.
  */
-export type HashiEventCallbackFunction = (...args: any[]) => void;
+export type HashiEventCallbackFunction = (client: HashiClient, ...args: any[]) => void;
 
 /**
  * A default callback function used when nothing is set.

@@ -24,4 +24,4 @@ Data.Models.AutomaticRoleModel.create({
 
 setInterval(async () => {
   console.log(await client.databaseManager.dataMaps.automaticRole.content());
-}, 2000);
+}, 60000);

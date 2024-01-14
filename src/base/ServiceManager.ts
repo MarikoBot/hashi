@@ -88,7 +88,7 @@ export class ServiceManager extends Base {
    * @returns The class instance.
    */
   public loadServices(): ServiceManager {
-    const serviceFiles: [string, Service][] = this.client.fileManager.read<Service>(
+    const serviceFiles: [string, typeof Service][] = this.client.fileManager.read<typeof Service>(
       `${FileManager.ABSPATH}${this.client.servicesDir}`,
       `${FileManager.RMPATH}${this.client.servicesDir}`,
       {
@@ -98,7 +98,7 @@ export class ServiceManager extends Base {
     );
 
     let i: number = -1;
-    while (++i < serviceFiles.length) this.bindService(serviceFiles[i][1][serviceFiles[i][0]]);
+    while (++i < serviceFiles.length) this.bindService(new serviceFiles[i][1][serviceFiles[i][0]](this.client));
 
     return this;
   }
@@ -160,7 +160,7 @@ export class ServiceManager extends Base {
         serviceKey = Object.keys(this.services)[j];
         service = this.services[serviceKey];
 
-        this.client[eventKey === 'ready' ? 'once' : 'on'](eventKey, (...args: any[]): void => {
+        this.client.src[eventKey === 'ready' ? 'once' : 'on'](eventKey, (...args: any[]): void => {
           while (++k < service.onEmitted[eventKey].length)
             service.onEmitted[eventKey][k][0](service, ...service.onEmitted[eventKey][k][1]);
           k = -1;
