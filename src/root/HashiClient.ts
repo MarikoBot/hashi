@@ -13,6 +13,7 @@ import { DatabaseManager } from '../base/';
 import { ServiceManager } from '../base/';
 import { DATAMAP_INTENTS, DataMap, TypedDataMapStored } from '../base/';
 import { ConnectOptions } from 'mongoose';
+import { FileManager } from './FileManager';
 
 dotenv.config();
 
@@ -36,6 +37,10 @@ export interface HashiClientOptions extends ClientOptions {
    * The services folder directory.
    */
   servicesDir?: string;
+  /**
+   * The data maps folder directory.
+   */
+  dataMapsDir?: string;
   /**
    * The mongoose connection information.
    */
@@ -95,6 +100,11 @@ export class HashiClient {
   readonly #serviceManager: ServiceManager = new ServiceManager(this);
 
   /**
+   * The services manager for accessing different services (automatic roles, etc.).
+   */
+  readonly #fileManager: FileManager = new FileManager(this);
+
+  /**
    * The language manager for accessing strings.
    */
   readonly #constants: Constants = new Constants();
@@ -118,6 +128,11 @@ export class HashiClient {
    * The services folder directory.
    */
   readonly #servicesDir: string = 'services';
+
+  /**
+   * The data maps folder directory.
+   */
+  readonly #dataMapsDir: string = 'data';
 
   /**
    * Get the Discord Client instance.
@@ -176,6 +191,14 @@ export class HashiClient {
   }
 
   /**
+   * Get the files manager for accessing different files.
+   * @returns The files manager for accessing different files.
+   */
+  get fileManager(): FileManager {
+    return this.#fileManager;
+  }
+
+  /**
    * Get the constants.
    * @returns The constants.
    */
@@ -216,6 +239,14 @@ export class HashiClient {
   }
 
   /**
+   * Get the data maps folder directory.
+   * @returns The data maps folder directory.
+   */
+  get dataMapsDir(): string {
+    return this.#dataMapsDir;
+  }
+
+  /**
    * The constructor for the HashiClient class.
    * @param options The options for the HashiClient.
    */
@@ -236,11 +267,12 @@ export class HashiClient {
         },
     });
 
-    this.#processName = options.processName || '`Who I am ?`';
+    this.#processName = options.processName || '`unknown`';
     this.#logger = new Logger(this.processName);
     this.#commandsDir = options.commandsDir || 'commands';
     this.#eventsDir = options.eventsDir || 'events';
-    this.#servicesDir = options.servicesDir || 'services';
+    this.#servicesDir = options.servicesDir || 'services/classes';
+    this.#dataMapsDir = options.dataMapsDir || 'data/definitions';
 
     this.databaseManager.setDbName(options.mongoose.dbName || 'main');
     this.databaseManager.setConnectOptions(options.mongoose.connectOptions || { dbName: this.databaseManager.dbName });
@@ -253,10 +285,15 @@ export class HashiClient {
    * @returns Nothing.
    */
   public async login(token: string = process.env.TOKEN || process.env.token || process.env.Token): Promise<string> {
+    await this.databaseManager.connect();
+    this.databaseManager.loadDataMaps();
+
     this.serviceManager.loadServices();
+
     await this.eventManager.loadEvents();
 
     await this.src.login(token);
+
     await this.commandManager.loadCommands();
 
     let i: number = -1;

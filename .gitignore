@@ -1,6 +1,5 @@
 .git
 .idea
-data
 node_modules
 
 .env

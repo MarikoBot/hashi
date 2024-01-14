@@ -6,6 +6,7 @@ import { Classes } from '../services';
 import { Base } from './Base';
 import * as fs from 'fs';
 import * as path from 'path';
+import { FileManager } from '../root/FileManager';
 
 /**
  * The object of all the services.
@@ -87,17 +88,18 @@ export class ServiceManager extends Base {
    * @returns The class instance.
    */
   public loadServices(): ServiceManager {
-    if (!fs.existsSync(`lib/${this.client.servicesDir}/classes`)) return;
-
-    const files: string[] = fs.readdirSync(`lib/${this.client.servicesDir}/classes`);
+    const serviceFiles: [string, Service][] = this.client.fileManager.read<Service>(
+      `${FileManager.ABSPATH}${this.client.servicesDir}`,
+      `${FileManager.RMPATH}${this.client.servicesDir}`,
+      {
+        absPathStrSelf: `./lib/${this.client.servicesDir}`,
+        rmPathStrSelf: `../${this.client.servicesDir}`,
+      },
+    );
 
     let i: number = -1;
-    let serviceData: Service;
-    while (++i < files.length) {
-      serviceData = require(path.join(__dirname, `../../../../../lib/${this.client.servicesDir}/classes/${files[i]}`));
+    while (++i < serviceFiles.length) this.bindService(serviceFiles[i][1][serviceFiles[i][0]]);
 
-      this.bindService(serviceData[files[i]]);
-    }
     return this;
   }
 

@@ -1,6 +1,6 @@
 // noinspection JSUnusedGlobalSymbols
 
-import { model, Model, Schema, SchemaDefinition, Document, Types } from 'mongoose';
+import { model, Model, Schema, SchemaDefinition, Document, Types, Query } from 'mongoose';
 import { HashiClient } from '../root/';
 import { DataMapEntry } from '../root/';
 import { Base } from './Base';
@@ -10,13 +10,21 @@ import { Base } from './Base';
  */
 export interface DataMapDefinition<IStructure extends SchemaDefinition> {
   /**
+   * The name of the data map.
+   */
+  name: string;
+  /**
+   * The entry class associated.
+   */
+  entry: typeof DataMapEntry<any>;
+  /**
    * The build schema.
    */
   schema: Schema<IStructure>;
   /**
    * The model if the data map is using mongo.
    */
-  model?: Model<IStructure & Document>;
+  model?: Model<any>;
   /**
    * The default values.
    */
@@ -71,7 +79,9 @@ export class DataMap<
    * The default data for the data map.
    */
   #definition: DataMapDefinition<SchemaDefinition> = {
-    schema: new Schema<SchemaDefinition>({ id: { type: String } }),
+    name: 'unnamedMap',
+    entry: DataMapEntry<{ discordId: string }>,
+    schema: new Schema<SchemaDefinition>({ discordId: { type: String } }),
     defaultValues: {
       id: Date.now().toString(),
     },
@@ -85,7 +95,7 @@ export class DataMap<
   /**
    * The collection/model of the schema.
    */
-  readonly #model: Model<DataMapDefinition<SchemaDefinition>>;
+  #model: Model<DataMapDefinition<SchemaDefinition>>;
 
   /**
    * Get the data map name.
@@ -149,8 +159,6 @@ export class DataMap<
     super(client);
     this.#name = name;
     this.#entryClass = entryClass;
-
-    this.#definition.model = model<SchemaDefinition & Document>(this.name, <Schema>this.#definition.schema);
   }
 
   /**
@@ -191,7 +199,10 @@ export class DataMap<
   public setDefinition<IStructure extends SchemaDefinition>(
     definition: DataMapDefinition<IStructure>,
   ): DataMap<DataStructure, EntryClass> {
-    if (typeof definition === 'object') this.#definition = definition;
+    if (typeof definition === 'object' && definition !== null) {
+      this.#definition = definition;
+      this.#model = definition.model;
+    }
     return this;
   }
 
@@ -203,6 +214,16 @@ export class DataMap<
   public addIntent(intent: DATAMAP_INTENTS): DataMap<DataStructure, EntryClass> {
     if (intent === DATAMAP_INTENTS.CORE) this.#intents.push(intent);
     return this;
+  }
+
+  /**
+   * Display all the data included into the collection.
+   * @returns The retrieved data.
+   */
+  public async content(): Promise<Query<any, any>> {
+    console.log(this.model);
+    const documents: DataMapDefinition<SchemaDefinition>['model'][] = await this.model.find({});
+    return documents;
   }
 
   /**

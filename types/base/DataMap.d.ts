@@ -22,7 +22,7 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { Model, Schema, SchemaDefinition, Document, Types } from 'mongoose';
+import { Model, Schema, SchemaDefinition, Types, Query } from 'mongoose';
 import { HashiClient } from '../root/';
 import { DataMapEntry } from '../root/';
 import { Base } from './Base';
@@ -31,13 +31,21 @@ import { Base } from './Base';
  */
 export interface DataMapDefinition<IStructure extends SchemaDefinition> {
     /**
+     * The name of the data map.
+     */
+    name: string;
+    /**
+     * The entry class associated.
+     */
+    entry: typeof DataMapEntry<any>;
+    /**
      * The build schema.
      */
     schema: Schema<IStructure>;
     /**
      * The model if the data map is using mongo.
      */
-    model?: Model<IStructure & Document>;
+    model?: Model<any>;
     /**
      * The default values.
      */
@@ -130,6 +138,11 @@ export declare class DataMap<DataStructure extends TypedDataMapStored, EntryClas
      * @returns The data map.
      */
     addIntent(intent: DATAMAP_INTENTS): DataMap<DataStructure, EntryClass>;
+    /**
+     * Display all the data included into the collection.
+     * @returns The retrieved data.
+     */
+    content(): Promise<Query<any, any>>;
     /**
      * Get some data from the data map.
      * @param key The key to look for.

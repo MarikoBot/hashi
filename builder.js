@@ -4,12 +4,8 @@ const fs = require('fs');
 const folders = fs.readdirSync('./lib');
 const types = fs.readdirSync('./types');
 
-// Remove all the folders.
-folders.forEach((folder) => {
-  // Remove the folder.
-  fs.rm(`./lib/${folder}`, () => {});
-});
-types.forEach((folder) => {
-  // Remove the folder.
-  fs.rm(`./types/${folder}`, () => {});
-});
+fs.rmdirSync('./lib', { recursive: true });
+fs.mkdirSync('./lib');
+
+fs.rmdirSync('./types', { recursive: true });
+fs.mkdirSync('./types');

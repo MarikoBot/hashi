@@ -32,6 +32,7 @@ import { COMMAND_END } from './HashiSlashBaseCommand';
 import { DatabaseManager } from '../base/';
 import { ServiceManager } from '../base/';
 import { ConnectOptions } from 'mongoose';
+import { FileManager } from './FileManager';
 /**
  * The options for the HashiClient. It extends the ClientOptions from discord.js and implements extra options for the Hashi module.
  */
@@ -52,6 +53,10 @@ export interface HashiClientOptions extends ClientOptions {
      * The services folder directory.
      */
     servicesDir?: string;
+    /**
+     * The data maps folder directory.
+     */
+    dataMapsDir?: string;
     /**
      * The mongoose connection information.
      */
@@ -111,6 +116,11 @@ export declare class HashiClient {
      */
     get serviceManager(): ServiceManager;
     /**
+     * Get the files manager for accessing different files.
+     * @returns The files manager for accessing different files.
+     */
+    get fileManager(): FileManager;
+    /**
      * Get the constants.
      * @returns The constants.
      */
@@ -135,6 +145,11 @@ export declare class HashiClient {
      * @returns The services folder directory.
      */
     get servicesDir(): string;
+    /**
+     * Get the data maps folder directory.
+     * @returns The data maps folder directory.
+     */
+    get dataMapsDir(): string;
     /**
      * The constructor for the HashiClient class.
      * @param options The options for the HashiClient.

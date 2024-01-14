@@ -2,25 +2,8 @@
 
 import { Guild, GuildMember, Snowflake } from 'discord.js';
 import { Service } from '../../base/';
-import { DataMap } from '../../base/';
 import { HashiClient } from '../../root/';
-import { DataMapEntry } from '../../root/';
 import { AutomaticRoleType } from '../types';
-import { AutomaticRoleDefinition } from '../definitions';
-
-/**
- * The automatic-role entry class.
- */
-export class AutomaticRoleEntry extends DataMapEntry<AutomaticRoleType> {
-  /**
-   * The constructor for each entry of the automatic role system.
-   * @param dataMap The data map associated with the service.
-   * @param data The data encapsulated into the entry class.
-   */
-  constructor(dataMap: DataMap<AutomaticRoleType>, data: AutomaticRoleType) {
-    super(dataMap, data);
-  }
-}
 
 /**
  * The class that includes all the required tools to create an automatic role system.
@@ -45,9 +28,8 @@ export class AutomaticRole extends Service {
    */
   constructor(client: HashiClient) {
     super(client, 'AutomaticRole', '0.1.0', 'automaticRole');
-    this.dataMap.setDefinition(AutomaticRoleDefinition);
 
-    this.link('guildMemberAdd', [, []]);
+    this.link('guildMemberAdd', [(service: Service) => console.log(`${service.name} launched`), []]);
   }
 
   /**
