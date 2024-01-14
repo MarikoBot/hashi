@@ -1,4 +1,4 @@
-import { HashiSlashBaseCommand } from './HashiSlashBaseCommand';
+import { HashiSlashBaseCommand, HashiSlashCommandCallbackFunction } from './HashiSlashBaseCommand';
 import { HashiSlashSubcommand } from './HashiSlashSubcommand';
 import { HashiSlashSubcommandGroup } from './HashiSlashSubcommandGroup';
 /**
@@ -22,11 +22,18 @@ export declare class HashiSlashCommand extends HashiSlashBaseCommand {
      */
     constructor(name: HashiSlashBaseCommand['name']);
     /**
+     * The callback function executed when the command is triggered.
+     *
+     * @param callback The function to set.
+     * @returns The class instance.
+     */
+    setCallbackFunction(callback: HashiSlashCommandCallbackFunction): HashiSlashCommand;
+    /**
      * Add a slash command built with the Hashi source builder.
      * @param subcommand The slash command instance to add.
      * @returns The class instance.
      */
-    addHashiSlashSubcommand(subcommand: HashiSlashSubcommand): this;
+    addHashiSlashSubcommand(subcommand: HashiSlashSubcommand): HashiSlashCommand;
     /**
      * Add a slash command built with the Hashi source builder.
      * @param subcommandGroup The slash command group instance to add.

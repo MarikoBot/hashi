@@ -86,6 +86,12 @@ export declare class DatabaseManager extends Base {
      */
     createDataMap(name: string): DataMap<TypedDataMapStored>;
     /**
+     * Synchronize the datamaps created by the coder into their own repository.
+     * Synchronize this project files too.
+     * @returns The class instance.
+     */
+    loadDataMaps(): DatabaseManager;
+    /**
      * Connect the database to the mongodb cluster.
      * @param connectionURI The connection URI.
      * @param connectOptions The connection options.

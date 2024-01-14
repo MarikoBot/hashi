@@ -15,13 +15,18 @@ export interface MainColors {
 }
 
 /**
+ * The pair of paths based on the environment.
+ */
+export type EnvPath = Record<'lab' | 'prod', string>;
+
+/**
  * The main class for managing the configuring constants for the bot.
  */
 export class Constants {
   /**
    * The color list.
    */
-  public Colors: MainColors = {
+  public readonly Colors: MainColors = {
     RED: 0xff4848,
     ORANGE: 0xff7526,
     YELLOW: 0xffec80,

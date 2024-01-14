@@ -27,9 +27,11 @@ export class Base {
 
   /**
    * Set the client instance.
+   * @param client The client instance.
+   * @returns The class instance.
    */
   public setClient(client: HashiClient): Base {
-    if (client instanceof HashiClient && client.src.user.id === this.client.src.user.id) this.#client = client;
+    if (client instanceof HashiClient && client.src.token === this.client.src.token) this.#client = client;
     return this;
   }
 }

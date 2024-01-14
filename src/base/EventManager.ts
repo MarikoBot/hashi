@@ -1,9 +1,10 @@
 import { Collection } from 'discord.js';
-import { HashiEvent } from '../root/';
+import { HashiEvent, HashiSlashCommand } from '../root/';
 import { HashiClient } from '../root/';
 import * as fs from 'fs';
 import * as path from 'path';
 import { Base } from './Base';
+import { FileManager } from '../root/FileManager';
 
 /**
  * Represents the event manager for the client service.
@@ -35,20 +36,27 @@ export class EventManager extends Base {
    * @returns Nothing.
    */
   public async loadEvents(): Promise<void> {
-    const files: string[] = fs.readdirSync(`lib/${this.client.eventsDir}`);
+    const eventFiles: [string, HashiEvent][] = this.client.fileManager.read<HashiEvent>(
+      `${FileManager.ABSPATH}${this.client.eventsDir}`,
+      `${FileManager.RMPATH}${this.client.eventsDir}`,
+      {
+        absPathStrSelf: `./lib/${this.client.eventsDir}`,
+        rmPathStrSelf: `../${this.client.eventsDir}`,
+      },
+    );
+
     const events: HashiEvent[] = [];
+    let eventData: HashiEvent;
 
     let i: number = -1;
-    let eventData: HashiEvent;
-    while (++i < files.length) {
-      eventData = require(path.join(__dirname, `../../../../../lib/${this.client.eventsDir}/${files[i]}`));
+    while (++i < eventFiles.length) {
+      eventData = eventFiles[i][1][eventFiles[i][0]];
 
-      this.client.eventManager.eventsList.set(files[i].replace('.js', ''), eventData);
+      this.client.eventManager.eventsList.set(eventData.name, eventData);
       events.push(eventData);
     }
-
     i = -1;
-    eventData = null;
+
     while (++i < events.length) {
       eventData = events[i];
       eventData.setClient(this.client);

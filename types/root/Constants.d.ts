@@ -12,13 +12,17 @@ export interface MainColors {
     DARK: number;
 }
 /**
+ * The pair of paths based on the environment.
+ */
+export type EnvPath = Record<'lab' | 'prod', string>;
+/**
  * The main class for managing the configuring constants for the bot.
  */
 export declare class Constants {
     /**
      * The color list.
      */
-    Colors: MainColors;
+    readonly Colors: MainColors;
     /**
      * The custom color list (added manually by the user).
      */

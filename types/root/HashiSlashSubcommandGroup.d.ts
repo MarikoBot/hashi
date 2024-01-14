@@ -1,4 +1,4 @@
-import { HashiSlashBaseCommand } from './HashiSlashBaseCommand';
+import { HashiSlashBaseCommand, HashiSlashCommandCallbackFunction } from './HashiSlashBaseCommand';
 import { SlashCommandSubcommandGroupBuilder } from 'discord.js';
 import { HashiSlashSubcommand } from './HashiSlashSubcommand';
 /**
@@ -16,6 +16,13 @@ export declare class HashiSlashSubcommandGroup extends HashiSlashBaseCommand {
      * @param name The subcommand group name.
      */
     constructor(name: SlashCommandSubcommandGroupBuilder['name']);
+    /**
+     * The callback function executed when the command is triggered.
+     *
+     * @param callback The function to set.
+     * @returns The class instance.
+     */
+    setCallbackFunction(callback: HashiSlashCommandCallbackFunction): HashiSlashSubcommandGroup;
     /**
      * Add a slash command built with the Hashi source builder.
      * @param subcommand The slash command instance to add.

@@ -27,7 +27,7 @@ import { DataMapDefinition } from '../../base';
 /**
  * The automatic-role definition.
  */
-export declare const AutomaticRoleSchema: {
+export declare const AutomaticRoleStructure: {
     _id: {
         type: typeof Schema.Types.ObjectId;
         default: () => Types.ObjectId;
@@ -44,4 +44,4 @@ export declare const AutomaticRoleSchema: {
 /**
  * The interface that includes all the properties of an automatic roles system.
  */
-export declare const AutomaticRoleDefinition: DataMapDefinition<typeof AutomaticRoleSchema>;
+export declare const AutomaticRoleDefinition: DataMapDefinition<typeof AutomaticRoleStructure>;

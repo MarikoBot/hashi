@@ -1,4 +1,4 @@
-import { HashiSlashBaseCommand } from './HashiSlashBaseCommand';
+import { HashiSlashBaseCommand, HashiSlashCommandCallbackFunction } from './HashiSlashBaseCommand';
 import { HashiSlashSubcommand } from './HashiSlashSubcommand';
 import { HashiSlashSubcommandGroup } from './HashiSlashSubcommandGroup';
 
@@ -42,11 +42,22 @@ export class HashiSlashCommand extends HashiSlashBaseCommand {
   }
 
   /**
+   * The callback function executed when the command is triggered.
+   *
+   * @param callback The function to set.
+   * @returns The class instance.
+   */
+  public setCallbackFunction(callback: HashiSlashCommandCallbackFunction): HashiSlashCommand {
+    if (typeof callback === 'function') super.setCallbackFunction(callback);
+    return this;
+  }
+
+  /**
    * Add a slash command built with the Hashi source builder.
    * @param subcommand The slash command instance to add.
    * @returns The class instance.
    */
-  public addHashiSlashSubcommand(subcommand: HashiSlashSubcommand): this {
+  public addHashiSlashSubcommand(subcommand: HashiSlashSubcommand): HashiSlashCommand {
     subcommand.setFullName(`${this.name} ${subcommand.name}`);
     HashiSlashBaseCommand.transformSubcommand(this, subcommand);
     this.hashiSubcommands.push(subcommand);

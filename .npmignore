@@ -1,6 +1,6 @@
 .git
 .idea
-data
+src/models
 node_modules
 src
 

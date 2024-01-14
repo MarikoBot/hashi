@@ -32,7 +32,7 @@ export class Logger {
    */
   public info(...args: any[]): void {
     args.forEach((arg: any): any => {
-      console.log(chalk.blue(`「 ${this.projectName} INFO 」`), chalk.blue(arg.message || arg));
+      console.log(chalk.blue(`「 ${this.projectName.toUpperCase()} INFO 」`), chalk.blue(arg.message || arg));
       if (arg.message) console.log(arg);
     });
   }
@@ -44,7 +44,7 @@ export class Logger {
    */
   public clean(...args: any[]): void {
     args.forEach((arg: any): any => {
-      console.log(chalk.grey(`「 ${this.projectName} INFO 」`), chalk.grey(arg.message || arg));
+      console.log(chalk.grey(`「 ${this.projectName.toUpperCase()} INFO 」`), chalk.grey(arg.message || arg));
       if (arg.message) console.log(arg);
     });
   }

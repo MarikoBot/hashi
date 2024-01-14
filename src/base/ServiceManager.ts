@@ -6,6 +6,7 @@ import { Classes } from '../services';
 import { Base } from './Base';
 import * as fs from 'fs';
 import * as path from 'path';
+import { FileManager } from '../root/FileManager';
 
 /**
  * The object of all the services.
@@ -87,15 +88,18 @@ export class ServiceManager extends Base {
    * @returns The class instance.
    */
   public loadServices(): ServiceManager {
-    const files: string[] = fs.readdirSync(`lib/${this.client.servicesDir}/classes`);
+    const serviceFiles: [string, typeof Service][] = this.client.fileManager.read<typeof Service>(
+      `${FileManager.ABSPATH}${this.client.servicesDir}`,
+      `${FileManager.RMPATH}${this.client.servicesDir}`,
+      {
+        absPathStrSelf: `./lib/${this.client.servicesDir}`,
+        rmPathStrSelf: `../${this.client.servicesDir}`,
+      },
+    );
 
     let i: number = -1;
-    let serviceData: Service;
-    while (++i < files.length) {
-      serviceData = require(path.join(__dirname, `../../../../../lib/${this.client.servicesDir}/classes/${files[i]}`));
+    while (++i < serviceFiles.length) this.bindService(new serviceFiles[i][1][serviceFiles[i][0]](this.client));
 
-      this.bindService(serviceData[files[i]]);
-    }
     return this;
   }
 
@@ -156,7 +160,7 @@ export class ServiceManager extends Base {
         serviceKey = Object.keys(this.services)[j];
         service = this.services[serviceKey];
 
-        this.client[eventKey === 'ready' ? 'once' : 'on'](eventKey, (...args: any[]): void => {
+        this.client.src[eventKey === 'ready' ? 'once' : 'on'](eventKey, (...args: any[]): void => {
           while (++k < service.onEmitted[eventKey].length)
             service.onEmitted[eventKey][k][0](service, ...service.onEmitted[eventKey][k][1]);
           k = -1;

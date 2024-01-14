@@ -1,5 +1,5 @@
 import { ChatInputCommandInteraction, Collection } from 'discord.js';
-import { HashiSlashCommand } from '../root/';
+import { HashiSlashBaseCommand, HashiSlashCommand } from '../root/';
 import { CoolDownManager } from '../root/';
 import { InterferingManager } from '../root/';
 import { HashiClient } from '../root/';
@@ -8,6 +8,8 @@ import { HashiSlashSubcommandGroup } from '../root/';
 import { Base } from './Base';
 import * as fs from 'fs';
 import * as path from 'path';
+import { FileManager } from '../root/FileManager';
+import { Model } from 'mongoose';
 
 /**
  * A triplet returned when the client transforms an interaction into a callable class group.
@@ -140,16 +142,24 @@ export class CommandManager extends Base {
    * @returns Nothing.
    */
   public async loadCommands(): Promise<void> {
-    const files: string[] = fs.readdirSync(`lib/${this.client.commandsDir}`);
+    const commandFiles: [string, HashiSlashCommand][] = this.client.fileManager.read<HashiSlashCommand>(
+      `${FileManager.ABSPATH}${this.client.commandsDir}`,
+      `${FileManager.RMPATH}${this.client.commandsDir}`,
+      {
+        absPathStrSelf: `./lib/${this.client.commandsDir}`,
+        rmPathStrSelf: `../${this.client.commandsDir}`,
+      },
+    );
+
     const commands: HashiSlashCommand[] = [];
+    let commandData: HashiSlashCommand;
 
     let i: number = -1;
-    let commandData: HashiSlashCommand;
-    while (++i < files.length) {
-      commandData = require(path.join(__dirname, `../../../../../lib/${this.client.commandsDir}/${files[i]}`));
+    while (++i < commandFiles.length) {
+      commandData = commandFiles[i][1][commandFiles[i][0]];
       commandData.setClient(this.client);
 
-      this.client.commandManager.commandsList.set(files[i].replace('.js', ''), commandData);
+      this.client.commandManager.commandsList.set(commandData.name, commandData);
 
       const discordDataOnly: HashiSlashCommand = Object.assign(new HashiSlashCommand('default'), commandData);
       discordDataOnly.clearClient();

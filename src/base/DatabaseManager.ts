@@ -1,9 +1,10 @@
 // noinspection JSUnusedGlobalSymbols
 
 import { HashiClient } from '../root/';
-import { connect, ConnectOptions } from 'mongoose';
-import { DataMap, TypedDataMapStored } from './DataMap';
+import { connect, ConnectOptions, Model, Schema, SchemaDefinition } from 'mongoose';
+import { DataMap, DataMapDefinition, TypedDataMapStored } from './DataMap';
 import { Base } from './Base';
+import { FileManager } from '../root/FileManager';
 
 /**
  * The type that includes all the data maps of the database.
@@ -112,6 +113,44 @@ export class DatabaseManager extends Base {
     const dataMap: DataMap<TypedDataMapStored> = new DataMap<TypedDataMapStored>(this.client, name);
     this.dataMaps[name] = dataMap;
     return dataMap;
+  }
+
+  /**
+   * Synchronize the datamaps created by the coder into their own repository.
+   * Synchronize this project files too.
+   * @returns The class instance.
+   */
+  public loadDataMaps(): DatabaseManager {
+    const definitions: [string, DataMapDefinition<any>][] = this.client.fileManager.read<DataMapDefinition<any>>(
+      `${FileManager.ABSPATH}${this.client.dataMapsDir}`,
+      `${FileManager.RMPATH}${this.client.dataMapsDir}`,
+      {
+        absPathStrSelf: `./lib/${this.client.dataMapsDir}`,
+        rmPathStrSelf: `../${this.client.dataMapsDir}`,
+      },
+    );
+    const models: [string, Model<any>][] = this.client.fileManager.read<Model<any>>(
+      `${FileManager.ABSPATH}${this.client.dataMapsDir}/../models`,
+      `${FileManager.RMPATH}${this.client.dataMapsDir}/../models`,
+      {
+        absPathStrSelf: `./lib/${this.client.dataMapsDir}/../models`,
+        rmPathStrSelf: `../${this.client.dataMapsDir}/../models`,
+      },
+    );
+
+    let definition: DataMapDefinition<any>;
+    let model: Model<any>;
+    let dataMap: DataMap<any, any>;
+
+    let i: number = -1;
+    while (++i < definitions.length) {
+      definition = definitions[i][1][definitions[i][0]];
+      model = models[i][1][models[i][0]];
+
+      dataMap = this.createDataMap(definition.name);
+      dataMap.setDefinition({ ...definition, model });
+    }
+    return this;
   }
 
   /**

@@ -117,21 +117,14 @@ export class Service<
    * @param name The name of the service.
    * @param version The version of the service.
    * @param dataMapName The name of the data map.
-   * @param serviceDataStructure The data object structure to set. Extends the DataMapDefinition.
    */
-  constructor(
-    client: HashiClient,
-    name: string,
-    version: string,
-    dataMapName: string,
-    serviceDataStructure: ServiceDataStructure = null,
-  ) {
+  constructor(client: HashiClient, name: string, version: string, dataMapName: string) {
     super(client);
     this.#name = name;
     this.#version = version || '0.1.0';
-    this.client.databaseManager.ensure(dataMapName, true);
-    const dataMap: DataMap<TypedDataMapStored> = this.dataMap;
-    dataMap.setDefinition(serviceDataStructure);
+    this.#dataMapName = dataMapName;
+
+    this.client.databaseManager.ensure(this.#dataMapName, true);
   }
 
   /**

@@ -16,6 +16,8 @@ export declare class Base {
     constructor(client: HashiClient);
     /**
      * Set the client instance.
+     * @param client The client instance.
+     * @returns The class instance.
      */
     setClient(client: HashiClient): Base;
 }
