@@ -1,12 +1,15 @@
+export * from './CommandAncillary';
 export * from './Constants';
 export * from './CoolDownManager';
 
 export * from './DataMapEntry';
 
-export * from './HashiEvent';
+export * from './FileManager';
 
 export * from './HashiClient';
-export * from './HashiSlashBaseCommand';
+export * from './HashiEvent';
+
+export * from './HashiMessageCommand';
 export * from './HashiSlashCommand';
 export * from './HashiSlashSubcommand';
 export * from './HashiSlashSubcommandGroup';

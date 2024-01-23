@@ -22,50 +22,9 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { Model, Schema, SchemaDefinition, Types, Query } from 'mongoose';
-import { HashiClient } from '../root/';
-import { DataMapEntry } from '../root/';
-import { Base } from './Base';
-/**
- * The type that represents a document for the hashi data map.
- */
-export interface DataMapDefinition<IStructure extends SchemaDefinition> {
-    /**
-     * The name of the data map.
-     */
-    name: string;
-    /**
-     * The entry class associated.
-     */
-    entry: typeof DataMapEntry<any>;
-    /**
-     * The build schema.
-     */
-    schema: Schema<IStructure>;
-    /**
-     * The model if the data map is using mongo.
-     */
-    model?: Model<any>;
-    /**
-     * The default values.
-     */
-    defaultValues: TypedDataMapStored;
-}
-/**
- * The possible value to store in.
- */
-export type TypedDataMapStored = number | string | boolean | TypedDataMapStored[] | {
-    [key: string]: TypedDataMapStored;
-} | undefined | Types.ObjectId;
-/**
- * The list of flags for the data map intents.
- */
-export declare enum DATAMAP_INTENTS {
-    /**
-     * If the data map is used for store the most important data (as process data).
-     */
-    CORE = 0
-}
+import { Query, Schema, Types, Model, SchemaDefinition } from 'mongoose';
+import { Base } from './';
+import { DataMapEntry, HashiClient } from '../root/';
 /**
  * The main class. Represents a data map technology.
  */
@@ -169,3 +128,43 @@ export declare class DataMap<DataStructure extends TypedDataMapStored, EntryClas
      */
     protected get(key?: string): Promise<TypedDataMapStored | DataMapEntry<DataStructure>>;
 }
+/**
+ * The list of flags for the data map intents.
+ */
+export declare enum DATAMAP_INTENTS {
+    /**
+     * If the data map is used for store the most important data (as process data).
+     */
+    CORE = 0
+}
+/**
+ * The type that represents a document for the hashi data map.
+ */
+export interface DataMapDefinition<IStructure extends SchemaDefinition> {
+    /**
+     * The name of the data map.
+     */
+    name: string;
+    /**
+     * The entry class associated.
+     */
+    entry: typeof DataMapEntry<any>;
+    /**
+     * The build schema.
+     */
+    schema: Schema<IStructure>;
+    /**
+     * The model if the data map is using mongo.
+     */
+    model?: Model<any>;
+    /**
+     * The default values.
+     */
+    defaultValues: TypedDataMapStored;
+}
+/**
+ * The possible value to store in.
+ */
+export type TypedDataMapStored = number | string | boolean | TypedDataMapStored[] | {
+    [key: string]: TypedDataMapStored;
+} | undefined | Types.ObjectId;

@@ -1,34 +1,8 @@
 // noinspection JSUnusedGlobalSymbols
 
-import { HashiClient, HashiEvent } from '../root/';
-import { ClientEventsKey, Service } from './Service';
+import { Base, Service, ClientEventsKey } from './';
+import { FileManager, HashiClient } from '../root/';
 import { Classes } from '../services';
-import { Base } from './Base';
-import * as fs from 'fs';
-import * as path from 'path';
-import { FileManager } from '../root/FileManager';
-
-/**
- * The object of all the services.
- */
-export interface ServicesMap {
-  [serviceName: string]: Service;
-
-  /**
-   * The class that includes all the required tools to create an automatic role system.
-   */
-  AutomaticRole: Classes.AutomaticRole;
-}
-
-/**
- * A key for the service map.
- */
-export type ServicesMapKey = keyof ServicesMap;
-
-/**
- * A value for the service map.
- */
-export type ServicesMapValue = ServicesMap[ServicesMapKey];
 
 /**
  * The class including the services and sync them.
@@ -172,3 +146,25 @@ export class ServiceManager extends Base {
     return;
   }
 }
+
+/**
+ * The object of all the services.
+ */
+export interface ServicesMap {
+  [serviceName: string]: Service;
+
+  /**
+   * The class that includes all the required tools to create an automatic role system.
+   */
+  AutomaticRole: Classes.AutomaticRole;
+}
+
+/**
+ * A key for the service map.
+ */
+export type ServicesMapKey = keyof ServicesMap;
+
+/**
+ * A value for the service map.
+ */
+export type ServicesMapValue = ServicesMap[ServicesMapKey];

@@ -1,32 +1,6 @@
-import { ChatInputCommandInteraction, Collection } from 'discord.js';
-import { HashiSlashCommand } from '../root/';
-import { CoolDownManager } from '../root/';
-import { InterferingManager } from '../root/';
-import { HashiClient } from '../root/';
-import { HashiSlashSubcommand } from '../root/';
-import { HashiSlashSubcommandGroup } from '../root/';
-import { Base } from './Base';
-/**
- * A triplet returned when the client transforms an interaction into a callable class group.
- */
-export interface CommandBlock {
-    /**
-     * The subcommand group if there is one.
-     */
-    subcommandGroup: HashiSlashSubcommandGroup;
-    /**
-     * The subcommand if there is one.
-     */
-    subcommand: HashiSlashSubcommand;
-    /**
-     * The command.
-     */
-    command: HashiSlashCommand;
-}
-/**
- * The type that represents an element of CommandBlock.
- */
-export type CommandBlockValue = CommandBlock[keyof CommandBlock];
+import { ChatInputCommandInteraction, Collection, Message } from 'discord.js';
+import { Base } from './';
+import { CoolDownManager, HashiClient, InterferingManager, CommandBlock, AnyCommandConstructor } from '../root/';
 /**
  * Represents the command manager of the client.
  */
@@ -46,7 +20,7 @@ export declare class CommandManager extends Base {
      * Get the list of commands.
      * @returns The list of commands.
      */
-    get commandsList(): Collection<string, HashiSlashCommand>;
+    get commandsList(): Collection<string, AnyCommandConstructor>;
     /**
      * The constructor of the command manager.
      * @param client The client instance.
@@ -58,13 +32,19 @@ export declare class CommandManager extends Base {
      * @param commandData The options passed (name, command options, command instance).
      * @returns The command manager instance (this).
      */
-    addCommand(commandData: HashiSlashCommand): CommandManager;
+    addCommand(commandData: AnyCommandConstructor): CommandManager;
     /**
      * Get a command from the cache with the name.
      * @param interaction The interaction.
      * @returns The found command instance, or undefined.
      */
-    getCommand(interaction: ChatInputCommandInteraction): CommandBlock;
+    getCommandFromInteraction(interaction: ChatInputCommandInteraction): CommandBlock;
+    /**
+     * Returns a message command from a message create event. Cached commands only.
+     * @param message The message.
+     * @returns The found command instance, or undefined.
+     */
+    getCommandFromMessage(message: Message): CommandBlock;
     /**
      * Load the commands from the given commands directory.
      * @returns Nothing.

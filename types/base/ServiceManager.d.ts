@@ -1,25 +1,6 @@
+import { Base, Service } from './';
 import { HashiClient } from '../root/';
-import { Service } from './Service';
 import { Classes } from '../services';
-import { Base } from './Base';
-/**
- * The object of all the services.
- */
-export interface ServicesMap {
-    [serviceName: string]: Service;
-    /**
-     * The class that includes all the required tools to create an automatic role system.
-     */
-    AutomaticRole: Classes.AutomaticRole;
-}
-/**
- * A key for the service map.
- */
-export type ServicesMapKey = keyof ServicesMap;
-/**
- * A value for the service map.
- */
-export type ServicesMapValue = ServicesMap[ServicesMapKey];
 /**
  * The class including the services and sync them.
  */
@@ -65,3 +46,21 @@ export declare class ServiceManager extends Base {
      */
     launchLinkedEvents(): void;
 }
+/**
+ * The object of all the services.
+ */
+export interface ServicesMap {
+    [serviceName: string]: Service;
+    /**
+     * The class that includes all the required tools to create an automatic role system.
+     */
+    AutomaticRole: Classes.AutomaticRole;
+}
+/**
+ * A key for the service map.
+ */
+export type ServicesMapKey = keyof ServicesMap;
+/**
+ * A value for the service map.
+ */
+export type ServicesMapValue = ServicesMap[ServicesMapKey];

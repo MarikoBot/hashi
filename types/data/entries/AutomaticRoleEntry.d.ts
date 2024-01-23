@@ -1,6 +1,6 @@
+import { DataMap } from '../../base';
 import { DataMapEntry } from '../../root';
 import { AutomaticRoleType } from '../../services/types';
-import { DataMap } from '../../base';
 /**
  * The automatic-role entry class.
  */

@@ -22,33 +22,10 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { HashiClient } from '../root/';
 import { ClientEvents } from 'discord.js';
-import { DataMap, DataMapDefinition, TypedDataMapStored } from './DataMap';
 import { SchemaDefinition } from 'mongoose';
-import { Base } from './Base';
-/**
- * The type representing the key name of an event.
- */
-export type ClientEventsKey = keyof ClientEvents;
-/**
- * A duet including a function and a list of parameters to make accomplished the on-event emitted function.
- */
-export type ServiceFunctionPackage = [(service: Service, ...arg: any[]) => any | Promise<any>, any[]];
-/**
- * The type representing the list of methods called on an event triggered moment.
- */
-export type OnEventEmittedMethods = Partial<Record<ClientEventsKey, ServiceFunctionPackage[]>>;
-/**
- * The default value for the 'event ready' function.
- */
-export declare const defaultOnEventEmittedMethods: OnEventEmittedMethods;
-/**
- * The type that represents an object with all the resources of the service.
- */
-export type ServiceResources = {
-    [resourceName: string]: ServiceResources | any;
-};
+import { Base, DataMap, DataMapDefinition, TypedDataMapStored } from './';
+import { HashiClient } from '../root/';
 /**
  * The class that represents a service.
  */
@@ -106,3 +83,25 @@ export declare class Service<ServiceDataStructure extends DataMapDefinition<Sche
      */
     link(eventName: ClientEventsKey, funcPackage: ServiceFunctionPackage): Service;
 }
+/**
+ * The default value for the 'event ready' function.
+ */
+export declare const defaultOnEventEmittedMethods: OnEventEmittedMethods;
+/**
+ * The type representing the key name of an event.
+ */
+export type ClientEventsKey = keyof ClientEvents;
+/**
+ * The type representing the list of methods called on an event triggered moment.
+ */
+export type OnEventEmittedMethods = Partial<Record<ClientEventsKey, ServiceFunctionPackage[]>>;
+/**
+ * A duet including a function and a list of parameters to make accomplished the on-event emitted function.
+ */
+export type ServiceFunctionPackage = [(service: Service, ...arg: any[]) => any | Promise<any>, any[]];
+/**
+ * The type that represents an object with all the resources of the service.
+ */
+export type ServiceResources = {
+    [resourceName: string]: ServiceResources | any;
+};

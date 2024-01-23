@@ -1,21 +1,6 @@
 import { ChatInputCommandInteraction, Collection, Snowflake } from 'discord.js';
 
 /**
- * Represents an element in the interfering commands queue.
- * Interfering commands that are same-time executed.
- */
-export type InterferingQueueElement = [
-  /**
-   * The full name of the command (including the subcommands name).
-   */
-  string,
-  /**
-   * The interaction id.
-   */
-  ChatInputCommandInteraction,
-];
-
-/**
  * The main class who manages the active cool downs for commands.
  */
 export class InterferingManager {
@@ -79,3 +64,18 @@ export class InterferingManager {
     );
   }
 }
+
+/**
+ * Represents an element in the interfering commands queue.
+ * Interfering commands that are same-time executed.
+ */
+export type InterferingQueueElement = [
+  /**
+   * The full name of the command (including the subcommands name).
+   */
+  string,
+  /**
+   * The interaction id.
+   */
+  ChatInputCommandInteraction,
+];

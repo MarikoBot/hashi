@@ -1,43 +1,42 @@
-import { HashiSlashBaseCommand, HashiSlashCommandCallbackFunction } from './HashiSlashBaseCommand';
-import { HashiSlashSubcommand } from './HashiSlashSubcommand';
-import { HashiSlashSubcommandGroup } from './HashiSlashSubcommandGroup';
+import { ChatInputCommandInteraction, APIApplicationCommand } from 'discord.js';
+import { Context } from '../base/';
+import { CommandAncillary, HashiClient, HashiSlashSubcommand, HashiSlashSubcommandGroup, COMMAND_END } from './';
 /**
- * The main class who represents a command for the Hashi package. [Extends the SlashCommandBuilder class from Discord.js.]
+ * The class who represents a base-command for the Hashi package.
  */
-export declare class HashiSlashCommand extends HashiSlashBaseCommand {
-    #private;
+export declare class HashiSlashCommand extends CommandAncillary {
     /**
-     * Get the list of hashi subcommands.
-     * @returns The list of hashi subcommands.
+     * The Discord slash command data. PROVIDE THE SUBCOMMANDS(GROUPS) DATA.
      */
-    get hashiSubcommands(): HashiSlashSubcommand[];
+    src: APIApplicationCommand;
     /**
-     * Get the list of hashi subcommand groups.
-     * @returns The list of hashi subcommand groups.
+     * The subcommand groups of the command.
      */
-    get hashiSubcommandsGroups(): HashiSlashSubcommandGroup[];
+    subcommandGroups: (typeof HashiSlashSubcommandGroup)[];
+    /**
+     * The subcommands of the command.
+     */
+    subcommands: (typeof HashiSlashSubcommand)[];
     /**
      * The constructor for the HashiSlashCommand.
-     * @param name The name of the command.
      */
-    constructor(name: HashiSlashBaseCommand['name']);
-    /**
-     * The callback function executed when the command is triggered.
-     *
-     * @param callback The function to set.
-     * @returns The class instance.
-     */
-    setCallbackFunction(callback: HashiSlashCommandCallbackFunction): HashiSlashCommand;
-    /**
-     * Add a slash command built with the Hashi source builder.
-     * @param subcommand The slash command instance to add.
-     * @returns The class instance.
-     */
-    addHashiSlashSubcommand(subcommand: HashiSlashSubcommand): HashiSlashCommand;
-    /**
-     * Add a slash command built with the Hashi source builder.
-     * @param subcommandGroup The slash command group instance to add.
-     * @returns The class instance.
-     */
-    addHashiSlashSubcommandGroup(subcommandGroup: HashiSlashSubcommandGroup): this;
+    constructor();
 }
+/**
+ * The default callback function.
+ *
+ * @param client The client that instanced the process.
+ * @param interaction The associated interaction.
+ * @param context The front-end class to manage interactions.
+ * @returns COMMAND_END The exit command code.
+ */
+export declare const defaultSlashCommandCallback: HashiSlashCommandCallbackFunction;
+/**
+ * Represents the function called back when the command is triggered.
+ *
+ * @param client The client that instanced the process.
+ * @param interaction The associated interaction.
+ * @param context The front-end class to manage interactions.
+ * @returns COMMAND_END The exit command code.
+ */
+export type HashiSlashCommandCallbackFunction = (client: HashiClient, interaction: ChatInputCommandInteraction, context: Context) => Promise<COMMAND_END>;

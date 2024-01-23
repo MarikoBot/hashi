@@ -5,61 +5,14 @@ import {
   BaseGuildVoiceChannel,
   ButtonInteraction,
   ChatInputCommandInteraction,
-  InteractionReplyOptions,
   InteractionResponse,
   Message,
   ThreadChannel,
   User,
+  InteractionReplyOptions,
 } from 'discord.js';
-import { Language, LanguageContentKey } from './LanguageManager';
-import { CommandBlockValue } from './CommandManager';
-import { Base } from './Base';
-import { HashiClient } from '../root';
-
-/**
- * The data extracted structure.
- */
-export interface ExtractedDataFromString {
-  data: {
-    [varName: string]: string;
-  };
-  origin: string;
-}
-
-/**
- * Represents the type for a context possible channel type among Discord package.
- */
-export type ContextChannel = BaseGuildTextChannel | BaseGuildVoiceChannel | ThreadChannel;
-
-/**
- * The options for the context constructor.
- */
-export interface ContextOptions {
-  /**
-   * The language id of the main user.
-   */
-  languageId?: Language;
-  /**
-   * The command associated with the context.
-   */
-  command: CommandBlockValue;
-  /**
-   * The users implicated in the context/action.
-   */
-  users: User[];
-  /**
-   * The channel where the action occurs.
-   */
-  channel: ContextChannel;
-  /**
-   * The interaction, if there is one.
-   */
-  interaction: ChatInputCommandInteraction;
-  /**
-   * The interaction button, if there is one.
-   */
-  buttonInteraction?: ButtonInteraction;
-}
+import { Base, Language, LanguageContentKey } from './';
+import { HashiClient, CommandBlockValue } from '../root';
 
 /**
  * The class who manages the front part of an interaction with Discord and the user.
@@ -313,3 +266,48 @@ export class Context extends Base {
     return { data, origin: finalStr };
   }
 }
+
+/**
+ * The options for the context constructor.
+ */
+export interface ContextOptions {
+  /**
+   * The language id of the main user.
+   */
+  languageId?: Language;
+  /**
+   * The command associated with the context.
+   */
+  command: CommandBlockValue;
+  /**
+   * The users implicated in the context/action.
+   */
+  users: User[];
+  /**
+   * The channel where the action occurs.
+   */
+  channel: ContextChannel;
+  /**
+   * The interaction, if there is one.
+   */
+  interaction: ChatInputCommandInteraction;
+  /**
+   * The interaction button, if there is one.
+   */
+  buttonInteraction?: ButtonInteraction;
+}
+
+/**
+ * The data extracted structure.
+ */
+export interface ExtractedDataFromString {
+  data: {
+    [varName: string]: string;
+  };
+  origin: string;
+}
+
+/**
+ * Represents the type for a context possible channel type among Discord package.
+ */
+export type ContextChannel = BaseGuildTextChannel | BaseGuildVoiceChannel | ThreadChannel;

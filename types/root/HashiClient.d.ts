@@ -23,58 +23,9 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 import { ChatInputCommandInteraction, Client, ClientOptions } from 'discord.js';
-import { Logger } from './Logger';
-import { CommandManager } from '../base/';
-import { EventManager } from '../base/';
-import { LanguageManager } from '../base/';
-import { Constants } from './Constants';
-import { COMMAND_END } from './HashiSlashBaseCommand';
-import { DatabaseManager } from '../base/';
-import { ServiceManager } from '../base/';
 import { ConnectOptions } from 'mongoose';
-import { FileManager } from './FileManager';
-/**
- * The options for the HashiClient. It extends the ClientOptions from discord.js and implements extra options for the Hashi module.
- */
-export interface HashiClientOptions extends ClientOptions {
-    /**
-     * The name of the project/process you're in.
-     */
-    processName: string;
-    /**
-     * The commands folder directory.
-     */
-    commandsDir?: string;
-    /**
-     * The events folder directory.
-     */
-    eventsDir?: string;
-    /**
-     * The services folder directory.
-     */
-    servicesDir?: string;
-    /**
-     * The data maps folder directory.
-     */
-    dataMapsDir?: string;
-    /**
-     * The mongoose connection information.
-     */
-    mongoose: {
-        /**
-         * The database name. Not useful to change it (only for MongoDB). Default: main.
-         */
-        dbName?: string;
-        /**
-         * The connection URI.
-         */
-        connectionURI: string;
-        /**
-         * The options for the connection.
-         */
-        connectOptions: ConnectOptions;
-    };
-}
+import { CommandManager, DatabaseManager, EventManager, LanguageManager, ServiceManager } from '../base/';
+import { Constants, FileManager, Logger, COMMAND_END } from './';
 /**
  * The HashiClient class. It extends the Client class from discord.js and implements extra methods for the Hashi module.
  */
@@ -166,5 +117,47 @@ export declare class HashiClient {
      * @param interaction The associated interaction.
      * @returns The issue of the command.
      */
-    detectAndLaunchCommand(interaction: ChatInputCommandInteraction): Promise<COMMAND_END>;
+    detectAndLaunchSlashCommand(interaction: ChatInputCommandInteraction): Promise<COMMAND_END>;
+}
+/**
+ * The options for the HashiClient. It extends the ClientOptions from discord.js and implements extra options for the Hashi module.
+ */
+export interface HashiClientOptions extends ClientOptions {
+    /**
+     * The name of the project/process you're in.
+     */
+    processName: string;
+    /**
+     * The commands folder directory.
+     */
+    commandsDir?: string;
+    /**
+     * The events folder directory.
+     */
+    eventsDir?: string;
+    /**
+     * The services folder directory.
+     */
+    servicesDir?: string;
+    /**
+     * The data maps folder directory.
+     */
+    dataMapsDir?: string;
+    /**
+     * The mongoose connection information.
+     */
+    mongoose: {
+        /**
+         * The database name. Not useful to change it (only for MongoDB). Default: main.
+         */
+        dbName?: string;
+        /**
+         * The connection URI.
+         */
+        connectionURI: string;
+        /**
+         * The options for the connection.
+         */
+        connectOptions: ConnectOptions;
+    };
 }

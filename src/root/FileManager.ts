@@ -1,26 +1,6 @@
-import { EnvPath } from './Constants';
-import { HashiClient } from './HashiClient';
 import * as fs from 'fs';
 import * as path from 'path';
-
-/**
- * The type used for defining abstractly the content of a file.
- */
-export type FileContentType = { [dataKey: string]: any };
-
-/**
- * The interface including parameters for self-research program.
- */
-export interface SelfResearchOptions {
-  /**
-   * The absolute self-path to look.
-   */
-  absPathStrSelf: string;
-  /**
-   * The recursive self-path to look.
-   */
-  rmPathStrSelf: string;
-}
+import { HashiClient, EnvPath } from './';
 
 /**
  * The class that manages the files included into this project, and also those at the root of the package user.
@@ -117,3 +97,22 @@ export class FileManager {
     }[process.env.ENVPATH];
   }
 }
+
+/**
+ * The interface including parameters for self-research program.
+ */
+export interface SelfResearchOptions {
+  /**
+   * The absolute self-path to look.
+   */
+  absPathStrSelf: string;
+  /**
+   * The recursive self-path to look.
+   */
+  rmPathStrSelf: string;
+}
+
+/**
+ * The type used for defining abstractly the content of a file.
+ */
+export type FileContentType = { [dataKey: string]: any };

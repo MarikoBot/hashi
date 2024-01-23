@@ -22,16 +22,9 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { HashiClient } from '../root/';
 import { ConnectOptions } from 'mongoose';
-import { DataMap, TypedDataMapStored } from './DataMap';
-import { Base } from './Base';
-/**
- * The type that includes all the data maps of the database.
- */
-export type DataMapsObj = {
-    [dmName: string]: DataMap<any>;
-};
+import { Base, DataMap, TypedDataMapStored } from './';
+import { HashiClient } from '../root/';
 /**
  * The class who manages the database of the project.
  */
@@ -105,3 +98,9 @@ export declare class DatabaseManager extends Base {
      */
     ensure(dataMapName: string, force?: boolean): DataMap<TypedDataMapStored>;
 }
+/**
+ * The type that includes all the data maps of the database.
+ */
+export type DataMapsObj = {
+    [dmName: string]: DataMap<any>;
+};

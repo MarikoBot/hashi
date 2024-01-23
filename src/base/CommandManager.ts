@@ -1,38 +1,23 @@
-import { ChatInputCommandInteraction, Collection } from 'discord.js';
-import { HashiSlashBaseCommand, HashiSlashCommand } from '../root/';
-import { CoolDownManager } from '../root/';
-import { InterferingManager } from '../root/';
-import { HashiClient } from '../root/';
-import { HashiSlashSubcommand } from '../root/';
-import { HashiSlashSubcommandGroup } from '../root/';
-import { Base } from './Base';
-import * as fs from 'fs';
-import * as path from 'path';
-import { FileManager } from '../root/FileManager';
-import { Model } from 'mongoose';
-
-/**
- * A triplet returned when the client transforms an interaction into a callable class group.
- */
-export interface CommandBlock {
-  /**
-   * The subcommand group if there is one.
-   */
-  subcommandGroup: HashiSlashSubcommandGroup;
-  /**
-   * The subcommand if there is one.
-   */
-  subcommand: HashiSlashSubcommand;
-  /**
-   * The command.
-   */
-  command: HashiSlashCommand;
-}
-
-/**
- * The type that represents an element of CommandBlock.
- */
-export type CommandBlockValue = CommandBlock[keyof CommandBlock];
+import {
+  ChatInputCommandInteraction,
+  Collection,
+  Message,
+  APIApplicationCommand,
+  ApplicationCommandDataResolvable,
+} from 'discord.js';
+import { Base } from './';
+import {
+  CoolDownManager,
+  FileManager,
+  HashiClient,
+  HashiMessageCommand,
+  HashiSlashCommand,
+  HashiSlashSubcommand,
+  HashiSlashSubcommandGroup,
+  InterferingManager,
+  CommandBlock,
+  AnyCommandConstructor,
+} from '../root/';
 
 /**
  * Represents the command manager of the client.
@@ -51,7 +36,7 @@ export class CommandManager extends Base {
   /**
    * The list of commands.
    */
-  readonly #commandsList: Collection<string, HashiSlashCommand> = new Collection<string, HashiSlashCommand>();
+  readonly #commandsList: Collection<string, AnyCommandConstructor> = new Collection<string, AnyCommandConstructor>();
 
   /**
    * Get the cool downs' manager.
@@ -73,7 +58,7 @@ export class CommandManager extends Base {
    * Get the list of commands.
    * @returns The list of commands.
    */
-  get commandsList(): Collection<string, HashiSlashCommand> {
+  get commandsList(): Collection<string, AnyCommandConstructor> {
     return this.#commandsList;
   }
 
@@ -91,8 +76,8 @@ export class CommandManager extends Base {
    * @param commandData The options passed (name, command options, command instance).
    * @returns The command manager instance (this).
    */
-  public addCommand(commandData: HashiSlashCommand): CommandManager {
-    this.commandsList.set(commandData.name, commandData);
+  public addCommand(commandData: AnyCommandConstructor): CommandManager {
+    this.commandsList.set(commandData.prototype.id, commandData);
     return this;
   }
 
@@ -101,40 +86,51 @@ export class CommandManager extends Base {
    * @param interaction The interaction.
    * @returns The found command instance, or undefined.
    */
-  public getCommand(interaction: ChatInputCommandInteraction): CommandBlock {
-    let command: HashiSlashCommand = this.commandsList.get(interaction.commandName);
+  public getCommandFromInteraction(interaction: ChatInputCommandInteraction): CommandBlock {
+    let command: HashiSlashCommand = <HashiSlashCommand>new (this.commandsList.get(interaction.commandName))();
 
-    const commandSubcommandGroupOption: string = command.hashiSubcommandsGroups.length
+    const commandSubcommandGroupOption: string = command.subcommandGroups.length
       ? interaction.options.getSubcommandGroup()
       : null;
-    const commandSubcommandOption: string = command.hashiSubcommands.length
-      ? interaction.options.getSubcommand()
-      : null;
+    const commandSubcommandOption: string = command.subcommands.length ? interaction.options.getSubcommand() : null;
 
     let subcommandGroup: HashiSlashSubcommandGroup;
     let subcommand: HashiSlashSubcommand;
 
     if (commandSubcommandGroupOption) {
-      subcommandGroup = command.hashiSubcommandsGroups
-        .filter((group: HashiSlashSubcommandGroup): boolean => group.name === commandSubcommandGroupOption)
+      subcommandGroup = command.subcommandGroups
+        .map((group: typeof HashiSlashSubcommandGroup) => new group())
+        .filter((group: HashiSlashSubcommandGroup): boolean => group.id === commandSubcommandGroupOption)
         ?.at(0);
-      subcommand = subcommandGroup.hashiSubcommands
-        .filter((cmd: HashiSlashSubcommand): boolean => cmd.name === interaction.options.getSubcommand())
+      subcommand = subcommandGroup.subcommands
+        .map((group: typeof HashiSlashSubcommand) => new group())
+        .filter((cmd: HashiSlashSubcommand): boolean => cmd.id === commandSubcommandOption)
         ?.at(0);
 
-      subcommandGroup.setClient(this.client);
-      subcommand.setClient(this.client);
+      subcommandGroup.client = this.client;
+      subcommand.client = this.client;
     } else if (commandSubcommandOption) {
-      subcommand = command.hashiSubcommands
-        .filter((cmd: HashiSlashSubcommand): boolean => cmd.name === commandSubcommandOption)
+      subcommand = command.subcommands
+        .map((group: typeof HashiSlashSubcommand) => new group())
+        .filter((cmd: HashiSlashSubcommand): boolean => cmd.id === commandSubcommandOption)
         ?.at(0);
 
-      subcommand.setClient(this.client);
+      subcommand.client = this.client;
     }
 
-    command.setClient(this.client);
+    command.client = this.client;
 
     return { command, subcommand, subcommandGroup };
+  }
+
+  /**
+   * Returns a message command from a message create event. Cached commands only.
+   * @param message The message.
+   * @returns The found command instance, or undefined.
+   */
+  public getCommandFromMessage(message: Message): CommandBlock {
+    let command: HashiMessageCommand = <HashiMessageCommand>new (this.commandsList.get(message.content))();
+    return { command, subcommand: command };
   }
 
   /**
@@ -142,31 +138,23 @@ export class CommandManager extends Base {
    * @returns Nothing.
    */
   public async loadCommands(): Promise<void> {
-    const commandFiles: [string, HashiSlashCommand][] = this.client.fileManager.read<HashiSlashCommand>(
+    const commandFiles: [string, typeof HashiSlashCommand][] = this.client.fileManager.read<typeof HashiSlashCommand>(
       `${FileManager.ABSPATH}${this.client.commandsDir}`,
       `${FileManager.RMPATH}${this.client.commandsDir}`,
-      {
-        absPathStrSelf: `./lib/${this.client.commandsDir}`,
-        rmPathStrSelf: `../${this.client.commandsDir}`,
-      },
     );
 
-    const commands: HashiSlashCommand[] = [];
-    let commandData: HashiSlashCommand;
+    const commands: APIApplicationCommand[] = [];
+    let commandData: typeof HashiSlashCommand;
 
-    let i: number = -1;
-    while (++i < commandFiles.length) {
-      commandData = commandFiles[i][1][commandFiles[i][0]];
-      commandData.setClient(this.client);
+    for (const file of commandFiles) {
+      commandData = file[1];
 
-      this.client.commandManager.commandsList.set(commandData.name, commandData);
+      this.client.commandManager.commandsList.set(commandData.prototype.id, commandData);
 
-      const discordDataOnly: HashiSlashCommand = Object.assign(new HashiSlashCommand('default'), commandData);
-      discordDataOnly.clearClient();
-      discordDataOnly.clearContext();
+      const discordDataOnly: APIApplicationCommand = commandData.prototype.src;
       commands.push(discordDataOnly);
     }
 
-    void (await this.client.src.application.commands.set(commands));
+    void (await this.client.src.application.commands.set(<readonly ApplicationCommandDataResolvable[]>commands));
   }
 }

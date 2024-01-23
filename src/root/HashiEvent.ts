@@ -3,21 +3,6 @@
 import { HashiClient } from './HashiClient';
 
 /**
- * The model of a callback function for an event.
- * @param client The client instance.
- * @param args The command args.
- */
-export type HashiEventCallbackFunction = (client: HashiClient, ...args: any[]) => void;
-
-/**
- * A default callback function used when nothing is set.
- * @returns Nothing.
- */
-export async function defaultEventCallback(): Promise<void> {
-  return void setTimeout((): null => null);
-}
-
-/**
  * Represents an Event on client service.
  */
 export class HashiEvent {
@@ -98,3 +83,18 @@ export class HashiEvent {
     return this;
   }
 }
+
+/**
+ * A default callback function used when nothing is set.
+ * @returns Nothing.
+ */
+export async function defaultEventCallback(): Promise<void> {
+  return void setTimeout((): null => null);
+}
+
+/**
+ * The model of a callback function for an event.
+ * @param client The client instance.
+ * @param args The command args.
+ */
+export type HashiEventCallbackFunction = (client: HashiClient, ...args: any[]) => void;

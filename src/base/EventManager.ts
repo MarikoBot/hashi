@@ -1,10 +1,6 @@
 import { Collection } from 'discord.js';
-import { HashiEvent, HashiSlashCommand } from '../root/';
-import { HashiClient } from '../root/';
-import * as fs from 'fs';
-import * as path from 'path';
-import { Base } from './Base';
-import { FileManager } from '../root/FileManager';
+import { Base } from './';
+import { FileManager, HashiClient, HashiEvent } from '../root/';
 
 /**
  * Represents the event manager for the client service.

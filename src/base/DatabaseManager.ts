@@ -1,15 +1,8 @@
 // noinspection JSUnusedGlobalSymbols
 
-import { HashiClient } from '../root/';
-import { connect, ConnectOptions, Model, Schema, SchemaDefinition } from 'mongoose';
-import { DataMap, DataMapDefinition, TypedDataMapStored } from './DataMap';
-import { Base } from './Base';
-import { FileManager } from '../root/FileManager';
-
-/**
- * The type that includes all the data maps of the database.
- */
-export type DataMapsObj = { [dmName: string]: DataMap<any> };
+import { connect, Model, ConnectOptions } from 'mongoose';
+import { Base, DataMap, DataMapDefinition, TypedDataMapStored } from './';
+import { FileManager, HashiClient } from '../root/';
 
 /**
  * The class who manages the database of the project.
@@ -181,3 +174,8 @@ export class DatabaseManager extends Base {
     return null;
   }
 }
+
+/**
+ * The type that includes all the data maps of the database.
+ */
+export type DataMapsObj = { [dmName: string]: DataMap<any> };
