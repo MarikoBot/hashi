@@ -5,55 +5,36 @@ import { HashiClient, CommandBlockValue } from '../root';
  * The class who manages the front part of an interaction with Discord and the user.
  */
 export declare class Context extends Base {
-    #private;
     /**
-     * Get the language id.
-     * @returns The language id.
+     * The language id of the main user.
      */
-    get languageId(): Language;
+    languageId: Language;
     /**
-     * Get the command.
-     * @returns The command.
+     * The command associated with the context.
      */
-    get command(): CommandBlockValue;
+    command: CommandBlockValue;
     /**
-     * Get the users.
-     * @returns The users.
+     * The users implicated in the context/action.
      */
-    get users(): User[];
+    users: User[];
     /**
-     * Get the channel.
-     * @returns The channel.
+     * The channel where the action occurs.
      */
-    get channel(): ContextChannel;
+    channel: ContextChannel;
     /**
-     * Get the interaction.
-     * @returns The interaction.
+     * The interaction, if there is one.
      */
-    get interaction(): ChatInputCommandInteraction;
+    interaction: ChatInputCommandInteraction;
     /**
-     * Get the button interaction.
-     * @returns The button interaction.
+     * The interaction button, if there is one.
      */
-    get buttonInter(): ButtonInteraction;
+    buttonInteraction: ButtonInteraction;
     /**
      * The constructor of the context.
      * @param client The client instance.
      * @param options The context options.
      */
     constructor(client: HashiClient, options: ContextOptions);
-    /**
-     * Set the language id.
-     * @param languageId The language id to set.
-     * @returns The class instance.
-     */
-    setLanguageId(languageId: Language): Context;
-    /**
-     * Set the command.
-     * @param commandBlock The command block to set.
-     * @returns The class instance.
-     */
-    setCommand(commandBlock: CommandBlockValue): Context;
     /**
      * Add a user.
      * @param user The user to add.
@@ -66,30 +47,6 @@ export declare class Context extends Base {
      * @returns The class instance.
      */
     removeUser(user: User): Context;
-    /**
-     * Set the users.
-     * @param users The users to set.
-     * @returns The class instance.
-     */
-    setUsers(users: User[]): Context;
-    /**
-     * Set the channel.
-     * @param channel The channel to set.
-     * @returns The class instance.
-     */
-    setChannel(channel: ContextChannel): Context;
-    /**
-     * Set the interaction.
-     * @param interaction The interaction to set.
-     * @returns The class instance.
-     */
-    setInteraction(interaction: ChatInputCommandInteraction): Context;
-    /**
-     * Set the button interaction.
-     * @param buttonInter The button interaction to set.
-     * @returns The class instance.
-     */
-    setButtonInteraction(buttonInter: ButtonInteraction): Context;
     /**
      * Reply to an interaction.
      * @param messageData The message data to send (Discord.<BaseMessageOptions>).

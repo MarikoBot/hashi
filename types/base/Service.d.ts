@@ -30,32 +30,26 @@ import { HashiClient } from '../root/';
  * The class that represents a service.
  */
 export declare class Service<ServiceDataStructure extends DataMapDefinition<SchemaDefinition> = DataMapDefinition<SchemaDefinition>> extends Base {
-    #private;
     /**
      * The name of the service.
-     * @returns The name of the service.
      */
-    get name(): string;
+    readonly name: string;
     /**
      * The list of methods called when a precise event is executed.
-     * @returns The list of methods.
      */
-    get onEmitted(): OnEventEmittedMethods;
+    readonly onEmitted: OnEventEmittedMethods;
     /**
      * The data map name associated with the service.
-     * @returns The data map name.
      */
-    get dataMapName(): string;
+    readonly dataMapName: string;
     /**
      * The version of the service.
-     * @returns The version of the service.
      */
-    get version(): string;
+    readonly version: string;
     /**
-     * The resources for the service.
-     * @returns The resources.
+     * The object including all the resources of the service.
      */
-    get resources(): ServiceResources;
+    resources: ServiceResources;
     /**
      * The constructor of the class. You can pass here the attributes and the functions you need.
      * @param client The client instance.
@@ -64,13 +58,6 @@ export declare class Service<ServiceDataStructure extends DataMapDefinition<Sche
      * @param dataMapName The name of the data map.
      */
     constructor(client: HashiClient, name: string, version: string, dataMapName: string);
-    /**
-     * Set the resources with all the objects/classes linked to the service.
-     * Regroup all in this property.
-     * @param resources The resources object.
-     * @returns The class instance.
-     */
-    setResources(resources: ServiceResources): Service;
     /**
      * Returns the linked data map.
      * @returns The data map.

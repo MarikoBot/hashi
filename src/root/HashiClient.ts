@@ -231,9 +231,9 @@ export class HashiClient {
     this.#servicesDir = options.servicesDir || 'services/classes';
     this.#dataMapsDir = options.dataMapsDir || 'data/definitions';
 
-    this.databaseManager.setDbName(options.mongoose.dbName || 'main');
-    this.databaseManager.setConnectOptions(options.mongoose.connectOptions || { dbName: this.databaseManager.dbName });
-    if (options.mongoose.connectionURI) this.databaseManager.setConnectionURI(options.mongoose.connectionURI);
+    this.databaseManager.dbName = options.mongoose.dbName || 'main';
+    this.databaseManager.connectOptions = options.mongoose.connectOptions || { dbName: this.databaseManager.dbName };
+    if (options.mongoose.connectionURI) this.databaseManager.connectionURI = options.mongoose.connectionURI;
   }
 
   /**

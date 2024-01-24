@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, SlashCommandBuilder, APIApplicationCommand, ChatInputApplicationCommandData, DiscordjsError, DiscordAPIError } from 'discord.js';
+import { ChatInputCommandInteraction, DiscordjsError, DiscordAPIError, SlashCommandBuilder, APIApplicationCommand, ChatInputApplicationCommandData } from 'discord.js';
 import { Context } from '../base';
 import { HashiClient, HashiMessageCommand, HashiSlashCommand, HashiSlashSubcommand, HashiSlashSubcommandGroup, HashiSlashCommandCallbackFunction } from './';
 /**

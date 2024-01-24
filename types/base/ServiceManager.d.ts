@@ -5,12 +5,10 @@ import { Classes } from '../services';
  * The class including the services and sync them.
  */
 export declare class ServiceManager extends Base {
-    #private;
     /**
-     * Get the services.
-     * @returns The services.
+     * The list of services.
      */
-    get services(): ServicesMap;
+    services: ServicesMap;
     /**
      * The constructor of the command manager.
      * @param client The client instance.

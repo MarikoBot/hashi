@@ -1,5 +1,6 @@
 import { Collection } from 'discord.js';
 import { Base } from './';
+import { Validators } from '../decorators';
 import { FileManager, HashiClient, HashiEvent } from '../root/';
 
 /**
@@ -9,15 +10,8 @@ export class EventManager extends Base {
   /**
    * The collection of the events.
    */
-  readonly #eventsList: Collection<string, HashiEvent> = new Collection();
-
-  /**
-   * Get the events list.
-   * @returns The events list.
-   */
-  get eventsList(): Collection<string, HashiEvent> {
-    return this.#eventsList;
-  }
+  @Validators.IsInstanceOf.Collection
+  public readonly eventsList: Collection<string, HashiEvent> = new Collection();
 
   /**
    * The constructor of the event manager.

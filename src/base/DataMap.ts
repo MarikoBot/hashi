@@ -2,6 +2,7 @@
 
 import { Query, Schema, Types, Model, SchemaDefinition } from 'mongoose';
 import { Base } from './';
+import { Validators } from '../decorators';
 import { DataMapEntry, HashiClient } from '../root/';
 
 /**
@@ -14,22 +15,26 @@ export class DataMap<
   /**
    * The name of the data map.
    */
-  #name: string = 'default';
+  @Validators.StringValidator.ValidId
+  public name: string = 'default';
 
   /**
    * The entry class to use while using the data.
    */
-  #entryClass: EntryClass;
+  @Validators.IsInstanceOf.DataMapEntry
+  public entryClass: EntryClass;
 
   /**
    * The primary key(s). Separate it with a '+' sign.
    */
-  #primaryKey: string = 'discordId';
+  @Validators.StringValidator.ValidPrimaryKeys
+  public primaryKey: string = 'discordId';
 
   /**
    * The default data for the data map.
    */
-  #definition: DataMapDefinition<SchemaDefinition> = {
+  @Validators.ObjectValidator.IsDataMapDefinition
+  public definition: DataMapDefinition<SchemaDefinition> = {
     name: 'unnamedMap',
     entry: DataMapEntry<{ discordId: string }>,
     schema: new Schema<SchemaDefinition>({ discordId: { type: String } }),
@@ -41,60 +46,14 @@ export class DataMap<
   /**
    * Intents for the database. Be careful! Those intents MUST BE set before the launch of the process.
    */
-  #intents: DATAMAP_INTENTS[] = [];
+  @Validators.ArrayValidator.OnlyEnumValues
+  public intents: DATAMAP_INTENTS[] = [];
 
   /**
    * The collection/model of the schema.
    */
-  #model: Model<DataMapDefinition<SchemaDefinition>>;
-
-  /**
-   * Get the data map name.
-   * @returns The name.
-   */
-  get name(): string {
-    return this.#name;
-  }
-
-  /**
-   * Get the entry class.
-   * @returns The entry class.
-   */
-  get entryClass(): EntryClass {
-    return this.#entryClass;
-  }
-
-  /**
-   * Get the primary key.
-   * @returns The primary key.
-   */
-  get primaryKey(): string {
-    return this.#primaryKey;
-  }
-
-  /**
-   * Get the default data.
-   * @returns The default data.
-   */
-  get definition(): DataMapDefinition<SchemaDefinition> {
-    return this.#definition;
-  }
-
-  /**
-   * Get the intents.
-   * @returns The intents.
-   */
-  get intents(): DATAMAP_INTENTS[] {
-    return this.#intents;
-  }
-
-  /**
-   * Get the data map.
-   * @returns The data map.
-   */
-  get model(): Model<DataMapDefinition<SchemaDefinition>> {
-    return this.#model;
-  }
+  @Validators.IsInstanceOf.Model
+  model: Model<DataMapDefinition<SchemaDefinition>>;
 
   /**
    * The constructor of a data map.
@@ -108,53 +67,8 @@ export class DataMap<
     entryClass: EntryClass = <EntryClass>(<unknown>DataMapEntry<DataStructure>),
   ) {
     super(client);
-    this.#name = name;
-    this.#entryClass = entryClass;
-  }
-
-  /**
-   * Set the data map name.
-   * @param name The data map name to set.
-   * @returns The class instance.
-   */
-  public setName(name: string): DataMap<DataStructure, EntryClass> {
-    if (typeof name === 'string') this.#name = name;
-    return this;
-  }
-
-  /**
-   * Set the entry class.
-   * @param entryClass the entry class to set.
-   * @returns The class instance.
-   */
-  public setEntryClass(entryClass: EntryClass): DataMap<DataStructure, EntryClass> {
-    if (typeof entryClass === 'object') this.#entryClass = entryClass;
-    return this;
-  }
-
-  /**
-   * Set the primary key.
-   * @param primaryKey The primary key to set.
-   * @returns The class instance.
-   */
-  public setPrimaryKey(primaryKey: string): DataMap<DataStructure, EntryClass> {
-    if (typeof primaryKey === 'string') this.#primaryKey = primaryKey;
-    return this;
-  }
-
-  /**
-   * Set the definition data.
-   * @param definition The definition data to set.
-   * @returns The data map.
-   */
-  public setDefinition<IStructure extends SchemaDefinition>(
-    definition: DataMapDefinition<IStructure>,
-  ): DataMap<DataStructure, EntryClass> {
-    if (typeof definition === 'object' && definition !== null) {
-      this.#definition = definition;
-      this.#model = definition.model;
-    }
-    return this;
+    this.name = name;
+    this.entryClass = entryClass;
   }
 
   /**
@@ -163,7 +77,7 @@ export class DataMap<
    * @returns The data map.
    */
   public addIntent(intent: DATAMAP_INTENTS): DataMap<DataStructure, EntryClass> {
-    if (intent === DATAMAP_INTENTS.CORE) this.#intents.push(intent);
+    if (intent === DATAMAP_INTENTS.CORE) this.intents.push(intent);
     return this;
   }
 

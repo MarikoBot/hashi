@@ -3,6 +3,7 @@
 import { ClientEvents } from 'discord.js';
 import { SchemaDefinition } from 'mongoose';
 import { Base, DataMap, DataMapDefinition, TypedDataMapStored } from './';
+import { Validators } from '../decorators';
 import { HashiClient } from '../root/';
 
 /**
@@ -14,67 +15,32 @@ export class Service<
   /**
    * The name of the service.
    */
-  readonly #name: string;
+  @Validators.StringValidator.ValidId
+  public readonly name: string;
 
   /**
    * The list of methods called when a precise event is executed.
    */
-  readonly #onEmitted: OnEventEmittedMethods = defaultOnEventEmittedMethods;
+  @Validators.ObjectValidator.KeyFunctionPair
+  public readonly onEmitted: OnEventEmittedMethods = defaultOnEventEmittedMethods;
 
   /**
    * The data map name associated with the service.
    */
-  readonly #dataMapName: string;
+  @Validators.StringValidator.ValidId
+  public readonly dataMapName: string;
 
   /**
    * The version of the service.
    */
-  readonly #version: string = '0.1.0';
+  @Validators.StringValidator.ValidVersion
+  public readonly version: string = '0.1.0';
 
   /**
    * The object including all the resources of the service.
    */
-  #resources: ServiceResources;
-
-  /**
-   * The name of the service.
-   * @returns The name of the service.
-   */
-  get name(): string {
-    return this.#name;
-  }
-
-  /**
-   * The list of methods called when a precise event is executed.
-   * @returns The list of methods.
-   */
-  get onEmitted(): OnEventEmittedMethods {
-    return this.#onEmitted;
-  }
-
-  /**
-   * The data map name associated with the service.
-   * @returns The data map name.
-   */
-  get dataMapName(): string {
-    return this.#dataMapName;
-  }
-
-  /**
-   * The version of the service.
-   * @returns The version of the service.
-   */
-  get version(): string {
-    return this.#version;
-  }
-
-  /**
-   * The resources for the service.
-   * @returns The resources.
-   */
-  get resources(): ServiceResources {
-    return this.#resources;
-  }
+  @Validators.ObjectValidator.KeyObjectPair
+  public resources: ServiceResources;
 
   /**
    * The constructor of the class. You can pass here the attributes and the functions you need.
@@ -85,22 +51,11 @@ export class Service<
    */
   constructor(client: HashiClient, name: string, version: string, dataMapName: string) {
     super(client);
-    this.#name = name;
-    this.#version = version || '0.1.0';
-    this.#dataMapName = dataMapName;
+    this.name = name;
+    this.version = version || '0.1.0';
+    this.dataMapName = dataMapName;
 
-    this.client.databaseManager.ensure(this.#dataMapName, true);
-  }
-
-  /**
-   * Set the resources with all the objects/classes linked to the service.
-   * Regroup all in this property.
-   * @param resources The resources object.
-   * @returns The class instance.
-   */
-  public setResources(resources: ServiceResources): Service {
-    this.#resources = resources;
-    return this;
+    this.client.databaseManager.ensure(this.dataMapName, true);
   }
 
   /**

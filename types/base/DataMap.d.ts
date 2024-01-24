@@ -29,37 +29,30 @@ import { DataMapEntry, HashiClient } from '../root/';
  * The main class. Represents a data map technology.
  */
 export declare class DataMap<DataStructure extends TypedDataMapStored, EntryClass extends new (...args: any[]) => DataMapEntry<DataStructure> = typeof DataMapEntry> extends Base {
-    #private;
     /**
-     * Get the data map name.
-     * @returns The name.
+     * The name of the data map.
      */
-    get name(): string;
+    name: string;
     /**
-     * Get the entry class.
-     * @returns The entry class.
+     * The entry class to use while using the data.
      */
-    get entryClass(): EntryClass;
+    entryClass: EntryClass;
     /**
-     * Get the primary key.
-     * @returns The primary key.
+     * The primary key(s). Separate it with a '+' sign.
      */
-    get primaryKey(): string;
+    primaryKey: string;
     /**
-     * Get the default data.
-     * @returns The default data.
+     * The default data for the data map.
      */
-    get definition(): DataMapDefinition<SchemaDefinition>;
+    definition: DataMapDefinition<SchemaDefinition>;
     /**
-     * Get the intents.
-     * @returns The intents.
+     * Intents for the database. Be careful! Those intents MUST BE set before the launch of the process.
      */
-    get intents(): DATAMAP_INTENTS[];
+    intents: DATAMAP_INTENTS[];
     /**
-     * Get the data map.
-     * @returns The data map.
+     * The collection/model of the schema.
      */
-    get model(): Model<DataMapDefinition<SchemaDefinition>>;
+    model: Model<DataMapDefinition<SchemaDefinition>>;
     /**
      * The constructor of a data map.
      * @param client The client instance.
@@ -67,30 +60,6 @@ export declare class DataMap<DataStructure extends TypedDataMapStored, EntryClas
      * @param entryClass The entry class.
      */
     constructor(client: HashiClient, name: string, entryClass?: EntryClass);
-    /**
-     * Set the data map name.
-     * @param name The data map name to set.
-     * @returns The class instance.
-     */
-    setName(name: string): DataMap<DataStructure, EntryClass>;
-    /**
-     * Set the entry class.
-     * @param entryClass the entry class to set.
-     * @returns The class instance.
-     */
-    setEntryClass(entryClass: EntryClass): DataMap<DataStructure, EntryClass>;
-    /**
-     * Set the primary key.
-     * @param primaryKey The primary key to set.
-     * @returns The class instance.
-     */
-    setPrimaryKey(primaryKey: string): DataMap<DataStructure, EntryClass>;
-    /**
-     * Set the definition data.
-     * @param definition The definition data to set.
-     * @returns The data map.
-     */
-    setDefinition<IStructure extends SchemaDefinition>(definition: DataMapDefinition<IStructure>): DataMap<DataStructure, EntryClass>;
     /**
      * Add an intent.
      * @param intent The intent to add.

@@ -2,6 +2,7 @@
 
 import { connect, Model, ConnectOptions } from 'mongoose';
 import { Base, DataMap, DataMapDefinition, TypedDataMapStored } from './';
+import { Validators } from '../decorators';
 import { FileManager, HashiClient } from '../root/';
 
 /**
@@ -11,54 +12,26 @@ export class DatabaseManager extends Base {
   /**
    * The database name. Not useful to change it (only for MongoDB). Default: main.
    */
-  #dbName: string = 'main';
+  @Validators.StringValidator.ValidId
+  public dbName: string = 'main';
 
   /**
    * The connection URI.
    */
-  #connectionURI: string;
+  @Validators.StringValidator.NotEmpty
+  public connectionURI: string;
 
   /**
    * The options for the connection.
    */
-  #connectOptions: ConnectOptions;
+  @Validators.ObjectValidator.Matches
+  public connectOptions: ConnectOptions;
 
   /**
    * The list of dataMaps.
    */
-  #dataMaps: DataMapsObj = {};
-
-  /**
-   * Get the database name.
-   * @returns The database name.
-   */
-  get dbName(): string {
-    return this.#dbName;
-  }
-
-  /**
-   * Get the connection URI.
-   * @returns The connection URI.
-   */
-  get connectionURI(): string {
-    return this.#connectionURI;
-  }
-
-  /**
-   * Get the connect options.
-   * @returns The connect options.
-   */
-  get connectOptions(): ConnectOptions {
-    return this.#connectOptions;
-  }
-
-  /**
-   * Get the data maps.
-   * @returns The data maps.
-   */
-  get dataMaps(): DataMapsObj {
-    return this.#dataMaps;
-  }
+  @Validators.ObjectValidator.KeyDataMapPair
+  public dataMaps: DataMapsObject = {};
 
   /**
    * The constructor of the class.
@@ -66,36 +39,6 @@ export class DatabaseManager extends Base {
    */
   constructor(client: HashiClient) {
     super(client);
-  }
-
-  /**
-   * Set the database name.
-   * @param dbName The database name to set.
-   * @returns The class instance.
-   */
-  public setDbName(dbName: string): DatabaseManager {
-    if (typeof dbName === 'string') this.#dbName = dbName;
-    return this;
-  }
-
-  /**
-   * Set the connection URI.
-   * @param connectionURI The connection URI to set.
-   * @returns The class instance.
-   */
-  public setConnectionURI(connectionURI: string): DatabaseManager {
-    if (typeof connectionURI === 'string') this.#connectionURI = connectionURI;
-    return this;
-  }
-
-  /**
-   * Set the connect options.
-   * @param connectOptions The connect options to set.
-   * @returns The class instance.
-   */
-  public setConnectOptions(connectOptions: ConnectOptions): DatabaseManager {
-    if (typeof connectOptions === 'object') this.#connectOptions = connectOptions;
-    return this;
   }
 
   /**
@@ -141,7 +84,7 @@ export class DatabaseManager extends Base {
       model = models[i][1][models[i][0]];
 
       dataMap = this.createDataMap(definition.name);
-      dataMap.setDefinition({ ...definition, model });
+      dataMap.definition = { ...definition, model };
     }
     return this;
   }
@@ -155,8 +98,8 @@ export class DatabaseManager extends Base {
     connectionURI: string = this.connectionURI,
     connectOptions: ConnectOptions = { dbName: this.dbName },
   ): Promise<void> {
-    if (connectionURI) this.#connectionURI = connectionURI;
-    if (connectOptions) this.#connectOptions = connectOptions;
+    if (connectionURI) this.connectionURI = connectionURI;
+    if (connectOptions) this.connectOptions = connectOptions;
 
     await connect(this.connectionURI, this.connectOptions);
   }
@@ -178,4 +121,4 @@ export class DatabaseManager extends Base {
 /**
  * The type that includes all the data maps of the database.
  */
-export type DataMapsObj = { [dmName: string]: DataMap<any> };
+export type DataMapsObject = { [dmName: string]: DataMap<any> };

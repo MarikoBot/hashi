@@ -1,13 +1,14 @@
 import {
   ChatInputCommandInteraction,
+  DiscordjsError,
+  DiscordAPIError,
   GuildMemberRoleManager,
   SlashCommandBuilder,
   APIApplicationCommand,
   ChatInputApplicationCommandData,
-  DiscordjsError,
-  DiscordAPIError,
 } from 'discord.js';
 import { Context } from '../base';
+import { Validators } from '../decorators';
 import {
   HashiClient,
   HashiMessageCommand,
@@ -31,11 +32,13 @@ export class CommandAncillary {
   /**
    * The client instance.
    */
+  @Validators.IsInstanceOf.HashiClient
   public client: HashiClient;
 
   /**
    * The name of the command.
    */
+  @Validators.StringValidator.ValidId
   public id: string;
 
   /**
@@ -284,20 +287,20 @@ export class CommandAncillary {
       users: [interaction.user],
     });
 
-    ctx.setInteraction(interaction);
+    ctx.interaction = interaction;
 
     [commandBlock.command, ctx] = HashiSlashCommand.refreshContext(commandBlock.command, ctx);
     let flowWall: boolean = await HashiSlashCommand.flowControlWall(client, interaction, ctx);
     if (!flowWall) return COMMAND_END.ERROR;
 
     if (commandBlock.subcommandGroup) {
-      ctx.setCommand(commandBlock.subcommandGroup);
+      ctx.command = commandBlock.subcommandGroup;
       command.context = ctx;
       flowWall = await HashiSlashCommand.flowControlWall(client, interaction, ctx);
       if (!flowWall) return COMMAND_END.ERROR;
     }
     if (commandBlock.subcommand) {
-      ctx.setCommand(commandBlock.subcommand);
+      ctx.command = commandBlock.subcommand;
       command.context = ctx;
       flowWall = await HashiSlashCommand.flowControlWall(client, interaction, ctx);
       if (!flowWall) return COMMAND_END.ERROR;
@@ -313,14 +316,14 @@ export class CommandAncillary {
     if (commandWall === COMMAND_END.ERROR) return commandWall;
 
     if (commandBlock.subcommandGroup) {
-      command.context.setCommand(commandBlock.subcommandGroup);
+      command.context.command = commandBlock.subcommandGroup;
 
       commandWall = (await commandBlock.subcommandGroup.callback(client, interaction, ctx)) as COMMAND_END;
       if (commandWall === COMMAND_END.ERROR) return commandWall;
     }
 
     if (commandBlock.subcommand) {
-      command.context.setCommand(commandBlock.subcommand);
+      command.context.command = commandBlock.subcommand;
 
       commandWall = (await commandBlock.subcommand.callback(client, interaction, command.context)) as COMMAND_END;
       if (commandWall === COMMAND_END.ERROR) return commandWall;
@@ -337,7 +340,7 @@ export class CommandAncillary {
    * @returns The new context and the new command.
    */
   private static refreshContext(commandBlockValue: CommandBlockValue, context: Context): [CommandBlockValue, Context] {
-    context.setCommand(commandBlockValue);
+    context.command = commandBlockValue;
     commandBlockValue.context = context;
     return [commandBlockValue, context];
   }

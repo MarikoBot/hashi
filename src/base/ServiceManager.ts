@@ -1,6 +1,7 @@
 // noinspection JSUnusedGlobalSymbols
 
 import { Base, Service, ClientEventsKey } from './';
+import { Validators } from '../decorators';
 import { FileManager, HashiClient } from '../root/';
 import { Classes } from '../services';
 
@@ -11,20 +12,13 @@ export class ServiceManager extends Base {
   /**
    * The list of services.
    */
-  #services: ServicesMap = {
+  @Validators.ObjectValidator.KeyServicePair
+  public services: ServicesMap = {
     /**
      * The class that includes all the required tools to create an automatic role system.
      */
     AutomaticRole: null,
   };
-
-  /**
-   * Get the services.
-   * @returns The services.
-   */
-  get services(): ServicesMap {
-    return this.#services;
-  }
 
   /**
    * The constructor of the command manager.
@@ -42,7 +36,7 @@ export class ServiceManager extends Base {
    */
   public create(serviceName: string, dataMapName: string): Service {
     const service: Service = new Service(this.client, '0.1.0-experimental', serviceName, dataMapName);
-    this.#services[serviceName] = service;
+    this.services[serviceName] = service;
 
     return service;
   }
@@ -53,7 +47,7 @@ export class ServiceManager extends Base {
    * @returns A service instance.
    */
   public bindService(service: Service): Service {
-    this.#services[service.name] = service;
+    this.services[service.name] = service;
     return service;
   }
 

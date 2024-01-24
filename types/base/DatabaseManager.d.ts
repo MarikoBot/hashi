@@ -29,50 +29,27 @@ import { HashiClient } from '../root/';
  * The class who manages the database of the project.
  */
 export declare class DatabaseManager extends Base {
-    #private;
     /**
-     * Get the database name.
-     * @returns The database name.
+     * The database name. Not useful to change it (only for MongoDB). Default: main.
      */
-    get dbName(): string;
+    dbName: string;
     /**
-     * Get the connection URI.
-     * @returns The connection URI.
+     * The connection URI.
      */
-    get connectionURI(): string;
+    connectionURI: string;
     /**
-     * Get the connect options.
-     * @returns The connect options.
+     * The options for the connection.
      */
-    get connectOptions(): ConnectOptions;
+    connectOptions: ConnectOptions;
     /**
-     * Get the data maps.
-     * @returns The data maps.
+     * The list of dataMaps.
      */
-    get dataMaps(): DataMapsObj;
+    dataMaps: DataMapsObject;
     /**
      * The constructor of the class.
      * @param client The client instance.
      */
     constructor(client: HashiClient);
-    /**
-     * Set the database name.
-     * @param dbName The database name to set.
-     * @returns The class instance.
-     */
-    setDbName(dbName: string): DatabaseManager;
-    /**
-     * Set the connection URI.
-     * @param connectionURI The connection URI to set.
-     * @returns The class instance.
-     */
-    setConnectionURI(connectionURI: string): DatabaseManager;
-    /**
-     * Set the connect options.
-     * @param connectOptions The connect options to set.
-     * @returns The class instance.
-     */
-    setConnectOptions(connectOptions: ConnectOptions): DatabaseManager;
     /**
      * Build and save a data map.
      * @param name The name of the collection.
@@ -101,6 +78,6 @@ export declare class DatabaseManager extends Base {
 /**
  * The type that includes all the data maps of the database.
  */
-export type DataMapsObj = {
+export type DataMapsObject = {
     [dmName: string]: DataMap<any>;
 };

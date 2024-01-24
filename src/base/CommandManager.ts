@@ -6,6 +6,7 @@ import {
   ApplicationCommandDataResolvable,
 } from 'discord.js';
 import { Base } from './';
+import { Validators } from '../decorators';
 import {
   CoolDownManager,
   FileManager,
@@ -26,41 +27,23 @@ export class CommandManager extends Base {
   /**
    * The cool downs' manager instance, to get access to the different delays of the current command.
    */
-  readonly #coolDowns: CoolDownManager = new CoolDownManager();
+  @Validators.IsInstanceOf.CoolDownManager
+  public readonly coolDowns: CoolDownManager = new CoolDownManager();
 
   /**
    * The interfering manager instance, to have access to the different executing commands.
    */
-  readonly #interfering: InterferingManager = new InterferingManager();
+  @Validators.IsInstanceOf.InterferingManager
+  public readonly interfering: InterferingManager = new InterferingManager();
 
   /**
    * The list of commands.
    */
-  readonly #commandsList: Collection<string, AnyCommandConstructor> = new Collection<string, AnyCommandConstructor>();
-
-  /**
-   * Get the cool downs' manager.
-   * @returns The cool downs' manager.
-   */
-  get coolDowns(): CoolDownManager {
-    return this.#coolDowns;
-  }
-
-  /**
-   * Get the interfering manager.
-   * @returns The interfering manager.
-   */
-  get interfering(): InterferingManager {
-    return this.#interfering;
-  }
-
-  /**
-   * Get the list of commands.
-   * @returns The list of commands.
-   */
-  get commandsList(): Collection<string, AnyCommandConstructor> {
-    return this.#commandsList;
-  }
+  @Validators.IsInstanceOf.Collection
+  public readonly commandsList: Collection<string, AnyCommandConstructor> = new Collection<
+    string,
+    AnyCommandConstructor
+  >();
 
   /**
    * The constructor of the command manager.

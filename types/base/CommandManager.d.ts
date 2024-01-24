@@ -5,22 +5,18 @@ import { CoolDownManager, HashiClient, InterferingManager, CommandBlock, AnyComm
  * Represents the command manager of the client.
  */
 export declare class CommandManager extends Base {
-    #private;
     /**
-     * Get the cool downs' manager.
-     * @returns The cool downs' manager.
+     * The cool downs' manager instance, to get access to the different delays of the current command.
      */
-    get coolDowns(): CoolDownManager;
+    readonly coolDowns: CoolDownManager;
     /**
-     * Get the interfering manager.
-     * @returns The interfering manager.
+     * The interfering manager instance, to have access to the different executing commands.
      */
-    get interfering(): InterferingManager;
+    readonly interfering: InterferingManager;
     /**
-     * Get the list of commands.
-     * @returns The list of commands.
+     * The list of commands.
      */
-    get commandsList(): Collection<string, AnyCommandConstructor>;
+    readonly commandsList: Collection<string, AnyCommandConstructor>;
     /**
      * The constructor of the command manager.
      * @param client The client instance.

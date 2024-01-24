@@ -5,12 +5,10 @@ import { HashiClient, HashiEvent } from '../root/';
  * Represents the event manager for the client service.
  */
 export declare class EventManager extends Base {
-    #private;
     /**
-     * Get the events list.
-     * @returns The events list.
+     * The collection of the events.
      */
-    get eventsList(): Collection<string, HashiEvent>;
+    readonly eventsList: Collection<string, HashiEvent>;
     /**
      * The constructor of the event manager.
      * @param client The client instance.
