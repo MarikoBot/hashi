@@ -1,11 +1,11 @@
 import { Validators } from '../decorators/';
-import { HashiClient } from '../root/';
+import { HashiClient } from '../root';
 
 /**
  * Represents the base class for each class of the package.
  */
-export class Base {
-  @Validators.IsInstanceOf.HashiClient
+export class BaseClient {
+  @Validators.ObjectValidator.IsInstanceOf(HashiClient)
   public client: HashiClient;
 
   /**

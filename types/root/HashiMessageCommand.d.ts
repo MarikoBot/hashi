@@ -4,9 +4,6 @@ import { CommandAncillary } from './CommandAncillary';
  */
 export declare class HashiMessageCommand extends CommandAncillary {
     /**
-     *
-     */
-    /**
      * The constructor for a new message command.
      */
     constructor();

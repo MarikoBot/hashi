@@ -2,7 +2,7 @@
 
 import { ClientEvents } from 'discord.js';
 import { SchemaDefinition } from 'mongoose';
-import { Base, DataMap, DataMapDefinition, TypedDataMapStored } from './';
+import { BaseClient, DataMap, DataMapDefinition, TypedDataMapStored } from './';
 import { Validators } from '../decorators';
 import { HashiClient } from '../root/';
 
@@ -11,7 +11,7 @@ import { HashiClient } from '../root/';
  */
 export class Service<
   ServiceDataStructure extends DataMapDefinition<SchemaDefinition> = DataMapDefinition<SchemaDefinition>,
-> extends Base {
+> extends BaseClient {
   /**
    * The name of the service.
    */

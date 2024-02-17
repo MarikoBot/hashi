@@ -1,14 +1,14 @@
 // noinspection JSUnusedGlobalSymbols
 
 import { connect, Model, ConnectOptions } from 'mongoose';
-import { Base, DataMap, DataMapDefinition, TypedDataMapStored } from './';
+import { BaseClient, DataMap, DataMapDefinition, TypedDataMapStored } from './';
 import { Validators } from '../decorators';
 import { FileManager, HashiClient } from '../root/';
 
 /**
  * The class who manages the database of the project.
  */
-export class DatabaseManager extends Base {
+export class DatabaseManager extends BaseClient {
   /**
    * The database name. Not useful to change it (only for MongoDB). Default: main.
    */

@@ -5,7 +5,7 @@ import {
   APIApplicationCommand,
   ApplicationCommandDataResolvable,
 } from 'discord.js';
-import { Base } from './';
+import { BaseClient } from './';
 import { Validators } from '../decorators';
 import {
   CoolDownManager,
@@ -23,23 +23,23 @@ import {
 /**
  * Represents the command manager of the client.
  */
-export class CommandManager extends Base {
+export class CommandManager extends BaseClient {
   /**
    * The cool downs' manager instance, to get access to the different delays of the current command.
    */
-  @Validators.IsInstanceOf.CoolDownManager
+  @Validators.ObjectValidator.IsInstanceOf(CoolDownManager)
   public readonly coolDowns: CoolDownManager = new CoolDownManager();
 
   /**
    * The interfering manager instance, to have access to the different executing commands.
    */
-  @Validators.IsInstanceOf.InterferingManager
+  @Validators.ObjectValidator.IsInstanceOf(InterferingManager)
   public readonly interfering: InterferingManager = new InterferingManager();
 
   /**
    * The list of commands.
    */
-  @Validators.IsInstanceOf.Collection
+  @Validators.ObjectValidator.IsInstanceOf(Collection)
   public readonly commandsList: Collection<string, AnyCommandConstructor> = new Collection<
     string,
     AnyCommandConstructor

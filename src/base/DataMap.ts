@@ -1,7 +1,7 @@
 // noinspection JSUnusedGlobalSymbols
 
 import { Query, Schema, Types, Model, SchemaDefinition } from 'mongoose';
-import { Base } from './';
+import { BaseClient } from './';
 import { Validators } from '../decorators';
 import { DataMapEntry, HashiClient } from '../root/';
 
@@ -11,7 +11,7 @@ import { DataMapEntry, HashiClient } from '../root/';
 export class DataMap<
   DataStructure extends TypedDataMapStored,
   EntryClass extends new (...args: any[]) => DataMapEntry<DataStructure> = typeof DataMapEntry,
-> extends Base {
+> extends BaseClient {
   /**
    * The name of the data map.
    */
@@ -21,7 +21,7 @@ export class DataMap<
   /**
    * The entry class to use while using the data.
    */
-  @Validators.IsInstanceOf.DataMapEntry
+  @Validators.ObjectValidator.IsInstanceOf(DataMapEntry)
   public entryClass: EntryClass;
 
   /**
@@ -52,7 +52,7 @@ export class DataMap<
   /**
    * The collection/model of the schema.
    */
-  @Validators.IsInstanceOf.Model
+  @Validators.ObjectValidator.IsInstanceOf(Model)
   model: Model<DataMapDefinition<SchemaDefinition>>;
 
   /**

@@ -1,10 +1,10 @@
-import { Base, Service } from './';
+import { BaseClient, Service } from './';
 import { HashiClient } from '../root/';
 import { Classes } from '../services';
 /**
  * The class including the services and sync them.
  */
-export declare class ServiceManager extends Base {
+export declare class ServiceManager extends BaseClient {
     /**
      * The list of services.
      */

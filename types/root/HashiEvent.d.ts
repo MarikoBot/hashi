@@ -1,47 +1,25 @@
-import { HashiClient } from './HashiClient';
+import { HashiClient } from './';
 /**
  * Represents an Event on client service.
  */
 export declare class HashiEvent {
-    #private;
     /**
-     * Get the client instance.
-     * @returns The client instance.
+     * The client instance.
      */
-    get client(): HashiClient;
+    client: HashiClient;
     /**
-     * Get the name.
-     * @returns The name.
+     * The event name.
      */
-    get name(): string;
+    name: string;
     /**
      * The callback function.
-     * @returns The callback function.
      */
-    get callback(): HashiEventCallbackFunction;
+    callback: HashiEventCallbackFunction;
     /**
      * The constructor of the event.
      * @param name The event name.
      */
     constructor(name: string);
-    /**
-     * Set the name.
-     * @param name The name to set.
-     * @returns The class instance.
-     */
-    setName(name: string): HashiEvent;
-    /**
-     * The callback function executed when the event is triggered.
-     * @param callback The function to set.
-     * @returns The class instance.
-     */
-    setCallbackFunction(callback: HashiEventCallbackFunction): HashiEvent;
-    /**
-     * Set the client instance.
-     * @param client The client instance to set.
-     * @returns The class instance.
-     */
-    setClient(client: HashiClient): HashiEvent;
 }
 /**
  * A default callback function used when nothing is set.

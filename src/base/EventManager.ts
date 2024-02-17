@@ -1,16 +1,16 @@
 import { Collection } from 'discord.js';
-import { Base } from './';
+import { BaseClient } from './';
 import { Validators } from '../decorators';
 import { FileManager, HashiClient, HashiEvent } from '../root/';
 
 /**
  * Represents the event manager for the client service.
  */
-export class EventManager extends Base {
+export class EventManager extends BaseClient {
   /**
    * The collection of the events.
    */
-  @Validators.IsInstanceOf.Collection
+  @Validators.ObjectValidator.IsInstanceOf(Collection)
   public readonly eventsList: Collection<string, HashiEvent> = new Collection();
 
   /**
@@ -49,7 +49,7 @@ export class EventManager extends Base {
 
     while (++i < events.length) {
       eventData = events[i];
-      eventData.setClient(this.client);
+      eventData.client = this.client;
       this.client.src[eventData.name === 'ready' ? 'once' : 'on'](eventData.name, (...args: any[]) =>
         eventData.callback(this.client, ...args),
       );

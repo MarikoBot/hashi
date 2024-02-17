@@ -3,23 +3,15 @@ import { HashiClient, EnvPath } from './';
  * The class that manages the files included into this project, and also those at the root of the package user.
  */
 export declare class FileManager {
-    #private;
     /**
-     * Get the client instance.
-     * @returns The client instance.
+     * The client instance.
      */
-    get client(): HashiClient;
+    client: HashiClient;
     /**
      * The constructor to instance the FileManager class. Client can be useful to pass.
      * @param client The client instance.
      */
     constructor(client: HashiClient);
-    /**
-     * Set the client instance.
-     * @param client The client instance.
-     * @returns The class instance.
-     */
-    setClient(client: HashiClient): FileManager;
     /**
      * Get, store and returns an array of data included into a directory.
      * @param absPathStr The absolute path to look-up for.

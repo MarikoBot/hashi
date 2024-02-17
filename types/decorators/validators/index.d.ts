@@ -1,5 +1,5 @@
 export * from './ArrayValidator';
-export * from './IsInstanceOf';
-export * from './LanguageValidator';
+export * from './FunctionValidator';
+export * from './NumberValidator';
 export * from './ObjectValidator';
 export * from './StringValidator';

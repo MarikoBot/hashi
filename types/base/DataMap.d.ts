@@ -23,12 +23,12 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 import { Query, Schema, Types, Model, SchemaDefinition } from 'mongoose';
-import { Base } from './';
+import { BaseClient } from './';
 import { DataMapEntry, HashiClient } from '../root/';
 /**
  * The main class. Represents a data map technology.
  */
-export declare class DataMap<DataStructure extends TypedDataMapStored, EntryClass extends new (...args: any[]) => DataMapEntry<DataStructure> = typeof DataMapEntry> extends Base {
+export declare class DataMap<DataStructure extends TypedDataMapStored, EntryClass extends new (...args: any[]) => DataMapEntry<DataStructure> = typeof DataMapEntry> extends BaseClient {
     /**
      * The name of the data map.
      */

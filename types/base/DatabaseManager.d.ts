@@ -23,12 +23,12 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 import { ConnectOptions } from 'mongoose';
-import { Base, DataMap, TypedDataMapStored } from './';
+import { BaseClient, DataMap, TypedDataMapStored } from './';
 import { HashiClient } from '../root/';
 /**
  * The class who manages the database of the project.
  */
-export declare class DatabaseManager extends Base {
+export declare class DatabaseManager extends BaseClient {
     /**
      * The database name. Not useful to change it (only for MongoDB). Default: main.
      */

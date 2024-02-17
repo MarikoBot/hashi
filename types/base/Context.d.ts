@@ -1,10 +1,10 @@
 import { BaseGuildTextChannel, BaseGuildVoiceChannel, ButtonInteraction, ChatInputCommandInteraction, InteractionResponse, Message, ThreadChannel, User, InteractionReplyOptions } from 'discord.js';
-import { Base, Language, LanguageContentKey } from './';
+import { BaseClient, Language, LanguageContentKey } from './';
 import { HashiClient, CommandBlockValue } from '../root';
 /**
  * The class who manages the front part of an interaction with Discord and the user.
  */
-export declare class Context extends Base {
+export declare class Context extends BaseClient {
     /**
      * The language id of the main user.
      */

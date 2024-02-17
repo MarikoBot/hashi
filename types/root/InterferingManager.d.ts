@@ -1,9 +1,12 @@
-import { ChatInputCommandInteraction, Snowflake } from 'discord.js';
+import { ChatInputCommandInteraction, Collection, Snowflake } from 'discord.js';
 /**
  * The main class who manages the active cool downs for commands.
  */
 export declare class InterferingManager {
-    #private;
+    /**
+     * The collection of the current cool downs.
+     */
+    readonly queue: Collection<Snowflake, InterferingQueueElement[]>;
     /**
      * The constructor of the interfering manager.
      */

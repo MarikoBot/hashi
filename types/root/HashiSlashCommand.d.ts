@@ -1,5 +1,5 @@
 import { ChatInputCommandInteraction, APIApplicationCommand } from 'discord.js';
-import { Context } from '../base/';
+import { Context } from '../base';
 import { CommandAncillary, HashiClient, HashiSlashSubcommand, HashiSlashSubcommandGroup, COMMAND_END } from './';
 /**
  * The class who represents a base-command for the Hashi package.

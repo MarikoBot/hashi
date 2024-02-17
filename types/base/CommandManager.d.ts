@@ -1,10 +1,10 @@
 import { ChatInputCommandInteraction, Collection, Message } from 'discord.js';
-import { Base } from './';
+import { BaseClient } from './';
 import { CoolDownManager, HashiClient, InterferingManager, CommandBlock, AnyCommandConstructor } from '../root/';
 /**
  * Represents the command manager of the client.
  */
-export declare class CommandManager extends Base {
+export declare class CommandManager extends BaseClient {
     /**
      * The cool downs' manager instance, to get access to the different delays of the current command.
      */

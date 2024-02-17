@@ -2,6 +2,7 @@
 
 import { Guild, GuildMember, Snowflake } from 'discord.js';
 import { Service } from '../../base/';
+import { Validators } from '../../decorators';
 import { HashiClient } from '../../root/';
 import { AutomaticRoleType } from '../types';
 
@@ -12,15 +13,8 @@ export class AutomaticRole extends Service {
   /**
    * The guild targeted by the service.
    */
-  #guild: Guild;
-
-  /**
-   * Get the guild.
-   * @returns The guild.
-   */
-  get guild(): Guild {
-    return this.#guild;
-  }
+  @Validators.ObjectValidator.Matches
+  public guild: Guild;
 
   /**
    * The constructor of the service.
@@ -28,15 +22,6 @@ export class AutomaticRole extends Service {
    */
   constructor(client: HashiClient) {
     super(client, 'AutomaticRole', '0.1.0', 'automaticRole');
-  }
-
-  /**
-   * Set the guild.
-   * @param guild The guild to set.
-   */
-  public setGuild(guild: Guild): AutomaticRole {
-    if (guild instanceof Guild) this.#guild = guild;
-    return this;
   }
 
   /**

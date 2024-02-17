@@ -1,3 +1,4 @@
+import { Validators } from '../decorators';
 import { CommandAncillary, HashiSlashSubcommand } from './';
 
 /**
@@ -7,6 +8,7 @@ export class HashiSlashSubcommandGroup extends CommandAncillary {
   /**
    * The subcommands of the group.
    */
+  @Validators.ArrayValidator.OnlyConstructorOf(HashiSlashSubcommand)
   public subcommands: (typeof HashiSlashSubcommand)[] = [];
 
   /**

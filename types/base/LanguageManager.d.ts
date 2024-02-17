@@ -1,9 +1,9 @@
-import { Base } from './';
+import { BaseClient } from './';
 import { HashiClient } from '../root/';
 /**
  * The class who manages the translations in the project.
  */
-export declare class LanguageManager extends Base {
+export declare class LanguageManager extends BaseClient {
     /**
      * The constructor of the language manager.
      * @param client The client instance.

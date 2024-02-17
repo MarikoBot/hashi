@@ -24,12 +24,12 @@
 /// <reference types="mongoose/types/inferschematype" />
 import { ClientEvents } from 'discord.js';
 import { SchemaDefinition } from 'mongoose';
-import { Base, DataMap, DataMapDefinition, TypedDataMapStored } from './';
+import { BaseClient, DataMap, DataMapDefinition, TypedDataMapStored } from './';
 import { HashiClient } from '../root/';
 /**
  * The class that represents a service.
  */
-export declare class Service<ServiceDataStructure extends DataMapDefinition<SchemaDefinition> = DataMapDefinition<SchemaDefinition>> extends Base {
+export declare class Service<ServiceDataStructure extends DataMapDefinition<SchemaDefinition> = DataMapDefinition<SchemaDefinition>> extends BaseClient {
     /**
      * The name of the service.
      */

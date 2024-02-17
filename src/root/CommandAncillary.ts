@@ -27,12 +27,13 @@ export class CommandAncillary {
   /**
    * The type of the command.
    */
+  @Validators.StringValidator.IsHashiCommandType
   public readonly type: HashiCommandType;
 
   /**
    * The client instance.
    */
-  @Validators.IsInstanceOf.HashiClient
+  @Validators.ObjectValidator.IsInstanceOf(HashiClient)
   public client: HashiClient;
 
   /**
@@ -44,42 +45,50 @@ export class CommandAncillary {
   /**
    * The full name of the command.
    */
+  @Validators.StringValidator.ValidNonFormatted
   public fullName: string;
 
   /**
    * The description of the command.
    */
+  @Validators.StringValidator.ValidNonFormatted
   public description: string;
 
   /**
    * The list of errors for the command occurrence.
    */
+  @Validators.ArrayValidator.OnlyHashiErrors
   public errors: HashiError[];
 
   /**
    * The commands that must be executed before this one.
    * If one of the interfering commands is same-time running, this command will be ignored.
    */
+  @Validators.ArrayValidator.OnlyObjects
   public interferingCommands: ChatInputApplicationCommandData['name'][];
 
   /**
    * The amount of time before running the command again. Must be between 0 and 300 seconds.
    */
+  @Validators.NumberValidator.Matches
   public coolDown: number;
 
   /**
    * The context of the command.
    */
+  @Validators.ObjectValidator.IsInstanceOf(Context)
   public context: Context;
 
   /**
    * The external data for the command.
    */
+  @Validators.ObjectValidator.KeyStringArrayPair
   public privileges: CommandPrivileges;
 
   /**
    * The callback function called.
    */
+  @Validators.FunctionValidator.Matches
   public callback: HashiSlashCommandCallbackFunction;
 
   /**
@@ -350,7 +359,7 @@ export class CommandAncillary {
  * The decorator that insert metadata into a command.
  * @param commandMetadata The metadata to set.
  */
-export const MetadataInjector = (
+export const CommandMetadataInjector = (
   commandMetadata: Partial<Record<CommandMetadataKeys, CommandMetadata[CommandMetadataKeys]>>,
 ): Function => {
   return function (constructor: Function) {
@@ -524,9 +533,14 @@ export type CommandMetadataKeys = keyof CommandMetadata;
 export type CommandPrivilegesKey = keyof CommandPrivileges;
 
 /**
+ * The different values of for the HashiCommandType type.
+ */
+export const HashiCommandValues: string[] = ['message', 'slash', 'sub', 'group'] as const;
+
+/**
  * The different types of command.
  */
-export type HashiCommandType = 'message' | 'slash' | 'sub' | 'group';
+export type HashiCommandType = (typeof HashiCommandValues)[number];
 
 /**
  * Represents an error.

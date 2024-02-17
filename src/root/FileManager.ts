@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { Validators } from '../decorators';
 import { HashiClient, EnvPath } from './';
 
 /**
@@ -9,32 +10,15 @@ export class FileManager {
   /**
    * The client instance.
    */
-  #client: HashiClient;
-
-  /**
-   * Get the client instance.
-   * @returns The client instance.
-   */
-  public get client(): HashiClient {
-    return this.#client;
-  }
+  @Validators.ObjectValidator.IsInstanceOf(HashiClient)
+  public client: HashiClient;
 
   /**
    * The constructor to instance the FileManager class. Client can be useful to pass.
    * @param client The client instance.
    */
   constructor(client: HashiClient) {
-    this.setClient(client);
-  }
-
-  /**
-   * Set the client instance.
-   * @param client The client instance.
-   * @returns The class instance.
-   */
-  public setClient(client: HashiClient): FileManager {
-    if (client instanceof HashiClient) this.#client = client;
-    return this;
+    this.client = client;
   }
 
   /**

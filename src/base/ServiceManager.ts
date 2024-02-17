@@ -1,6 +1,6 @@
 // noinspection JSUnusedGlobalSymbols
 
-import { Base, Service, ClientEventsKey } from './';
+import { BaseClient, Service, ClientEventsKey } from './';
 import { Validators } from '../decorators';
 import { FileManager, HashiClient } from '../root/';
 import { Classes } from '../services';
@@ -8,7 +8,7 @@ import { Classes } from '../services';
 /**
  * The class including the services and sync them.
  */
-export class ServiceManager extends Base {
+export class ServiceManager extends BaseClient {
   /**
    * The list of services.
    */

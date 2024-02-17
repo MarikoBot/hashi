@@ -1,4 +1,4 @@
-export * from './Base';
+export * from './BaseClient';
 
 export * from './CommandManager';
 export * from './Context';

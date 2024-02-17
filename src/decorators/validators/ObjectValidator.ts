@@ -1,9 +1,73 @@
+import { BaseGuildTextChannel, BaseGuildVoiceChannel, ThreadChannel } from 'discord.js';
 import { DataMap, Service } from '../../base';
+import { HashiMessageCommand, HashiSlashCommand, HashiSlashSubcommand, HashiSlashSubcommandGroup } from '../../root';
+import { Constructable, InstanceValidator } from '../shared';
 
 /**
  * All the object type validators.
  */
 export class ObjectValidator {
+  /**
+   * Verify if a value is an CommandBlockValue initial type instance.
+   * @param target The class instance.
+   * @param key The attribute to set.
+   * @constructor
+   */
+  public static CommandBlockValueInitial(target: Object, key: string): void {
+    let value: any;
+
+    const setter = (newValue: any): void => {
+      if (
+        typeof newValue !== 'object' ||
+        (!(newValue instanceof HashiMessageCommand) &&
+          !(newValue instanceof HashiSlashCommand) &&
+          !(newValue instanceof HashiSlashSubcommand) &&
+          !(newValue instanceof HashiSlashSubcommandGroup))
+      )
+        throw new Error(
+          `The property ${target.constructor.name}.${key} must be an instance of one of the CommandBlockValue initial type classes.`,
+        );
+      value = newValue;
+    };
+
+    Object.defineProperty(target, key, {
+      get: (): typeof value => value,
+      set: setter,
+      enumerable: true,
+      configurable: true,
+    });
+  }
+
+  /**
+   * Verify if a value is an ContextChannel initial type instance.
+   * @param target The class instance.
+   * @param key The attribute to set.
+   * @constructor
+   */
+  public static ContextChannelInitial(target: Object, key: string): void {
+    let value: any;
+
+    const setter = (newValue: any): void => {
+      if (
+        typeof newValue !== 'object' ||
+        (!(newValue instanceof BaseGuildTextChannel) &&
+          !(newValue instanceof BaseGuildVoiceChannel) &&
+          !(newValue instanceof ThreadChannel))
+      )
+        throw new Error(
+          `The property ${target.constructor.name}.${key} must be an instance of one of the ContextChannel initial type classes.`,
+        );
+      value = newValue;
+    };
+
+    Object.defineProperty(target, key, {
+      get: (): typeof value => value,
+      set: setter,
+      enumerable: true,
+      configurable: true,
+    });
+  }
+
   /**
    * Verify if the value is a dataMapDefinition object.
    * @param target The class instance.
@@ -31,6 +95,32 @@ export class ObjectValidator {
       enumerable: true,
       configurable: true,
     });
+  }
+
+  /**
+   * Verify if the value is a class instance.
+   * @param constructable The class the value shall inherit.
+   * @constructor
+   */
+  public static IsInstanceOf(constructable: Constructable<any>): InstanceValidator {
+    return function (target: Object, key: string): void {
+      let value: any;
+
+      const setter = (newValue: any): void => {
+        if (typeof newValue !== 'object' || !(newValue instanceof constructable))
+          throw new Error(
+            `The property ${target.constructor.name}.${key} must be an instance of ${constructable.prototype.name}.`,
+          );
+        value = newValue;
+      };
+
+      Object.defineProperty(target, key, {
+        get: (): typeof value => value,
+        set: setter,
+        enumerable: true,
+        configurable: true,
+      });
+    };
   }
 
   /**
@@ -134,6 +224,37 @@ export class ObjectValidator {
         )
       )
         throw new Error(`The property ${target.constructor.name}.${key} must be an object string-service.`);
+      value = newValue;
+    };
+
+    Object.defineProperty(target, key, {
+      get: (): typeof value => value,
+      set: setter,
+      enumerable: true,
+      configurable: true,
+    });
+  }
+
+  /**
+   * Verify if the value is an object string-string[].
+   * @param target The class instance.
+   * @param key The attribute to set.
+   * @constructor
+   */
+  public static KeyStringArrayPair(target: Object, key: string): void {
+    let value: any;
+
+    const setter = (newValue: any): void => {
+      if (
+        typeof newValue !== 'object' ||
+        !Object.entries(newValue).every(
+          ([_key, _value]: [string, unknown]): boolean =>
+            typeof _key === 'string' &&
+            typeof _value === 'object' &&
+            (<Array<any>>_value).every((v: any): boolean => typeof v === 'string'),
+        )
+      )
+        throw new Error(`The property ${target.constructor.name}.${key} must be an object string-string[].`);
       value = newValue;
     };
 

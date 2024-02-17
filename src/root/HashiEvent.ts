@@ -1,6 +1,7 @@
 // noinspection JSUnusedGlobalSymbols
 
-import { HashiClient } from './HashiClient';
+import { Validators } from '../decorators';
+import { HashiClient } from './';
 
 /**
  * Represents an Event on client service.
@@ -9,78 +10,27 @@ export class HashiEvent {
   /**
    * The client instance.
    */
-  #client: HashiClient;
+  @Validators.ObjectValidator.IsInstanceOf(HashiClient)
+  public client: HashiClient;
 
   /**
    * The event name.
    */
-  #name: string;
+  @Validators.StringValidator.ValidId
+  public name: string;
 
   /**
    * The callback function.
    */
-  #callback: HashiEventCallbackFunction = defaultEventCallback;
-
-  /**
-   * Get the client instance.
-   * @returns The client instance.
-   */
-  get client(): HashiClient {
-    return this.#client;
-  }
-
-  /**
-   * Get the name.
-   * @returns The name.
-   */
-  get name(): string {
-    return this.#name;
-  }
-
-  /**
-   * The callback function.
-   * @returns The callback function.
-   */
-  get callback(): HashiEventCallbackFunction {
-    return this.#callback;
-  }
+  @Validators.FunctionValidator.Matches
+  public callback: HashiEventCallbackFunction = defaultEventCallback;
 
   /**
    * The constructor of the event.
    * @param name The event name.
    */
   constructor(name: string) {
-    this.#name = name;
-  }
-
-  /**
-   * Set the name.
-   * @param name The name to set.
-   * @returns The class instance.
-   */
-  public setName(name: string): HashiEvent {
-    if (typeof name === 'string') this.#name = name;
-    return this;
-  }
-
-  /**
-   * The callback function executed when the event is triggered.
-   * @param callback The function to set.
-   * @returns The class instance.
-   */
-  public setCallbackFunction(callback: HashiEventCallbackFunction): HashiEvent {
-    if (typeof callback === 'function') this.#callback = callback;
-    return this;
-  }
-
-  /**
-   * Set the client instance.
-   * @param client The client instance to set.
-   * @returns The class instance.
-   */
-  public setClient(client: HashiClient): HashiEvent {
-    if (client instanceof HashiClient) this.#client = client;
-    return this;
+    this.name = name;
   }
 }
 

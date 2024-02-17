@@ -11,24 +11,25 @@ import {
   User,
   InteractionReplyOptions,
 } from 'discord.js';
-import { Base, Language, LanguageContentKey } from './';
+import { BaseClient, Language, LanguageContentKey } from './';
 import { Validators } from '../decorators';
+import { PublicChatInputCommandInteraction } from '../public';
 import { HashiClient, CommandBlockValue } from '../root';
 
 /**
  * The class who manages the front part of an interaction with Discord and the user.
  */
-export class Context extends Base {
+export class Context extends BaseClient {
   /**
    * The language id of the main user.
    */
-  @Validators.LanguageValidator.IsValid
+  @Validators.StringValidator.ValidLanguage
   public languageId: Language = 'fr';
 
   /**
    * The command associated with the context.
    */
-  @Validators.IsInstanceOf.CommandBlockValueInitial
+  @Validators.ObjectValidator.CommandBlockValueInitial
   public command: CommandBlockValue;
 
   /**
@@ -40,19 +41,19 @@ export class Context extends Base {
   /**
    * The channel where the action occurs.
    */
-  @Validators.IsInstanceOf.ContextChannelInitial
+  @Validators.ObjectValidator.ContextChannelInitial
   public channel: ContextChannel;
 
   /**
    * The interaction, if there is one.
    */
-  @Validators.IsInstanceOf.ChatInputCommandInteraction
+  @Validators.ObjectValidator.IsInstanceOf(PublicChatInputCommandInteraction)
   public interaction: ChatInputCommandInteraction;
 
   /**
    * The interaction button, if there is one.
    */
-  @Validators.IsInstanceOf.ButtonInteraction
+  @Validators.ObjectValidator.Matches
   public buttonInteraction: ButtonInteraction;
 
   /**

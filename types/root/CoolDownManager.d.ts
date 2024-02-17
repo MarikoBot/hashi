@@ -3,7 +3,10 @@ import { Snowflake } from 'discord.js';
  * The main class who manages the active cool downs for commands.
  */
 export declare class CoolDownManager {
-    #private;
+    /**
+     * The collection of the current cool downs.
+     */
+    private readonly queue;
     /**
      * The constructor of the cool down manager.
      */

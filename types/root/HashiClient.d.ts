@@ -30,77 +30,62 @@ import { Constants, FileManager, Logger, COMMAND_END } from './';
  * The HashiClient class. It extends the Client class from discord.js and implements extra methods for the Hashi module.
  */
 export declare class HashiClient {
-    #private;
     /**
-     * Get the Discord Client instance.
-     * @returns The Discord Client instance.
+     * The Discord Client instance.
      */
-    get src(): Client;
+    readonly src: Client;
     /**
-     * Get the logger for the HashiClient.
-     * @returns The logger for the HashiClient.
+     * The logger for the HashiClient.
      */
-    get logger(): Logger;
+    readonly logger: Logger;
     /**
-     * Get the command manager instance.
-     * @returns The command manager instance.
+     * The command manager instance.
      */
-    get commandManager(): CommandManager;
+    readonly commandManager: CommandManager;
     /**
-     * Get the event manager instance.
-     * @returns The event manager instance.
+     * The event manager instance.
      */
-    get eventManager(): EventManager;
+    readonly eventManager: EventManager;
     /**
-     * Get the language manager for accessing strings.
-     * @returns The language manager for accessing strings.
+     * The language manager for accessing strings.
      */
-    get languageManager(): LanguageManager;
+    readonly languageManager: LanguageManager;
     /**
-     * Get the database manager for accessing data maps/lakes.
-     * @returns The database manager for accessing data maps/lakes.
+     * The database manager for accessing data maps/lakes.
      */
-    get databaseManager(): DatabaseManager;
+    readonly databaseManager: DatabaseManager;
     /**
-     * Get the services manager for accessing different services (automatic roles, etc.).
-     * @returns The services manager for accessing different services (automatic roles, etc.).
+     * The services manager for accessing different services (automatic roles, etc.).
      */
-    get serviceManager(): ServiceManager;
+    readonly serviceManager: ServiceManager;
     /**
-     * Get the files manager for accessing different files.
-     * @returns The files manager for accessing different files.
+     * The services manager for accessing different services (automatic roles, etc.).
      */
-    get fileManager(): FileManager;
+    readonly fileManager: FileManager;
     /**
-     * Get the constants.
-     * @returns The constants.
+     * The language manager for accessing strings.
      */
-    get constants(): Constants;
+    readonly constants: Constants;
     /**
-     * Get the name of the project/process you're in.
-     * @returns The name of the project/process you're in.
+     * The name of the project/process you're in.
      */
-    get processName(): string;
+    readonly processName: string;
     /**
-     * Get the commands folder directory.
-     * @returns The commands folder directory.
+     * The commands folder directory.
      */
-    get commandsDir(): string;
+    readonly commandsDir: string;
     /**
-     * Get the events folder directory.
-     * @returns The events folder directory.
+     * The events folder directory.
      */
-    get eventsDir(): string;
+    readonly eventsDir: string;
     /**
-     * Get the services folder directory.
-     * @returns The services folder directory.
+     * The services folder directory.
      */
-    get servicesDir(): string;
+    readonly servicesDir: string;
     /**
-     * Get the data maps folder directory.
-     * @returns The data maps folder directory.
+     * The data maps folder directory.
      */
-    get dataMapsDir(): string;
+    readonly dataMapsDir: string;
     /**
      * The constructor for the HashiClient class.
      * @param options The options for the HashiClient.

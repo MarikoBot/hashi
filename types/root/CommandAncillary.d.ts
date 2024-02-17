@@ -108,7 +108,7 @@ export declare class CommandAncillary {
  * The decorator that insert metadata into a command.
  * @param commandMetadata The metadata to set.
  */
-export declare const MetadataInjector: (commandMetadata: Partial<Record<CommandMetadataKeys, CommandMetadata[CommandMetadataKeys]>>) => Function;
+export declare const CommandMetadataInjector: (commandMetadata: Partial<Record<CommandMetadataKeys, CommandMetadata[CommandMetadataKeys]>>) => Function;
 /**
  * The value that is returned when the command is finished.
  */
@@ -251,9 +251,13 @@ export type CommandMetadataKeys = keyof CommandMetadata;
  */
 export type CommandPrivilegesKey = keyof CommandPrivileges;
 /**
+ * The different values of for the HashiCommandType type.
+ */
+export declare const HashiCommandValues: string[];
+/**
  * The different types of command.
  */
-export type HashiCommandType = 'message' | 'slash' | 'sub' | 'group';
+export type HashiCommandType = (typeof HashiCommandValues)[number];
 /**
  * Represents an error.
  */

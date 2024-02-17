@@ -5,22 +5,15 @@ import { HashiClient } from '../../root/';
  * The class that includes all the required tools to create an automatic role system.
  */
 export declare class AutomaticRole extends Service {
-    #private;
     /**
-     * Get the guild.
-     * @returns The guild.
+     * The guild targeted by the service.
      */
-    get guild(): Guild;
+    guild: Guild;
     /**
      * The constructor of the service.
      * @param client The client instance.
      */
     constructor(client: HashiClient);
-    /**
-     * Set the guild.
-     * @param guild The guild to set.
-     */
-    setGuild(guild: Guild): AutomaticRole;
     /**
      * Get the roles from the database.
      * @param guildId The guild id to get the data from.

@@ -1,4 +1,5 @@
 import * as chalk from 'chalk';
+import { Validators } from '../decorators';
 
 /**
  * The Logger class. Contains multiple functions to log data.
@@ -7,22 +8,15 @@ export class Logger {
   /**
    * The name of the project.
    */
-  readonly #projectName: string;
-
-  /**
-   * Get the name of the project.
-   * @returns The name of the project.
-   */
-  get projectName(): string {
-    return this.#projectName;
-  }
+  @Validators.StringValidator.NotEmpty
+  public readonly projectName: string;
 
   /**
    * The constructor of the Logger class.
    * @param name The name of the project.
    */
   constructor(name: string) {
-    this.#projectName = name;
+    this.projectName = name;
   }
 
   /**
