@@ -24,7 +24,7 @@
 /// <reference types="mongoose/types/inferschematype" />
 import { ChatInputCommandInteraction, Client, ClientOptions } from 'discord.js';
 import { ConnectOptions } from 'mongoose';
-import { CommandManager, DatabaseManager, EventManager, LanguageManager, ServiceManager } from '../base/';
+import { CommandManager, DatabaseManager, EventManager, LanguageManager } from '../base/';
 import { Constants, FileManager, Logger, COMMAND_END } from './';
 /**
  * The HashiClient class. It extends the Client class from discord.js and implements extra methods for the Hashi module.
@@ -55,11 +55,7 @@ export declare class HashiClient {
      */
     readonly databaseManager: DatabaseManager;
     /**
-     * The services manager for accessing different services (automatic roles, etc.).
-     */
-    readonly serviceManager: ServiceManager;
-    /**
-     * The services manager for accessing different services (automatic roles, etc.).
+     * The files manager for accessing different files (for handling especially).
      */
     readonly fileManager: FileManager;
     /**
@@ -78,10 +74,6 @@ export declare class HashiClient {
      * The events folder directory.
      */
     readonly eventsDir: string;
-    /**
-     * The services folder directory.
-     */
-    readonly servicesDir: string;
     /**
      * The data maps folder directory.
      */
@@ -120,10 +112,6 @@ export interface HashiClientOptions extends ClientOptions {
      * The events folder directory.
      */
     eventsDir?: string;
-    /**
-     * The services folder directory.
-     */
-    servicesDir?: string;
     /**
      * The data maps folder directory.
      */

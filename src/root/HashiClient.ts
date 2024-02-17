@@ -9,7 +9,6 @@ import {
   DataMap,
   EventManager,
   LanguageManager,
-  ServiceManager,
   DATAMAP_INTENTS,
   TypedDataMapStored,
 } from '../base/';
@@ -59,13 +58,7 @@ export class HashiClient {
   public readonly databaseManager: DatabaseManager = new DatabaseManager(this);
 
   /**
-   * The services manager for accessing different services (automatic roles, etc.).
-   */
-  @Validators.ObjectValidator.IsInstanceOf(ServiceManager)
-  public readonly serviceManager: ServiceManager = new ServiceManager(this);
-
-  /**
-   * The services manager for accessing different services (automatic roles, etc.).
+   * The files manager for accessing different files (for handling especially).
    */
   @Validators.ObjectValidator.IsInstanceOf(FileManager)
   public readonly fileManager: FileManager = new FileManager(this);
@@ -93,12 +86,6 @@ export class HashiClient {
    */
   @Validators.StringValidator.ValidId
   public readonly eventsDir: string = 'events';
-
-  /**
-   * The services folder directory.
-   */
-  @Validators.StringValidator.ValidId
-  public readonly servicesDir: string = 'services';
 
   /**
    * The data maps folder directory.
@@ -130,7 +117,6 @@ export class HashiClient {
     this.logger = new Logger(this.processName);
     this.commandsDir = options.commandsDir || 'commands';
     this.eventsDir = options.eventsDir || 'events';
-    this.servicesDir = options.servicesDir || 'services/classes';
     this.dataMapsDir = options.dataMapsDir || 'data/definitions';
 
     this.databaseManager.dbName = options.mongoose.dbName || 'main';
@@ -146,8 +132,6 @@ export class HashiClient {
   public async login(token: string = process.env.TOKEN || process.env.token || process.env.Token): Promise<string> {
     await this.databaseManager.connect();
     this.databaseManager.loadDataMaps();
-
-    this.serviceManager.loadServices().launchLinkedEvents();
 
     await this.eventManager.loadEvents();
 
@@ -195,10 +179,6 @@ export interface HashiClientOptions extends ClientOptions {
    * The events folder directory.
    */
   eventsDir?: string;
-  /**
-   * The services folder directory.
-   */
-  servicesDir?: string;
   /**
    * The data maps folder directory.
    */

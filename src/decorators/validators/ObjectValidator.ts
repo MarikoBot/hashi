@@ -1,5 +1,5 @@
 import { BaseGuildTextChannel, BaseGuildVoiceChannel, ThreadChannel } from 'discord.js';
-import { DataMap, Service } from '../../base';
+import { DataMap } from '../../base';
 import { HashiMessageCommand, HashiSlashCommand, HashiSlashSubcommand, HashiSlashSubcommandGroup } from '../../root';
 import { Constructable, InstanceValidator } from '../shared';
 
@@ -196,34 +196,6 @@ export class ObjectValidator {
         )
       )
         throw new Error(`The property ${target.constructor.name}.${key} must be an object string-object.`);
-      value = newValue;
-    };
-
-    Object.defineProperty(target, key, {
-      get: (): typeof value => value,
-      set: setter,
-      enumerable: true,
-      configurable: true,
-    });
-  }
-
-  /**
-   * Verify if the value is an object string-service.
-   * @param target The class instance.
-   * @param key The attribute to set.
-   * @constructor
-   */
-  public static KeyServicePair(target: Object, key: string): void {
-    let value: any;
-
-    const setter = (newValue: any): void => {
-      if (
-        typeof newValue !== 'object' ||
-        !Object.entries(newValue).every(
-          ([_key, _value]: [string, unknown]): boolean => typeof _key === 'string' && _value instanceof Service,
-        )
-      )
-        throw new Error(`The property ${target.constructor.name}.${key} must be an object string-service.`);
       value = newValue;
     };
 

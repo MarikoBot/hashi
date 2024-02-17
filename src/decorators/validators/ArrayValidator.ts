@@ -1,5 +1,5 @@
-import { ChatInputApplicationCommandData, DiscordAPIError, DiscordjsError, User } from 'discord.js';
-import { Constructable, Constructible, InstanceValidator, isConstructor } from '../shared';
+import { DiscordAPIError, DiscordjsError, User } from 'discord.js';
+import { Constructible, InstanceValidator, isConstructor } from '../shared';
 
 /**
  * All the array type validators.

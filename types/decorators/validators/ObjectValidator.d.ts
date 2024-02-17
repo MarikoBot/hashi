@@ -52,13 +52,6 @@ export declare class ObjectValidator {
      */
     static KeyObjectPair(target: Object, key: string): void;
     /**
-     * Verify if the value is an object string-service.
-     * @param target The class instance.
-     * @param key The attribute to set.
-     * @constructor
-     */
-    static KeyServicePair(target: Object, key: string): void;
-    /**
      * Verify if the value is an object string-string[].
      * @param target The class instance.
      * @param key The attribute to set.
