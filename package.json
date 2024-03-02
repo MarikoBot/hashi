@@ -1,8 +1,8 @@
 {
-  "scope": "@elouannh",
-  "name": "@elouannh/hashi",
-  "version": "1.0.0",
-  "description": "A cool discord.js assistant to create bots in another way.",
+  "scope": "@marikobot",
+  "name": "@marikobot/hashi",
+  "version": "0.1.0",
+  "description": "A cool discord.js assistant to create bots in a simpler way.",
   "keywords": [
     "discord",
     "bot",
@@ -10,9 +10,9 @@
     "discord.js",
     "wrapper"
   ],
-  "homepage": "https://github.com/MarikoBot/hashi#readme",
+  "homepage": "https://github.com/MarikoBot/marikobot-hashi#readme",
   "bugs": {
-    "url": "https://github.com/MarikoBot/hashi/issues"
+    "url": "https://github.com/MarikoBot/marikobot-hashi/issues"
   },
   "license": "MIT",
   "author": {
@@ -21,14 +21,8 @@
   },
   "contributors": [
     {
-      "name": "Elouann Panda",
-      "email": "elouannpro@proton.me"
-    }
-  ],
-  "funding": [
-    {
-      "type": "individual",
-      "url": "https://paypal.me/elouannpanda?country.x=FR&locale.x=fr_FR"
+      "name": "Elouann H.",
+      "email": "elouannh@marikobot.com"
     }
   ],
   "files": [
@@ -44,7 +38,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MarikoBot/hashi.git"
+    "url": "git+https://github.com/MarikoBot/marikobot-hashi.git"
   },
   "scripts": {
     "run-builder": "node builder.js",
