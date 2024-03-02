@@ -1,4 +1,5 @@
 import { DataMap, TypedDataMapStored } from '../base/';
+import { Validators } from '../decorators';
 
 /**
  * The base class that represents a data map class object.
@@ -8,28 +9,13 @@ export class DataMapEntry<DataStructure extends TypedDataMapStored> {
   /**
    * The data map.
    */
-  readonly #dataMap: DataMap<DataStructure, typeof DataMapEntry>;
+  @Validators.ObjectValidator.IsInstanceOf(DataMap)
+  public readonly dataMap: DataMap<DataStructure, typeof DataMapEntry>;
 
   /**
    * The data.
    */
-  readonly #data: DataStructure;
-
-  /**
-   * Get the data map.
-   * @returns The data map.
-   */
-  get dataMap(): DataMap<DataStructure, typeof DataMapEntry> {
-    return this.#dataMap;
-  }
-
-  /**
-   * Get the data.
-   * @returns The data.
-   */
-  get data(): DataStructure {
-    return this.#data;
-  }
+  public readonly data: DataStructure;
 
   /**
    * The constructor of a data map entry.
@@ -37,7 +23,7 @@ export class DataMapEntry<DataStructure extends TypedDataMapStored> {
    * @param data The data.
    */
   constructor(dataMap: DataMap<DataStructure, typeof DataMapEntry>, data: DataStructure) {
-    this.#dataMap = dataMap;
-    this.#data = data;
+    this.dataMap = dataMap;
+    this.data = data;
   }
 }

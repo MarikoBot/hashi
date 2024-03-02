@@ -5,143 +5,56 @@ import {
   BaseGuildVoiceChannel,
   ButtonInteraction,
   ChatInputCommandInteraction,
-  InteractionReplyOptions,
   InteractionResponse,
   Message,
   ThreadChannel,
   User,
+  InteractionReplyOptions,
 } from 'discord.js';
-import { Language, LanguageContentKey } from './LanguageManager';
-import { CommandBlockValue } from './CommandManager';
-import { Base } from './Base';
-import { HashiClient } from '../root';
-
-/**
- * The data extracted structure.
- */
-export interface ExtractedDataFromString {
-  data: {
-    [varName: string]: string;
-  };
-  origin: string;
-}
-
-/**
- * Represents the type for a context possible channel type among Discord package.
- */
-export type ContextChannel = BaseGuildTextChannel | BaseGuildVoiceChannel | ThreadChannel;
-
-/**
- * The options for the context constructor.
- */
-export interface ContextOptions {
-  /**
-   * The language id of the main user.
-   */
-  languageId?: Language;
-  /**
-   * The command associated with the context.
-   */
-  command: CommandBlockValue;
-  /**
-   * The users implicated in the context/action.
-   */
-  users: User[];
-  /**
-   * The channel where the action occurs.
-   */
-  channel: ContextChannel;
-  /**
-   * The interaction, if there is one.
-   */
-  interaction: ChatInputCommandInteraction;
-  /**
-   * The interaction button, if there is one.
-   */
-  buttonInteraction?: ButtonInteraction;
-}
+import { BaseClient, Language, LanguageContentKey } from './';
+import { Validators } from '../decorators';
+import { PublicChatInputCommandInteraction } from '../public';
+import { HashiClient, CommandBlockValue } from '../root';
 
 /**
  * The class who manages the front part of an interaction with Discord and the user.
  */
-export class Context extends Base {
+export class Context extends BaseClient {
   /**
    * The language id of the main user.
    */
-  #languageId: Language = 'fr';
+  @Validators.StringValidator.ValidLanguage
+  public languageId: Language = 'fr';
 
   /**
    * The command associated with the context.
    */
-  #command: CommandBlockValue;
+  @Validators.ObjectValidator.CommandBlockValueInitial
+  public command: CommandBlockValue;
 
   /**
    * The users implicated in the context/action.
    */
-  #users: User[];
+  @Validators.ArrayValidator.OnlyUsers
+  public users: User[];
 
   /**
    * The channel where the action occurs.
    */
-  #channel: ContextChannel;
+  @Validators.ObjectValidator.ContextChannelInitial
+  public channel: ContextChannel;
 
   /**
    * The interaction, if there is one.
    */
-  #interaction: ChatInputCommandInteraction;
+  @Validators.ObjectValidator.IsInstanceOf(PublicChatInputCommandInteraction)
+  public interaction: ChatInputCommandInteraction;
 
   /**
    * The interaction button, if there is one.
    */
-  #buttonInteraction: ButtonInteraction;
-
-  /**
-   * Get the language id.
-   * @returns The language id.
-   */
-  get languageId(): Language {
-    return this.#languageId;
-  }
-
-  /**
-   * Get the command.
-   * @returns The command.
-   */
-  get command(): CommandBlockValue {
-    return this.#command;
-  }
-
-  /**
-   * Get the users.
-   * @returns The users.
-   */
-  get users(): User[] {
-    return this.#users;
-  }
-
-  /**
-   * Get the channel.
-   * @returns The channel.
-   */
-  get channel(): ContextChannel {
-    return this.#channel;
-  }
-
-  /**
-   * Get the interaction.
-   * @returns The interaction.
-   */
-  get interaction(): ChatInputCommandInteraction {
-    return this.#interaction;
-  }
-
-  /**
-   * Get the button interaction.
-   * @returns The button interaction.
-   */
-  get buttonInter(): ButtonInteraction {
-    return this.#buttonInteraction;
-  }
+  @Validators.ObjectValidator.Matches
+  public buttonInteraction: ButtonInteraction;
 
   /**
    * The constructor of the context.
@@ -151,32 +64,12 @@ export class Context extends Base {
   constructor(client: HashiClient, options: ContextOptions) {
     super(client);
 
-    if (options.languageId) this.setLanguageId(options.languageId);
-    if (options.command) this.setCommand(options.command);
-    this.setUsers(options.users);
-    this.setChannel(options.channel);
-    if (this.interaction) this.setInteraction(options.interaction);
-    if (this.buttonInter) this.setButtonInteraction(options.buttonInteraction);
-  }
-
-  /**
-   * Set the language id.
-   * @param languageId The language id to set.
-   * @returns The class instance.
-   */
-  public setLanguageId(languageId: Language): Context {
-    if (typeof languageId === 'string') this.#languageId = languageId;
-    return this;
-  }
-
-  /**
-   * Set the command.
-   * @param commandBlock The command block to set.
-   * @returns The class instance.
-   */
-  public setCommand(commandBlock: CommandBlockValue): Context {
-    if (typeof commandBlock === 'object') this.#command = commandBlock;
-    return this;
+    if (options.languageId) this.languageId = options.languageId;
+    if (options.command) this.command = options.command;
+    this.users = options.users;
+    this.channel = options.channel;
+    if (this.interaction) this.interaction = options.interaction;
+    if (this.buttonInteraction) this.buttonInteraction = options.buttonInteraction;
   }
 
   /**
@@ -185,7 +78,7 @@ export class Context extends Base {
    * @returns The class instance.
    */
   public addUser(user: User): Context {
-    if (user instanceof User) this.#users.push(user);
+    if (user instanceof User) this.users.push(user);
     return this;
   }
 
@@ -196,47 +89,7 @@ export class Context extends Base {
    */
   public removeUser(user: User): Context {
     if (user instanceof User)
-      this.#users = this.#users.filter((presentUser: User): boolean => presentUser.id !== user.id);
-    return this;
-  }
-
-  /**
-   * Set the users.
-   * @param users The users to set.
-   * @returns The class instance.
-   */
-  public setUsers(users: User[]): Context {
-    if (users.every((user: User): boolean => user instanceof User)) this.#users = users;
-    return this;
-  }
-
-  /**
-   * Set the channel.
-   * @param channel The channel to set.
-   * @returns The class instance.
-   */
-  public setChannel(channel: ContextChannel): Context {
-    if (typeof channel === 'object') this.#channel = channel;
-    return this;
-  }
-
-  /**
-   * Set the interaction.
-   * @param interaction The interaction to set.
-   * @returns The class instance.
-   */
-  public setInteraction(interaction: ChatInputCommandInteraction): Context {
-    if (interaction instanceof ChatInputCommandInteraction) this.#interaction = interaction;
-    return this;
-  }
-
-  /**
-   * Set the button interaction.
-   * @param buttonInter The button interaction to set.
-   * @returns The class instance.
-   */
-  public setButtonInteraction(buttonInter: ButtonInteraction): Context {
-    if (buttonInter instanceof ButtonInteraction) this.#buttonInteraction = buttonInter;
+      this.users = this.users.filter((presentUser: User): boolean => presentUser.id !== user.id);
     return this;
   }
 
@@ -313,3 +166,48 @@ export class Context extends Base {
     return { data, origin: finalStr };
   }
 }
+
+/**
+ * The options for the context constructor.
+ */
+export interface ContextOptions {
+  /**
+   * The language id of the main user.
+   */
+  languageId?: Language;
+  /**
+   * The command associated with the context.
+   */
+  command: CommandBlockValue;
+  /**
+   * The users implicated in the context/action.
+   */
+  users: User[];
+  /**
+   * The channel where the action occurs.
+   */
+  channel: ContextChannel;
+  /**
+   * The interaction, if there is one.
+   */
+  interaction: ChatInputCommandInteraction;
+  /**
+   * The interaction button, if there is one.
+   */
+  buttonInteraction?: ButtonInteraction;
+}
+
+/**
+ * The data extracted structure.
+ */
+export interface ExtractedDataFromString {
+  data: {
+    [varName: string]: string;
+  };
+  origin: string;
+}
+
+/**
+ * Represents the type for a context possible channel type among Discord package.
+ */
+export type ContextChannel = BaseGuildTextChannel | BaseGuildVoiceChannel | ThreadChannel;

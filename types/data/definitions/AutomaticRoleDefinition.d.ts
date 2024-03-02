@@ -25,6 +25,10 @@
 import { Schema, Types } from 'mongoose';
 import { DataMapDefinition } from '../../base';
 /**
+ * The interface that includes all the properties of an automatic roles system.
+ */
+export declare const AutomaticRoleDefinition: DataMapDefinition<typeof AutomaticRoleStructure>;
+/**
  * The automatic-role definition.
  */
 export declare const AutomaticRoleStructure: {
@@ -41,7 +45,3 @@ export declare const AutomaticRoleStructure: {
         type: StringConstructor[];
     };
 };
-/**
- * The interface that includes all the properties of an automatic roles system.
- */
-export declare const AutomaticRoleDefinition: DataMapDefinition<typeof AutomaticRoleStructure>;

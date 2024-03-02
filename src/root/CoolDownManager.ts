@@ -1,22 +1,5 @@
 import { Collection, Snowflake } from 'discord.js';
-
-/**
- * Represents an element in the cool downs queue.
- */
-export type CoolDownsQueueElement = [
-  /**
-   The full name of the command (including the subcommands name).
-   */
-  string,
-  /**
-   * The end time of the cool down.
-   */
-  number,
-  /**
-   * The cool down amount.
-   */
-  number,
-];
+import { Validators } from '../decorators';
 
 /**
  * The main class who manages the active cool downs for commands.
@@ -25,7 +8,8 @@ export class CoolDownManager {
   /**
    * The collection of the current cool downs.
    */
-  readonly #queue: Collection<Snowflake, CoolDownsQueueElement[]> = new Collection();
+  @Validators.ObjectValidator.IsInstanceOf(Collection)
+  private readonly queue: Collection<Snowflake, CoolDownsQueueElement[]> = new Collection();
 
   /**
    * The constructor of the cool down manager.
@@ -45,7 +29,7 @@ export class CoolDownManager {
 
     currentCoolDowns.push([commandName, endTime, coolDown]);
 
-    this.#queue.set(userId, currentCoolDowns);
+    this.queue.set(userId, currentCoolDowns);
   }
 
   /**
@@ -55,14 +39,14 @@ export class CoolDownManager {
    * @returns The full list of the user cool downs.
    */
   public values(userId: Snowflake, commandName?: string): CoolDownsQueueElement[] {
-    let currentCoolDowns: CoolDownsQueueElement[] | [] = this.#queue.get(userId) || [];
+    let currentCoolDowns: CoolDownsQueueElement[] | [] = this.queue.get(userId) || [];
 
     const currentTime: number = Date.now();
     currentCoolDowns = currentCoolDowns.filter(
       (queueElement: CoolDownsQueueElement): boolean => currentTime < queueElement[1],
     );
 
-    this.#queue.set(userId, currentCoolDowns);
+    this.queue.set(userId, currentCoolDowns);
 
     if (commandName)
       return currentCoolDowns.filter((queueElement: CoolDownsQueueElement): boolean =>
@@ -72,3 +56,21 @@ export class CoolDownManager {
     return currentCoolDowns;
   }
 }
+
+/**
+ * Represents an element in the cool downs queue.
+ */
+export type CoolDownsQueueElement = [
+  /**
+   The full name of the command (including the subcommands name).
+   */
+  string,
+  /**
+   * The end time of the cool down.
+   */
+  number,
+  /**
+   * The cool down amount.
+   */
+  number,
+];

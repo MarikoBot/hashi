@@ -1,4 +1,4 @@
-export * from './Base';
+export * from './BaseClient';
 
 export * from './CommandManager';
 export * from './Context';
@@ -9,6 +9,3 @@ export * from './DataMap';
 export * from './EventManager';
 
 export * from './LanguageManager';
-
-export * from './Service';
-export * from './ServiceManager';

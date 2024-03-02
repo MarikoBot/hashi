@@ -4,17 +4,14 @@ import { DataMap, TypedDataMapStored } from '../base/';
  * Every object into the data map will be passed in this class to improve manipulation.
  */
 export declare class DataMapEntry<DataStructure extends TypedDataMapStored> {
-    #private;
     /**
-     * Get the data map.
-     * @returns The data map.
+     * The data map.
      */
-    get dataMap(): DataMap<DataStructure, typeof DataMapEntry>;
+    readonly dataMap: DataMap<DataStructure, typeof DataMapEntry>;
     /**
-     * Get the data.
-     * @returns The data.
+     * The data.
      */
-    get data(): DataStructure;
+    readonly data: DataStructure;
     /**
      * The constructor of a data map entry.
      * @param dataMap The data map.

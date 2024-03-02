@@ -1,25 +1,6 @@
 // noinspection JSUnusedGlobalSymbols
 
 /**
- * The list of available colors.
- */
-export interface MainColors {
-  RED: number;
-  ORANGE: number;
-  YELLOW: number;
-  GREEN: number;
-  BLUE: number;
-  PURPLE: number;
-  WHITE: number;
-  DARK: number;
-}
-
-/**
- * The pair of paths based on the environment.
- */
-export type EnvPath = Record<'lab' | 'prod', string>;
-
-/**
  * The main class for managing the configuring constants for the bot.
  */
 export class Constants {
@@ -42,3 +23,22 @@ export class Constants {
    */
   public CustomColors: Record<string, number> = {};
 }
+
+/**
+ * The list of available colors.
+ */
+export interface MainColors {
+  RED: number;
+  ORANGE: number;
+  YELLOW: number;
+  GREEN: number;
+  BLUE: number;
+  PURPLE: number;
+  WHITE: number;
+  DARK: number;
+}
+
+/**
+ * The pair of paths based on the environment.
+ */
+export type EnvPath = Record<'lab' | 'prod', string>;

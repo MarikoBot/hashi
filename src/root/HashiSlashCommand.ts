@@ -1,78 +1,68 @@
-import { HashiSlashBaseCommand, HashiSlashCommandCallbackFunction } from './HashiSlashBaseCommand';
-import { HashiSlashSubcommand } from './HashiSlashSubcommand';
-import { HashiSlashSubcommandGroup } from './HashiSlashSubcommandGroup';
+// noinspection JSUnusedGlobalSymbols
+
+import { ChatInputCommandInteraction, APIApplicationCommand } from 'discord.js';
+import { Validators } from '../decorators';
+import { Context } from '../base';
+import { CommandAncillary, HashiClient, HashiSlashSubcommand, HashiSlashSubcommandGroup, COMMAND_END } from './';
 
 /**
- * The main class who represents a command for the Hashi package. [Extends the SlashCommandBuilder class from Discord.js.]
+ * The class who represents a base-command for the Hashi package.
  */
-export class HashiSlashCommand extends HashiSlashBaseCommand {
+export class HashiSlashCommand extends CommandAncillary {
   /**
-   * The list of hashi subcommands.
+   * The Discord slash command data. PROVIDE THE SUBCOMMANDS(GROUPS) DATA.
    */
-  readonly #hashiSubcommands: HashiSlashSubcommand[] = [];
+  @Validators.ObjectValidator.Matches
+  public src: APIApplicationCommand;
 
   /**
-   * The list of hashi subcommand groups.
+   * The subcommand groups of the command.
    */
-  readonly #hashiSubcommandsGroups: HashiSlashSubcommandGroup[] = [];
+  @Validators.ArrayValidator.OnlyConstructorOf(HashiSlashSubcommandGroup)
+  public subcommandGroups: (typeof HashiSlashSubcommandGroup)[] = [];
 
   /**
-   * Get the list of hashi subcommands.
-   * @returns The list of hashi subcommands.
+   * The subcommands of the command.
    */
-  get hashiSubcommands(): HashiSlashSubcommand[] {
-    return this.#hashiSubcommands;
-  }
-
-  /**
-   * Get the list of hashi subcommand groups.
-   * @returns The list of hashi subcommand groups.
-   */
-  get hashiSubcommandsGroups(): HashiSlashSubcommandGroup[] {
-    return this.#hashiSubcommandsGroups;
-  }
+  @Validators.ArrayValidator.OnlyConstructorOf(HashiSlashSubcommand)
+  public subcommands: (typeof HashiSlashSubcommand)[] = [];
 
   /**
    * The constructor for the HashiSlashCommand.
-   * @param name The name of the command.
    */
-  constructor(name: HashiSlashBaseCommand['name']) {
-    super(name);
-    this.setFullName(name);
-  }
-
-  /**
-   * The callback function executed when the command is triggered.
-   *
-   * @param callback The function to set.
-   * @returns The class instance.
-   */
-  public setCallbackFunction(callback: HashiSlashCommandCallbackFunction): HashiSlashCommand {
-    if (typeof callback === 'function') super.setCallbackFunction(callback);
-    return this;
-  }
-
-  /**
-   * Add a slash command built with the Hashi source builder.
-   * @param subcommand The slash command instance to add.
-   * @returns The class instance.
-   */
-  public addHashiSlashSubcommand(subcommand: HashiSlashSubcommand): HashiSlashCommand {
-    subcommand.setFullName(`${this.name} ${subcommand.name}`);
-    HashiSlashBaseCommand.transformSubcommand(this, subcommand);
-    this.hashiSubcommands.push(subcommand);
-    return this;
-  }
-
-  /**
-   * Add a slash command built with the Hashi source builder.
-   * @param subcommandGroup The slash command group instance to add.
-   * @returns The class instance.
-   */
-  public addHashiSlashSubcommandGroup(subcommandGroup: HashiSlashSubcommandGroup): this {
-    subcommandGroup.setFullName(`${this.name} ${subcommandGroup.name}`);
-    HashiSlashBaseCommand.transformSubcommandGroup(this, subcommandGroup);
-    this.hashiSubcommandsGroups.push(subcommandGroup);
-    return this;
+  constructor() {
+    super('slash');
   }
 }
+
+/**
+ * The default callback function.
+ *
+ * @param client The client that instanced the process.
+ * @param interaction The associated interaction.
+ * @param context The front-end class to manage interactions.
+ * @returns COMMAND_END The exit command code.
+ */
+export const defaultSlashCommandCallback: HashiSlashCommandCallbackFunction = async (
+  client: HashiClient,
+  interaction: ChatInputCommandInteraction,
+  context: Context,
+): Promise<COMMAND_END> => {
+  void client;
+  void interaction;
+  return context.command.end();
+};
+
+/**
+ * Represents the function called back when the command is triggered.
+ *
+ * @param client The client that instanced the process.
+ * @param interaction The associated interaction.
+ * @param context The front-end class to manage interactions.
+ * @returns COMMAND_END The exit command code.
+ */
+export type HashiSlashCommandCallbackFunction = (
+  client: HashiClient,
+  interaction: ChatInputCommandInteraction,
+  context: Context,
+) => Promise<COMMAND_END>;

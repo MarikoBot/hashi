@@ -1,19 +1,5 @@
 import { ChatInputCommandInteraction, Collection, Snowflake } from 'discord.js';
-
-/**
- * Represents an element in the interfering commands queue.
- * Interfering commands that are same-time executed.
- */
-export type InterferingQueueElement = [
-  /**
-   * The full name of the command (including the subcommands name).
-   */
-  string,
-  /**
-   * The interaction id.
-   */
-  ChatInputCommandInteraction,
-];
+import { Validators } from '../decorators';
 
 /**
  * The main class who manages the active cool downs for commands.
@@ -22,7 +8,8 @@ export class InterferingManager {
   /**
    * The collection of the current cool downs.
    */
-  readonly #queue: Collection<Snowflake, InterferingQueueElement[]> = new Collection();
+  @Validators.ObjectValidator.IsInstanceOf(Collection)
+  public readonly queue: Collection<Snowflake, InterferingQueueElement[]> = new Collection();
 
   /**
    * The constructor of the interfering manager.
@@ -41,7 +28,7 @@ export class InterferingManager {
 
     currentCoolDowns.push([commandName, interaction]);
 
-    this.#queue.set(userId, currentCoolDowns);
+    this.queue.set(userId, currentCoolDowns);
   }
 
   /**
@@ -51,7 +38,7 @@ export class InterferingManager {
    * @returns The full list of the user cool downs.
    */
   public values(userId: Snowflake, ...commands: string[]): InterferingQueueElement[] {
-    const currentInterfering: InterferingQueueElement[] | [] = this.#queue.get(userId) || [];
+    const currentInterfering: InterferingQueueElement[] | [] = this.queue.get(userId) || [];
 
     if (commands.length > 0) {
       return currentInterfering.filter((queueElement: InterferingQueueElement): boolean =>
@@ -71,7 +58,7 @@ export class InterferingManager {
   public removeInterfering(userId: Snowflake, key: string | Snowflake): void {
     const currentInterfering: InterferingQueueElement[] = this.values(userId);
 
-    this.#queue.set(
+    this.queue.set(
       userId,
       currentInterfering.filter((queueElement: InterferingQueueElement): boolean => {
         return queueElement[1].id !== key;
@@ -79,3 +66,18 @@ export class InterferingManager {
     );
   }
 }
+
+/**
+ * Represents an element in the interfering commands queue.
+ * Interfering commands that are same-time executed.
+ */
+export type InterferingQueueElement = [
+  /**
+   * The full name of the command (including the subcommands name).
+   */
+  string,
+  /**
+   * The interaction id.
+   */
+  ChatInputCommandInteraction,
+];

@@ -22,85 +22,37 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { Model, Schema, SchemaDefinition, Types, Query } from 'mongoose';
-import { HashiClient } from '../root/';
-import { DataMapEntry } from '../root/';
-import { Base } from './Base';
+import { Query, Schema, Types, Model, SchemaDefinition } from 'mongoose';
+import { BaseClient } from './';
+import { DataMapEntry, HashiClient } from '../root/';
 /**
- * The type that represents a document for the hashi data map.
+ * The main class. Represents a data map technology.
  */
-export interface DataMapDefinition<IStructure extends SchemaDefinition> {
+export declare class DataMap<DataStructure extends TypedDataMapStored, EntryClass extends new (...args: any[]) => DataMapEntry<DataStructure> = typeof DataMapEntry> extends BaseClient {
     /**
      * The name of the data map.
      */
     name: string;
     /**
-     * The entry class associated.
+     * The entry class to use while using the data.
      */
-    entry: typeof DataMapEntry<any>;
+    entryClass: EntryClass;
     /**
-     * The build schema.
+     * The primary key(s). Separate it with a '+' sign.
      */
-    schema: Schema<IStructure>;
+    primaryKey: string;
     /**
-     * The model if the data map is using mongo.
+     * The default data for the data map.
      */
-    model?: Model<any>;
+    definition: DataMapDefinition<SchemaDefinition>;
     /**
-     * The default values.
+     * Intents for the database. Be careful! Those intents MUST BE set before the launch of the process.
      */
-    defaultValues: TypedDataMapStored;
-}
-/**
- * The possible value to store in.
- */
-export type TypedDataMapStored = number | string | boolean | TypedDataMapStored[] | {
-    [key: string]: TypedDataMapStored;
-} | undefined | Types.ObjectId;
-/**
- * The list of flags for the data map intents.
- */
-export declare enum DATAMAP_INTENTS {
+    intents: DATAMAP_INTENTS[];
     /**
-     * If the data map is used for store the most important data (as process data).
+     * The collection/model of the schema.
      */
-    CORE = 0
-}
-/**
- * The main class. Represents a data map technology.
- */
-export declare class DataMap<DataStructure extends TypedDataMapStored, EntryClass extends new (...args: any[]) => DataMapEntry<DataStructure> = typeof DataMapEntry> extends Base {
-    #private;
-    /**
-     * Get the data map name.
-     * @returns The name.
-     */
-    get name(): string;
-    /**
-     * Get the entry class.
-     * @returns The entry class.
-     */
-    get entryClass(): EntryClass;
-    /**
-     * Get the primary key.
-     * @returns The primary key.
-     */
-    get primaryKey(): string;
-    /**
-     * Get the default data.
-     * @returns The default data.
-     */
-    get definition(): DataMapDefinition<SchemaDefinition>;
-    /**
-     * Get the intents.
-     * @returns The intents.
-     */
-    get intents(): DATAMAP_INTENTS[];
-    /**
-     * Get the data map.
-     * @returns The data map.
-     */
-    get model(): Model<DataMapDefinition<SchemaDefinition>>;
+    model: Model<DataMapDefinition<SchemaDefinition>>;
     /**
      * The constructor of a data map.
      * @param client The client instance.
@@ -108,30 +60,6 @@ export declare class DataMap<DataStructure extends TypedDataMapStored, EntryClas
      * @param entryClass The entry class.
      */
     constructor(client: HashiClient, name: string, entryClass?: EntryClass);
-    /**
-     * Set the data map name.
-     * @param name The data map name to set.
-     * @returns The class instance.
-     */
-    setName(name: string): DataMap<DataStructure, EntryClass>;
-    /**
-     * Set the entry class.
-     * @param entryClass the entry class to set.
-     * @returns The class instance.
-     */
-    setEntryClass(entryClass: EntryClass): DataMap<DataStructure, EntryClass>;
-    /**
-     * Set the primary key.
-     * @param primaryKey The primary key to set.
-     * @returns The class instance.
-     */
-    setPrimaryKey(primaryKey: string): DataMap<DataStructure, EntryClass>;
-    /**
-     * Set the definition data.
-     * @param definition The definition data to set.
-     * @returns The data map.
-     */
-    setDefinition<IStructure extends SchemaDefinition>(definition: DataMapDefinition<IStructure>): DataMap<DataStructure, EntryClass>;
     /**
      * Add an intent.
      * @param intent The intent to add.
@@ -169,3 +97,43 @@ export declare class DataMap<DataStructure extends TypedDataMapStored, EntryClas
      */
     protected get(key?: string): Promise<TypedDataMapStored | DataMapEntry<DataStructure>>;
 }
+/**
+ * The list of flags for the data map intents.
+ */
+export declare enum DATAMAP_INTENTS {
+    /**
+     * If the data map is used for store the most important data (as process data).
+     */
+    CORE = 0
+}
+/**
+ * The type that represents a document for the hashi data map.
+ */
+export interface DataMapDefinition<IStructure extends SchemaDefinition> {
+    /**
+     * The name of the data map.
+     */
+    name: string;
+    /**
+     * The entry class associated.
+     */
+    entry: typeof DataMapEntry<any>;
+    /**
+     * The build schema.
+     */
+    schema: Schema<IStructure>;
+    /**
+     * The model if the data map is using mongo.
+     */
+    model?: Model<any>;
+    /**
+     * The default values.
+     */
+    defaultValues: TypedDataMapStored;
+}
+/**
+ * The possible value to store in.
+ */
+export type TypedDataMapStored = number | string | boolean | TypedDataMapStored[] | {
+    [key: string]: TypedDataMapStored;
+} | undefined | Types.ObjectId;

@@ -22,5 +22,5 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { Document, SchemaDefinition, Model } from 'mongoose';
+import { Document, Model, SchemaDefinition } from 'mongoose';
 export declare const AutomaticRoleModel: Model<SchemaDefinition & Document>;

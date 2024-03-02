@@ -1,26 +1,12 @@
 import { Snowflake } from 'discord.js';
 /**
- * Represents an element in the cool downs queue.
- */
-export type CoolDownsQueueElement = [
-    /**
-     The full name of the command (including the subcommands name).
-     */
-    string,
-    /**
-     * The end time of the cool down.
-     */
-    number,
-    /**
-     * The cool down amount.
-     */
-    number
-];
-/**
  * The main class who manages the active cool downs for commands.
  */
 export declare class CoolDownManager {
-    #private;
+    /**
+     * The collection of the current cool downs.
+     */
+    private readonly queue;
     /**
      * The constructor of the cool down manager.
      */
@@ -41,3 +27,20 @@ export declare class CoolDownManager {
      */
     values(userId: Snowflake, commandName?: string): CoolDownsQueueElement[];
 }
+/**
+ * Represents an element in the cool downs queue.
+ */
+export type CoolDownsQueueElement = [
+    /**
+     The full name of the command (including the subcommands name).
+     */
+    string,
+    /**
+     * The end time of the cool down.
+     */
+    number,
+    /**
+     * The cool down amount.
+     */
+    number
+];

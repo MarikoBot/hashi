@@ -1,25 +1,9 @@
+import { BaseClient } from './';
 import { HashiClient } from '../root/';
-import { Base } from './Base';
-/**
- * The id of a language.
- */
-export type Language = 'fr' | 'en';
-/**
- * The default type for a language translation file.
- */
-export type LanguageContent = Record<string, string>;
-/**
- * The type that represents a language content id.
- */
-export type LanguageContentKey = keyof LanguageContent;
-/**
- * All the language content.
- */
-export declare const Languages: Record<Language, LanguageContent>;
 /**
  * The class who manages the translations in the project.
  */
-export declare class LanguageManager extends Base {
+export declare class LanguageManager extends BaseClient {
     /**
      * The constructor of the language manager.
      * @param client The client instance.
@@ -33,3 +17,19 @@ export declare class LanguageManager extends Base {
      */
     getStr(languageId: Language, key: LanguageContentKey): LanguageContent[Language];
 }
+/**
+ * All the language content.
+ */
+export declare const Languages: Record<Language, LanguageContent>;
+/**
+ * The id of a language.
+ */
+export type Language = 'fr' | 'en';
+/**
+ * The default type for a language translation file.
+ */
+export type LanguageContent = Record<string, string>;
+/**
+ * The type that represents a language content id.
+ */
+export type LanguageContentKey = keyof LanguageContent;

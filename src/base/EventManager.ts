@@ -1,27 +1,17 @@
 import { Collection } from 'discord.js';
-import { HashiEvent, HashiSlashCommand } from '../root/';
-import { HashiClient } from '../root/';
-import * as fs from 'fs';
-import * as path from 'path';
-import { Base } from './Base';
-import { FileManager } from '../root/FileManager';
+import { BaseClient } from './';
+import { Validators } from '../decorators';
+import { FileManager, HashiClient, HashiEvent } from '../root/';
 
 /**
  * Represents the event manager for the client service.
  */
-export class EventManager extends Base {
+export class EventManager extends BaseClient {
   /**
    * The collection of the events.
    */
-  readonly #eventsList: Collection<string, HashiEvent> = new Collection();
-
-  /**
-   * Get the events list.
-   * @returns The events list.
-   */
-  get eventsList(): Collection<string, HashiEvent> {
-    return this.#eventsList;
-  }
+  @Validators.ObjectValidator.IsInstanceOf(Collection)
+  public readonly eventsList: Collection<string, HashiEvent> = new Collection();
 
   /**
    * The constructor of the event manager.
@@ -59,7 +49,7 @@ export class EventManager extends Base {
 
     while (++i < events.length) {
       eventData = events[i];
-      eventData.setClient(this.client);
+      eventData.client = this.client;
       this.client.src[eventData.name === 'ready' ? 'once' : 'on'](eventData.name, (...args: any[]) =>
         eventData.callback(this.client, ...args),
       );
