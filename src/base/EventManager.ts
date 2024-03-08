@@ -2,6 +2,7 @@ import { Collection } from 'discord.js';
 import { BaseClient } from './';
 import { Validators } from '../decorators';
 import { FileManager, HashiClient, HashiEvent } from '../root/';
+import { InstanceValidator } from '../decorators/shared';
 
 /**
  * Represents the event manager for the client service.
@@ -10,7 +11,7 @@ export class EventManager extends BaseClient {
   /**
    * The collection of the events.
    */
-  @Validators.ObjectValidator.IsInstanceOf(Collection)
+  @((<(arg: typeof Collection) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(Collection))
   public readonly eventsList: Collection<string, HashiEvent> = new Collection();
 
   /**

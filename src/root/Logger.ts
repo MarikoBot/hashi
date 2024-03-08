@@ -1,5 +1,6 @@
 import * as chalk from 'chalk';
 import { Validators } from '../decorators';
+import { InstanceValidator } from '../decorators/shared';
 
 /**
  * The Logger class. Contains multiple functions to log data.
@@ -8,7 +9,7 @@ export class Logger {
   /**
    * The name of the project.
    */
-  @Validators.StringValidator.NotEmpty
+  @(<InstanceValidator>Validators.StringValidator.NotEmpty)
   public readonly projectName: string;
 
   /**

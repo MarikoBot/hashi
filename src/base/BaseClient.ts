@@ -1,11 +1,12 @@
 import { Validators } from '../decorators/';
 import { HashiClient } from '../root';
+import { Constructable, InstanceValidator } from '../decorators/shared';
 
 /**
  * Represents the base class for each class of the package.
  */
 export class BaseClient {
-  @Validators.ObjectValidator.IsInstanceOf(HashiClient)
+  @((<(arg: typeof HashiClient) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(HashiClient))
   public client: HashiClient;
 
   /**

@@ -2,6 +2,7 @@
 
 import { Validators } from '../decorators';
 import { HashiClient } from './';
+import { InstanceValidator } from '../decorators/shared';
 
 /**
  * Represents an Event on client service.
@@ -10,13 +11,13 @@ export class HashiEvent {
   /**
    * The client instance.
    */
-  @Validators.ObjectValidator.IsInstanceOf(HashiClient)
+  @((<(arg: typeof HashiClient) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(HashiClient))
   public client: HashiClient;
 
   /**
    * The event name.
    */
-  @Validators.StringValidator.ValidId
+  @(<InstanceValidator>Validators.StringValidator.ValidId)
   public name: string;
 
   /**

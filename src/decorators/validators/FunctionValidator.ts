@@ -1,14 +1,16 @@
+import { InstanceValidator } from '../shared';
+
 /**
  * All the function type validators.
  */
-export class FunctionValidator {
+export const FunctionValidator: { readonly [validatorName: string]: InstanceValidator } = {
   /**
    * Verify if the value is a function.
    * @param target The class instance.
    * @param key The attribute to set.
    * @constructor
    */
-  public static Matches(target: Object, key: string): void {
+  Matches: (target: Object, key: string): void => {
     let value: any;
 
     const setter = (newValue: any): void => {
@@ -23,5 +25,5 @@ export class FunctionValidator {
       enumerable: true,
       configurable: true,
     });
-  }
-}
+  },
+} as const;

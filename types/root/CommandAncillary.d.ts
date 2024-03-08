@@ -2,6 +2,10 @@ import { ChatInputCommandInteraction, DiscordjsError, DiscordAPIError, SlashComm
 import { Context } from '../base';
 import { HashiClient, HashiMessageCommand, HashiSlashCommand, HashiSlashSubcommand, HashiSlashSubcommandGroup, HashiSlashCommandCallbackFunction } from './';
 /**
+ * The different values of for the HashiCommandType type.
+ */
+export declare const HashiCommandValues: readonly string[];
+/**
  * The class that includes many useful functions shared between HashiMessageCommand and SlashCommand.
  */
 export declare class CommandAncillary {
@@ -250,10 +254,6 @@ export type CommandMetadataKeys = keyof CommandMetadata;
  * The type that represents a key included in CommandPrivileges.
  */
 export type CommandPrivilegesKey = keyof CommandPrivileges;
-/**
- * The different values of for the HashiCommandType type.
- */
-export declare const HashiCommandValues: string[];
 /**
  * The different types of command.
  */

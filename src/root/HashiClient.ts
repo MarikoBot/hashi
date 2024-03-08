@@ -14,6 +14,7 @@ import {
 } from '../base/';
 import { Validators } from '../decorators';
 import { Constants, FileManager, HashiSlashCommand, Logger, COMMAND_END, CommandBlock } from './';
+import { InstanceValidator } from '../decorators/shared';
 
 dotenv.config();
 
@@ -24,74 +25,75 @@ export class HashiClient {
   /**
    * The Discord Client instance.
    */
-  @Validators.ObjectValidator.IsInstanceOf(Client)
+  @((<(arg: typeof Client) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(Client))
   public readonly src: Client;
 
   /**
    * The logger for the HashiClient.
    */
-  @Validators.ObjectValidator.IsInstanceOf(Logger)
+  @((<(arg: typeof Logger) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(Logger))
   public readonly logger: Logger;
 
   /**
    * The command manager instance.
    */
-  @Validators.ObjectValidator.IsInstanceOf(CommandManager)
+  @((<(arg: typeof CommandManager) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(CommandManager))
   public readonly commandManager: CommandManager = new CommandManager(this);
 
   /**
    * The event manager instance.
    */
-  @Validators.ObjectValidator.IsInstanceOf(EventManager)
+  @((<(arg: typeof EventManager) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(EventManager))
   public readonly eventManager: EventManager = new EventManager(this);
 
   /**
    * The language manager for accessing strings.
    */
-  @Validators.ObjectValidator.IsInstanceOf(LanguageManager)
+  @((<(arg: typeof LanguageManager) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(LanguageManager))
   public readonly languageManager: LanguageManager = new LanguageManager(this);
 
   /**
    * The database manager for accessing data maps/lakes.
    */
-  @Validators.ObjectValidator.IsInstanceOf(DatabaseManager)
+  @((<(arg: typeof DatabaseManager) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(DatabaseManager))
   public readonly databaseManager: DatabaseManager = new DatabaseManager(this);
 
   /**
    * The files manager for accessing different files (for handling especially).
    */
-  @Validators.ObjectValidator.IsInstanceOf(FileManager)
+  @((<(arg: typeof FileManager) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(FileManager))
   public readonly fileManager: FileManager = new FileManager(this);
 
   /**
    * The language manager for accessing strings.
    */
-  @Validators.ObjectValidator.IsInstanceOf(Constants)
+  @((<(arg: typeof Constants) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(Constants))
   public readonly constants: Constants = new Constants();
 
   /**
    * The name of the project/process you're in.
    */
-  @Validators.StringValidator.ValidId
+  @(<InstanceValidator>Validators.StringValidator.ValidId)
   public readonly processName: string;
 
   /**
    * The commands folder directory.
    */
-  @Validators.StringValidator.ValidId
+  @(<InstanceValidator>Validators.StringValidator.ValidId)
   public readonly commandsDir: string = 'commands';
 
   /**
    * The events folder directory.
    */
-  @Validators.StringValidator.ValidId
+  @(<InstanceValidator>Validators.StringValidator.ValidId)
   public readonly eventsDir: string = 'events';
 
   /**
    * The data maps folder directory.
    */
-  @Validators.StringValidator.ValidId
+  @(<InstanceValidator>Validators.StringValidator.ValidId)
   public readonly dataMapsDir: string = 'data';
+
   /**
    * The constructor for the HashiClient class.
    * @param options The options for the HashiClient.

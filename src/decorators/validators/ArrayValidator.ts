@@ -4,13 +4,13 @@ import { Constructible, InstanceValidator, isConstructor } from '../shared';
 /**
  * All the array type validators.
  */
-export class ArrayValidator {
+export const ArrayValidator: { readonly [validatorName: string]: InstanceValidator } = {
   /**
    * Verify if an array is composed only of a constructible class object.
    * @param constructible The class the value shall inherit.
    * @constructor
    */
-  public static OnlyConstructorOf(constructible: Constructible): InstanceValidator {
+  OnlyConstructorOf: (constructible: Constructible): InstanceValidator => {
     return function (target: Object, key: string): void {
       let value: any;
 
@@ -33,15 +33,14 @@ export class ArrayValidator {
         configurable: true,
       });
     };
-  }
-
+  },
   /**
    * Verify if an array is composed only of objects.
    * @param target The class instance.
    * @param key The attribute to set.
    * @constructor
    */
-  public static OnlyObjects(target: Object, key: string): void {
+  OnlyObjects: (target: Object, key: string): void => {
     let value: any;
 
     const setter = (newValue: any): void => {
@@ -56,15 +55,14 @@ export class ArrayValidator {
       enumerable: true,
       configurable: true,
     });
-  }
-
+  },
   /**
    * Verify if an array is composed only of enumeration values.
    * @param target The class instance.
    * @param key The attribute to set.
    * @constructor
    */
-  public static OnlyEnumValues(target: Object, key: string): void {
+  OnlyEnumValues: (target: Object, key: string): void => {
     let value: any;
 
     const setter = (newValue: any): void => {
@@ -82,15 +80,14 @@ export class ArrayValidator {
       enumerable: true,
       configurable: true,
     });
-  }
-
+  },
   /**
    * Verify if an array is composed only of HashiErrors initials classes instances.
    * @param target The class instance.
    * @param key The attribute to set.
    * @constructor
    */
-  public static OnlyHashiErrors(target: Object, key: string): void {
+  OnlyHashiErrors: (target: Object, key: string): void => {
     let value: any;
 
     const setter = (newValue: any): void => {
@@ -113,15 +110,14 @@ export class ArrayValidator {
       enumerable: true,
       configurable: true,
     });
-  }
-
+  },
   /**
    * Verify if an array is composed only of users.
    * @param target The class instance.
    * @param key The attribute to set.
    * @constructor
    */
-  public static OnlyUsers(target: Object, key: string): void {
+  OnlyUsers: (target: Object, key: string): void => {
     let value: any;
 
     const setter = (newValue: any): void => {
@@ -136,5 +132,5 @@ export class ArrayValidator {
       enumerable: true,
       configurable: true,
     });
-  }
-}
+  },
+} as const;

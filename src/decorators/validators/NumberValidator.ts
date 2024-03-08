@@ -1,14 +1,16 @@
+import { InstanceValidator } from '../shared';
+
 /**
  * All the number type validators.
  */
-export class NumberValidator {
+export const NumberValidator: { readonly [validatorName: string]: InstanceValidator } = {
   /**
    * Verify if the value is a number.
    * @param target The class instance.
    * @param key The attribute to set.
    * @constructor
    */
-  public static Matches(target: Object, key: string): void {
+  Matches: (target: Object, key: string): void => {
     let value: any;
 
     const setter = (newValue: any): void => {
@@ -23,5 +25,5 @@ export class NumberValidator {
       enumerable: true,
       configurable: true,
     });
-  }
-}
+  },
+} as const;

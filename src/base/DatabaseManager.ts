@@ -4,6 +4,7 @@ import { connect, Model, ConnectOptions } from 'mongoose';
 import { BaseClient, DataMap, DataMapDefinition, TypedDataMapStored } from './';
 import { Validators } from '../decorators';
 import { FileManager, HashiClient } from '../root/';
+import { InstanceValidator } from '../decorators/shared';
 
 /**
  * The class who manages the database of the project.
@@ -12,25 +13,25 @@ export class DatabaseManager extends BaseClient {
   /**
    * The database name. Not useful to change it (only for MongoDB). Default: main.
    */
-  @Validators.StringValidator.ValidId
+  @(<InstanceValidator>Validators.StringValidator.ValidId)
   public dbName: string = 'main';
 
   /**
    * The connection URI.
    */
-  @Validators.StringValidator.NotEmpty
+  @(<InstanceValidator>Validators.StringValidator.NotEmpty)
   public connectionURI: string;
 
   /**
    * The options for the connection.
    */
-  @Validators.ObjectValidator.Matches
+  @(<InstanceValidator>Validators.ObjectValidator.Matches)
   public connectOptions: ConnectOptions;
 
   /**
    * The list of dataMaps.
    */
-  @Validators.ObjectValidator.KeyDataMapPair
+  @((<(dataMap: typeof DataMap) => InstanceValidator>Validators.ObjectValidator.KeyDataMapPair)(DataMap))
   public dataMaps: DataMapsObject = {};
 
   /**

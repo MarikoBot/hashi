@@ -45,7 +45,8 @@
     "save": "git add ./",
     "build": "npm run run-builder && npm run prettier && tsc && npm run save",
     "prepublish": "npm run build && git commit -m \"[AUTO] dev build\"",
-    "test": "npm run build && node lab.test.js",
+    "test": "npm run build && node lab/lab.test.js",
+    "test-ts": "ts-node lab/lab.test.ts",
     "dev-patch": "npm run prepublish && npm run publish-patch",
     "publish-patch": "npm version patch && git push && npm publish && git push --tags",
     "publish-minor": "npm version minor && git push && npm publish && git push --tags",
@@ -54,13 +55,14 @@
   "dependencies": {
     "chalk": "^4.1.2",
     "discord-api-types": "^0.37.38",
-    "discord.js": "^14.14.1",
+    "discord.js": "^14.12.1",
     "dotenv": "^16.3.1",
     "mongoose": "^7.2.2"
   },
   "devDependencies": {
     "eslint": "^8.53.0",
     "prettier": "^2.8.4",
+    "ts-node": "^10.9.2",
     "tslint-config-prettier": "^1.18.0"
   },
   "engines": {

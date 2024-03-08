@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { Validators } from '../decorators';
 import { HashiClient, EnvPath } from './';
+import { InstanceValidator } from '../decorators/shared';
 
 /**
  * The class that manages the files included into this project, and also those at the root of the package user.
@@ -10,7 +11,7 @@ export class FileManager {
   /**
    * The client instance.
    */
-  @Validators.ObjectValidator.IsInstanceOf(HashiClient)
+  @((<(arg: typeof HashiClient) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(HashiClient))
   public client: HashiClient;
 
   /**

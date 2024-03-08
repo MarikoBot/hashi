@@ -11,10 +11,18 @@ import {
   User,
   InteractionReplyOptions,
 } from 'discord.js';
-import { BaseClient, Language, LanguageContentKey } from './';
+import { BaseClient, Language, LanguageContentKey, Languages } from './';
 import { Validators } from '../decorators';
 import { PublicChatInputCommandInteraction } from '../public';
-import { HashiClient, CommandBlockValue } from '../root';
+import {
+  HashiClient,
+  CommandBlockValue,
+  HashiMessageCommand,
+  HashiSlashCommand,
+  HashiSlashSubcommand,
+  HashiSlashSubcommandGroup,
+} from '../root';
+import { InstanceValidator } from '../decorators/shared';
 
 /**
  * The class who manages the front part of an interaction with Discord and the user.
@@ -23,13 +31,25 @@ export class Context extends BaseClient {
   /**
    * The language id of the main user.
    */
-  @Validators.StringValidator.ValidLanguage
+  @((<(arg: typeof Languages) => InstanceValidator>Validators.StringValidator.ValidLanguage)(Languages))
   public languageId: Language = 'fr';
 
   /**
    * The command associated with the context.
    */
-  @Validators.ObjectValidator.CommandBlockValueInitial
+  @((<
+    (
+      hashiMessageCommand: typeof HashiMessageCommand,
+      hashiSlashCommand: typeof HashiSlashCommand,
+      hashiSlashSubcommand: typeof HashiSlashSubcommand,
+      hashiSlashSubcommandGroup: typeof HashiSlashSubcommandGroup,
+    ) => InstanceValidator
+  >Validators.ObjectValidator.CommandBlockValueInitial)(
+    HashiMessageCommand,
+    HashiSlashCommand,
+    HashiSlashSubcommand,
+    HashiSlashSubcommandGroup,
+  ))
   public command: CommandBlockValue;
 
   /**
@@ -41,19 +61,21 @@ export class Context extends BaseClient {
   /**
    * The channel where the action occurs.
    */
-  @Validators.ObjectValidator.ContextChannelInitial
+  @(<InstanceValidator>Validators.ObjectValidator.ContextChannelInitial)
   public channel: ContextChannel;
 
   /**
    * The interaction, if there is one.
    */
-  @Validators.ObjectValidator.IsInstanceOf(PublicChatInputCommandInteraction)
+  @((<(arg: typeof PublicChatInputCommandInteraction) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(
+    PublicChatInputCommandInteraction,
+  ))
   public interaction: ChatInputCommandInteraction;
 
   /**
    * The interaction button, if there is one.
    */
-  @Validators.ObjectValidator.Matches
+  @(<InstanceValidator>Validators.ObjectValidator.Matches)
   public buttonInteraction: ButtonInteraction;
 
   /**

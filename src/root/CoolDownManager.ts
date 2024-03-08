@@ -1,5 +1,6 @@
 import { Collection, Snowflake } from 'discord.js';
 import { Validators } from '../decorators';
+import { InstanceValidator } from '../decorators/shared';
 
 /**
  * The main class who manages the active cool downs for commands.
@@ -8,7 +9,7 @@ export class CoolDownManager {
   /**
    * The collection of the current cool downs.
    */
-  @Validators.ObjectValidator.IsInstanceOf(Collection)
+  @((<(arg: typeof Collection) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(Collection))
   private readonly queue: Collection<Snowflake, CoolDownsQueueElement[]> = new Collection();
 
   /**

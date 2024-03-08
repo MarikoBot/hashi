@@ -19,6 +19,7 @@ import {
   CommandBlock,
   AnyCommandConstructor,
 } from '../root/';
+import { InstanceValidator } from '../decorators/shared';
 
 /**
  * Represents the command manager of the client.
@@ -27,19 +28,21 @@ export class CommandManager extends BaseClient {
   /**
    * The cool downs' manager instance, to get access to the different delays of the current command.
    */
-  @Validators.ObjectValidator.IsInstanceOf(CoolDownManager)
+  @((<(arg: typeof CoolDownManager) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(CoolDownManager))
   public readonly coolDowns: CoolDownManager = new CoolDownManager();
 
   /**
    * The interfering manager instance, to have access to the different executing commands.
    */
-  @Validators.ObjectValidator.IsInstanceOf(InterferingManager)
+  @((<(arg: typeof InterferingManager) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(
+    InterferingManager,
+  ))
   public readonly interfering: InterferingManager = new InterferingManager();
 
   /**
    * The list of commands.
    */
-  @Validators.ObjectValidator.IsInstanceOf(Collection)
+  @((<(arg: typeof Collection) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(Collection))
   public readonly commandsList: Collection<string, AnyCommandConstructor> = new Collection<
     string,
     AnyCommandConstructor

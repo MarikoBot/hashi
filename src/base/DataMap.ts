@@ -4,6 +4,7 @@ import { Query, Schema, Types, Model, SchemaDefinition } from 'mongoose';
 import { BaseClient } from './';
 import { Validators } from '../decorators';
 import { DataMapEntry, HashiClient } from '../root/';
+import { InstanceValidator } from '../decorators/shared';
 
 /**
  * The main class. Represents a data map technology.
@@ -15,25 +16,25 @@ export class DataMap<
   /**
    * The name of the data map.
    */
-  @Validators.StringValidator.ValidId
+  @(<InstanceValidator>Validators.StringValidator.ValidId)
   public name: string = 'default';
 
   /**
    * The entry class to use while using the data.
    */
-  @Validators.ObjectValidator.IsInstanceOf(DataMapEntry)
+  @((<(arg: typeof DataMapEntry) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(DataMapEntry))
   public entryClass: EntryClass;
 
   /**
    * The primary key(s). Separate it with a '+' sign.
    */
-  @Validators.StringValidator.ValidPrimaryKeys
+  @(<InstanceValidator>Validators.StringValidator.ValidPrimaryKeys)
   public primaryKey: string = 'discordId';
 
   /**
    * The default data for the data map.
    */
-  @Validators.ObjectValidator.IsDataMapDefinition
+  @(<InstanceValidator>Validators.ObjectValidator.IsDataMapDefinition)
   public definition: DataMapDefinition<SchemaDefinition> = {
     name: 'unnamedMap',
     entry: DataMapEntry<{ discordId: string }>,
@@ -52,7 +53,7 @@ export class DataMap<
   /**
    * The collection/model of the schema.
    */
-  @Validators.ObjectValidator.IsInstanceOf(Model)
+  @((<(arg: typeof Model) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(Model))
   model: Model<DataMapDefinition<SchemaDefinition>>;
 
   /**

@@ -7,7 +7,7 @@ src
 .gitignore
 .prettierrc
 builder.js
-lab.test.js
+lab/lab.test.js
 package-lock.json
 tsconfig.json
 tslint.json

@@ -4,6 +4,7 @@ import { ChatInputCommandInteraction, APIApplicationCommand } from 'discord.js';
 import { Validators } from '../decorators';
 import { Context } from '../base';
 import { CommandAncillary, HashiClient, HashiSlashSubcommand, HashiSlashSubcommandGroup, COMMAND_END } from './';
+import { InstanceValidator } from '../decorators/shared';
 
 /**
  * The class who represents a base-command for the Hashi package.
@@ -12,19 +13,23 @@ export class HashiSlashCommand extends CommandAncillary {
   /**
    * The Discord slash command data. PROVIDE THE SUBCOMMANDS(GROUPS) DATA.
    */
-  @Validators.ObjectValidator.Matches
+  @(<InstanceValidator>Validators.ObjectValidator.Matches)
   public src: APIApplicationCommand;
 
   /**
    * The subcommand groups of the command.
    */
-  @Validators.ArrayValidator.OnlyConstructorOf(HashiSlashSubcommandGroup)
+  @((<(arg: typeof HashiSlashSubcommandGroup) => InstanceValidator>Validators.ArrayValidator.OnlyConstructorOf)(
+    HashiSlashSubcommandGroup,
+  ))
   public subcommandGroups: (typeof HashiSlashSubcommandGroup)[] = [];
 
   /**
    * The subcommands of the command.
    */
-  @Validators.ArrayValidator.OnlyConstructorOf(HashiSlashSubcommand)
+  @((<(constructible: typeof HashiSlashSubcommand) => InstanceValidator>Validators.ArrayValidator.OnlyConstructorOf)(
+    HashiSlashSubcommand,
+  ))
   public subcommands: (typeof HashiSlashSubcommand)[] = [];
 
   /**

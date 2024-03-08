@@ -19,6 +19,12 @@ import {
   HashiSlashCommandCallbackFunction,
   InterferingQueueElement,
 } from './';
+import { Constructable, InstanceValidator } from '../decorators/shared';
+
+/**
+ * The different values of for the HashiCommandType type.
+ */
+export const HashiCommandValues: readonly string[] = ['message', 'slash', 'sub', 'group'] as const;
 
 /**
  * The class that includes many useful functions shared between HashiMessageCommand and SlashCommand.
@@ -27,31 +33,33 @@ export class CommandAncillary {
   /**
    * The type of the command.
    */
-  @Validators.StringValidator.IsHashiCommandType
+  @((<(hashiCommandValues: typeof HashiCommandValues) => InstanceValidator>(
+    Validators.StringValidator.IsHashiCommandType
+  ))(HashiCommandValues))
   public readonly type: HashiCommandType;
 
   /**
    * The client instance.
    */
-  @Validators.ObjectValidator.IsInstanceOf(HashiClient)
+  @((<(constructable: Constructable<any>) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(HashiClient))
   public client: HashiClient;
 
   /**
    * The name of the command.
    */
-  @Validators.StringValidator.ValidId
+  @(<InstanceValidator>Validators.StringValidator.ValidId)
   public id: string;
 
   /**
    * The full name of the command.
    */
-  @Validators.StringValidator.ValidNonFormatted
+  @(<InstanceValidator>Validators.StringValidator.ValidNonFormatted)
   public fullName: string;
 
   /**
    * The description of the command.
    */
-  @Validators.StringValidator.ValidNonFormatted
+  @(<InstanceValidator>Validators.StringValidator.ValidNonFormatted)
   public description: string;
 
   /**
@@ -76,13 +84,13 @@ export class CommandAncillary {
   /**
    * The context of the command.
    */
-  @Validators.ObjectValidator.IsInstanceOf(Context)
+  @((<(constructable: Constructable<any>) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(Context))
   public context: Context;
 
   /**
    * The external data for the command.
    */
-  @Validators.ObjectValidator.KeyStringArrayPair
+  @(<InstanceValidator>Validators.ObjectValidator.KeyStringArrayPair)
   public privileges: CommandPrivileges;
 
   /**
@@ -531,11 +539,6 @@ export type CommandMetadataKeys = keyof CommandMetadata;
  * The type that represents a key included in CommandPrivileges.
  */
 export type CommandPrivilegesKey = keyof CommandPrivileges;
-
-/**
- * The different values of for the HashiCommandType type.
- */
-export const HashiCommandValues: string[] = ['message', 'slash', 'sub', 'group'] as const;
 
 /**
  * The different types of command.

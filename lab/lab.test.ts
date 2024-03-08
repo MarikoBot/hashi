@@ -1,19 +1,17 @@
-const dotenv = require('dotenv');
+import * as dotenv from 'dotenv';
 dotenv.config({ path: `${__dirname}/../.env` });
 
-const { HashiClient, Data } = require('./lib');
+import { HashiClient, Data } from '../src';
 
-const client = new HashiClient({
+const client: HashiClient = new HashiClient({
   intents: 3276799,
   processName: 'BOT-LAB',
   mongoose: {
     dbName: 'dev',
     connectionURI: 'mongodb://localhost:27017/',
-    connectOptions: { dbName: 'dev' },
+    connectOptions: { dbName: 'hashi-dev' },
   },
 });
-
-client.serviceManager.enable('AutomaticRole');
 
 void client.login();
 
@@ -22,6 +20,6 @@ Data.Models.AutomaticRoleModel.create({
   roles: ["1", "2"],
 });
 
-setInterval(async () => {
+setInterval(async (): Promise<void> => {
   console.log(await client.databaseManager.dataMaps.automaticRole.content());
 }, 60000);
