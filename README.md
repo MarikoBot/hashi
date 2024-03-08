@@ -30,14 +30,14 @@ Node.js and a package manager (Yarn, PNPM, NPM) installed in your environment.
 
 Simply run the command:
 ```bash
-npm install @marikobot/hashi@latest
+npm install marikobot-hashi@latest
 ```
 ## Usage/Examples
 
 ### Initialisation
 
 ```typescript
-import {HashiClient} from '@marikobot/hashi';
+import {HashiClient} from 'marikobot-hashi';
 
 const client: HashiClient = new HashiClient();
 ```
