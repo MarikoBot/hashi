@@ -5,3 +5,5 @@ export * as InternEvents from './events';
 export * as Root from './root';
 export * as Strings from './strings';
 export * as Public from './public';
+export * from './base';
+export * from './root';
