@@ -1,4 +1,4 @@
-# Code of Conduct - Hashi (@marikobot-hashi)
+# Code of Conduct - Hashi (marikobot-hashi)
 
 ## Our Pledge
 

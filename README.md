@@ -1,5 +1,5 @@
 
-# Hashi (@marikobot-hashi)
+# Hashi (marikobot-hashi)
 
 Hashi is a NPM package that wraps and implements features from Discord.js library.
 Including a command handler, an event handler, integrated database system, and more.
