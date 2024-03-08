@@ -1,6 +1,5 @@
 {
-  "scope": "@marikobot",
-  "name": "hashi",
+  "name": "marikobot-hashi",
   "version": "1.0.0",
   "description": "A cool discord.js wrapper to create bots in a simpler way.",
   "keywords": [
