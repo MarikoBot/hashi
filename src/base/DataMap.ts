@@ -1,9 +1,9 @@
 // noinspection JSUnusedGlobalSymbols
 
-import { Query, Schema, Types, Model, SchemaDefinition } from 'mongoose';
+import { Query, Types } from 'mongoose';
 import { BaseClient } from './';
 import { Validators } from '../decorators';
-import { DataMapEntry, HashiClient } from '../root/';
+import { DataMapEntry, HashiClient, SuperModel } from '../root/';
 import { InstanceValidator } from '../decorators/shared';
 
 /**
@@ -34,27 +34,14 @@ export class DataMap<
   /**
    * The default data for the data map.
    */
-  @(<InstanceValidator>Validators.ObjectValidator.IsDataMapDefinition)
-  public definition: DataMapDefinition<SchemaDefinition> = {
-    name: 'unnamedMap',
-    entry: DataMapEntry<{ discordId: string }>,
-    schema: new Schema<SchemaDefinition>({ discordId: { type: String } }),
-    defaultValues: {
-      id: Date.now().toString(),
-    },
-  };
+  @((<(arg: typeof SuperModel) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(SuperModel))
+  public superModel: SuperModel;
 
   /**
    * Intents for the database. Be careful! Those intents MUST BE set before the launch of the process.
    */
   @Validators.ArrayValidator.OnlyEnumValues
   public intents: DATAMAP_INTENTS[] = [];
-
-  /**
-   * The collection/model of the schema.
-   */
-  @((<(arg: typeof Model) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(Model))
-  model: Model<DataMapDefinition<SchemaDefinition>>;
 
   /**
    * The constructor of a data map.
@@ -87,7 +74,7 @@ export class DataMap<
    * @returns The retrieved data.
    */
   public async content(): Promise<Query<any, any>> {
-    const documents: DataMapDefinition<SchemaDefinition>['model'][] = await this.model.find({});
+    const documents: this['superModel']['model'][] = await this.superModel.model.find({});
     return documents;
   }
 
@@ -96,7 +83,7 @@ export class DataMap<
    * @param key The key to look for.
    * @returns The data if found.
    */
-  public async getRaw(key: string = this.definition.defaultValues[this.primaryKey]): Promise<TypedDataMapStored> {
+  public async getRaw(key: string = this.superModel.defaultValues[this.primaryKey]): Promise<TypedDataMapStored> {
     let value: TypedDataMapStored = null;
 
     return value;
@@ -109,7 +96,7 @@ export class DataMap<
   public async refreshCore(): Promise<void> {
     if (!this.intents.includes(DATAMAP_INTENTS.CORE)) return;
 
-    const currentData: TypedDataMapStored = await this.getRaw(this.definition.defaultValues[this.primaryKey]);
+    const currentData: TypedDataMapStored = await this.getRaw(this.superModel.defaultValues[this.primaryKey]);
   }
 
   /**
@@ -120,7 +107,7 @@ export class DataMap<
    * @returns Nothing.
    */
   public async update(
-    key: string = this.definition.defaultValues[this.primaryKey],
+    key: string = this.superModel.defaultValues[this.primaryKey],
     data: TypedDataMapStored,
     path?: string,
   ): Promise<void> {}
@@ -131,12 +118,12 @@ export class DataMap<
    * @returns The player data.
    */
   protected async get(
-    key: string = this.definition.defaultValues[this.primaryKey],
+    key: string = this.superModel.defaultValues[this.primaryKey],
   ): Promise<TypedDataMapStored | DataMapEntry<DataStructure>> {
     const data: TypedDataMapStored = await this.getRaw(key);
     if (!data) return data;
 
-    const structure: this['definition']['defaultValues'] = this.definition.defaultValues;
+    const structure: this['superModel']['defaultValues'] = this.superModel.defaultValues;
     let finalStructure: { [key: string]: any };
     let refreshIsRequired: boolean = false;
 
@@ -173,32 +160,6 @@ export enum DATAMAP_INTENTS {
    * If the data map is used for store the most important data (as process data).
    */
   CORE = 0,
-}
-
-/**
- * The type that represents a document for the hashi data map.
- */
-export interface DataMapDefinition<IStructure extends SchemaDefinition> {
-  /**
-   * The name of the data map.
-   */
-  name: string;
-  /**
-   * The entry class associated.
-   */
-  entry: typeof DataMapEntry<any>;
-  /**
-   * The build schema.
-   */
-  schema: Schema<IStructure>;
-  /**
-   * The model if the data map is using mongo.
-   */
-  model?: Model<any>;
-  /**
-   * The default values.
-   */
-  defaultValues: TypedDataMapStored;
 }
 
 /**

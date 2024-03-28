@@ -1,9 +1,9 @@
 // noinspection JSUnusedGlobalSymbols
 
 import { connect, Model, ConnectOptions } from 'mongoose';
-import { BaseClient, DataMap, DataMapDefinition, TypedDataMapStored } from './';
+import { BaseClient, DataMap, TypedDataMapStored } from './';
 import { Validators } from '../decorators';
-import { FileManager, HashiClient } from '../root/';
+import { FileManager, HashiClient, SuperModel } from '../root/';
 import { InstanceValidator } from '../decorators/shared';
 
 /**
@@ -58,7 +58,7 @@ export class DatabaseManager extends BaseClient {
    * @returns The class instance.
    */
   public loadDataMaps(): DatabaseManager {
-    const definitions: [string, DataMapDefinition<any>][] = this.client.fileManager.read<DataMapDefinition<any>>(
+    const superModels: [string, typeof SuperModel][] = this.client.fileManager.read<typeof SuperModel>(
       `${FileManager.ABSPATH}${this.client.dataMapsDir}`,
       `${FileManager.RMPATH}${this.client.dataMapsDir}`,
       {
@@ -66,26 +66,16 @@ export class DatabaseManager extends BaseClient {
         rmPathStrSelf: `../${this.client.dataMapsDir}`,
       },
     );
-    const models: [string, Model<any>][] = this.client.fileManager.read<Model<any>>(
-      `${FileManager.ABSPATH}${this.client.dataMapsDir}/../models`,
-      `${FileManager.RMPATH}${this.client.dataMapsDir}/../models`,
-      {
-        absPathStrSelf: `./lib/${this.client.dataMapsDir}/../models`,
-        rmPathStrSelf: `../${this.client.dataMapsDir}/../models`,
-      },
-    );
 
-    let definition: DataMapDefinition<any>;
-    let model: Model<any>;
+    let superModel: SuperModel;
     let dataMap: DataMap<any, any>;
 
     let i: number = -1;
-    while (++i < definitions.length) {
-      definition = definitions[i][1][definitions[i][0]];
-      model = models[i][1][models[i][0]];
+    while (++i < superModels.length) {
+      superModel = superModels[i][1][superModels[i][0]];
 
-      dataMap = this.createDataMap(definition.name);
-      dataMap.definition = { ...definition, model };
+      dataMap = this.createDataMap(superModel.name);
+      dataMap.superModel = superModel;
     }
     return this;
   }

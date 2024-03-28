@@ -19,7 +19,7 @@ export declare class HashiEvent {
      * The constructor of the event.
      * @param name The event name.
      */
-    constructor(name: string);
+    constructor(name?: string);
 }
 /**
  * A default callback function used when nothing is set.

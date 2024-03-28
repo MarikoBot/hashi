@@ -8,7 +8,7 @@ export declare class EventManager extends BaseClient {
     /**
      * The collection of the events.
      */
-    readonly eventsList: Collection<string, HashiEvent>;
+    readonly eventsList: Collection<string, typeof HashiEvent>;
     /**
      * The constructor of the event manager.
      * @param client The client instance.

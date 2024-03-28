@@ -11,3 +11,6 @@ export * from './HashiSlashSubcommand';
 export * from './HashiSlashSubcommandGroup';
 export * from './InterferingManager';
 export * from './Logger';
+export * from './Placeholder';
+export * from './SuperModel';
+export * from './SuperModelColumn';

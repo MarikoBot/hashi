@@ -30,7 +30,7 @@ export class HashiEvent {
    * The constructor of the event.
    * @param name The event name.
    */
-  constructor(name: string) {
+  constructor(name: string = 'ready') {
     this.name = name;
   }
 }

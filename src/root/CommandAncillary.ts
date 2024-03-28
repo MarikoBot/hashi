@@ -9,6 +9,7 @@ import {
 } from 'discord.js';
 import { Context } from '../base';
 import { Validators } from '../decorators';
+import { Constructable, InstanceValidator } from '../decorators/shared';
 import {
   HashiClient,
   HashiMessageCommand,
@@ -19,7 +20,6 @@ import {
   HashiSlashCommandCallbackFunction,
   InterferingQueueElement,
 } from './';
-import { Constructable, InstanceValidator } from '../decorators/shared';
 
 /**
  * The different values of for the HashiCommandType type.

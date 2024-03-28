@@ -22,9 +22,9 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { Query, Schema, Types, Model, SchemaDefinition } from 'mongoose';
+import { Query, Types } from 'mongoose';
 import { BaseClient } from './';
-import { DataMapEntry, HashiClient } from '../root/';
+import { DataMapEntry, HashiClient, SuperModel } from '../root/';
 /**
  * The main class. Represents a data map technology.
  */
@@ -44,15 +44,11 @@ export declare class DataMap<DataStructure extends TypedDataMapStored, EntryClas
     /**
      * The default data for the data map.
      */
-    definition: DataMapDefinition<SchemaDefinition>;
+    superModel: SuperModel;
     /**
      * Intents for the database. Be careful! Those intents MUST BE set before the launch of the process.
      */
     intents: DATAMAP_INTENTS[];
-    /**
-     * The collection/model of the schema.
-     */
-    model: Model<DataMapDefinition<SchemaDefinition>>;
     /**
      * The constructor of a data map.
      * @param client The client instance.
@@ -105,31 +101,6 @@ export declare enum DATAMAP_INTENTS {
      * If the data map is used for store the most important data (as process data).
      */
     CORE = 0
-}
-/**
- * The type that represents a document for the hashi data map.
- */
-export interface DataMapDefinition<IStructure extends SchemaDefinition> {
-    /**
-     * The name of the data map.
-     */
-    name: string;
-    /**
-     * The entry class associated.
-     */
-    entry: typeof DataMapEntry<any>;
-    /**
-     * The build schema.
-     */
-    schema: Schema<IStructure>;
-    /**
-     * The model if the data map is using mongo.
-     */
-    model?: Model<any>;
-    /**
-     * The default values.
-     */
-    defaultValues: TypedDataMapStored;
 }
 /**
  * The possible value to store in.

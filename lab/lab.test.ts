@@ -14,12 +14,3 @@ const client: HashiClient = new HashiClient({
 });
 
 void client.login();
-
-Data.Models.AutomaticRoleModel.create({
-  discordId: String(Date.now()),
-  roles: ["1", "2"],
-});
-
-setInterval(async (): Promise<void> => {
-  console.log(await client.databaseManager.dataMaps.automaticRole.content());
-}, 60000);

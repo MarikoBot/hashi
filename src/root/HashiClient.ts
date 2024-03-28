@@ -133,7 +133,7 @@ export class HashiClient {
    */
   public async login(token: string = process.env.TOKEN || process.env.token || process.env.Token): Promise<string> {
     await this.databaseManager.connect();
-    this.databaseManager.loadDataMaps();
+    // this.databaseManager.loadDataMaps();
 
     await this.eventManager.loadEvents();
 

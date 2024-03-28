@@ -12,7 +12,7 @@ export class EventManager extends BaseClient {
    * The collection of the events.
    */
   @((<(arg: typeof Collection) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(Collection))
-  public readonly eventsList: Collection<string, HashiEvent> = new Collection();
+  public readonly eventsList: Collection<string, typeof HashiEvent> = new Collection();
 
   /**
    * The constructor of the event manager.
@@ -27,7 +27,7 @@ export class EventManager extends BaseClient {
    * @returns Nothing.
    */
   public async loadEvents(): Promise<void> {
-    const eventFiles: [string, HashiEvent][] = this.client.fileManager.read<HashiEvent>(
+    const eventFiles: [string, typeof HashiEvent][] = this.client.fileManager.read<typeof HashiEvent>(
       `${FileManager.ABSPATH}${this.client.eventsDir}`,
       `${FileManager.RMPATH}${this.client.eventsDir}`,
       {
@@ -36,8 +36,8 @@ export class EventManager extends BaseClient {
       },
     );
 
-    const events: HashiEvent[] = [];
-    let eventData: HashiEvent;
+    const events: (typeof HashiEvent)[] = [];
+    let eventData: typeof HashiEvent;
 
     let i: number = -1;
     while (++i < eventFiles.length) {
@@ -48,11 +48,13 @@ export class EventManager extends BaseClient {
     }
     i = -1;
 
+    let eventInstance: HashiEvent;
+
     while (++i < events.length) {
-      eventData = events[i];
-      eventData.client = this.client;
+      eventInstance = new events[i]();
+      eventInstance.client = this.client;
       this.client.src[eventData.name === 'ready' ? 'once' : 'on'](eventData.name, (...args: any[]) =>
-        eventData.callback(this.client, ...args),
+        eventInstance.callback(this.client, ...args),
       );
     }
   }
