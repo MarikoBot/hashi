@@ -1,12 +1,11 @@
 import {
-  ApplicationCommandDataResolvable,
   APIApplicationCommand,
+  ApplicationCommandDataResolvable,
   ChatInputCommandInteraction,
   Collection,
-  Message,
 } from 'discord.js';
 import { BaseClient } from './';
-import { Validators } from '../decorators';
+import { Validators, InstanceValidatorReturner } from '../decorators';
 import {
   AnyCommandConstructorType,
   CommandBlock,
@@ -19,7 +18,6 @@ import {
   HashiSlashSubcommandGroup,
   InterferingManager,
 } from '../root/';
-import { InstanceValidatorReturner } from '../decorators/shared';
 
 /**
  * Represents the command manager of the client. This class manages the slash and message commands for the project.
@@ -93,17 +91,6 @@ export class CommandManager extends BaseClient {
     command.client = this.client;
 
     return { command, subcommand, subcommandGroup };
-  }
-
-  // TODO:
-  /**
-   * Returns a message command from a message create event. Cached commands only.
-   * @param message The message.
-   * @returns The found command instance, or undefined.
-   */
-  public getCommandFromMessage(message: Message): CommandBlock {
-    let command: HashiMessageCommand = <HashiMessageCommand>new (this.commandsList.get(message.content))();
-    return { command, subcommand: command };
   }
 
   /**

@@ -1,5 +1,4 @@
-import { Validators } from '../decorators/';
-import { InstanceValidatorReturner } from '../decorators/shared';
+import { Validators, InstanceValidatorReturner } from '../decorators/';
 import { HashiClient } from '../root';
 
 /**

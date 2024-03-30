@@ -1,7 +1,6 @@
 import { Query } from 'mongoose';
-import { DATAMAP_INTENTS, BaseClient, TypedDataMapStored } from './';
-import { Validators } from '../decorators';
-import { InstanceValidator, InstanceValidatorReturner } from '../decorators/shared';
+import { BaseClient, DATAMAP_INTENTS, TypedDataMapStored } from './';
+import { Validators, InstanceValidator, InstanceValidatorReturner } from '../decorators';
 import { DataMapEntry, HashiClient, SuperModel } from '../root/';
 
 /**
@@ -58,21 +57,12 @@ export class DataMap<
   }
 
   /**
-   * Add an intent.
-   * @param intent The intent to add.
-   * @returns The data map.
-   */
-  public addIntent(intent: DATAMAP_INTENTS): DataMap<DataStructure, EntryClass> {
-    if (intent === DATAMAP_INTENTS.CORE) this.intents.push(intent);
-    return this;
-  }
-
-  /**
    * Display all the data included into the collection.
    * @returns The retrieved data.
    */
   public async content(): Promise<Query<any, any>> {
     const documents: this['superModel']['model'][] = await this.superModel.model.find({});
+    console.log(documents);
     return documents;
   }
 
@@ -83,7 +73,7 @@ export class DataMap<
    */
   public async getRaw(key: string = this.superModel.defaultValues[this.primaryKey]): Promise<TypedDataMapStored> {
     let value: TypedDataMapStored = null;
-
+    console.log(key, value);
     return value;
   }
 
@@ -95,6 +85,7 @@ export class DataMap<
     if (!this.intents.includes(DATAMAP_INTENTS.CORE)) return;
 
     const currentData: TypedDataMapStored = await this.getRaw(this.superModel.defaultValues[this.primaryKey]);
+    console.log(currentData);
   }
 
   /**
@@ -108,7 +99,9 @@ export class DataMap<
     key: string = this.superModel.defaultValues[this.primaryKey],
     data: TypedDataMapStored,
     path?: string,
-  ): Promise<void> {}
+  ): Promise<void> {
+    console.log(key, data, path);
+  }
 
   /**
    * Refresh the data in the database if the structure is detected to be different.

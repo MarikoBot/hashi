@@ -1,8 +1,6 @@
-import { ChatInputCommandInteraction, APIApplicationCommand } from 'discord.js';
-import { Validators } from '../decorators';
-import { Context } from '../base';
-import { HashiCommandBase, HashiClient, HashiSlashSubcommand, HashiSlashSubcommandGroup, COMMAND_END } from './';
-import { InstanceValidator, InstanceValidatorReturner } from '../decorators/shared';
+import { APIApplicationCommand } from 'discord.js';
+import { Validators, InstanceValidator, InstanceValidatorReturner } from '../decorators';
+import { HashiCommandBase, HashiSlashSubcommand, HashiSlashSubcommandGroup } from './';
 
 /**
  * The class who represents a base-command for the Hashi package.

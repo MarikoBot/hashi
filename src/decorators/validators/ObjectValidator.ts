@@ -263,7 +263,7 @@ export const ObjectValidator: {
   },
   /**
    * Verify if the value is a class instance of a placeholder value.
-   * @param model The class constructor.
+   * @param arg The class constructor.
    * @param placeholder The placeholder constructor.
    */
   KindOfInstance: (arg: Constructable<any>, placeholder: Constructable<any>): InstanceValidator => {

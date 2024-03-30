@@ -42,6 +42,8 @@
   "scripts": {
     "run-builder": "node builder.js",
     "prettier": "prettier -w src",
+    "lint": "tslint --config tslint.json --project tsconfig.json 'src/**/*.ts' > linter-output.txt",
+    "clean": "npm run prettier && npm run lint",
     "save": "git add ./",
     "build": "npm run run-builder && npm run prettier && tsc && npm run save",
     "prepublish": "npm run build && git commit -m \"[AUTO] dev build\"",
@@ -65,6 +67,7 @@
     "eslint": "^8.53.0",
     "prettier": "^2.8.4",
     "ts-node": "^10.9.2",
+    "tslint": "^6.1.3",
     "tslint-config-prettier": "^1.18.0"
   },
   "engines": {

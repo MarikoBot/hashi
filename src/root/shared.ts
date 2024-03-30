@@ -8,13 +8,15 @@ import {
   SlashCommandBuilder,
 } from 'discord.js';
 import { ConnectOptions } from 'mongoose';
-import { HashiSlashCommand } from './HashiSlashCommand';
-import { HashiMessageCommand } from './HashiMessageCommand';
-import { HashiSlashSubcommandGroup } from './HashiSlashSubcommandGroup';
-import { HashiSlashSubcommand } from './HashiSlashSubcommand';
-import { HashiClient } from './HashiClient';
 import { Context } from '../base';
-import { SuperModelColumn } from './';
+import {
+  HashiClient,
+  HashiMessageCommand,
+  HashiSlashCommand,
+  HashiSlashSubcommand,
+  HashiSlashSubcommandGroup,
+  SuperModelColumn,
+} from './';
 
 /**
  * Represents any command constructor.

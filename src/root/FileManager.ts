@@ -1,8 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { Validators } from '../decorators';
+import { Validators, InstanceValidatorReturner } from '../decorators';
 import { HashiClient, EnvPath, FileContentType, SelfResearchOptions } from './';
-import { InstanceValidatorReturner } from '../decorators/shared';
 
 /**
  * The class that manages the files included into this project, and also those at the root of the package user.

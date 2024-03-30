@@ -1,5 +1,5 @@
-import { HashiMessageCommand } from '../../root';
 import { Injectors } from '../../decorators';
+import { HashiMessageCommand } from '../../root';
 
 @Injectors.HashiCommandInjector({
   id: 'ping',

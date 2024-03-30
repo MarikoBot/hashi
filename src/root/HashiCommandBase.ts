@@ -1,22 +1,21 @@
-import { ChatInputCommandInteraction, GuildMemberRoleManager, ChatInputApplicationCommandData } from 'discord.js';
+import { ChatInputApplicationCommandData, ChatInputCommandInteraction, GuildMemberRoleManager } from 'discord.js';
 import { Context } from '../base';
-import { Validators } from '../decorators';
-import { InstanceValidator, InstanceValidatorReturner } from '../decorators/shared';
+import { Validators, InstanceValidator, InstanceValidatorReturner } from '../decorators';
 import {
-  HashiClient,
-  HashiSlashCommand,
-  HashiSlashSubcommand,
-  CoolDownsQueueElement,
-  HashiSlashCommandCallbackFunction,
-  InterferingQueueElement,
-  HashiCommandValues,
-  CommandBlock,
   COMMAND_END,
+  CommandBlock,
   CommandBlockValue,
-  CommandPrivilegesKey,
   CommandPrivileges,
-  HashiError,
+  CommandPrivilegesKey,
+  CoolDownsQueueElement,
+  HashiClient,
   HashiCommandType,
+  HashiCommandValues,
+  HashiError,
+  HashiSlashCommand,
+  HashiSlashCommandCallbackFunction,
+  HashiSlashSubcommand,
+  InterferingQueueElement,
 } from './';
 
 /**
@@ -98,6 +97,7 @@ export class HashiCommandBase {
     this.type = type;
   }
 
+  // noinspection JSUnusedGlobalSymbols
   /**
    * The function who MUST be called at the end of your program in the call back function. IT IS REALLY IMPORTANT!
    *

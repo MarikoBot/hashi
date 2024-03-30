@@ -1,5 +1,4 @@
-import { Validators } from '../decorators';
-import { InstanceValidator } from '../decorators/shared';
+import { Validators, InstanceValidator } from '../decorators';
 
 /**
  * The placeholder class when data is missing.

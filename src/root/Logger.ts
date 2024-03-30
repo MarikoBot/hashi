@@ -1,6 +1,5 @@
 import * as chalk from 'chalk';
-import { Validators } from '../decorators';
-import { InstanceValidator } from '../decorators/shared';
+import { Validators, InstanceValidator } from '../decorators';
 
 /**
  * The Logger class. Contains multiple functions to log data.

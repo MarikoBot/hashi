@@ -1,5 +1,5 @@
-import { HashiSlashCommand } from '../../root';
 import { Injectors } from '../../decorators';
+import { HashiSlashCommand } from '../../root';
 
 @Injectors.HashiCommandInjector({
   id: 'pang',
