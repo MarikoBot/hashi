@@ -22,8 +22,8 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { Query, Types } from 'mongoose';
-import { BaseClient } from './';
+import { Query } from 'mongoose';
+import { DATAMAP_INTENTS, BaseClient, TypedDataMapStored } from './';
 import { DataMapEntry, HashiClient, SuperModel } from '../root/';
 /**
  * The main class. Represents a data map technology.
@@ -93,18 +93,3 @@ export declare class DataMap<DataStructure extends TypedDataMapStored, EntryClas
      */
     protected get(key?: string): Promise<TypedDataMapStored | DataMapEntry<DataStructure>>;
 }
-/**
- * The list of flags for the data map intents.
- */
-export declare enum DATAMAP_INTENTS {
-    /**
-     * If the data map is used for store the most important data (as process data).
-     */
-    CORE = 0
-}
-/**
- * The possible value to store in.
- */
-export type TypedDataMapStored = number | string | boolean | TypedDataMapStored[] | {
-    [key: string]: TypedDataMapStored;
-} | undefined | Types.ObjectId;

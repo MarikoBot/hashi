@@ -23,7 +23,7 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 import { ConnectOptions } from 'mongoose';
-import { BaseClient, DataMap, TypedDataMapStored } from './';
+import { DataMapsObject, TypedDataMapStored, BaseClient, DataMap } from './';
 import { HashiClient } from '../root/';
 /**
  * The class who manages the database of the project.
@@ -46,7 +46,6 @@ export declare class DatabaseManager extends BaseClient {
      */
     dataMaps: DataMapsObject;
     /**
-     * The constructor of the class.
      * @param client The client instance.
      */
     constructor(client: HashiClient);
@@ -67,17 +66,4 @@ export declare class DatabaseManager extends BaseClient {
      * @param connectOptions The connection options.
      */
     connect(connectionURI?: string, connectOptions?: ConnectOptions): Promise<void>;
-    /**
-     * Get a data map with the possibility to create it if it doesn't exist.
-     * @param dataMapName The data map name.
-     * @param force If the data map should be created if it doesn't exist.
-     * @returns The [created] data map
-     */
-    ensure(dataMapName: string, force?: boolean): DataMap<TypedDataMapStored>;
 }
-/**
- * The type that includes all the data maps of the database.
- */
-export type DataMapsObject = {
-    [dmName: string]: DataMap<any>;
-};

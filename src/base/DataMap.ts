@@ -1,10 +1,7 @@
-// noinspection JSUnusedGlobalSymbols
-
-import { Query, Types } from 'mongoose';
-import { BaseClient } from './';
-import { Validators } from '../decorators';
+import { Query } from 'mongoose';
+import { BaseClient, DATAMAP_INTENTS, TypedDataMapStored } from './';
+import { Validators, InstanceValidator, InstanceValidatorReturner } from '../decorators';
 import { DataMapEntry, HashiClient, SuperModel } from '../root/';
-import { InstanceValidator } from '../decorators/shared';
 
 /**
  * The main class. Represents a data map technology.
@@ -22,7 +19,7 @@ export class DataMap<
   /**
    * The entry class to use while using the data.
    */
-  @((<(arg: typeof DataMapEntry) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(DataMapEntry))
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(DataMapEntry))
   public entryClass: EntryClass;
 
   /**
@@ -34,7 +31,7 @@ export class DataMap<
   /**
    * The default data for the data map.
    */
-  @((<(arg: typeof SuperModel) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(SuperModel))
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(SuperModel))
   public superModel: SuperModel;
 
   /**
@@ -60,21 +57,12 @@ export class DataMap<
   }
 
   /**
-   * Add an intent.
-   * @param intent The intent to add.
-   * @returns The data map.
-   */
-  public addIntent(intent: DATAMAP_INTENTS): DataMap<DataStructure, EntryClass> {
-    if (intent === DATAMAP_INTENTS.CORE) this.intents.push(intent);
-    return this;
-  }
-
-  /**
    * Display all the data included into the collection.
    * @returns The retrieved data.
    */
   public async content(): Promise<Query<any, any>> {
     const documents: this['superModel']['model'][] = await this.superModel.model.find({});
+    console.log(documents);
     return documents;
   }
 
@@ -85,7 +73,7 @@ export class DataMap<
    */
   public async getRaw(key: string = this.superModel.defaultValues[this.primaryKey]): Promise<TypedDataMapStored> {
     let value: TypedDataMapStored = null;
-
+    console.log(key, value);
     return value;
   }
 
@@ -97,6 +85,7 @@ export class DataMap<
     if (!this.intents.includes(DATAMAP_INTENTS.CORE)) return;
 
     const currentData: TypedDataMapStored = await this.getRaw(this.superModel.defaultValues[this.primaryKey]);
+    console.log(currentData);
   }
 
   /**
@@ -110,7 +99,9 @@ export class DataMap<
     key: string = this.superModel.defaultValues[this.primaryKey],
     data: TypedDataMapStored,
     path?: string,
-  ): Promise<void> {}
+  ): Promise<void> {
+    console.log(key, data, path);
+  }
 
   /**
    * Refresh the data in the database if the structure is detected to be different.
@@ -151,25 +142,3 @@ export class DataMap<
     return new this.entryClass(this, <DataStructure>finalStructure);
   }
 }
-
-/**
- * The list of flags for the data map intents.
- */
-export enum DATAMAP_INTENTS {
-  /**
-   * If the data map is used for store the most important data (as process data).
-   */
-  CORE = 0,
-}
-
-/**
- * The possible value to store in.
- */
-export type TypedDataMapStored =
-  | number
-  | string
-  | boolean
-  | TypedDataMapStored[]
-  | { [key: string]: TypedDataMapStored }
-  | undefined
-  | Types.ObjectId;

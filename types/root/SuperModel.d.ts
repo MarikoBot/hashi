@@ -23,13 +23,7 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 import { Document, Model, Schema, SchemaDefinition, SchemaDefinitionProperty } from 'mongoose';
-import { SuperModelColumn } from './';
-/**
- * A type-structure that represents a column or an object of columns.
- */
-export type StructureColumnOrChild = {
-    [key: string]: SuperModelColumn | StructureColumnOrChild;
-};
+import { StructureColumnOrChild } from './';
 /**
  * The class that combines a model and a schema.
  */

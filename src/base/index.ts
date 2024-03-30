@@ -1,3 +1,4 @@
+// Global exports (classes only)
 export * from './BaseClient';
 
 export * from './CommandManager';
@@ -9,3 +10,6 @@ export * from './DataMap';
 export * from './EventManager';
 
 export * from './LanguageManager';
+
+// Shared exports
+export * from './shared';

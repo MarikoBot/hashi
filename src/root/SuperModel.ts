@@ -1,13 +1,6 @@
 import { Document, Model, Schema, SchemaDefinition, SchemaDefinitionProperty } from 'mongoose';
-import { Validators } from '../decorators';
-import { InstanceValidator } from '../decorators/shared';
-import { SuperModelColumn } from './';
-import { Placeholder } from './Placeholder';
-
-/**
- * A type-structure that represents a column or an object of columns.
- */
-export type StructureColumnOrChild = { [key: string]: SuperModelColumn | StructureColumnOrChild };
+import { Validators, InstanceValidator } from '../decorators';
+import { Placeholder, StructureColumnOrChild, SuperModelColumn } from './';
 
 /**
  * The class that combines a model and a schema.

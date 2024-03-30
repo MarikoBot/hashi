@@ -1,4 +1,5 @@
 import { ChatInputCommandInteraction, Collection, Snowflake } from 'discord.js';
+import { InterferingQueueElement } from './shared';
 /**
  * The main class who manages the active cool downs for commands.
  */
@@ -35,17 +36,3 @@ export declare class InterferingManager {
      */
     removeInterfering(userId: Snowflake, key: string | Snowflake): void;
 }
-/**
- * Represents an element in the interfering commands queue.
- * Interfering commands that are same-time executed.
- */
-export type InterferingQueueElement = [
-    /**
-     * The full name of the command (including the subcommands name).
-     */
-    string,
-    /**
-     * The interaction id.
-     */
-    ChatInputCommandInteraction
-];

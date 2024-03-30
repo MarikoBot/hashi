@@ -11,8 +11,4 @@ export declare class InteractionCreate extends HashiEvent {
      * @returns Nothing.
      */
     callback: HashiEventCallbackFunction;
-    /**
-     * Define the name of the event into the super constructor.
-     */
-    constructor(name?: string);
 }

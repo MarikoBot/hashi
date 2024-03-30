@@ -1,9 +1,10 @@
+import { Injectors } from '../decorators';
 import { StructureColumnOrChild, SuperModel, SuperModelColumn } from '../root';
 
 /**
- // --- EXAMPLE --- //
  * An example of use case for the SuperModel.
  */
+@Injectors.SuperModelInjector('user')
 export class UserSuperModel extends SuperModel {
   /**
    * Definitions of the columns.
@@ -16,11 +17,4 @@ export class UserSuperModel extends SuperModel {
       favoriteAnimal: new SuperModelColumn(String, 'panda'),
     },
   };
-
-  /**
-   * Define the name of the model into the super constructor using default parameters.
-   */
-  constructor(name: string = 'user') {
-    super(name);
-  }
 }

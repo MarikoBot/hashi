@@ -1,5 +1,4 @@
-export * from './CommandAncillary';
-export * from './Constants';
+// Global exports
 export * from './CoolDownManager';
 
 export * from './DataMapEntry';
@@ -7,17 +6,21 @@ export * from './DataMapEntry';
 export * from './FileManager';
 
 export * from './HashiClient';
+export * from './HashiCommandBase';
 export * from './HashiEvent';
-
 export * from './HashiMessageCommand';
 export * from './HashiSlashCommand';
 export * from './HashiSlashSubcommand';
 export * from './HashiSlashSubcommandGroup';
 
 export * from './InterferingManager';
+
 export * from './Logger';
 
 export * from './Placeholder';
 
 export * from './SuperModel';
 export * from './SuperModelColumn';
+
+// Shared exports
+export * from './shared';

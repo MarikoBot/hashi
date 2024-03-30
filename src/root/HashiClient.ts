@@ -1,20 +1,16 @@
-// noinspection JSUnusedGlobalSymbols
-
-import { ActivityType, ChatInputCommandInteraction, Client, ClientOptions, PresenceData } from 'discord.js';
+import { ActivityType, ChatInputCommandInteraction, Client, PresenceData } from 'discord.js';
 import * as dotenv from 'dotenv';
-import { ConnectOptions } from 'mongoose';
 import {
   CommandManager,
   DatabaseManager,
   DataMap,
+  DATAMAP_INTENTS,
   EventManager,
   LanguageManager,
-  DATAMAP_INTENTS,
   TypedDataMapStored,
 } from '../base/';
-import { Validators } from '../decorators';
-import { Constants, FileManager, HashiSlashCommand, Logger, COMMAND_END, CommandBlock } from './';
-import { InstanceValidator } from '../decorators/shared';
+import { Validators, InstanceValidator, InstanceValidatorReturner } from '../decorators';
+import { CommandBlock, HashiClientOptions, COMMAND_END, FileManager, HashiSlashCommand, Logger } from './';
 
 dotenv.config();
 
@@ -25,50 +21,44 @@ export class HashiClient {
   /**
    * The Discord Client instance.
    */
-  @((<(arg: typeof Client) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(Client))
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(Client))
   public readonly src: Client;
 
   /**
    * The logger for the HashiClient.
    */
-  @((<(arg: typeof Logger) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(Logger))
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(Logger))
   public readonly logger: Logger;
 
   /**
    * The command manager instance.
    */
-  @((<(arg: typeof CommandManager) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(CommandManager))
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(CommandManager))
   public readonly commandManager: CommandManager = new CommandManager(this);
 
   /**
    * The event manager instance.
    */
-  @((<(arg: typeof EventManager) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(EventManager))
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(EventManager))
   public readonly eventManager: EventManager = new EventManager(this);
 
   /**
    * The language manager for accessing strings.
    */
-  @((<(arg: typeof LanguageManager) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(LanguageManager))
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(LanguageManager))
   public readonly languageManager: LanguageManager = new LanguageManager(this);
 
   /**
    * The database manager for accessing data maps/lakes.
    */
-  @((<(arg: typeof DatabaseManager) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(DatabaseManager))
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(DatabaseManager))
   public readonly databaseManager: DatabaseManager = new DatabaseManager(this);
 
   /**
    * The files manager for accessing different files (for handling especially).
    */
-  @((<(arg: typeof FileManager) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(FileManager))
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(FileManager))
   public readonly fileManager: FileManager = new FileManager(this);
-
-  /**
-   * The language manager for accessing strings.
-   */
-  @((<(arg: typeof Constants) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(Constants))
-  public readonly constants: Constants = new Constants();
 
   /**
    * The name of the project/process you're in.
@@ -95,7 +85,6 @@ export class HashiClient {
   public readonly dataMapsDir: string = 'data';
 
   /**
-   * The constructor for the HashiClient class.
    * @param options The options for the HashiClient.
    */
   constructor(options: HashiClientOptions) {
@@ -133,7 +122,7 @@ export class HashiClient {
    */
   public async login(token: string = process.env.TOKEN || process.env.token || process.env.Token): Promise<string> {
     await this.databaseManager.connect();
-    // this.databaseManager.loadDataMaps();
+    this.databaseManager.loadDataMaps();
 
     await this.eventManager.loadEvents();
 
@@ -163,43 +152,4 @@ export class HashiClient {
     if (commandBlock.command) return HashiSlashCommand.launch(this, interaction, commandBlock);
     return COMMAND_END.SUCCESS;
   }
-}
-
-/**
- * The options for the HashiClient. It extends the ClientOptions from discord.js and implements extra options for the Hashi module.
- */
-export interface HashiClientOptions extends ClientOptions {
-  /**
-   * The name of the project/process you're in.
-   */
-  processName: string;
-  /**
-   * The commands folder directory.
-   */
-  commandsDir?: string;
-  /**
-   * The events folder directory.
-   */
-  eventsDir?: string;
-  /**
-   * The data maps folder directory.
-   */
-  dataMapsDir?: string;
-  /**
-   * The mongoose connection information.
-   */
-  mongoose: {
-    /**
-     * The database name. Not useful to change it (only for MongoDB). Default: main.
-     */
-    dbName?: string;
-    /**
-     * The connection URI.
-     */
-    connectionURI: string;
-    /**
-     * The options for the connection.
-     */
-    connectOptions: ConnectOptions;
-  };
 }

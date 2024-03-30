@@ -1,7 +1,7 @@
 import * as dotenv from 'dotenv';
 dotenv.config({ path: `${__dirname}/../.env` });
 
-import { HashiClient, Data } from '../src';
+import { HashiClient } from '../src';
 
 const client: HashiClient = new HashiClient({
   intents: 3276799,
