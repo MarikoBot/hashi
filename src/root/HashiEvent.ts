@@ -1,6 +1,5 @@
-import { Validators } from '../decorators';
+import { Validators, InstanceValidator, InstanceValidatorReturner } from '../decorators';
 import { defaultEventCallback, HashiClient, HashiEventCallbackFunction } from './';
-import { InstanceValidator, InstanceValidatorReturner } from '../decorators/shared';
 
 /**
  * Represents an Event on client service.

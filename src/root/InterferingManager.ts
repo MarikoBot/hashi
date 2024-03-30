@@ -1,7 +1,6 @@
 import { ChatInputCommandInteraction, Collection, Snowflake } from 'discord.js';
-import { Validators } from '../decorators';
-import { InstanceValidator } from '../decorators/shared';
-import { InterferingQueueElement } from './shared';
+import { Validators, InstanceValidatorReturner } from '../decorators';
+import { InterferingQueueElement } from './';
 
 /**
  * The main class who manages the active cool downs for commands.
@@ -10,7 +9,7 @@ export class InterferingManager {
   /**
    * The collection of the current cool downs.
    */
-  @((<(arg: typeof Collection) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(Collection))
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(Collection))
   public readonly queue: Collection<Snowflake, InterferingQueueElement[]> = new Collection();
 
   /**

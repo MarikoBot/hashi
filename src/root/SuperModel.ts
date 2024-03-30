@@ -1,8 +1,6 @@
 import { Document, Model, Schema, SchemaDefinition, SchemaDefinitionProperty } from 'mongoose';
-import { Validators } from '../decorators';
-import { InstanceValidator } from '../decorators/shared';
-import { StructureColumnOrChild, SuperModelColumn } from './';
-import { Placeholder } from './Placeholder';
+import { Validators, InstanceValidator } from '../decorators';
+import { Placeholder, StructureColumnOrChild, SuperModelColumn } from './';
 
 /**
  * The class that combines a model and a schema.

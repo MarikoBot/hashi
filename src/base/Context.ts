@@ -1,14 +1,13 @@
 import {
-  InteractionReplyOptions,
   ButtonInteraction,
   ChatInputCommandInteraction,
+  InteractionReplyOptions,
   InteractionResponse,
   Message,
   User,
 } from 'discord.js';
-import { ContextChannel, Language, LanguageContentKey, ContextOptions, Languages, BaseClient } from './';
-import { Validators } from '../decorators';
-import { InstanceValidator, InstanceValidatorReturner } from '../decorators/shared';
+import { BaseClient, ContextChannel, ContextOptions, Language, LanguageContentKey, Languages } from './';
+import { Validators, InstanceValidator, InstanceValidatorReturner } from '../decorators';
 import { PublicChatInputCommandInteraction } from '../public';
 import {
   CommandBlockValue,
@@ -77,27 +76,6 @@ export class Context extends BaseClient {
     this.channel = options.channel;
     if (this.interaction) this.interaction = options.interaction;
     if (this.buttonInteraction) this.buttonInteraction = options.buttonInteraction;
-  }
-
-  /**
-   * Add a user to the current context.
-   * @param user The user to add.
-   * @returns The context instance.
-   */
-  public addUser(user: User): Context {
-    if (user instanceof User) this.users.push(user);
-    return this;
-  }
-
-  /**
-   * Remove a user to the current context.
-   * @param user The user to remove.
-   * @returns The context instance.
-   */
-  public removeUser(user: User): Context {
-    if (user instanceof User)
-      this.users = this.users.filter((presentUser: User): boolean => presentUser.id !== user.id);
-    return this;
   }
 
   /**

@@ -1,4 +1,4 @@
-import { Constructable, InstanceValidator } from '../shared';
+import { InstanceValidator } from '../shared';
 
 /**
  * All the string type validators.

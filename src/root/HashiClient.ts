@@ -4,14 +4,13 @@ import {
   CommandManager,
   DatabaseManager,
   DataMap,
+  DATAMAP_INTENTS,
   EventManager,
   LanguageManager,
-  DATAMAP_INTENTS,
   TypedDataMapStored,
 } from '../base/';
-import { Validators } from '../decorators';
-import { FileManager, HashiSlashCommand, Logger, COMMAND_END, CommandBlock, HashiClientOptions } from './';
-import { InstanceValidator, InstanceValidatorReturner } from '../decorators/shared';
+import { Validators, InstanceValidator, InstanceValidatorReturner } from '../decorators';
+import { CommandBlock, HashiClientOptions, COMMAND_END, FileManager, HashiSlashCommand, Logger } from './';
 
 dotenv.config();
 

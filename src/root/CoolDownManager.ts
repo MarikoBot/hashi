@@ -1,6 +1,5 @@
 import { Collection, Snowflake } from 'discord.js';
-import { Validators } from '../decorators';
-import { InstanceValidatorReturner } from '../decorators/shared';
+import { Validators, InstanceValidatorReturner } from '../decorators';
 import { CoolDownsQueueElement } from './';
 
 /**

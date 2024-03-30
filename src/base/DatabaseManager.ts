@@ -1,7 +1,6 @@
-import { ConnectOptions, connect } from 'mongoose';
-import { DataMapsObject, TypedDataMapStored, BaseClient, DataMap } from './';
-import { Validators } from '../decorators';
-import { InstanceValidator, InstanceValidatorReturner } from '../decorators/shared';
+import { connect, ConnectOptions } from 'mongoose';
+import { BaseClient, DataMap, DataMapsObject, TypedDataMapStored } from './';
+import { Validators, InstanceValidator, InstanceValidatorReturner } from '../decorators';
 import { FileManager, HashiClient, SuperModel } from '../root/';
 
 /**

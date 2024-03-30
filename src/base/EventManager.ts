@@ -1,8 +1,7 @@
 import { Collection } from 'discord.js';
 import { BaseClient } from './';
-import { Validators } from '../decorators';
+import { Validators, InstanceValidatorReturner } from '../decorators';
 import { FileManager, HashiClient, HashiEvent } from '../root/';
-import { InstanceValidator, InstanceValidatorReturner } from '../decorators/shared';
 
 /**
  * Represents the event manager for the client service.

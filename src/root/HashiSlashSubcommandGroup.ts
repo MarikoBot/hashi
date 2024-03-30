@@ -1,6 +1,5 @@
-import { Validators } from '../decorators';
+import { Validators, InstanceValidator } from '../decorators';
 import { HashiCommandBase, HashiSlashSubcommand } from './';
-import { InstanceValidator } from '../decorators/shared';
 
 /**
  * The class who represents a subcommand for the slash base.
