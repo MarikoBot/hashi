@@ -1,10 +1,8 @@
-// noinspection JSUnusedGlobalSymbols
-
-import { connect, Model, ConnectOptions } from 'mongoose';
-import { BaseClient, DataMap, TypedDataMapStored } from './';
+import { ConnectOptions, connect } from 'mongoose';
+import { DataMapsObject, TypedDataMapStored, BaseClient, DataMap } from './';
 import { Validators } from '../decorators';
+import { InstanceValidator, InstanceValidatorReturner } from '../decorators/shared';
 import { FileManager, HashiClient, SuperModel } from '../root/';
-import { InstanceValidator } from '../decorators/shared';
 
 /**
  * The class who manages the database of the project.
@@ -31,11 +29,10 @@ export class DatabaseManager extends BaseClient {
   /**
    * The list of dataMaps.
    */
-  @((<(dataMap: typeof DataMap) => InstanceValidator>Validators.ObjectValidator.KeyDataMapPair)(DataMap))
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.KeyDataMapPair)(DataMap))
   public dataMaps: DataMapsObject = {};
 
   /**
-   * The constructor of the class.
    * @param client The client instance.
    */
   constructor(client: HashiClient) {
@@ -94,22 +91,4 @@ export class DatabaseManager extends BaseClient {
 
     await connect(this.connectionURI, this.connectOptions);
   }
-
-  /**
-   * Get a data map with the possibility to create it if it doesn't exist.
-   * @param dataMapName The data map name.
-   * @param force If the data map should be created if it doesn't exist.
-   * @returns The [created] data map
-   */
-  public ensure(dataMapName: string, force: boolean = false): DataMap<TypedDataMapStored> {
-    if (dataMapName in this.dataMaps) return this.dataMaps[dataMapName];
-
-    if (force) return this.createDataMap(dataMapName);
-    return null;
-  }
 }
-
-/**
- * The type that includes all the data maps of the database.
- */
-export type DataMapsObject = { [dmName: string]: DataMap<any> };

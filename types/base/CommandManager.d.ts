@@ -1,8 +1,8 @@
 import { ChatInputCommandInteraction, Collection, Message } from 'discord.js';
 import { BaseClient } from './';
-import { CoolDownManager, HashiClient, InterferingManager, CommandBlock, AnyCommandConstructor } from '../root/';
+import { AnyCommandConstructorType, CommandBlock, CoolDownManager, HashiClient, InterferingManager } from '../root/';
 /**
- * Represents the command manager of the client.
+ * Represents the command manager of the client. This class manages the slash and message commands for the project.
  */
 export declare class CommandManager extends BaseClient {
     /**
@@ -16,21 +16,13 @@ export declare class CommandManager extends BaseClient {
     /**
      * The list of commands.
      */
-    readonly commandsList: Collection<string, AnyCommandConstructor>;
+    readonly commandsList: Collection<string, AnyCommandConstructorType>;
     /**
-     * The constructor of the command manager.
      * @param client The client instance.
      */
     constructor(client: HashiClient);
     /**
-     * Add a command to the client (the bot) using the name, options and or the command itself.
-     * If no command is passed, the function creates one based on the data passed.
-     * @param commandData The options passed (name, command options, command instance).
-     * @returns The command manager instance (this).
-     */
-    addCommand(commandData: AnyCommandConstructor): CommandManager;
-    /**
-     * Get a command from the cache with the name.
+     * Get a slash command from the cache with the name.
      * @param interaction The interaction.
      * @returns The found command instance, or undefined.
      */
@@ -41,6 +33,12 @@ export declare class CommandManager extends BaseClient {
      * @returns The found command instance, or undefined.
      */
     getCommandFromMessage(message: Message): CommandBlock;
+    /**
+     * Load the commands from the given commands directory.
+     * @param dirName The directory to load on.
+     * @returns Nothing.
+     */
+    private commandsScraper;
     /**
      * Load the commands from the given commands directory.
      * @returns Nothing.

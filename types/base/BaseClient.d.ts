@@ -1,6 +1,6 @@
 import { HashiClient } from '../root';
 /**
- * Represents the base class for each class of the package.
+ * Represents the base class for each class of the package base.
  */
 export declare class BaseClient {
     client: HashiClient;

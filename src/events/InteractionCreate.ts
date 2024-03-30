@@ -1,10 +1,12 @@
 import { BaseInteraction } from 'discord.js';
+import { Injectors } from '../decorators';
 import { HashiClient, HashiEvent, HashiEventCallbackFunction } from '../root';
 
 /**
  * An example of use case for the HashiEvent class. Get the command and launches it using all the managers (cool downs,
  * interfering, database).
  */
+@Injectors.HashiEventInjector('interactionCreate')
 export class InteractionCreate extends HashiEvent {
   /**
    * The function that is called when an interaction is triggered.
@@ -18,11 +20,4 @@ export class InteractionCreate extends HashiEvent {
   ): Promise<void> => {
     if (interaction.isChatInputCommand()) await client.detectAndLaunchSlashCommand(interaction);
   };
-
-  /**
-   * Define the name of the event into the super constructor.
-   */
-  constructor(name: string = 'interactionCreate') {
-    super(name);
-  }
 }

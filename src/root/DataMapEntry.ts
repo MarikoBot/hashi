@@ -1,6 +1,6 @@
 import { DataMap, TypedDataMapStored } from '../base/';
 import { Validators } from '../decorators';
-import { InstanceValidator } from '../decorators/shared';
+import { InstanceValidator, InstanceValidatorReturner } from '../decorators/shared';
 
 /**
  * The base class that represents a data map class object.
@@ -10,7 +10,7 @@ export class DataMapEntry<DataStructure extends TypedDataMapStored> {
   /**
    * The data map.
    */
-  @((<(arg: typeof DataMap) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(DataMap))
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(DataMap))
   public readonly dataMap: DataMap<DataStructure, typeof DataMapEntry>;
 
   /**

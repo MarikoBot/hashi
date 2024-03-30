@@ -1,7 +1,6 @@
 import { HashiEvent, HashiEventCallbackFunction } from '../root';
 /**
- * An example of use case for the HashiEvent class. Get the command and launches it using all the managers (cool downs,
- * interfering, database).
+ * An example of use case for the HashiEvent class.
  */
 export declare class MessageCreate extends HashiEvent {
     /**
@@ -11,8 +10,4 @@ export declare class MessageCreate extends HashiEvent {
      * @returns Nothing.
      */
     callback: HashiEventCallbackFunction;
-    /**
-     * Define the name of the event into the super constructor.
-     */
-    constructor(name?: string);
 }

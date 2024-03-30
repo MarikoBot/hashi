@@ -1,8 +1,8 @@
-import { CommandAncillary } from './CommandAncillary';
+import { HashiCommandBase } from './HashiCommandBase';
 /**
  * The class who represents a subcommand for the hashi command.
  */
-export declare class HashiSlashSubcommand extends CommandAncillary {
+export declare class HashiSlashSubcommand extends HashiCommandBase {
     /**
      * The constructor for the HashiSlashCommand.
      */

@@ -5,3 +5,4 @@ export * from './DatabaseManager';
 export * from './DataMap';
 export * from './EventManager';
 export * from './LanguageManager';
+export * from './shared';

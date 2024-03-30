@@ -1,11 +1,11 @@
 import { Validators } from '../decorators';
-import { CommandAncillary, HashiSlashSubcommand } from './';
+import { HashiCommandBase, HashiSlashSubcommand } from './';
 import { InstanceValidator } from '../decorators/shared';
 
 /**
  * The class who represents a subcommand for the slash base.
  */
-export class HashiSlashSubcommandGroup extends CommandAncillary {
+export class HashiSlashSubcommandGroup extends HashiCommandBase {
   /**
    * The subcommands of the group.
    */

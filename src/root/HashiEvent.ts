@@ -1,8 +1,6 @@
-// noinspection JSUnusedGlobalSymbols
-
 import { Validators } from '../decorators';
-import { HashiClient } from './';
-import { InstanceValidator } from '../decorators/shared';
+import { defaultEventCallback, HashiClient, HashiEventCallbackFunction } from './';
+import { InstanceValidator, InstanceValidatorReturner } from '../decorators/shared';
 
 /**
  * Represents an Event on client service.
@@ -11,7 +9,7 @@ export class HashiEvent {
   /**
    * The client instance.
    */
-  @((<(arg: typeof HashiClient) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(HashiClient))
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(HashiClient))
   public client: HashiClient;
 
   /**
@@ -34,18 +32,3 @@ export class HashiEvent {
     this.name = name;
   }
 }
-
-/**
- * A default callback function used when nothing is set.
- * @returns Nothing.
- */
-export async function defaultEventCallback(): Promise<void> {
-  return void setTimeout((): null => null);
-}
-
-/**
- * The model of a callback function for an event.
- * @param client The client instance.
- * @param args The command args.
- */
-export type HashiEventCallbackFunction = (client: HashiClient, ...args: any[]) => void;

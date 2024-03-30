@@ -1,6 +1,7 @@
 import { Collection, Snowflake } from 'discord.js';
 import { Validators } from '../decorators';
-import { InstanceValidator } from '../decorators/shared';
+import { InstanceValidatorReturner } from '../decorators/shared';
+import { CoolDownsQueueElement } from './';
 
 /**
  * The main class who manages the active cool downs for commands.
@@ -9,13 +10,8 @@ export class CoolDownManager {
   /**
    * The collection of the current cool downs.
    */
-  @((<(arg: typeof Collection) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(Collection))
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(Collection))
   private readonly queue: Collection<Snowflake, CoolDownsQueueElement[]> = new Collection();
-
-  /**
-   * The constructor of the cool down manager.
-   */
-  constructor() {}
 
   /**
    * Register a cool down when a command is triggered.
@@ -57,21 +53,3 @@ export class CoolDownManager {
     return currentCoolDowns;
   }
 }
-
-/**
- * Represents an element in the cool downs queue.
- */
-export type CoolDownsQueueElement = [
-  /**
-   The full name of the command (including the subcommands name).
-   */
-  string,
-  /**
-   * The end time of the cool down.
-   */
-  number,
-  /**
-   * The cool down amount.
-   */
-  number,
-];

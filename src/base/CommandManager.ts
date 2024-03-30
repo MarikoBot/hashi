@@ -1,13 +1,15 @@
 import {
+  ApplicationCommandDataResolvable,
+  APIApplicationCommand,
   ChatInputCommandInteraction,
   Collection,
   Message,
-  APIApplicationCommand,
-  ApplicationCommandDataResolvable,
 } from 'discord.js';
 import { BaseClient } from './';
 import { Validators } from '../decorators';
 import {
+  AnyCommandConstructorType,
+  CommandBlock,
   CoolDownManager,
   FileManager,
   HashiClient,
@@ -16,40 +18,35 @@ import {
   HashiSlashSubcommand,
   HashiSlashSubcommandGroup,
   InterferingManager,
-  CommandBlock,
-  AnyCommandConstructor,
 } from '../root/';
-import { InstanceValidator } from '../decorators/shared';
+import { InstanceValidatorReturner } from '../decorators/shared';
 
 /**
- * Represents the command manager of the client.
+ * Represents the command manager of the client. This class manages the slash and message commands for the project.
  */
 export class CommandManager extends BaseClient {
   /**
    * The cool downs' manager instance, to get access to the different delays of the current command.
    */
-  @((<(arg: typeof CoolDownManager) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(CoolDownManager))
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(CoolDownManager))
   public readonly coolDowns: CoolDownManager = new CoolDownManager();
 
   /**
    * The interfering manager instance, to have access to the different executing commands.
    */
-  @((<(arg: typeof InterferingManager) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(
-    InterferingManager,
-  ))
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(InterferingManager))
   public readonly interfering: InterferingManager = new InterferingManager();
 
   /**
    * The list of commands.
    */
-  @((<(arg: typeof Collection) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(Collection))
-  public readonly commandsList: Collection<string, AnyCommandConstructor> = new Collection<
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(Collection))
+  public readonly commandsList: Collection<string, AnyCommandConstructorType> = new Collection<
     string,
-    AnyCommandConstructor
+    AnyCommandConstructorType
   >();
 
   /**
-   * The constructor of the command manager.
    * @param client The client instance.
    */
   constructor(client: HashiClient) {
@@ -57,18 +54,7 @@ export class CommandManager extends BaseClient {
   }
 
   /**
-   * Add a command to the client (the bot) using the name, options and or the command itself.
-   * If no command is passed, the function creates one based on the data passed.
-   * @param commandData The options passed (name, command options, command instance).
-   * @returns The command manager instance (this).
-   */
-  public addCommand(commandData: AnyCommandConstructor): CommandManager {
-    this.commandsList.set(commandData.prototype.id, commandData);
-    return this;
-  }
-
-  /**
-   * Get a command from the cache with the name.
+   * Get a slash command from the cache with the name.
    * @param interaction The interaction.
    * @returns The found command instance, or undefined.
    */
@@ -109,6 +95,7 @@ export class CommandManager extends BaseClient {
     return { command, subcommand, subcommandGroup };
   }
 
+  // TODO:
   /**
    * Returns a message command from a message create event. Cached commands only.
    * @param message The message.
@@ -121,26 +108,38 @@ export class CommandManager extends BaseClient {
 
   /**
    * Load the commands from the given commands directory.
+   * @param dirName The directory to load on.
    * @returns Nothing.
    */
-  public async loadCommands(): Promise<void> {
-    const commandFiles: [string, typeof HashiSlashCommand][] = this.client.fileManager.read<typeof HashiSlashCommand>(
-      `${FileManager.ABSPATH}${this.client.commandsDir}`,
-      `${FileManager.RMPATH}${this.client.commandsDir}`,
+  private async commandsScraper<T extends AnyCommandConstructorType>(dirName: string): Promise<void> {
+    const commandFiles: [string, T][] = this.client.fileManager.read<T>(
+      `${FileManager.ABSPATH}${dirName}`,
+      `${FileManager.RMPATH}${dirName}`,
     );
 
     const commands: APIApplicationCommand[] = [];
-    let commandData: typeof HashiSlashCommand;
+    let commandData: T;
 
     for (const file of commandFiles) {
       commandData = file[1];
 
       this.client.commandManager.commandsList.set(commandData.prototype.id, commandData);
 
-      const discordDataOnly: APIApplicationCommand = commandData.prototype.src;
-      commands.push(discordDataOnly);
+      if ('src' in commandData.prototype) {
+        const discordDataOnly: APIApplicationCommand = commandData.prototype.src;
+        commands.push(discordDataOnly);
+      }
     }
 
     void (await this.client.src.application.commands.set(<readonly ApplicationCommandDataResolvable[]>commands));
+  }
+
+  /**
+   * Load the commands from the given commands directory.
+   * @returns Nothing.
+   */
+  public async loadCommands(): Promise<void> {
+    await this.commandsScraper<typeof HashiMessageCommand>(`${this.client.commandsDir}/message`);
+    await this.commandsScraper<typeof HashiSlashCommand>(`${this.client.commandsDir}/slash`);
   }
 }

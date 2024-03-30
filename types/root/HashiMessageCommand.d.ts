@@ -1,15 +1,10 @@
-import { CommandAncillary } from './CommandAncillary';
+import { HashiCommandBase } from './HashiCommandBase';
 /**
  * The class that represents a command into a message.
  */
-export declare class HashiMessageCommand extends CommandAncillary {
+export declare class HashiMessageCommand extends HashiCommandBase {
     /**
      * The constructor for a new message command.
      */
     constructor();
-}
-/**
- * Represents a parameter for a command.
- */
-export interface HashiMessageCommandParameter {
 }

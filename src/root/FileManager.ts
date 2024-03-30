@@ -1,8 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { Validators } from '../decorators';
-import { HashiClient, EnvPath } from './';
-import { InstanceValidator } from '../decorators/shared';
+import { HashiClient, EnvPath, FileContentType, SelfResearchOptions } from './';
+import { InstanceValidatorReturner } from '../decorators/shared';
 
 /**
  * The class that manages the files included into this project, and also those at the root of the package user.
@@ -11,7 +11,7 @@ export class FileManager {
   /**
    * The client instance.
    */
-  @((<(arg: typeof HashiClient) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(HashiClient))
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(HashiClient))
   public client: HashiClient;
 
   /**
@@ -82,22 +82,3 @@ export class FileManager {
     }[process.env.ENVPATH];
   }
 }
-
-/**
- * The interface including parameters for self-research program.
- */
-export interface SelfResearchOptions {
-  /**
-   * The absolute self-path to look.
-   */
-  absPathStrSelf: string;
-  /**
-   * The recursive self-path to look.
-   */
-  rmPathStrSelf: string;
-}
-
-/**
- * The type used for defining abstractly the content of a file.
- */
-export type FileContentType = { [dataKey: string]: any };

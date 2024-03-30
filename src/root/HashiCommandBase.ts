@@ -1,47 +1,38 @@
-import {
-  ChatInputCommandInteraction,
-  DiscordjsError,
-  DiscordAPIError,
-  GuildMemberRoleManager,
-  SlashCommandBuilder,
-  APIApplicationCommand,
-  ChatInputApplicationCommandData,
-} from 'discord.js';
+import { ChatInputCommandInteraction, GuildMemberRoleManager, ChatInputApplicationCommandData } from 'discord.js';
 import { Context } from '../base';
 import { Validators } from '../decorators';
-import { Constructable, InstanceValidator } from '../decorators/shared';
+import { InstanceValidator, InstanceValidatorReturner } from '../decorators/shared';
 import {
   HashiClient,
-  HashiMessageCommand,
   HashiSlashCommand,
   HashiSlashSubcommand,
-  HashiSlashSubcommandGroup,
   CoolDownsQueueElement,
   HashiSlashCommandCallbackFunction,
   InterferingQueueElement,
+  HashiCommandValues,
+  CommandBlock,
+  COMMAND_END,
+  CommandBlockValue,
+  CommandPrivilegesKey,
+  CommandPrivileges,
+  HashiError,
+  HashiCommandType,
 } from './';
-
-/**
- * The different values of for the HashiCommandType type.
- */
-export const HashiCommandValues: readonly string[] = ['message', 'slash', 'sub', 'group'] as const;
 
 /**
  * The class that includes many useful functions shared between HashiMessageCommand and SlashCommand.
  */
-export class CommandAncillary {
+export class HashiCommandBase {
   /**
    * The type of the command.
    */
-  @((<(hashiCommandValues: typeof HashiCommandValues) => InstanceValidator>(
-    Validators.StringValidator.IsHashiCommandType
-  ))(HashiCommandValues))
+  @((<InstanceValidatorReturner>Validators.StringValidator.IsHashiCommandType)(HashiCommandValues))
   public readonly type: HashiCommandType;
 
   /**
    * The client instance.
    */
-  @((<(constructable: Constructable<any>) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(HashiClient))
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(HashiClient))
   public client: HashiClient;
 
   /**
@@ -84,7 +75,7 @@ export class CommandAncillary {
   /**
    * The context of the command.
    */
-  @((<(constructable: Constructable<any>) => InstanceValidator>Validators.ObjectValidator.IsInstanceOf)(Context))
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(Context))
   public context: Context;
 
   /**
@@ -103,7 +94,7 @@ export class CommandAncillary {
    * The base constructor of a command.
    * @param type The type of the command.
    */
-  constructor(type: CommandAncillary['type'] = 'message') {
+  constructor(type: HashiCommandBase['type'] = 'message') {
     this.type = type;
   }
 
@@ -362,190 +353,3 @@ export class CommandAncillary {
     return [commandBlockValue, context];
   }
 }
-
-/**
- * The decorator that insert metadata into a command.
- * @param commandMetadata The metadata to set.
- */
-export const CommandMetadataInjector = (
-  commandMetadata: Partial<Record<CommandMetadataKeys, CommandMetadata[CommandMetadataKeys]>>,
-): Function => {
-  return function (constructor: Function) {
-    if (!('type' in commandMetadata)) commandMetadata['type'] = 'message';
-
-    for (const key in commandMetadata) {
-      if (key === 'src' && commandMetadata['type'] !== 'slash') continue;
-
-      constructor.prototype[key] = commandMetadata[key];
-
-      Object.defineProperty(constructor, key, {
-        value: commandMetadata[key],
-        writable: true,
-        configurable: true,
-      });
-    }
-  };
-};
-
-/**
- * The value that is returned when the command is finished.
- */
-export enum COMMAND_END {
-  /**
-   * When the command terminates goodly.
-   */
-  SUCCESS = 0,
-  /**
-   * When the command did not terminate.
-   */
-  ERROR = 1,
-  /**
-   * When the command terminates but with some problems that occurred in the process.
-   */
-  ISSUED = 1,
-}
-
-/**
- * The command block that includes the command, subcommands and/or subcommand groups.
- */
-export interface CommandBlock {
-  /**
-   * The command constructor.
-   */
-  command: HashiSlashCommand | HashiMessageCommand;
-  /**
-   * The subcommand group constructor.
-   */
-  subcommandGroup?: HashiSlashSubcommandGroup;
-  /**
-   * The subcommand constructor.
-   */
-  subcommand?: HashiSlashSubcommand;
-}
-
-/**
- * The interface that represents a command metadata.
- */
-export interface CommandMetadata {
-  /**
-   * The client instance.
-   */
-  client: HashiClient;
-  /**
-   * The type of the command.
-   */
-  type: HashiCommandType;
-  /**
-   * The name of the command.
-   */
-  id: string;
-  /**
-   * The list of errors for the command occurrence.
-   */
-  errors: HashiError[];
-  /**
-   * The commands that must be executed before this one.
-   * If one of the interfering commands is same-time running, this command will be ignored.
-   */
-  interferingCommands: ChatInputApplicationCommandData['name'][];
-  /**
-   * The amount of time before running the command again. Must be between 0 and 300 seconds.
-   */
-  coolDown: number;
-  /**
-   * The context of the command.
-   */
-  context: Context;
-  /**
-   * The external data for the command.
-   */
-  privileges: CommandPrivileges;
-  /**
-   * The callback function called.
-   */
-  callback: HashiSlashCommandCallbackFunction;
-  /**
-   * The slash command if there is one.
-   */
-  slashCommand: SlashCommandBuilder;
-  /**
-   * The slash command but the hashi builder.
-   */
-  hashiCommand: SlashCommandBuilder;
-  /**
-   * The command data for the hashi slash command.
-   */
-  src?: APIApplicationCommand;
-}
-
-/**
- * The privileges for a command (restrictions and prohibition).
- */
-export interface CommandPrivileges {
-  /**
-   * If the command is forbidden in some specific channels.
-   */
-  forbiddenChannels?: string[];
-  /**
-   * If the command is forbidden for some specific users.
-   */
-  forbiddenUsers?: string[];
-  /**
-   * If the command is forbidden for some specific roles.
-   */
-  forbiddenRoles?: string[];
-  /**
-   * If the command is forbidden for some specific guilds.
-   */
-  forbiddenGuilds?: string[];
-  /**
-   * If the command is only allowed in some specific channels only.
-   */
-  uniqueChannels?: string[];
-  /**
-   * If the command is only allowed by some specific users only.
-   */
-  uniqueUsers?: string[];
-  /**
-   * If the command is only allowed by some specific roles only.
-   */
-  uniqueRoles?: string[];
-  /**
-   * If the command is only allowed in some specific guilds only.
-   */
-  uniqueGuilds?: string[];
-}
-
-/**
- * Represents any command constructor.
- */
-export type AnyCommandConstructor =
-  | typeof HashiMessageCommand
-  | typeof HashiSlashCommand
-  | typeof HashiSlashSubcommand
-  | typeof HashiSlashSubcommandGroup;
-
-/**
- * The type that represents an element of CommandBlock.
- */
-export type CommandBlockValue = CommandBlock[keyof CommandBlock];
-
-/**
- * The keys of the command metadata.
- */
-export type CommandMetadataKeys = keyof CommandMetadata;
-
-/**
- * The type that represents a key included in CommandPrivileges.
- */
-export type CommandPrivilegesKey = keyof CommandPrivileges;
-
-/**
- * The different types of command.
- */
-export type HashiCommandType = (typeof HashiCommandValues)[number];
-
-/**
- * Represents an error.
- */
-export type HashiError = Error | DiscordjsError | DiscordAPIError;
