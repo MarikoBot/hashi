@@ -56,7 +56,8 @@
     "publish-patch": "npm version patch && npm run post-version-push",
     "publish-minor": "npm version minor && npm run post-version-push",
     "publish-major": "npm version major && npm run post-version-push",
-    "publish-prerel": "npm version prerelease --preid=${TAG} && npm run post-version-push"
+    "publish-prerel": "npm version prerelease --preid=${TAG} && npm run post-version-push",
+    "devbuild": "npm run prepublish -- --MESSAGE='Devbuild version' && npm run publish-prerel -- --TAG='devbuild'"
   },
   "dependencies": {
     "chalk": "^4.1.2",
