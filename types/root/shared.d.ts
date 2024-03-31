@@ -22,7 +22,7 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { APIApplicationCommand, ChatInputApplicationCommandData, ChatInputCommandInteraction, ClientOptions, DiscordAPIError, DiscordjsError } from 'discord.js';
+import { APIApplicationCommandOption, ChatInputApplicationCommandData, ChatInputCommandInteraction, ClientOptions, DiscordAPIError, DiscordjsError, LocalizationMap } from 'discord.js';
 import { ConnectOptions } from 'mongoose';
 import { Context } from '../base';
 import { HashiClient, HashiMessageCommand, HashiSlashCommand, HashiSlashSubcommand, HashiSlashSubcommandGroup, SuperModelColumn } from './';
@@ -34,6 +34,56 @@ export type AnyCommandConstructorType = typeof HashiMessageCommand | typeof Hash
  * Represents any command constructor.
  */
 export type AnyCommandConstructor = HashiMessageCommand | HashiSlashCommand | HashiSlashSubcommand | HashiSlashSubcommandGroup;
+/**
+ * Prefilled version of the Discord.<APIApplicationCommand>
+ * @link https://discord.com/developers/docs/interactions/application-commands#application-command-object
+ */
+export interface APIApplicationCommandPrefilled {
+    /**
+     * Type of the command
+     */
+    type: 1;
+    /**
+     * 1-32 character name; `CHAT_INPUT` command names must be all lowercase matching `^[-_\p{L}\p{N}\p{sc=Deva}\p{sc=Thai}]{1,32}$`
+     */
+    name: string;
+    /**
+     * Localization dictionary for the name field. Values follow the same restrictions as name
+     */
+    name_localizations?: LocalizationMap | null;
+    /**
+     * 1-100 character description for `CHAT_INPUT` commands, empty string for `USER` and `MESSAGE` commands
+     */
+    description: string;
+    /**
+     * Localization dictionary for the description field. Values follow the same restrictions as description
+     */
+    description_localizations?: LocalizationMap | null;
+    /**
+     * The parameters for the `CHAT_INPUT` command, max 25
+     */
+    options?: APIApplicationCommandOption[];
+    /**
+     * Set of permissions represented as a bitset
+     */
+    default_member_permissions: Permissions | null;
+    /**
+     * Indicates whether the command is available in DMs with the app, only for globally-scoped commands. By default, commands are visible
+     */
+    dm_permission?: boolean;
+    /**
+     * Whether the command is enabled by default when the app is added to a guild
+     *
+     * If missing, this property should be assumed as `true`
+     *
+     * @deprecated Use `dm_permission` and/or `default_member_permissions` instead
+     */
+    default_permission?: boolean;
+    /**
+     * Indicates whether the command is age-restricted, defaults to `false`
+     */
+    nsfw?: boolean;
+}
 /**
  * The value that is returned when the command is finished.
  */
@@ -96,11 +146,19 @@ export interface CommandMetadata {
     /**
      * The external data for the command.
      */
-    privileges: CommandPrivileges;
+    privileges?: CommandPrivileges;
     /**
      * The command data for the hashi slash command.
      */
-    src?: APIApplicationCommand;
+    src?: APIApplicationCommandPrefilled;
+    /**
+     * The subcommand groups of the command.
+     */
+    subcommandGroups?: (typeof HashiSlashSubcommandGroup)[];
+    /**
+     * The subcommands of the command.
+     */
+    subcommands?: (typeof HashiSlashSubcommand)[];
 }
 /**
  * The keys of the command metadata.
@@ -220,7 +278,7 @@ export interface HashiClientOptions extends ClientOptions {
 /**
  * The different values of for the HashiCommandType type.
  */
-export declare const HashiCommandValues: readonly string[];
+export declare const HashiCommandValues: string[];
 /**
  * The different types of command.
  */

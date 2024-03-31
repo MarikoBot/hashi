@@ -1,5 +1,5 @@
 import { APIApplicationCommand } from 'discord.js';
-import { HashiCommandBase, HashiSlashSubcommand, HashiSlashSubcommandGroup } from './';
+import { HashiCommandBase, HashiSlashSubcommandGroup, HashiSlashSubcommand } from './';
 /**
  * The class who represents a base-command for the Hashi package.
  */
@@ -16,8 +16,4 @@ export declare class HashiSlashCommand extends HashiCommandBase {
      * The subcommands of the command.
      */
     subcommands: (typeof HashiSlashSubcommand)[];
-    /**
-     * The constructor for the HashiSlashCommand.
-     */
-    constructor();
 }

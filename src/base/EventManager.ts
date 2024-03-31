@@ -1,6 +1,6 @@
 import { Collection } from 'discord.js';
 import { BaseClient } from './';
-import { Validators, InstanceValidatorReturner } from '../decorators';
+import { Validators, InstanceValidatorReturner, InstanceInjector, HashiEventInjectorTarget } from '../decorators';
 import { FileManager, HashiClient, HashiEvent } from '../root';
 
 /**
@@ -50,11 +50,24 @@ export class EventManager extends BaseClient {
     let eventInstance: HashiEvent;
 
     while (++i < events.length) {
-      eventInstance = new events[i]();
+      eventInstance = new events[i](events[i].prototype.name);
       eventInstance.client = this.client;
+
+      this.client.logger.info(`Bound event: ${eventInstance.name}`);
       this.client.src[eventData.name === 'ready' ? 'once' : 'on'](eventData.name, (...args: any[]) =>
         eventInstance.callback(this.client, ...args),
       );
     }
+  }
+
+  /**
+   * The decorator to inject metadata into the constructor of HashiEvent.
+   * @param name The name of the event.
+   * @returns The decorator.
+   */
+  public HashiEventInjector(name: string): InstanceInjector {
+    return function (target: HashiEventInjectorTarget): void {
+      target.prototype.name = name;
+    };
   }
 }

@@ -1,5 +1,6 @@
 import { Collection } from 'discord.js';
 import { BaseClient } from './';
+import { InstanceInjector } from '../decorators';
 import { HashiClient, HashiEvent } from '../root';
 /**
  * Represents the event manager for the client service.
@@ -19,4 +20,10 @@ export declare class EventManager extends BaseClient {
      * @returns Nothing.
      */
     loadEvents(): Promise<void>;
+    /**
+     * The decorator to inject metadata into the constructor of HashiEvent.
+     * @param name The name of the event.
+     * @returns The decorator.
+     */
+    HashiEventInjector(name: string): InstanceInjector;
 }

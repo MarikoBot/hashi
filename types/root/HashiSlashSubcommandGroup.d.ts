@@ -7,8 +7,4 @@ export declare class HashiSlashSubcommandGroup extends HashiCommandBase {
      * The subcommands of the group.
      */
     subcommands: (typeof HashiSlashSubcommand)[];
-    /**
-     * The constructor for the HashiSlashCommand.
-     */
-    constructor();
 }

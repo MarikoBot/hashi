@@ -1,6 +1,6 @@
 import { connect, ConnectOptions } from 'mongoose';
 import { BaseClient, DataMap, DataMapsObject, TypedDataMapStored } from './';
-import { Validators, InstanceValidator, InstanceValidatorReturner } from '../decorators';
+import { Validators, InstanceValidator, InstanceValidatorReturner, SuperModelInjectorTarget } from '../decorators';
 import { FileManager, HashiClient, SuperModel } from '../root';
 
 /**
@@ -89,5 +89,16 @@ export class DatabaseManager extends BaseClient {
     if (connectOptions) this.connectOptions = connectOptions;
 
     await connect(this.connectionURI, this.connectOptions);
+  }
+
+  /**
+   * The decorator to inject metadata into the constructor of an extension of SuperModel.
+   * @param name The name of the super-SuperModel.
+   * @returns The decorator.
+   */
+  public SuperModelInjector(name: string) {
+    return function (target: SuperModelInjectorTarget) {
+      target.prototype.name = name;
+    };
   }
 }

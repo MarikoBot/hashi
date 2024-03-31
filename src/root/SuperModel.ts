@@ -1,5 +1,5 @@
 import { Document, Model, Schema, SchemaDefinition, SchemaDefinitionProperty } from 'mongoose';
-import { Validators, InstanceValidator } from '../decorators';
+import { InstanceValidator, InstanceValidatorReturner, Validators } from '../decorators';
 import { Placeholder, StructureColumnOrChild, SuperModelColumn } from './';
 
 /**
@@ -9,25 +9,19 @@ export class SuperModel {
   /**
    * The list of the columns of the collection.
    */
-  @((<(superModelColumn: typeof SuperModelColumn) => InstanceValidator>(
-    Validators.ObjectValidator.KeySuperModelColumnPair
-  ))(SuperModelColumn))
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.KeySuperModelColumnPair)(SuperModelColumn))
   public columns: StructureColumnOrChild;
 
   /**
    * The model class content.
    */
-  @((<(arg: typeof Model<SchemaDefinition & Document>, placeholder: typeof Placeholder) => InstanceValidator>(
-    Validators.ObjectValidator.KindOfInstance
-  ))(Model, Placeholder))
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.KindOfInstance)(Model, Placeholder))
   public readonly model: Model<SchemaDefinition & Document>;
 
   /**
    * The schema class content.
    */
-  @((<(arg: typeof Schema<any>, placeholder: typeof Placeholder) => InstanceValidator>(
-    Validators.ObjectValidator.KindOfInstance
-  ))(Schema, Placeholder))
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.KindOfInstance)(Schema, Placeholder))
   public readonly schema: Schema<SchemaDefinition>;
 
   /**

@@ -1,6 +1,7 @@
 import { ChatInputCommandInteraction, Collection } from 'discord.js';
 import { BaseClient } from './';
-import { AnyCommandConstructorType, CommandGroup, CoolDownManager, HashiClient, InterferingManager } from '../root';
+import { InstanceInjector } from '../decorators';
+import { AnyCommandConstructorType, CommandGroup, CommandMetadata, CoolDownManager, HashiClient, InterferingManager } from '../root';
 /**
  * Represents the command manager of the client. This class manages the slash and message commands for the project.
  */
@@ -38,4 +39,10 @@ export declare class CommandManager extends BaseClient {
      * @returns Nothing.
      */
     loadCommands(): Promise<void>;
+    /**
+     * The decorator to inject metadata into the constructor of an extension of HashiCommandBase.
+     * @param metadata The metadata of the super-HashiCommandBase.
+     * @returns The decorator.
+     */
+    HashiCommandInjector(metadata: CommandMetadata): InstanceInjector;
 }

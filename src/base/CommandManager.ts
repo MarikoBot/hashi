@@ -5,10 +5,11 @@ import {
   Collection,
 } from 'discord.js';
 import { BaseClient } from './';
-import { Validators, InstanceValidatorReturner } from '../decorators';
+import { Validators, InstanceValidatorReturner, InstanceInjector, HashiCommandInjectorTarget } from '../decorators';
 import {
   AnyCommandConstructorType,
   CommandGroup,
+  CommandMetadata,
   CoolDownManager,
   FileManager,
   HashiClient,
@@ -106,16 +107,21 @@ export class CommandManager extends BaseClient {
 
     const commands: APIApplicationCommand[] = [];
     let commandData: T;
+    let isMessage: boolean = false;
 
     for (const file of commandFiles) {
-      commandData = file[1];
+      commandData = file[1][file[0]];
+      isMessage = commandData.prototype.type === 'message';
 
       this.client.commandManager.commandsList.set(
-        `${commandData.prototype.type === 'message' ? 'message' : ''}${commandData.prototype.id}`,
+        `${isMessage ? 'message' : ''}${commandData.prototype.id}`,
         commandData,
       );
 
-      if ('src' in commandData.prototype) {
+      if (!isMessage) {
+        if (!('src' in commandData.prototype))
+          throw new Error(`A slash-based command shall have a 'src' property into its metadata.`);
+
         const discordDataOnly: APIApplicationCommand = commandData.prototype.src;
         commands.push(discordDataOnly);
       }
@@ -131,5 +137,16 @@ export class CommandManager extends BaseClient {
   public async loadCommands(): Promise<void> {
     await this.commandsScraper<typeof HashiMessageCommand>(`${this.client.commandsDir}/message`);
     await this.commandsScraper<typeof HashiSlashCommand>(`${this.client.commandsDir}/slash`);
+  }
+
+  /**
+   * The decorator to inject metadata into the constructor of an extension of HashiCommandBase.
+   * @param metadata The metadata of the super-HashiCommandBase.
+   * @returns The decorator.
+   */
+  public HashiCommandInjector(metadata: CommandMetadata): InstanceInjector {
+    return function (target: HashiCommandInjectorTarget): void {
+      for (const [key, value] of Object.entries(metadata)) target.prototype[key] = value;
+    };
   }
 }

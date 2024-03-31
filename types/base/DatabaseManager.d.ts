@@ -24,6 +24,7 @@
 /// <reference types="mongoose/types/inferschematype" />
 import { ConnectOptions } from 'mongoose';
 import { BaseClient, DataMap, DataMapsObject, TypedDataMapStored } from './';
+import { SuperModelInjectorTarget } from '../decorators';
 import { HashiClient } from '../root';
 /**
  * The class who manages the database of the project.
@@ -66,4 +67,10 @@ export declare class DatabaseManager extends BaseClient {
      * @param connectOptions The connection options.
      */
     connect(connectionURI?: string, connectOptions?: ConnectOptions): Promise<void>;
+    /**
+     * The decorator to inject metadata into the constructor of an extension of SuperModel.
+     * @param name The name of the super-SuperModel.
+     * @returns The decorator.
+     */
+    SuperModelInjector(name: string): (target: SuperModelInjectorTarget) => void;
 }

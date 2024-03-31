@@ -11,12 +11,15 @@ export const StringValidator: {
    * @param hashiCommandValues The hashiCommandValues instance.
    * @constructor
    */
-  IsHashiCommandType: (hashiCommandValues: readonly string[]): InstanceValidator => {
+  IsHashiCommandType: (hashiCommandValues: string[]): InstanceValidator => {
     return function (target: Object, key: string): void {
       let value: any;
 
       const setter = (newValue: any): void => {
-        if (typeof newValue !== 'string' || !hashiCommandValues.includes(newValue))
+        if (
+          typeof newValue !== 'string' ||
+          !(hashiCommandValues || require('../../root').HashiCommandValues).includes(newValue)
+        )
           throw new Error(`The property ${target.constructor.name}.${key} must be a HashiCommandType string.`);
         value = newValue;
       };
@@ -64,7 +67,7 @@ export const StringValidator: {
       if (typeof newValue !== 'string' || newValue.match(StringValidatorRegExp.validIdRegExp).join('') !== newValue)
         throw new Error(
           `The property ${target.constructor.name}.${key} must be a valid id string ` +
-            `(${StringValidator.validIdRegExp.toString()}).`,
+            `(${StringValidatorRegExp.validIdRegExp.toString()}).`,
         );
       value = newValue;
     };
