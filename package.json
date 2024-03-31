@@ -50,13 +50,13 @@
     "lint": "tslint --config tslint.json --project tsconfig.json 'src/**/*.ts' > linter-output.txt",
     "clean": "npm run prettier && npm run lint",
     "build": "npm run clean && npm run run-builder && tsc && git add .",
-    "prepublish": "npm run build && git commit -m \"[BUILD] ${MESSAGE}\"",
+    "prepublish": "npm run build && git commit -m \"[BUILD] Automatic build\"",
     "test-ts": "ts-node lab/lab.test.ts",
     "post-version-push": "git push && npm publish && git push --tags",
     "publish-patch": "npm version patch && npm run post-version-push",
     "publish-minor": "npm version minor && npm run post-version-push",
     "publish-major": "npm version major && npm run post-version-push",
-    "publish-prerel": "npm version prerelease --preid=${TAG} && npm run post-version-push"
+    "publish-prerel": "npm version prerelease --preid=prerelease && npm run post-version-push"
   },
   "dependencies": {
     "chalk": "^4.1.2",
