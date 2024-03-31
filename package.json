@@ -1,6 +1,6 @@
 {
   "name": "marikobot-hashi",
-  "version": "2.0.1-devbuild.0",
+  "version": "2.0.1-devbuild.1",
   "description": "A discord.js wrapper to create bots in a simpler way. Used for MarikoBot.",
   "keywords": [
     "discord",
