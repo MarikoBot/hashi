@@ -1,7 +1,7 @@
 import { connect, ConnectOptions } from 'mongoose';
 import { BaseClient, DataMap, DataMapsObject, TypedDataMapStored } from './';
 import { Validators, InstanceValidator, InstanceValidatorReturner } from '../decorators';
-import { FileManager, HashiClient, SuperModel } from '../root/';
+import { FileManager, HashiClient, SuperModel } from '../root';
 
 /**
  * The class who manages the database of the project.

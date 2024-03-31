@@ -22,15 +22,10 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { APIApplicationCommand, ChatInputApplicationCommandData, ChatInputCommandInteraction, ClientOptions, DiscordAPIError, DiscordjsError, SlashCommandBuilder } from 'discord.js';
+import { APIApplicationCommand, ChatInputApplicationCommandData, ChatInputCommandInteraction, ClientOptions, DiscordAPIError, DiscordjsError } from 'discord.js';
 import { ConnectOptions } from 'mongoose';
-import { HashiSlashCommand } from './HashiSlashCommand';
-import { HashiMessageCommand } from './HashiMessageCommand';
-import { HashiSlashSubcommandGroup } from './HashiSlashSubcommandGroup';
-import { HashiSlashSubcommand } from './HashiSlashSubcommand';
-import { HashiClient } from './HashiClient';
 import { Context } from '../base';
-import { SuperModelColumn } from './';
+import { HashiClient, HashiMessageCommand, HashiSlashCommand, HashiSlashSubcommand, HashiSlashSubcommandGroup, SuperModelColumn } from './';
 /**
  * Represents any command constructor.
  */
@@ -59,7 +54,7 @@ export declare enum COMMAND_END {
 /**
  * The command block that includes the command, subcommands and/or subcommand groups.
  */
-export interface CommandBlock {
+export interface CommandGroup {
     /**
      * The command constructor.
      */
@@ -74,17 +69,13 @@ export interface CommandBlock {
     subcommand?: HashiSlashSubcommand;
 }
 /**
- * The type that represents an element of CommandBlock.
+ * The type that represents an element of CommandGroup.
  */
-export type CommandBlockValue = CommandBlock[keyof CommandBlock];
+export type CommandGroupValue = CommandGroup[keyof CommandGroup];
 /**
  * The interface that represents a command metadata.
  */
 export interface CommandMetadata {
-    /**
-     * The client instance.
-     */
-    client: HashiClient;
     /**
      * The type of the command.
      */
@@ -93,10 +84,6 @@ export interface CommandMetadata {
      * The name of the command.
      */
     id: string;
-    /**
-     * The list of errors for the command occurrence.
-     */
-    errors: HashiError[];
     /**
      * The commands that must be executed before this one.
      * If one of the interfering commands is same-time running, this command will be ignored.
@@ -107,25 +94,9 @@ export interface CommandMetadata {
      */
     coolDown: number;
     /**
-     * The context of the command.
-     */
-    context: Context;
-    /**
      * The external data for the command.
      */
     privileges: CommandPrivileges;
-    /**
-     * The callback function called.
-     */
-    callback: HashiSlashCommandCallbackFunction;
-    /**
-     * The slash command if there is one.
-     */
-    slashCommand: SlashCommandBuilder;
-    /**
-     * The slash command but the hashi builder.
-     */
-    hashiCommand: SlashCommandBuilder;
     /**
      * The command data for the hashi slash command.
      */

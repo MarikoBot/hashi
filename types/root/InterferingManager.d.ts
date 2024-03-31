@@ -1,5 +1,5 @@
 import { ChatInputCommandInteraction, Collection, Snowflake } from 'discord.js';
-import { InterferingQueueElement } from './shared';
+import { InterferingQueueElement } from './';
 /**
  * The main class who manages the active cool downs for commands.
  */

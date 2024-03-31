@@ -10,7 +10,7 @@ import {
   TypedDataMapStored,
 } from '../base/';
 import { Validators, InstanceValidator, InstanceValidatorReturner } from '../decorators';
-import { CommandBlock, HashiClientOptions, COMMAND_END, FileManager, HashiSlashCommand, Logger } from './';
+import { CommandGroup, HashiClientOptions, COMMAND_END, FileManager, HashiSlashCommand, Logger } from './';
 
 dotenv.config();
 
@@ -148,8 +148,8 @@ export class HashiClient {
    * @returns The issue of the command.
    */
   public async detectAndLaunchSlashCommand(interaction: ChatInputCommandInteraction): Promise<COMMAND_END> {
-    const commandBlock: CommandBlock = this.commandManager.getCommandFromInteraction(interaction);
-    if (commandBlock.command) return HashiSlashCommand.launch(this, interaction, commandBlock);
+    const CommandGroup: CommandGroup = this.commandManager.getCommandFromInteraction(interaction);
+    if (CommandGroup.command) return HashiSlashCommand.launch(this, interaction, CommandGroup);
     return COMMAND_END.SUCCESS;
   }
 }

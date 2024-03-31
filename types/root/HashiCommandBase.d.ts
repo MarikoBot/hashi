@@ -1,6 +1,6 @@
-import { ChatInputCommandInteraction, ChatInputApplicationCommandData } from 'discord.js';
+import { ChatInputApplicationCommandData, ChatInputCommandInteraction } from 'discord.js';
 import { Context } from '../base';
-import { HashiClient, HashiSlashCommandCallbackFunction, CommandBlock, COMMAND_END, CommandPrivileges, HashiError, HashiCommandType } from './';
+import { COMMAND_END, CommandGroup, CommandPrivileges, HashiClient, HashiCommandType, HashiError, HashiSlashCommandCallbackFunction } from './';
 /**
  * The class that includes many useful functions shared between HashiMessageCommand and SlashCommand.
  */
@@ -82,23 +82,23 @@ export declare class HashiCommandBase {
      *
      * @param client The client that instanced the event.
      * @param interaction The associated interaction.
-     * @param commandBlock The hashiCommand [subclass] instance.
+     * @param CommandGroup The hashiCommand [subclass] instance.
      * @returns Nothing.
      */
-    static flowControlRegister(client: HashiClient, interaction: ChatInputCommandInteraction, commandBlock: CommandBlock): Promise<void>;
+    static flowControlRegister(client: HashiClient, interaction: ChatInputCommandInteraction, CommandGroup: CommandGroup): Promise<void>;
     /**
      * Launch the basic and starting verifications.
      *
      * @param client The client that instanced the event.
      * @param interaction The associated interaction.
-     * @param commandBlock The hashiCommand [subclass] instance.
+     * @param CommandGroup The hashiCommand [subclass] instance.
      * @returns If the command executed successfully.
      */
-    static launch(client: HashiClient, interaction: ChatInputCommandInteraction, commandBlock: CommandBlock): Promise<COMMAND_END>;
+    static launch(client: HashiClient, interaction: ChatInputCommandInteraction, CommandGroup: CommandGroup): Promise<COMMAND_END>;
     /**
      * Refreshes the context (avoid unreadable code in the bellow method).
      *
-     * @param commandBlockValue The command block value to refresh with.
+     * @param CommandGroupValue The command block value to refresh with.
      * @param context The context to refresh with.
      * @returns The new context and the new command.
      */

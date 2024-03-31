@@ -1,4 +1,4 @@
-import { CommandBlockValue } from '../root';
+import { CommandGroupValue } from '../root';
 import {
   BaseGuildTextChannel,
   BaseGuildVoiceChannel,
@@ -21,7 +21,7 @@ export interface ContextOptions {
   /**
    * The command associated with the context.
    */
-  command: CommandBlockValue;
+  command: CommandGroupValue;
   /**
    * The users implicated in the context/action.
    */

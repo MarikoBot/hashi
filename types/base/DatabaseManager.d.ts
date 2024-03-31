@@ -23,8 +23,8 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 import { ConnectOptions } from 'mongoose';
-import { DataMapsObject, TypedDataMapStored, BaseClient, DataMap } from './';
-import { HashiClient } from '../root/';
+import { BaseClient, DataMap, DataMapsObject, TypedDataMapStored } from './';
+import { HashiClient } from '../root';
 /**
  * The class who manages the database of the project.
  */

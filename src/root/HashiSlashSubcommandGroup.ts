@@ -1,16 +1,17 @@
-import { Validators, InstanceValidator } from '../decorators';
+import { Validators, Injectors, InstanceValidatorReturner } from '../decorators';
 import { HashiCommandBase, HashiSlashSubcommand } from './';
 
 /**
  * The class who represents a subcommand for the slash base.
  */
+@Injectors.HashiCommandInjector({
+  type: 'group',
+})
 export class HashiSlashSubcommandGroup extends HashiCommandBase {
   /**
    * The subcommands of the group.
    */
-  @((<(constructible: typeof HashiSlashSubcommand) => InstanceValidator>Validators.ArrayValidator.OnlyConstructorOf)(
-    HashiSlashSubcommand,
-  ))
+  @((<InstanceValidatorReturner>Validators.ArrayValidator.OnlyConstructorOf)(HashiSlashSubcommand))
   public subcommands: (typeof HashiSlashSubcommand)[] = [];
 
   /**

@@ -23,8 +23,8 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 import { Query } from 'mongoose';
-import { DATAMAP_INTENTS, BaseClient, TypedDataMapStored } from './';
-import { DataMapEntry, HashiClient, SuperModel } from '../root/';
+import { BaseClient, DATAMAP_INTENTS, TypedDataMapStored } from './';
+import { DataMapEntry, HashiClient, SuperModel } from '../root';
 /**
  * The main class. Represents a data map technology.
  */
@@ -56,12 +56,6 @@ export declare class DataMap<DataStructure extends TypedDataMapStored, EntryClas
      * @param entryClass The entry class.
      */
     constructor(client: HashiClient, name: string, entryClass?: EntryClass);
-    /**
-     * Add an intent.
-     * @param intent The intent to add.
-     * @returns The data map.
-     */
-    addIntent(intent: DATAMAP_INTENTS): DataMap<DataStructure, EntryClass>;
     /**
      * Display all the data included into the collection.
      * @returns The retrieved data.

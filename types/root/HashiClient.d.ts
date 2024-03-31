@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, Client } from 'discord.js';
 import { CommandManager, DatabaseManager, EventManager, LanguageManager } from '../base/';
-import { FileManager, Logger, COMMAND_END, HashiClientOptions } from './';
+import { HashiClientOptions, COMMAND_END, FileManager, Logger } from './';
 /**
  * The HashiClient class. It extends the Client class from discord.js and implements extra methods for the Hashi module.
  */

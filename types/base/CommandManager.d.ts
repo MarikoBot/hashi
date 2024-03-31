@@ -1,6 +1,6 @@
-import { ChatInputCommandInteraction, Collection, Message } from 'discord.js';
+import { ChatInputCommandInteraction, Collection } from 'discord.js';
 import { BaseClient } from './';
-import { AnyCommandConstructorType, CommandBlock, CoolDownManager, HashiClient, InterferingManager } from '../root/';
+import { AnyCommandConstructorType, CommandGroup, CoolDownManager, HashiClient, InterferingManager } from '../root';
 /**
  * Represents the command manager of the client. This class manages the slash and message commands for the project.
  */
@@ -26,13 +26,7 @@ export declare class CommandManager extends BaseClient {
      * @param interaction The interaction.
      * @returns The found command instance, or undefined.
      */
-    getCommandFromInteraction(interaction: ChatInputCommandInteraction): CommandBlock;
-    /**
-     * Returns a message command from a message create event. Cached commands only.
-     * @param message The message.
-     * @returns The found command instance, or undefined.
-     */
-    getCommandFromMessage(message: Message): CommandBlock;
+    getCommandFromInteraction(interaction: ChatInputCommandInteraction): CommandGroup;
     /**
      * Load the commands from the given commands directory.
      * @param dirName The directory to load on.

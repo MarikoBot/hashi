@@ -3,8 +3,8 @@ import { Context } from '../base';
 import { Validators, InstanceValidator, InstanceValidatorReturner } from '../decorators';
 import {
   COMMAND_END,
-  CommandBlock,
-  CommandBlockValue,
+  CommandGroup,
+  CommandGroupValue,
   CommandPrivileges,
   CommandPrivilegesKey,
   CoolDownsQueueElement,
@@ -213,7 +213,7 @@ export class HashiCommandBase {
     interaction: ChatInputCommandInteraction,
     ctx: Context,
   ): Promise<boolean> {
-    const command: CommandBlockValue = ctx.command;
+    const command: CommandGroupValue = ctx.command;
 
     const activeCoolDowns: CoolDownsQueueElement[] = client.commandManager.coolDowns.values(
       interaction.user.id,
@@ -249,25 +249,25 @@ export class HashiCommandBase {
    *
    * @param client The client that instanced the event.
    * @param interaction The associated interaction.
-   * @param commandBlock The hashiCommand [subclass] instance.
+   * @param CommandGroup The hashiCommand [subclass] instance.
    * @returns Nothing.
    */
   public static async flowControlRegister(
     client: HashiClient,
     interaction: ChatInputCommandInteraction,
-    commandBlock: CommandBlock,
+    CommandGroup: CommandGroup,
   ): Promise<void> {
     client.commandManager.interfering.registerInterfering(
       interaction.user.id,
-      commandBlock.subcommand?.fullName || commandBlock.command?.fullName,
+      CommandGroup.subcommand?.fullName || CommandGroup.command?.fullName,
       interaction,
     );
     client.commandManager.coolDowns.registerCoolDown(
       interaction.user.id,
-      commandBlock.subcommand?.fullName || commandBlock.command?.fullName,
-      commandBlock.subcommand?.coolDown ||
-        commandBlock.subcommandGroup?.coolDown ||
-        commandBlock.command?.coolDown ||
+      CommandGroup.subcommand?.fullName || CommandGroup.command?.fullName,
+      CommandGroup.subcommand?.coolDown ||
+        CommandGroup.subcommandGroup?.coolDown ||
+        CommandGroup.command?.coolDown ||
         0,
     );
   }
@@ -277,16 +277,16 @@ export class HashiCommandBase {
    *
    * @param client The client that instanced the event.
    * @param interaction The associated interaction.
-   * @param commandBlock The hashiCommand [subclass] instance.
+   * @param CommandGroup The hashiCommand [subclass] instance.
    * @returns If the command executed successfully.
    */
   public static async launch(
     client: HashiClient,
     interaction: ChatInputCommandInteraction,
-    commandBlock: CommandBlock,
+    CommandGroup: CommandGroup,
   ): Promise<COMMAND_END> {
-    if (!commandBlock.subcommand && !commandBlock.command) return COMMAND_END.ERROR;
-    const command: HashiSlashCommand | HashiSlashSubcommand = commandBlock.command || commandBlock.subcommand;
+    if (!CommandGroup.subcommand && !CommandGroup.command) return COMMAND_END.ERROR;
+    const command: HashiSlashCommand | HashiSlashSubcommand = CommandGroup.command || CommandGroup.subcommand;
 
     let ctx: Context = new Context(client, {
       channel: interaction.channel,
@@ -297,18 +297,18 @@ export class HashiCommandBase {
 
     ctx.interaction = interaction;
 
-    [commandBlock.command, ctx] = HashiSlashCommand.refreshContext(commandBlock.command, ctx);
+    [CommandGroup.command, ctx] = HashiSlashCommand.refreshContext(CommandGroup.command, ctx);
     let flowWall: boolean = await HashiSlashCommand.flowControlWall(client, interaction, ctx);
     if (!flowWall) return COMMAND_END.ERROR;
 
-    if (commandBlock.subcommandGroup) {
-      ctx.command = commandBlock.subcommandGroup;
+    if (CommandGroup.subcommandGroup) {
+      ctx.command = CommandGroup.subcommandGroup;
       command.context = ctx;
       flowWall = await HashiSlashCommand.flowControlWall(client, interaction, ctx);
       if (!flowWall) return COMMAND_END.ERROR;
     }
-    if (commandBlock.subcommand) {
-      ctx.command = commandBlock.subcommand;
+    if (CommandGroup.subcommand) {
+      ctx.command = CommandGroup.subcommand;
       command.context = ctx;
       flowWall = await HashiSlashCommand.flowControlWall(client, interaction, ctx);
       if (!flowWall) return COMMAND_END.ERROR;
@@ -317,23 +317,23 @@ export class HashiCommandBase {
     const authorized: boolean = await command.isAuthorized(interaction);
     if (!authorized) return COMMAND_END.ERROR;
 
-    await HashiSlashCommand.flowControlRegister(client, interaction, commandBlock);
+    await HashiSlashCommand.flowControlRegister(client, interaction, CommandGroup);
 
     let commandWall: COMMAND_END;
-    commandWall = (await commandBlock.command.callback(client, interaction, ctx)) as COMMAND_END;
+    commandWall = (await CommandGroup.command.callback(client, interaction, ctx)) as COMMAND_END;
     if (commandWall === COMMAND_END.ERROR) return commandWall;
 
-    if (commandBlock.subcommandGroup) {
-      command.context.command = commandBlock.subcommandGroup;
+    if (CommandGroup.subcommandGroup) {
+      command.context.command = CommandGroup.subcommandGroup;
 
-      commandWall = (await commandBlock.subcommandGroup.callback(client, interaction, ctx)) as COMMAND_END;
+      commandWall = (await CommandGroup.subcommandGroup.callback(client, interaction, ctx)) as COMMAND_END;
       if (commandWall === COMMAND_END.ERROR) return commandWall;
     }
 
-    if (commandBlock.subcommand) {
-      command.context.command = commandBlock.subcommand;
+    if (CommandGroup.subcommand) {
+      command.context.command = CommandGroup.subcommand;
 
-      commandWall = (await commandBlock.subcommand.callback(client, interaction, command.context)) as COMMAND_END;
+      commandWall = (await CommandGroup.subcommand.callback(client, interaction, command.context)) as COMMAND_END;
       if (commandWall === COMMAND_END.ERROR) return commandWall;
     }
 
@@ -343,13 +343,13 @@ export class HashiCommandBase {
   /**
    * Refreshes the context (avoid unreadable code in the bellow method).
    *
-   * @param commandBlockValue The command block value to refresh with.
+   * @param CommandGroupValue The command block value to refresh with.
    * @param context The context to refresh with.
    * @returns The new context and the new command.
    */
-  private static refreshContext(commandBlockValue: CommandBlockValue, context: Context): [CommandBlockValue, Context] {
-    context.command = commandBlockValue;
-    commandBlockValue.context = context;
-    return [commandBlockValue, context];
+  private static refreshContext(CommandGroupValue: CommandGroupValue, context: Context): [CommandGroupValue, Context] {
+    context.command = CommandGroupValue;
+    CommandGroupValue.context = context;
+    return [CommandGroupValue, context];
   }
 }

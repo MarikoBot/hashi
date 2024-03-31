@@ -10,7 +10,7 @@ import { BaseClient, ContextChannel, ContextOptions, Language, LanguageContentKe
 import { Validators, InstanceValidator, InstanceValidatorReturner } from '../decorators';
 import { PublicChatInputCommandInteraction } from '../public';
 import {
-  CommandBlockValue,
+  CommandGroupValue,
   HashiClient,
   HashiMessageCommand,
   HashiSlashCommand,
@@ -31,13 +31,13 @@ export class Context extends BaseClient {
   /**
    * The command associated with the context.
    */
-  @((<InstanceValidatorReturner>Validators.ObjectValidator.CommandBlockValueInitial)(
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.CommandGroupValueInitial)(
     HashiMessageCommand,
     HashiSlashCommand,
     HashiSlashSubcommand,
     HashiSlashSubcommandGroup,
   ))
-  public command: CommandBlockValue;
+  public command: CommandGroupValue;
 
   /**
    * The users implicated in the context/action.

@@ -1,6 +1,6 @@
-import { InteractionReplyOptions, ButtonInteraction, ChatInputCommandInteraction, InteractionResponse, Message, User } from 'discord.js';
-import { ContextChannel, Language, LanguageContentKey, ContextOptions, BaseClient } from './';
-import { CommandBlockValue, HashiClient } from '../root';
+import { ButtonInteraction, ChatInputCommandInteraction, InteractionReplyOptions, InteractionResponse, Message, User } from 'discord.js';
+import { BaseClient, ContextChannel, ContextOptions, Language, LanguageContentKey } from './';
+import { CommandGroupValue, HashiClient } from '../root';
 /**
  * The class who manages the front part of an interaction with Discord and the user.
  */
@@ -12,7 +12,7 @@ export declare class Context extends BaseClient {
     /**
      * The command associated with the context.
      */
-    command: CommandBlockValue;
+    command: CommandGroupValue;
     /**
      * The users implicated in the context/action.
      */
@@ -34,18 +34,6 @@ export declare class Context extends BaseClient {
      * @param options The context options.
      */
     constructor(client: HashiClient, options: ContextOptions);
-    /**
-     * Add a user to the current context.
-     * @param user The user to add.
-     * @returns The context instance.
-     */
-    addUser(user: User): Context;
-    /**
-     * Remove a user to the current context.
-     * @param user The user to remove.
-     * @returns The context instance.
-     */
-    removeUser(user: User): Context;
     /**
      * Reply to an interaction.
      * @param messageData The message data to send (Discord.<BaseMessageOptions>).

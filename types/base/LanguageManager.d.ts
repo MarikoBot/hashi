@@ -1,5 +1,5 @@
 import { BaseClient, Language, LanguageContent, LanguageContentKey } from './';
-import { HashiClient } from '../root/';
+import { HashiClient } from '../root';
 /**
  * The class who manages the translations in the project.
  */

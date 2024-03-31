@@ -8,7 +8,7 @@ import { BaseClient } from './';
 import { Validators, InstanceValidatorReturner } from '../decorators';
 import {
   AnyCommandConstructorType,
-  CommandBlock,
+  CommandGroup,
   CoolDownManager,
   FileManager,
   HashiClient,
@@ -17,7 +17,7 @@ import {
   HashiSlashSubcommand,
   HashiSlashSubcommandGroup,
   InterferingManager,
-} from '../root/';
+} from '../root';
 
 /**
  * Represents the command manager of the client. This class manages the slash and message commands for the project.
@@ -56,7 +56,7 @@ export class CommandManager extends BaseClient {
    * @param interaction The interaction.
    * @returns The found command instance, or undefined.
    */
-  public getCommandFromInteraction(interaction: ChatInputCommandInteraction): CommandBlock {
+  public getCommandFromInteraction(interaction: ChatInputCommandInteraction): CommandGroup {
     let command: HashiSlashCommand = <HashiSlashCommand>new (this.commandsList.get(interaction.commandName))();
 
     const commandSubcommandGroupOption: string = command.subcommandGroups.length
@@ -110,7 +110,10 @@ export class CommandManager extends BaseClient {
     for (const file of commandFiles) {
       commandData = file[1];
 
-      this.client.commandManager.commandsList.set(commandData.prototype.id, commandData);
+      this.client.commandManager.commandsList.set(
+        `${commandData.prototype.type === 'message' ? 'message' : ''}${commandData.prototype.id}`,
+        commandData,
+      );
 
       if ('src' in commandData.prototype) {
         const discordDataOnly: APIApplicationCommand = commandData.prototype.src;

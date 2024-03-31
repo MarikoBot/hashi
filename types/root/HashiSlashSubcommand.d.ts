@@ -1,4 +1,4 @@
-import { HashiCommandBase } from './HashiCommandBase';
+import { HashiCommandBase } from './';
 /**
  * The class who represents a subcommand for the hashi command.
  */

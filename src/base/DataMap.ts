@@ -1,7 +1,7 @@
 import { Query } from 'mongoose';
 import { BaseClient, DATAMAP_INTENTS, TypedDataMapStored } from './';
 import { Validators, InstanceValidator, InstanceValidatorReturner } from '../decorators';
-import { DataMapEntry, HashiClient, SuperModel } from '../root/';
+import { DataMapEntry, HashiClient, SuperModel } from '../root';
 
 /**
  * The main class. Represents a data map technology.

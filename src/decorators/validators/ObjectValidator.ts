@@ -8,13 +8,13 @@ export const ObjectValidator: {
   readonly [validatorName: string]: InstanceValidator | ((...args: any[]) => InstanceValidator);
 } = {
   /**
-   * Verify if a value is an CommandBlockValue initial type instance.
+   * Verify if a value is an CommandGroupValue initial type instance.
    * @param hashiMessageCommand The first class constructor.
    * @param hashiSlashCommand The second class constructor.
    * @param hashiSlashSubcommand The third class constructor.
    * @param hashiSlashSubcommandGroup The fourth class constructor.
    */
-  CommandBlockValueInitial: (
+  CommandGroupValueInitial: (
     hashiMessageCommand: Constructable<any>,
     hashiSlashCommand: Constructable<any>,
     hashiSlashSubcommand: Constructable<any>,
@@ -32,7 +32,7 @@ export const ObjectValidator: {
             !(newValue instanceof hashiSlashSubcommandGroup))
         )
           throw new Error(
-            `The property ${target.constructor.name}.${key} must be an instance of one of the CommandBlockValue initial type classes.`,
+            `The property ${target.constructor.name}.${key} must be an instance of one of the CommandGroupValue initial type classes.`,
           );
         value = newValue;
       };

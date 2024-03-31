@@ -1,4 +1,4 @@
-import { HashiCommandBase } from './HashiCommandBase';
+import { HashiCommandBase } from './';
 /**
  * The class that represents a command into a message.
  */

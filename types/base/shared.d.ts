@@ -22,7 +22,7 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { CommandBlockValue } from '../root';
+import { CommandGroupValue } from '../root';
 import { BaseGuildTextChannel, BaseGuildVoiceChannel, ButtonInteraction, ChatInputCommandInteraction, ThreadChannel, User } from 'discord.js';
 import { DataMap } from './DataMap';
 import { Types } from 'mongoose';
@@ -37,7 +37,7 @@ export interface ContextOptions {
     /**
      * The command associated with the context.
      */
-    command: CommandBlockValue;
+    command: CommandGroupValue;
     /**
      * The users implicated in the context/action.
      */
