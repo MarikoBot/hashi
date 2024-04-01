@@ -142,6 +142,7 @@ export class HashiClient {
     return '0';
   }
 
+  // noinspection JSUnusedGlobalSymbols
   /**
    * Function that encapsulates the command detection, authorization and execution.
    * @param interaction The associated interaction.

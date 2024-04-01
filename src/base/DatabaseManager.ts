@@ -90,7 +90,8 @@ export class DatabaseManager extends BaseClient {
 
     await connect(this.connectionURI, this.connectOptions);
   }
-
+  
+  // noinspection JSUnusedGlobalSymbols
   /**
    * The decorator to inject metadata into the constructor of an extension of SuperModel.
    * @param name The name of the super-SuperModel.
