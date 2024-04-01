@@ -59,7 +59,7 @@ export class EventManager extends BaseClient {
       );
     }
   }
-  
+
   // noinspection JSUnusedGlobalSymbols
   /**
    * The decorator to inject metadata into the constructor of HashiEvent.

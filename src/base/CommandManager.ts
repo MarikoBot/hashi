@@ -138,7 +138,7 @@ export class CommandManager extends BaseClient {
     await this.commandsScraper<typeof HashiMessageCommand>(`${this.client.commandsDir}/message`);
     await this.commandsScraper<typeof HashiSlashCommand>(`${this.client.commandsDir}/slash`);
   }
-  
+
   // noinspection JSUnusedGlobalSymbols
   /**
    * The decorator to inject metadata into the constructor of an extension of HashiCommandBase.
