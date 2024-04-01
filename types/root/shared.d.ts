@@ -161,10 +161,6 @@ export interface CommandMetadata {
     subcommands?: (typeof HashiSlashSubcommand)[];
 }
 /**
- * The keys of the command metadata.
- */
-export type CommandMetadataKeys = keyof CommandMetadata;
-/**
  * The privileges for a command (restrictions and prohibition).
  */
 export interface CommandPrivileges {
