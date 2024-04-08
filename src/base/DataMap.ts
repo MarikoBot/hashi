@@ -17,12 +17,6 @@ export class DataMap<
   public name: string = 'default';
 
   /**
-   * The entry class to use while using the data.
-   */
-  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(DataMapEntry))
-  public entryClass: EntryClass;
-
-  /**
    * The primary key(s). Separate it with a '+' sign.
    */
   @(<InstanceValidator>Validators.StringValidator.ValidPrimaryKeys)
@@ -44,16 +38,10 @@ export class DataMap<
    * The constructor of a data map.
    * @param client The client instance.
    * @param name The name of the collection.
-   * @param entryClass The entry class.
    */
-  constructor(
-    client: HashiClient,
-    name: string,
-    entryClass: EntryClass = <EntryClass>(<unknown>DataMapEntry<DataStructure>),
-  ) {
+  constructor(client: HashiClient, name: string) {
     super(client);
     this.name = name;
-    this.entryClass = entryClass;
   }
 
   /**
@@ -139,6 +127,6 @@ export class DataMap<
 
     finalStructure = compareObj(<object>structure, <object>data, {});
     if (refreshIsRequired) await this.update(key, finalStructure);
-    return new this.entryClass(this, <DataStructure>finalStructure);
+    return <DataStructure>finalStructure;
   }
 }

@@ -34,10 +34,6 @@ export declare class DataMap<DataStructure extends TypedDataMapStored, EntryClas
      */
     name: string;
     /**
-     * The entry class to use while using the data.
-     */
-    entryClass: EntryClass;
-    /**
      * The primary key(s). Separate it with a '+' sign.
      */
     primaryKey: string;
@@ -53,9 +49,8 @@ export declare class DataMap<DataStructure extends TypedDataMapStored, EntryClas
      * The constructor of a data map.
      * @param client The client instance.
      * @param name The name of the collection.
-     * @param entryClass The entry class.
      */
-    constructor(client: HashiClient, name: string, entryClass?: EntryClass);
+    constructor(client: HashiClient, name: string);
     /**
      * Display all the data included into the collection.
      * @returns The retrieved data.

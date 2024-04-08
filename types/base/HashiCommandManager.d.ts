@@ -1,11 +1,11 @@
-import { ChatInputCommandInteraction, Collection } from 'discord.js';
+import { APIApplicationCommand, ChatInputCommandInteraction, Collection } from 'discord.js';
 import { BaseClient } from './';
 import { InstanceInjector } from '../decorators';
 import { AnyCommandConstructorType, CommandGroup, CommandMetadata, CoolDownManager, HashiClient, InterferingManager } from '../root';
 /**
  * Represents the command manager of the client. This class manages the slash and message commands for the project.
  */
-export declare class CommandManager extends BaseClient {
+export declare class HashiCommandManager extends BaseClient {
     /**
      * The cool downs' manager instance, to get access to the different delays of the current command.
      */
@@ -19,6 +19,10 @@ export declare class CommandManager extends BaseClient {
      */
     readonly commandsList: Collection<string, AnyCommandConstructorType>;
     /**
+     * The list of discord commands data.
+     */
+    readonly discordCommandsData: APIApplicationCommand[];
+    /**
      * @param client The client instance.
      */
     constructor(client: HashiClient);
@@ -29,19 +33,8 @@ export declare class CommandManager extends BaseClient {
      */
     getCommandFromInteraction(interaction: ChatInputCommandInteraction): CommandGroup;
     /**
-     * Load the commands from the given commands directory.
-     * @param dirName The directory to load on.
-     * @returns Nothing.
-     */
-    private commandsScraper;
-    /**
-     * Load the commands from the given commands directory.
-     * @returns Nothing.
-     */
-    loadCommands(): Promise<void>;
-    /**
-     * The decorator to inject metadata into the constructor of an extension of HashiCommandBase.
-     * @param metadata The metadata of the super-HashiCommandBase.
+     * The decorator to inject metadata into the constructor of HashiCommandBase.
+     * @param metadata The metadata of the command.
      * @returns The decorator.
      */
     HashiCommandInjector(metadata: CommandMetadata): InstanceInjector;

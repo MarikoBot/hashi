@@ -5,7 +5,7 @@ import { HashiClient, HashiEvent } from '../root';
 /**
  * Represents the event manager for the client service.
  */
-export declare class EventManager extends BaseClient {
+export declare class HashiEventManager extends BaseClient {
     /**
      * The collection of the events.
      */
@@ -15,11 +15,6 @@ export declare class EventManager extends BaseClient {
      * @param client The client instance.
      */
     constructor(client: HashiClient);
-    /**
-     * Load the commands from the given events directory.
-     * @returns Nothing.
-     */
-    loadEvents(): Promise<void>;
     /**
      * The decorator to inject metadata into the constructor of HashiEvent.
      * @param name The name of the event.

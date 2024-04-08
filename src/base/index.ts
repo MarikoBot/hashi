@@ -1,13 +1,13 @@
 // Global exports (classes only)
 export * from './BaseClient';
 
-export * from './CommandManager';
+export * from './HashiCommandManager';
 export * from './Context';
 
 export * from './DatabaseManager';
 export * from './DataMap';
 
-export * from './EventManager';
+export * from './HashiEventManager';
 
 export * from './LanguageManager';
 

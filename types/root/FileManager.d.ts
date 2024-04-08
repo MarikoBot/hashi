@@ -1,4 +1,4 @@
-import { HashiClient, EnvPath, FileContentType, SelfResearchOptions } from './';
+import { HashiClient, EnvPath } from './';
 /**
  * The class that manages the files included into this project, and also those at the root of the package user.
  */
@@ -12,14 +12,6 @@ export declare class FileManager {
      * @param client The client instance.
      */
     constructor(client: HashiClient);
-    /**
-     * Get, store and returns an array of data included into a directory.
-     * @param absPathStr The absolute path to look-up for.
-     * @param rmPathStr The recursive path to look-up for.
-     * @param selfResearch Options if the program needs to search for the file into its own folders.
-     * @returns An array of values.
-     */
-    read<FileContentOwnType extends FileContentType | any>(absPathStr: string, rmPathStr: string, selfResearch?: SelfResearchOptions): [string, FileContentOwnType][];
     /**
      * The absolute directory path based on the environment.
      * @returns The path.

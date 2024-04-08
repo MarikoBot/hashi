@@ -1,11 +1,17 @@
-import { ActivityType, ChatInputCommandInteraction, Client, PresenceData } from 'discord.js';
+import {
+  ActivityType,
+  ApplicationCommandDataResolvable,
+  ChatInputCommandInteraction,
+  Client,
+  PresenceData,
+} from 'discord.js';
 import * as dotenv from 'dotenv';
 import {
-  CommandManager,
+  HashiCommandManager,
   DatabaseManager,
   DataMap,
   DATAMAP_INTENTS,
-  EventManager,
+  HashiEventManager,
   LanguageManager,
   TypedDataMapStored,
 } from '../base/';
@@ -33,14 +39,14 @@ export class HashiClient {
   /**
    * The command manager instance.
    */
-  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(CommandManager))
-  public readonly commandManager: CommandManager = new CommandManager(this);
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(HashiCommandManager))
+  public readonly commandManager: HashiCommandManager = new HashiCommandManager(this);
 
   /**
    * The event manager instance.
    */
-  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(EventManager))
-  public readonly eventManager: EventManager = new EventManager(this);
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(HashiEventManager))
+  public readonly eventManager: HashiEventManager = new HashiEventManager(this);
 
   /**
    * The language manager for accessing strings.
@@ -122,13 +128,12 @@ export class HashiClient {
    */
   public async login(token: string = process.env.TOKEN || process.env.token || process.env.Token): Promise<string> {
     await this.databaseManager.connect();
-    this.databaseManager.loadDataMaps();
-
-    await this.eventManager.loadEvents();
 
     await this.src.login(token);
 
-    await this.commandManager.loadCommands();
+    void (await this.src.application.commands.set(
+      <readonly ApplicationCommandDataResolvable[]>this.commandManager.discordCommandsData,
+    ));
 
     let i: number = -1;
     let dataMap: DataMap<TypedDataMapStored>;

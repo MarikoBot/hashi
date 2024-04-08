@@ -32,6 +32,12 @@ export class DatabaseManager extends BaseClient {
   public dataMaps: DataMapsObject = {};
 
   /**
+   * The list of dataMaps constructor waiting for being initialized.
+   */
+  @((<InstanceValidatorReturner>Validators.ArrayValidator.OnlyConstructorOf)(SuperModel))
+  public sleepingSuperModels: SuperModel[] = [];
+
+  /**
    * @param client The client instance.
    */
   constructor(client: HashiClient) {
@@ -46,34 +52,6 @@ export class DatabaseManager extends BaseClient {
     const dataMap: DataMap<TypedDataMapStored> = new DataMap<TypedDataMapStored>(this.client, name);
     this.dataMaps[name] = dataMap;
     return dataMap;
-  }
-
-  /**
-   * Synchronize the datamaps created by the coder into their own repository.
-   * Synchronize this project files too.
-   * @returns The class instance.
-   */
-  public loadDataMaps(): DatabaseManager {
-    const superModels: [string, typeof SuperModel][] = this.client.fileManager.read<typeof SuperModel>(
-      `${FileManager.ABSPATH}${this.client.dataMapsDir}`,
-      `${FileManager.RMPATH}${this.client.dataMapsDir}`,
-      {
-        absPathStrSelf: `./lib/${this.client.dataMapsDir}`,
-        rmPathStrSelf: `../${this.client.dataMapsDir}`,
-      },
-    );
-
-    let superModel: SuperModel;
-    let dataMap: DataMap<any, any>;
-
-    let i: number = -1;
-    while (++i < superModels.length) {
-      superModel = superModels[i][1][superModels[i][0]];
-
-      dataMap = this.createDataMap(superModel.name);
-      dataMap.superModel = superModel;
-    }
-    return this;
   }
 
   /**
@@ -98,8 +76,13 @@ export class DatabaseManager extends BaseClient {
    * @returns The decorator.
    */
   public SuperModelInjector(name: string) {
-    return function (target: SuperModelInjectorTarget) {
+    const instance: DatabaseManager = this;
+    return function (target: SuperModelInjectorTarget): void {
+      instance.client.logger.info(`Bound model: ${name}`);
       target.prototype.name = name;
+      instance.dataMaps[name] = new DataMap<TypedDataMapStored>(instance.client, name);
+      instance.createDataMap(name);
+      instance.dataMaps[name].superModel = new target();
     };
   }
 }

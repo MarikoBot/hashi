@@ -25,7 +25,7 @@
 import { ConnectOptions } from 'mongoose';
 import { BaseClient, DataMap, DataMapsObject, TypedDataMapStored } from './';
 import { SuperModelInjectorTarget } from '../decorators';
-import { HashiClient } from '../root';
+import { HashiClient, SuperModel } from '../root';
 /**
  * The class who manages the database of the project.
  */
@@ -47,6 +47,10 @@ export declare class DatabaseManager extends BaseClient {
      */
     dataMaps: DataMapsObject;
     /**
+     * The list of dataMaps constructor waiting for being initialized.
+     */
+    sleepingSuperModels: SuperModel[];
+    /**
      * @param client The client instance.
      */
     constructor(client: HashiClient);
@@ -55,12 +59,6 @@ export declare class DatabaseManager extends BaseClient {
      * @param name The name of the collection.
      */
     createDataMap(name: string): DataMap<TypedDataMapStored>;
-    /**
-     * Synchronize the datamaps created by the coder into their own repository.
-     * Synchronize this project files too.
-     * @returns The class instance.
-     */
-    loadDataMaps(): DatabaseManager;
     /**
      * Connect the database to the mongodb cluster.
      * @param connectionURI The connection URI.

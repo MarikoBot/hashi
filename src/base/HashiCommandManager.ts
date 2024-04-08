@@ -1,9 +1,4 @@
-import {
-  APIApplicationCommand,
-  ApplicationCommandDataResolvable,
-  ChatInputCommandInteraction,
-  Collection,
-} from 'discord.js';
+import { APIApplicationCommand, ChatInputCommandInteraction, Collection } from 'discord.js';
 import { BaseClient } from './';
 import { Validators, InstanceValidatorReturner, InstanceInjector, HashiCommandInjectorTarget } from '../decorators';
 import {
@@ -11,9 +6,7 @@ import {
   CommandGroup,
   CommandMetadata,
   CoolDownManager,
-  FileManager,
   HashiClient,
-  HashiMessageCommand,
   HashiSlashCommand,
   HashiSlashSubcommand,
   HashiSlashSubcommandGroup,
@@ -23,7 +16,7 @@ import {
 /**
  * Represents the command manager of the client. This class manages the slash and message commands for the project.
  */
-export class CommandManager extends BaseClient {
+export class HashiCommandManager extends BaseClient {
   /**
    * The cool downs' manager instance, to get access to the different delays of the current command.
    */
@@ -44,6 +37,12 @@ export class CommandManager extends BaseClient {
     string,
     AnyCommandConstructorType
   >();
+
+  /**
+   * The list of discord commands data.
+   */
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(Collection))
+  public readonly discordCommandsData: APIApplicationCommand[] = [];
 
   /**
    * @param client The client instance.
@@ -94,60 +93,31 @@ export class CommandManager extends BaseClient {
     return { command, subcommand, subcommandGroup };
   }
 
-  /**
-   * Load the commands from the given commands directory.
-   * @param dirName The directory to load on.
-   * @returns Nothing.
-   */
-  private async commandsScraper<T extends AnyCommandConstructorType>(dirName: string): Promise<void> {
-    const commandFiles: [string, T][] = this.client.fileManager.read<T>(
-      `${FileManager.ABSPATH}${dirName}`,
-      `${FileManager.RMPATH}${dirName}`,
-    );
-
-    const commands: APIApplicationCommand[] = [];
-    let commandData: T;
-    let isMessage: boolean = false;
-
-    for (const file of commandFiles) {
-      commandData = file[1][file[0]];
-      isMessage = commandData.prototype.type === 'message';
-
-      this.client.commandManager.commandsList.set(
-        `${isMessage ? 'message' : ''}${commandData.prototype.id}`,
-        commandData,
-      );
-
-      if (!isMessage) {
-        if (!('src' in commandData.prototype))
-          throw new Error(`A slash-based command shall have a 'src' property into its metadata.`);
-
-        const discordDataOnly: APIApplicationCommand = commandData.prototype.src;
-        commands.push(discordDataOnly);
-      }
-    }
-
-    void (await this.client.src.application.commands.set(<readonly ApplicationCommandDataResolvable[]>commands));
-  }
-
-  /**
-   * Load the commands from the given commands directory.
-   * @returns Nothing.
-   */
-  public async loadCommands(): Promise<void> {
-    await this.commandsScraper<typeof HashiMessageCommand>(`${this.client.commandsDir}/message`);
-    await this.commandsScraper<typeof HashiSlashCommand>(`${this.client.commandsDir}/slash`);
-  }
-
   // noinspection JSUnusedGlobalSymbols
   /**
-   * The decorator to inject metadata into the constructor of an extension of HashiCommandBase.
-   * @param metadata The metadata of the super-HashiCommandBase.
+   * The decorator to inject metadata into the constructor of HashiCommandBase.
+   * @param metadata The metadata of the command.
    * @returns The decorator.
    */
   public HashiCommandInjector(metadata: CommandMetadata): InstanceInjector {
+    const instance: HashiCommandManager = this;
     return function (target: HashiCommandInjectorTarget): void {
-      for (const [key, value] of Object.entries(metadata)) target.prototype[key] = value;
+      instance.client.logger.info(`Bound command: ${metadata.id}`);
+
+      for (const key of Object.keys(metadata)) target.prototype[key] = metadata[key];
+
+      const isMessage: boolean = target.prototype.type === 'message';
+      instance.commandsList.set(`${isMessage ? 'message' : ''}${target.prototype.id}`, target.prototype.id);
+
+      if (!isMessage) {
+        if (!('src' in target.prototype))
+          throw new Error(`A slash-based command shall have a 'src' property into its metadata.`);
+
+        const discordDataOnly: APIApplicationCommand = target.prototype.src;
+        instance.discordCommandsData.push(discordDataOnly);
+      }
+
+      instance.commandsList.set(metadata.id, <AnyCommandConstructorType>target);
     };
   }
 }
