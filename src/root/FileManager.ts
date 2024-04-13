@@ -18,26 +18,4 @@ export class FileManager {
   constructor(client: HashiClient) {
     this.client = client;
   }
-
-  /**
-   * The absolute directory path based on the environment.
-   * @returns The path.
-   */
-  static get ABSPATH(): EnvPath['lab' | 'prod'] {
-    return {
-      lab: 'lib/',
-      prod: 'lib/',
-    }[process.env.ENVPATH];
-  }
-
-  /**
-   * The backward directory path based on the environment.
-   * @returns The path.
-   */
-  static get RMPATH(): EnvPath['lab' | 'prod'] {
-    return {
-      lab: '../../lib/',
-      prod: '../../../../../lib/',
-    }[process.env.ENVPATH];
-  }
 }

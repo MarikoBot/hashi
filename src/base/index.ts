@@ -10,6 +10,7 @@ export * from './DataMap';
 export * from './HashiEventManager';
 
 export * from './LanguageManager';
+export * from './Logger';
 
 // Shared exports
 export * from './shared';

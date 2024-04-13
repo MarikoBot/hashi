@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, Client } from 'discord.js';
-import { HashiCommandManager, DatabaseManager, HashiEventManager, LanguageManager } from '../base/';
-import { HashiClientOptions, COMMAND_END, FileManager, Logger } from './';
+import { HashiCommandManager, DatabaseManager, HashiEventManager, LanguageManager, Logger } from '../base/';
+import { HashiClientOptions, COMMAND_END, FileManager, HashiClientChannelsOption } from './';
 /**
  * The HashiClient class. It extends the Client class from discord.js and implements extra methods for the Hashi module.
  */
@@ -36,23 +36,20 @@ export declare class HashiClient {
     /**
      * The name of the project/process you're in.
      */
-    readonly processName: string;
+    readonly projectName: string;
     /**
-     * The commands folder directory.
+     * The Discord channels where the bot can be configured/logged.
      */
-    readonly commandsDir: string;
-    /**
-     * The events folder directory.
-     */
-    readonly eventsDir: string;
-    /**
-     * The data maps folder directory.
-     */
-    readonly dataMapsDir: string;
+    readonly configChannels: Partial<HashiClientChannelsOption>;
     /**
      * @param options The options for the HashiClient.
      */
     constructor(options: HashiClientOptions);
+    /**
+     * Connect the database.
+     * @returns Nothing.
+     */
+    connectDatabase(): Promise<void>;
     /**
      * Login the client to Discord.
      * @param token The token of the bot.

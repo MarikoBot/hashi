@@ -205,6 +205,27 @@ export const ObjectValidator: {
     });
   },
   /**
+   * Verify if the value is an object string-string.
+   * @param target The class instance.
+   * @param key The attribute to set.
+   */
+  KeyStringPair: (target: Object, key: string): void => {
+    let value: any;
+
+    const setter = (newValue: any): void => {
+      if (typeof newValue !== 'object' || typeof newValue !== 'string')
+        throw new Error(`The property ${target.constructor.name}.${key} must be an object string-string.`);
+      value = newValue;
+    };
+
+    Object.defineProperty(target, key, {
+      get: (): typeof value => value,
+      set: setter,
+      enumerable: true,
+      configurable: true,
+    });
+  },
+  /**
    * Verify if the value is an object string-string[].
    * @param target The class instance.
    * @param key The attribute to set.

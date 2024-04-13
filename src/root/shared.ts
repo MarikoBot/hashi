@@ -242,30 +242,17 @@ export async function defaultEventCallback(): Promise<void> {
 export type EnvPath = Record<'lab' | 'prod', string>;
 
 /**
- * The type used for defining abstractly the content of a file.
- */
-export type FileContentType = { [dataKey: string]: any };
-
-/**
  * The options for the HashiClient. It extends the ClientOptions from discord.js and implements extra options for the Hashi module.
  */
 export interface HashiClientOptions extends ClientOptions {
   /**
    * The name of the project/process you're in.
    */
-  processName: string;
+  projectName: string;
   /**
-   * The commands folder directory.
+   * The Discord channels where the bot can be configured/logged.
    */
-  commandsDir?: string;
-  /**
-   * The events folder directory.
-   */
-  eventsDir?: string;
-  /**
-   * The data maps folder directory.
-   */
-  dataMapsDir?: string;
+  configChannels: HashiClientChannelsOption;
   /**
    * The mongoose connection information.
    */
@@ -283,6 +270,16 @@ export interface HashiClientOptions extends ClientOptions {
      */
     connectOptions: ConnectOptions;
   };
+}
+
+/**
+ * The Discord channels where the bot can be configured/logged.
+ */
+export interface HashiClientChannelsOption {
+  /**
+   * The channel for the bot status.
+   */
+  status: string;
 }
 
 /**
@@ -337,20 +334,13 @@ export type InterferingQueueElement = [
 ];
 
 /**
- * The interface including parameters for self-research program.
- */
-export interface SelfResearchOptions {
-  /**
-   * The absolute self-path to look.
-   */
-  absPathStrSelf: string;
-  /**
-   * The recursive self-path to look.
-   */
-  rmPathStrSelf: string;
-}
-
-/**
  * A type-structure that represents a column or an object of columns.
  */
-export type StructureColumnOrChild = { [key: string]: SuperModelColumn | StructureColumnOrChild };
+export type StructureColumnOrChild =
+  | { [key: string]: SuperModelColumn<any> | StructureColumnOrChild }
+  | SuperModelColumn<any>;
+
+/**
+ * An alias for the type-structure that represents a column or an object of columns.
+ */
+export type C = StructureColumnOrChild;

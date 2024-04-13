@@ -13,6 +13,6 @@ export class BaseClient {
    * @param client The client instance.
    */
   constructor(client: HashiClient) {
-    if (client) this.client = client;
+    this.client = client;
   }
 }

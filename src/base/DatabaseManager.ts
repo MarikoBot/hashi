@@ -66,7 +66,7 @@ export class DatabaseManager extends BaseClient {
     if (connectionURI) this.connectionURI = connectionURI;
     if (connectOptions) this.connectOptions = connectOptions;
 
-    await connect(this.connectionURI, this.connectOptions);
+    const connection = await connect(this.connectionURI, this.connectOptions);
   }
 
   // noinspection JSUnusedGlobalSymbols
@@ -75,14 +75,14 @@ export class DatabaseManager extends BaseClient {
    * @param name The name of the super-SuperModel.
    * @returns The decorator.
    */
-  public SuperModelInjector(name: string) {
+  public superModelInjector(name: string) {
     const instance: DatabaseManager = this;
     return function (target: SuperModelInjectorTarget): void {
       instance.client.logger.info(`Bound model: ${name}`);
       target.prototype.name = name;
       instance.dataMaps[name] = new DataMap<TypedDataMapStored>(instance.client, name);
       instance.createDataMap(name);
-      instance.dataMaps[name].superModel = new target();
+      instance.dataMaps[name].superModel = new target(name);
     };
   }
 }

@@ -4,13 +4,9 @@ import { Validators, InstanceValidator } from '../decorators';
 /**
  * The class that represents a column into a SuperModel instance.
  */
-export class SuperModelColumn<T extends any = undefined> {
-  /**
-   * The name of the column. If the column is folded inside an object, write the full path with dots.
-   */
-  @(<InstanceValidator>Validators.StringValidator.ValidId)
-  public readonly columnName: string;
-
+export class SuperModelColumn<
+  T extends SchemaDefinitionProperty | SchemaDefinitionWithBuiltInClass<any> | 'MongooseId',
+> {
   /**
    * The data of the column. This property is used to store the mongoose schema definition without editing the
    * "possible" already existing properties.

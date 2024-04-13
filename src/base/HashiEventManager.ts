@@ -27,13 +27,13 @@ export class HashiEventManager extends BaseClient {
    * @param name The name of the event.
    * @returns The decorator.
    */
-  public HashiEventInjector(name: string): InstanceInjector {
+  public hashiEventInjector(name: string): InstanceInjector {
     const instance: HashiEventManager = this;
     return function (target: HashiEventInjectorTarget): void {
       target.prototype.name = name;
       instance.client.logger.info(`Bound event: ${name}`);
-      this.client.src[name === 'ready' ? 'once' : 'on'](name, (...args: any[]) =>
-        new target().callback(this.client, ...args),
+      instance.client.src[name === 'ready' ? 'once' : 'on'](name, (...args: any[]) =>
+        new target().callback(instance.client, ...args),
       );
     };
   }

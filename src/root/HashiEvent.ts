@@ -19,9 +19,13 @@ export class HashiEvent {
 
   /**
    * The callback function.
+   * @param args The required (or not) arguments.
+   * @returns Nothing.
    */
   @Validators.FunctionValidator.Matches
-  public callback: HashiEventCallbackFunction = defaultEventCallback;
+  public callback(...args: any[]): Promise<void> | void {
+    return defaultEventCallback();
+  }
 
   /**
    * The constructor of the event.

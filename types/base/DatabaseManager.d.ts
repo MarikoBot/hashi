@@ -70,5 +70,5 @@ export declare class DatabaseManager extends BaseClient {
      * @param name The name of the super-SuperModel.
      * @returns The decorator.
      */
-    SuperModelInjector(name: string): (target: SuperModelInjectorTarget) => void;
+    superModelInjector(name: string): (target: SuperModelInjectorTarget) => void;
 }

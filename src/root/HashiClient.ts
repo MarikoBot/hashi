@@ -13,10 +13,18 @@ import {
   DATAMAP_INTENTS,
   HashiEventManager,
   LanguageManager,
+  Logger,
   TypedDataMapStored,
 } from '../base/';
 import { Validators, InstanceValidator, InstanceValidatorReturner } from '../decorators';
-import { CommandGroup, HashiClientOptions, COMMAND_END, FileManager, HashiSlashCommand, Logger } from './';
+import {
+  CommandGroup,
+  HashiClientOptions,
+  COMMAND_END,
+  FileManager,
+  HashiSlashCommand,
+  HashiClientChannelsOption,
+} from './';
 
 dotenv.config();
 
@@ -70,25 +78,13 @@ export class HashiClient {
    * The name of the project/process you're in.
    */
   @(<InstanceValidator>Validators.StringValidator.ValidId)
-  public readonly processName: string;
+  public readonly projectName: string;
 
   /**
-   * The commands folder directory.
+   * The Discord channels where the bot can be configured/logged.
    */
-  @(<InstanceValidator>Validators.StringValidator.ValidId)
-  public readonly commandsDir: string = 'commands';
-
-  /**
-   * The events folder directory.
-   */
-  @(<InstanceValidator>Validators.StringValidator.ValidId)
-  public readonly eventsDir: string = 'events';
-
-  /**
-   * The data maps folder directory.
-   */
-  @(<InstanceValidator>Validators.StringValidator.ValidId)
-  public readonly dataMapsDir: string = 'data';
+  @(<InstanceValidator>Validators.ObjectValidator.KeyStringPair)
+  public readonly configChannels: Partial<HashiClientChannelsOption>;
 
   /**
    * @param options The options for the HashiClient.
@@ -104,21 +100,36 @@ export class HashiClient {
           activities: [
             {
               name: `with version ${require('../../package.json').version}`,
-              type: ActivityType['Playing'],
+              type: ActivityType.Playing,
             },
           ],
         },
     });
 
-    this.processName = options.processName || '`unknown`';
-    this.logger = new Logger(this.processName);
-    this.commandsDir = options.commandsDir || 'commands';
-    this.eventsDir = options.eventsDir || 'events';
-    this.dataMapsDir = options.dataMapsDir || 'data/definitions';
+    this.projectName = options.projectName || '`unknown`';
+    this.logger = new Logger(this.projectName, this);
 
     this.databaseManager.dbName = options.mongoose.dbName || 'main';
     this.databaseManager.connectOptions = options.mongoose.connectOptions || { dbName: this.databaseManager.dbName };
     if (options.mongoose.connectionURI) this.databaseManager.connectionURI = options.mongoose.connectionURI;
+
+    this.configChannels = options.configChannels || {};
+
+    process.on('unhandledRejection', (reason: object & { stack: any }) => this.logger.error(reason?.stack || reason));
+    process.on('uncaughtException', (err: Error, origin: NodeJS.UncaughtExceptionOrigin): void => {
+      this.logger.error(err);
+      this.logger.error(origin);
+    });
+  }
+
+  /**
+   * Connect the database.
+   * @returns Nothing.
+   */
+  public async connectDatabase(): Promise<void> {
+    this.logger.info('Database is connecting...');
+    await this.databaseManager.connect();
+    this.logger.info('Database is connected.');
   }
 
   /**
@@ -127,8 +138,6 @@ export class HashiClient {
    * @returns Nothing.
    */
   public async login(token: string = process.env.TOKEN || process.env.token || process.env.Token): Promise<string> {
-    await this.databaseManager.connect();
-
     await this.src.login(token);
 
     void (await this.src.application.commands.set(
@@ -142,7 +151,7 @@ export class HashiClient {
       if (dataMap.intents.includes(DATAMAP_INTENTS.CORE)) await dataMap.refreshCore();
     }
 
-    this.logger.info(`The client is successfully launched on Discord as ${this.src.user.tag}`);
+    this.logger.info(`The client is successfully launched on Discord as ${this.src.user.tag}.`);
 
     return '0';
   }

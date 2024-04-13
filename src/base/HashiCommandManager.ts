@@ -99,7 +99,7 @@ export class HashiCommandManager extends BaseClient {
    * @param metadata The metadata of the command.
    * @returns The decorator.
    */
-  public HashiCommandInjector(metadata: CommandMetadata): InstanceInjector {
+  public hashiCommandInjector(metadata: CommandMetadata): InstanceInjector {
     const instance: HashiCommandManager = this;
     return function (target: HashiCommandInjectorTarget): void {
       instance.client.logger.info(`Bound command: ${metadata.id}`);
