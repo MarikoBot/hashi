@@ -9,20 +9,12 @@ import {
 } from 'discord.js';
 import { ConnectOptions } from 'mongoose';
 import { Context } from '../base';
-import {
-  HashiClient,
-  HashiMessageCommand,
-  HashiSlashCommand,
-  HashiSlashSubcommand,
-  HashiSlashSubcommandGroup,
-  SuperModelColumn,
-} from './';
+import { HashiClient, HashiSlashCommand, HashiSlashSubcommand, HashiSlashSubcommandGroup, SuperModelColumn } from './';
 
 /**
  * Represents any command constructor.
  */
 export type AnyCommandConstructorType =
-  | typeof HashiMessageCommand
   | typeof HashiSlashCommand
   | typeof HashiSlashSubcommand
   | typeof HashiSlashSubcommandGroup;
@@ -30,11 +22,7 @@ export type AnyCommandConstructorType =
 /**
  * Represents any command constructor.
  */
-export type AnyCommandConstructor =
-  | HashiMessageCommand
-  | HashiSlashCommand
-  | HashiSlashSubcommand
-  | HashiSlashSubcommandGroup;
+export type AnyCommandConstructor = HashiSlashCommand | HashiSlashSubcommand | HashiSlashSubcommandGroup;
 
 /**
  * Prefilled version of the Discord.<APIApplicationCommand>
@@ -112,7 +100,7 @@ export interface CommandGroup {
   /**
    * The command constructor.
    */
-  command: HashiSlashCommand | HashiMessageCommand;
+  command: HashiSlashCommand;
   /**
    * The subcommand group constructor.
    */
@@ -215,7 +203,7 @@ export type CommandPrivilegesKey = keyof CommandPrivileges;
  */
 export type CoolDownsQueueElement = [
   /**
-   The full name of the command (including the subcommands name).
+   * The full name of the command (including the subcommands name).
    */
   string,
   /**
@@ -235,11 +223,6 @@ export type CoolDownsQueueElement = [
 export async function defaultEventCallback(): Promise<void> {
   return void setTimeout((): null => null);
 }
-
-/**
- * The pair of paths based on the environment.
- */
-export type EnvPath = Record<'lab' | 'prod', string>;
 
 /**
  * The options for the HashiClient. It extends the ClientOptions from discord.js and implements extra options for the Hashi module.
@@ -339,8 +322,3 @@ export type InterferingQueueElement = [
 export type StructureColumnOrChild =
   | { [key: string]: SuperModelColumn<any> | StructureColumnOrChild }
   | SuperModelColumn<any>;
-
-/**
- * An alias for the type-structure that represents a column or an object of columns.
- */
-export type C = StructureColumnOrChild;

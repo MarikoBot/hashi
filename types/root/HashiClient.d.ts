@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, Client } from 'discord.js';
 import { HashiCommandManager, DatabaseManager, HashiEventManager, LanguageManager, Logger } from '../base/';
-import { HashiClientOptions, COMMAND_END, FileManager, HashiClientChannelsOption } from './';
+import { HashiClientOptions, COMMAND_END, HashiClientChannelsOption } from './';
 /**
  * The HashiClient class. It extends the Client class from discord.js and implements extra methods for the Hashi module.
  */
@@ -16,11 +16,11 @@ export declare class HashiClient {
     /**
      * The command manager instance.
      */
-    readonly commandManager: HashiCommandManager;
+    readonly commands: HashiCommandManager;
     /**
      * The event manager instance.
      */
-    readonly eventManager: HashiEventManager;
+    readonly events: HashiEventManager;
     /**
      * The language manager for accessing strings.
      */
@@ -28,11 +28,7 @@ export declare class HashiClient {
     /**
      * The database manager for accessing data maps/lakes.
      */
-    readonly databaseManager: DatabaseManager;
-    /**
-     * The files manager for accessing different files (for handling especially).
-     */
-    readonly fileManager: FileManager;
+    readonly db: DatabaseManager;
     /**
      * The name of the project/process you're in.
      */

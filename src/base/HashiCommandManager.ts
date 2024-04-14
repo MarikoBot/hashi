@@ -57,7 +57,7 @@ export class HashiCommandManager extends BaseClient {
    * @returns The found command instance, or undefined.
    */
   public getCommandFromInteraction(interaction: ChatInputCommandInteraction): CommandGroup {
-    let command: HashiSlashCommand = <HashiSlashCommand>new (this.commandsList.get(interaction.commandName))();
+    const command: HashiSlashCommand = <HashiSlashCommand>new (this.commandsList.get(interaction.commandName))();
 
     const commandSubcommandGroupOption: string = command.subcommandGroups.length
       ? interaction.options.getSubcommandGroup()
@@ -99,23 +99,20 @@ export class HashiCommandManager extends BaseClient {
    * @param metadata The metadata of the command.
    * @returns The decorator.
    */
-  public hashiCommandInjector(metadata: CommandMetadata): InstanceInjector {
+  public inject(metadata: CommandMetadata): InstanceInjector {
     const instance: HashiCommandManager = this;
     return function (target: HashiCommandInjectorTarget): void {
       instance.client.logger.info(`Bound command: ${metadata.id}`);
 
       for (const key of Object.keys(metadata)) target.prototype[key] = metadata[key];
 
-      const isMessage: boolean = target.prototype.type === 'message';
-      instance.commandsList.set(`${isMessage ? 'message' : ''}${target.prototype.id}`, target.prototype.id);
+      instance.commandsList.set(target.prototype.id, target.prototype);
 
-      if (!isMessage) {
-        if (!('src' in target.prototype))
-          throw new Error(`A slash-based command shall have a 'src' property into its metadata.`);
+      if (!('src' in target.prototype))
+        throw new Error(`A slash-based command shall have a 'src' property into its metadata.`);
 
-        const discordDataOnly: APIApplicationCommand = target.prototype.src;
-        instance.discordCommandsData.push(discordDataOnly);
-      }
+      const discordDataOnly: APIApplicationCommand = target.prototype.src;
+      instance.discordCommandsData.push(discordDataOnly);
 
       instance.commandsList.set(metadata.id, <AnyCommandConstructorType>target);
     };

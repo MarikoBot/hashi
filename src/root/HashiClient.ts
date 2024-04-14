@@ -17,14 +17,7 @@ import {
   TypedDataMapStored,
 } from '../base/';
 import { Validators, InstanceValidator, InstanceValidatorReturner } from '../decorators';
-import {
-  CommandGroup,
-  HashiClientOptions,
-  COMMAND_END,
-  FileManager,
-  HashiSlashCommand,
-  HashiClientChannelsOption,
-} from './';
+import { CommandGroup, HashiClientOptions, COMMAND_END, HashiSlashCommand, HashiClientChannelsOption } from './';
 
 dotenv.config();
 
@@ -48,13 +41,13 @@ export class HashiClient {
    * The command manager instance.
    */
   @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(HashiCommandManager))
-  public readonly commandManager: HashiCommandManager = new HashiCommandManager(this);
+  public readonly commands: HashiCommandManager = new HashiCommandManager(this);
 
   /**
    * The event manager instance.
    */
   @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(HashiEventManager))
-  public readonly eventManager: HashiEventManager = new HashiEventManager(this);
+  public readonly events: HashiEventManager = new HashiEventManager(this);
 
   /**
    * The language manager for accessing strings.
@@ -66,13 +59,7 @@ export class HashiClient {
    * The database manager for accessing data maps/lakes.
    */
   @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(DatabaseManager))
-  public readonly databaseManager: DatabaseManager = new DatabaseManager(this);
-
-  /**
-   * The files manager for accessing different files (for handling especially).
-   */
-  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(FileManager))
-  public readonly fileManager: FileManager = new FileManager(this);
+  public readonly db: DatabaseManager = new DatabaseManager(this);
 
   /**
    * The name of the project/process you're in.
@@ -109,9 +96,9 @@ export class HashiClient {
     this.projectName = options.projectName || '`unknown`';
     this.logger = new Logger(this.projectName, this);
 
-    this.databaseManager.dbName = options.mongoose.dbName || 'main';
-    this.databaseManager.connectOptions = options.mongoose.connectOptions || { dbName: this.databaseManager.dbName };
-    if (options.mongoose.connectionURI) this.databaseManager.connectionURI = options.mongoose.connectionURI;
+    this.db.dbName = options.mongoose.dbName || 'main';
+    this.db.connectOptions = options.mongoose.connectOptions || { dbName: this.db.dbName };
+    if (options.mongoose.connectionURI) this.db.connectionURI = options.mongoose.connectionURI;
 
     this.configChannels = options.configChannels || {};
 
@@ -128,7 +115,7 @@ export class HashiClient {
    */
   public async connectDatabase(): Promise<void> {
     this.logger.info('Database is connecting...');
-    await this.databaseManager.connect();
+    await this.db.connect();
     this.logger.info('Database is connected.');
   }
 
@@ -141,13 +128,13 @@ export class HashiClient {
     await this.src.login(token);
 
     void (await this.src.application.commands.set(
-      <readonly ApplicationCommandDataResolvable[]>this.commandManager.discordCommandsData,
+      <readonly ApplicationCommandDataResolvable[]>this.commands.discordCommandsData,
     ));
 
     let i: number = -1;
     let dataMap: DataMap<TypedDataMapStored>;
-    while (++i < Object.keys(this.databaseManager.dataMaps).length) {
-      dataMap = Object.values(this.databaseManager.dataMaps)[i];
+    while (++i < Object.keys(this.db.dataMaps).length) {
+      dataMap = Object.values(this.db.dataMaps)[i];
       if (dataMap.intents.includes(DATAMAP_INTENTS.CORE)) await dataMap.refreshCore();
     }
 
@@ -163,7 +150,7 @@ export class HashiClient {
    * @returns The issue of the command.
    */
   public async detectAndLaunchSlashCommand(interaction: ChatInputCommandInteraction): Promise<COMMAND_END> {
-    const CommandGroup: CommandGroup = this.commandManager.getCommandFromInteraction(interaction);
+    const CommandGroup: CommandGroup = this.commands.getCommandFromInteraction(interaction);
     if (CommandGroup.command) return HashiSlashCommand.launch(this, interaction, CommandGroup);
     return COMMAND_END.SUCCESS;
   }

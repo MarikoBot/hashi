@@ -97,8 +97,7 @@ export declare class HashiCommandBase {
     static launch(client: HashiClient, interaction: ChatInputCommandInteraction, CommandGroup: CommandGroup): Promise<COMMAND_END>;
     /**
      * Refreshes the context (avoid unreadable code in the bellow method).
-     *
-     * @param CommandGroupValue The command block value to refresh with.
+     * @param commandGroupValue The command block value to refresh with.
      * @param context The context to refresh with.
      * @returns The new context and the new command.
      */

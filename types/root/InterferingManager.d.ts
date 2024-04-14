@@ -9,10 +9,6 @@ export declare class InterferingManager {
      */
     readonly queue: Collection<Snowflake, InterferingQueueElement[]>;
     /**
-     * The constructor of the interfering manager.
-     */
-    constructor();
-    /**
      * Register an interfering command when this command is triggered.
      * @param userId The user id of the command author.
      * @param commandName The name of the command.

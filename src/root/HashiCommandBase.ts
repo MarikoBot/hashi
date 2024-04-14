@@ -104,10 +104,7 @@ export class HashiCommandBase {
    * @returns The exit code of the command.
    */
   public end(): COMMAND_END {
-    this.client.commandManager.interfering.removeInterfering(
-      this.context.interaction.user.id,
-      this.context.interaction.id,
-    );
+    this.client.commands.interfering.removeInterfering(this.context.interaction.user.id, this.context.interaction.id);
     return this.errors.length === 0 ? COMMAND_END.SUCCESS : COMMAND_END.ISSUED;
   }
 
@@ -137,7 +134,7 @@ export class HashiCommandBase {
       if (forbiddenGuild) missing.push('forbiddenGuilds');
 
       if (this.privileges.uniqueGuilds) {
-        if (this.privileges.uniqueGuilds.includes(interaction.guildId)) privileges = bitRecord['uniqueUsers'];
+        if (this.privileges.uniqueGuilds.includes(interaction.guildId)) privileges = bitRecord.uniqueUsers;
         else missing.push('uniqueUsers');
       }
 
@@ -148,8 +145,7 @@ export class HashiCommandBase {
 
         if (this.privileges.uniqueChannels) {
           if (this.privileges.uniqueChannels.includes(interaction.channel.id))
-            privileges =
-              Number(privileges) > Number(bitRecord['uniqueChannels']) ? privileges : bitRecord['uniqueChannels'];
+            privileges = Number(privileges) > Number(bitRecord.uniqueChannels) ? privileges : bitRecord.uniqueChannels;
           else missing.push('uniqueChannels');
         }
       }
@@ -167,7 +163,7 @@ export class HashiCommandBase {
               (<GuildMemberRoleManager>interaction.member?.roles).cache.has(role),
             )
           )
-            privileges = Number(privileges) > Number(bitRecord['uniqueRoles']) ? privileges : bitRecord['uniqueRoles'];
+            privileges = Number(privileges) > Number(bitRecord.uniqueRoles) ? privileges : bitRecord.uniqueRoles;
           else missing.push('uniqueRoles');
         }
       }
@@ -178,7 +174,7 @@ export class HashiCommandBase {
 
     if (this.privileges.uniqueUsers) {
       if (this.privileges.uniqueUsers.includes(interaction.user.id))
-        privileges = Number(privileges) > Number(bitRecord['uniqueUsers']) ? privileges : bitRecord['uniqueUsers'];
+        privileges = Number(privileges) > Number(bitRecord.uniqueUsers) ? privileges : bitRecord.uniqueUsers;
       else missing.push('uniqueUsers');
     }
 
@@ -215,11 +211,8 @@ export class HashiCommandBase {
   ): Promise<boolean> {
     const command: CommandGroupValue = ctx.command;
 
-    const activeCoolDowns: CoolDownsQueueElement[] = client.commandManager.coolDowns.values(
-      interaction.user.id,
-      command.id,
-    );
-    const activeInterfering: InterferingQueueElement[] = client.commandManager.interfering.values(
+    const activeCoolDowns: CoolDownsQueueElement[] = client.commands.coolDowns.values(interaction.user.id, command.id);
+    const activeInterfering: InterferingQueueElement[] = client.commands.interfering.values(
       interaction.user.id,
       ...(command.interferingCommands || []),
     );
@@ -257,12 +250,12 @@ export class HashiCommandBase {
     interaction: ChatInputCommandInteraction,
     CommandGroup: CommandGroup,
   ): Promise<void> {
-    client.commandManager.interfering.registerInterfering(
+    client.commands.interfering.registerInterfering(
       interaction.user.id,
       CommandGroup.subcommand?.fullName || CommandGroup.command?.fullName,
       interaction,
     );
-    client.commandManager.coolDowns.registerCoolDown(
+    client.commands.coolDowns.registerCoolDown(
       interaction.user.id,
       CommandGroup.subcommand?.fullName || CommandGroup.command?.fullName,
       CommandGroup.subcommand?.coolDown ||
@@ -342,14 +335,13 @@ export class HashiCommandBase {
 
   /**
    * Refreshes the context (avoid unreadable code in the bellow method).
-   *
-   * @param CommandGroupValue The command block value to refresh with.
+   * @param commandGroupValue The command block value to refresh with.
    * @param context The context to refresh with.
    * @returns The new context and the new command.
    */
-  private static refreshContext(CommandGroupValue: CommandGroupValue, context: Context): [CommandGroupValue, Context] {
-    context.command = CommandGroupValue;
-    CommandGroupValue.context = context;
-    return [CommandGroupValue, context];
+  private static refreshContext<T extends CommandGroupValue>(commandGroupValue: T, context: Context): [T, Context] {
+    context.command = commandGroupValue;
+    commandGroupValue.context = context;
+    return [commandGroupValue, context];
   }
 }

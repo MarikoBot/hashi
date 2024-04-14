@@ -12,7 +12,6 @@ import { PublicChatInputCommandInteraction } from '../public';
 import {
   CommandGroupValue,
   HashiClient,
-  HashiMessageCommand,
   HashiSlashCommand,
   HashiSlashSubcommand,
   HashiSlashSubcommandGroup,
@@ -32,7 +31,6 @@ export class Context extends BaseClient {
    * The command associated with the context.
    */
   @((<InstanceValidatorReturner>Validators.ObjectValidator.CommandGroupValueInitial)(
-    HashiMessageCommand,
     HashiSlashCommand,
     HashiSlashSubcommand,
     HashiSlashSubcommandGroup,

@@ -4,8 +4,7 @@
     "tslint-config-prettier"
   ],
   "rules": {
-    "semi": "off",
-    "@typescript-eslint/semi": "error",
+    "semicolon": [true, "always"],
     "no-console": false,
     "max-classes-per-file": [true, 1],
     "no-redundant-jsdoc": true,

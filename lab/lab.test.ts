@@ -2,6 +2,7 @@ import * as dotenv from 'dotenv';
 dotenv.config({ path: `${__dirname}/../.env` });
 
 import {HashiClient, SuperModel, SuperModelColumn, HashiEvent} from '../src';
+import { HashiSlashCommand } from '../types';
 
 const client: HashiClient = new HashiClient({
   intents: 3276799,
@@ -17,14 +18,24 @@ const client: HashiClient = new HashiClient({
 });
 void client.connectDatabase();
 
-@client.eventManager.hashiEventInjector('ready')
+@client.events.inject('ready')
 class Ready extends HashiEvent {
   callback(client: HashiClient): void {
     void client.logger.sendTo('status', { content: '<:MarikoOnline:1186296992629014558> The bot is now **online**.' });
   }
 }
 
-@client.databaseManager.superModelInjector('user')
+@client.commands.inject({
+  type: 'slash',
+  id: 'ping',
+  interferingCommands: [],
+  coolDown: 3,
+})
+class Ping extends HashiSlashCommand {
+
+}
+
+@client.db.inject('user')
 class User extends SuperModel {
   onLoaded() {
     return {
@@ -34,7 +45,7 @@ class User extends SuperModel {
 }
 
 
-void client.databaseManager.dataMaps.user.superModel.model.create({
+void client.db.dataMaps.user.definition.model.create({
   discordId: '1146145475683164273'
 });
 

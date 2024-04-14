@@ -20,5 +20,5 @@ export declare class HashiEventManager extends BaseClient {
      * @param name The name of the event.
      * @returns The decorator.
      */
-    hashiEventInjector(name: string): InstanceInjector;
+    inject(name: string): InstanceInjector;
 }

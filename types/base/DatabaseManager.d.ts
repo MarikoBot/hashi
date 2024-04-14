@@ -22,7 +22,7 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { ConnectOptions } from 'mongoose';
+import { ConnectOptions, Model, SchemaDefinition } from 'mongoose';
 import { BaseClient, DataMap, DataMapsObject, TypedDataMapStored } from './';
 import { SuperModelInjectorTarget } from '../decorators';
 import { HashiClient, SuperModel } from '../root';
@@ -70,5 +70,11 @@ export declare class DatabaseManager extends BaseClient {
      * @param name The name of the super-SuperModel.
      * @returns The decorator.
      */
-    superModelInjector(name: string): (target: SuperModelInjectorTarget) => void;
+    inject(name: string): (target: SuperModelInjectorTarget) => void;
+    /**
+     * Get a table and its model.
+     * @param name The name of the table.
+     * @returns The model of the table.
+     */
+    get(name: string): Model<SchemaDefinition & Document & any>;
 }

@@ -27,7 +27,7 @@ export class HashiEventManager extends BaseClient {
    * @param name The name of the event.
    * @returns The decorator.
    */
-  public hashiEventInjector(name: string): InstanceInjector {
+  public inject(name: string): InstanceInjector {
     const instance: HashiEventManager = this;
     return function (target: HashiEventInjectorTarget): void {
       target.prototype.name = name;

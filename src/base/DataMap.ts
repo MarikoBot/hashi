@@ -6,10 +6,7 @@ import { DataMapEntry, HashiClient, SuperModel } from '../root';
 /**
  * The main class. Represents a data map technology.
  */
-export class DataMap<
-  DataStructure extends TypedDataMapStored,
-  EntryClass extends new (...args: any[]) => DataMapEntry<DataStructure> = typeof DataMapEntry,
-> extends BaseClient {
+export class DataMap<DataStructure extends TypedDataMapStored> extends BaseClient {
   /**
    * The name of the data map.
    */
@@ -26,7 +23,7 @@ export class DataMap<
    * The default data for the data map.
    */
   @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(SuperModel))
-  public superModel: SuperModel;
+  public definition: SuperModel;
 
   /**
    * Intents for the database. Be careful! Those intents MUST BE set before the launch of the process.
@@ -45,22 +42,12 @@ export class DataMap<
   }
 
   /**
-   * Display all the data included into the collection.
-   * @returns The retrieved data.
-   */
-  public async content(): Promise<Query<any, any>> {
-    const documents: this['superModel']['model'][] = await this.superModel.model.find({});
-    console.log(documents);
-    return documents;
-  }
-
-  /**
    * Get some data from the data map.
    * @param key The key to look for.
    * @returns The data if found.
    */
-  public async getRaw(key: string = this.superModel.defaultValues[this.primaryKey]): Promise<TypedDataMapStored> {
-    let value: TypedDataMapStored = null;
+  public async getRaw(key: string = this.definition.defaultValues[this.primaryKey]): Promise<TypedDataMapStored> {
+    const value: TypedDataMapStored = null;
     console.log(key, value);
     return value;
   }
@@ -72,7 +59,7 @@ export class DataMap<
   public async refreshCore(): Promise<void> {
     if (!this.intents.includes(DATAMAP_INTENTS.CORE)) return;
 
-    const currentData: TypedDataMapStored = await this.getRaw(this.superModel.defaultValues[this.primaryKey]);
+    const currentData: TypedDataMapStored = await this.getRaw(this.definition.defaultValues[this.primaryKey]);
     console.log(currentData);
   }
 
@@ -84,7 +71,7 @@ export class DataMap<
    * @returns Nothing.
    */
   public async update(
-    key: string = this.superModel.defaultValues[this.primaryKey],
+    key: string = this.definition.defaultValues[this.primaryKey],
     data: TypedDataMapStored,
     path?: string,
   ): Promise<void> {
@@ -97,12 +84,12 @@ export class DataMap<
    * @returns The player data.
    */
   protected async get(
-    key: string = this.superModel.defaultValues[this.primaryKey],
+    key: string = this.definition.defaultValues[this.primaryKey],
   ): Promise<TypedDataMapStored | DataMapEntry<DataStructure>> {
     const data: TypedDataMapStored = await this.getRaw(key);
     if (!data) return data;
 
-    const structure: this['superModel']['defaultValues'] = this.superModel.defaultValues;
+    const structure: this['definition']['defaultValues'] = this.definition.defaultValues;
     let finalStructure: { [key: string]: any };
     let refreshIsRequired: boolean = false;
 

@@ -8,9 +8,7 @@ export declare function isConstructor(value: any): boolean;
 /**
  * Represents a constructable class.
  */
-export interface Constructable<T extends object> {
-    new (...args: any[]): T;
-}
+export type Constructable<T extends object> = new (...args: any[]) => T;
 /**
  * Represents a constructible value.
  */
@@ -19,28 +17,23 @@ export type Constructible = new (...args: any[]) => any;
  * Represents a function returned for a validator decorator.
  * @param target The class instance.
  * @param key The attribute to set.
- * @constructor
  */
-export type InstanceValidator = (target: Object, key: string) => void;
+export type InstanceValidator = (target: object, key: string) => void;
 /**
  * Represents a function returned for an injector decorator.
  * @param target The class instance.
- * @constructor
  */
-export type InstanceInjector = (target: Object) => void;
+export type InstanceInjector = (target: object) => void;
 /**
  * Represents a deferred (with parameters) function returned for a decorator.
  * @param target The class instance.
  * @param key The attribute to set.
- * @constructor
  */
 export type InstanceValidatorReturner = (...args: any[]) => InstanceValidator;
 /**
  * The target type for the HashiEventInjector.
  */
-export type HashiEventInjectorTarget = {
-    new (): HashiEvent;
-};
+export type HashiEventInjectorTarget = new () => HashiEvent;
 /**
  * The target type for the HashiCommandInjector.
  */

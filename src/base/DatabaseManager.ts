@@ -1,7 +1,7 @@
-import { connect, ConnectOptions } from 'mongoose';
+import { connect, ConnectOptions, Model, SchemaDefinition } from 'mongoose';
 import { BaseClient, DataMap, DataMapsObject, TypedDataMapStored } from './';
 import { Validators, InstanceValidator, InstanceValidatorReturner, SuperModelInjectorTarget } from '../decorators';
-import { FileManager, HashiClient, SuperModel } from '../root';
+import { HashiClient, SuperModel } from '../root';
 
 /**
  * The class who manages the database of the project.
@@ -75,14 +75,26 @@ export class DatabaseManager extends BaseClient {
    * @param name The name of the super-SuperModel.
    * @returns The decorator.
    */
-  public superModelInjector(name: string) {
+  public inject(name: string) {
     const instance: DatabaseManager = this;
     return function (target: SuperModelInjectorTarget): void {
       instance.client.logger.info(`Bound model: ${name}`);
       target.prototype.name = name;
       instance.dataMaps[name] = new DataMap<TypedDataMapStored>(instance.client, name);
       instance.createDataMap(name);
-      instance.dataMaps[name].superModel = new target(name);
+      instance.dataMaps[name].definition = new target(name);
     };
+  }
+
+  /**
+   * Get a table and its model.
+   * @param name The name of the table.
+   * @returns The model of the table.
+   */
+  public get(name: string): Model<SchemaDefinition & Document & any> {
+    const table: DataMap<any> = this.dataMaps[name];
+    if (!table) return null;
+
+    return table.definition.model;
   }
 }

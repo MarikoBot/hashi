@@ -37,5 +37,5 @@ export declare class HashiCommandManager extends BaseClient {
      * @param metadata The metadata of the command.
      * @returns The decorator.
      */
-    hashiCommandInjector(metadata: CommandMetadata): InstanceInjector;
+    inject(metadata: CommandMetadata): InstanceInjector;
 }
