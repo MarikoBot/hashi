@@ -7,31 +7,6 @@ export const StringValidator: {
   readonly [validatorName: string]: InstanceValidator | ((...args: any[]) => InstanceValidator);
 } = {
   /**
-   * Verify if a string is included into the HashiCommandType type.
-   * @param hashiCommandValues The hashiCommandValues instance.
-   */
-  IsHashiCommandType: (hashiCommandValues: string[]): InstanceValidator => {
-    return function (target: object, key: string): void {
-      let value: any;
-
-      const setter = (newValue: any): void => {
-        if (
-          typeof newValue !== 'string' ||
-          !(hashiCommandValues || require('../../root').HashiCommandValues).includes(newValue)
-        )
-          throw new Error(`The property ${target.constructor.name}.${key} must be a HashiCommandType string.`);
-        value = newValue;
-      };
-
-      Object.defineProperty(target, key, {
-        get: (): typeof value => value,
-        set: setter,
-        enumerable: true,
-        configurable: true,
-      });
-    };
-  },
-  /**
    * Verify if a string is not empty.
    * @param target The class instance.
    * @param key The attribute to set.
@@ -75,32 +50,6 @@ export const StringValidator: {
       enumerable: true,
       configurable: true,
     });
-  },
-  /**
-   * Verify if a value is a valid language id.
-   * @param languages The languages record.
-   */
-  ValidLanguage: (languages: Record<string, Record<string, string>>): InstanceValidator => {
-    return function (target: object, key: string): void {
-      let value: any;
-
-      const setter = (newValue: any): void => {
-        if (typeof newValue !== 'string' || !Object.keys(languages).includes(newValue))
-          throw new Error(
-            `The property ${target.constructor.name}.${key} must be a valid language id: ${Object.keys(languages).join(
-              ', ',
-            )}.`,
-          );
-        value = newValue;
-      };
-
-      Object.defineProperty(target, key, {
-        get: (): typeof value => value,
-        set: setter,
-        enumerable: true,
-        configurable: true,
-      });
-    };
   },
   /**
    * Verify if a string respects the syntax for a non-formatted string.

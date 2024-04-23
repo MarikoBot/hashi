@@ -1,5 +1,5 @@
 import { BaseClient, DATAMAP_INTENTS, TypedDataMapStored } from './';
-import { DataMapEntry, HashiClient, SuperModel } from '../root';
+import { DataMapEntry, Client, SuperModel } from '../root';
 /**
  * The main class. Represents a data map technology.
  */
@@ -25,7 +25,7 @@ export declare class DataMap<DataStructure extends TypedDataMapStored> extends B
      * @param client The client instance.
      * @param name The name of the collection.
      */
-    constructor(client: HashiClient, name: string);
+    constructor(client: Client, name: string);
     /**
      * Get some data from the data map.
      * @param key The key to look for.

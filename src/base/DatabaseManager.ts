@@ -1,7 +1,13 @@
 import { connect, ConnectOptions, Model, SchemaDefinition } from 'mongoose';
 import { BaseClient, DataMap, DataMapsObject, TypedDataMapStored } from './';
-import { Validators, InstanceValidator, InstanceValidatorReturner, SuperModelInjectorTarget } from '../decorators';
-import { HashiClient, SuperModel } from '../root';
+import {
+  InstanceInjector,
+  InstanceValidator,
+  InstanceValidatorReturner,
+  SuperModelInjectorTarget,
+  Validators,
+} from '../decorators';
+import { Client, SuperModel } from '../root';
 
 /**
  * The class who manages the database of the project.
@@ -40,7 +46,7 @@ export class DatabaseManager extends BaseClient {
   /**
    * @param client The client instance.
    */
-  constructor(client: HashiClient) {
+  constructor(client: Client) {
     super(client);
   }
 
@@ -66,7 +72,7 @@ export class DatabaseManager extends BaseClient {
     if (connectionURI) this.connectionURI = connectionURI;
     if (connectOptions) this.connectOptions = connectOptions;
 
-    const connection = await connect(this.connectionURI, this.connectOptions);
+    await connect(this.connectionURI, this.connectOptions);
   }
 
   // noinspection JSUnusedGlobalSymbols
@@ -75,7 +81,7 @@ export class DatabaseManager extends BaseClient {
    * @param name The name of the super-SuperModel.
    * @returns The decorator.
    */
-  public inject(name: string) {
+  public inject(name: string): InstanceInjector {
     const instance: DatabaseManager = this;
     return function (target: SuperModelInjectorTarget): void {
       instance.client.logger.info(`Bound model: ${name}`);

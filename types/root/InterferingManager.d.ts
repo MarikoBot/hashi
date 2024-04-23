@@ -1,5 +1,6 @@
 import { ChatInputCommandInteraction, Collection, Snowflake } from 'discord.js';
 import { InterferingQueueElement } from './';
+import { Context } from '../base';
 /**
  * The main class who manages the active cool downs for commands.
  */
@@ -9,6 +10,10 @@ export declare class InterferingManager {
      */
     readonly queue: Collection<Snowflake, InterferingQueueElement[]>;
     /**
+     * The function that is called when the interfering manager authorization does not pass.
+     */
+    callback: (context: Context, interferingCommands: string[]) => Promise<void>;
+    /**
      * Register an interfering command when this command is triggered.
      * @param userId The user id of the command author.
      * @param commandName The name of the command.
@@ -16,6 +21,12 @@ export declare class InterferingManager {
      * @returns Nothing.
      */
     registerInterfering(userId: Snowflake, commandName: string, interaction: ChatInputCommandInteraction): void;
+    /**
+     * Set the callback function when the interfering manager is triggered on.
+     * @param callback The function to set.
+     * @returns The class instance.
+     */
+    on(callback: (context: Context, interferingCommands: string[]) => Promise<void>): this;
     /**
      * Returns all the interfering commands for a specified user.
      * @param userId The user id to search for.

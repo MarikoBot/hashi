@@ -1,7 +1,6 @@
 export * as Base from './base';
 export * as Decorators from './decorators';
 export * as Root from './root';
-export * as Strings from './strings';
 export * as Public from './public';
 
 // Global exports

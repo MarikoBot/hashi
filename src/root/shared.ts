@@ -2,27 +2,13 @@ import {
   APIApplicationCommandOption,
   ChatInputApplicationCommandData,
   ChatInputCommandInteraction,
-  ClientOptions,
+  ClientOptions as DiscordClientOptions,
   DiscordAPIError,
   DiscordjsError,
   LocalizationMap,
 } from 'discord.js';
 import { ConnectOptions } from 'mongoose';
-import { Context } from '../base';
-import { HashiClient, HashiSlashCommand, HashiSlashSubcommand, HashiSlashSubcommandGroup, SuperModelColumn } from './';
-
-/**
- * Represents any command constructor.
- */
-export type AnyCommandConstructorType =
-  | typeof HashiSlashCommand
-  | typeof HashiSlashSubcommand
-  | typeof HashiSlashSubcommandGroup;
-
-/**
- * Represents any command constructor.
- */
-export type AnyCommandConstructor = HashiSlashCommand | HashiSlashSubcommand | HashiSlashSubcommandGroup;
+import { Command, SuperModelColumn } from './';
 
 /**
  * Prefilled version of the Discord.<APIApplicationCommand>
@@ -90,7 +76,7 @@ export enum COMMAND_END {
   /**
    * When the command terminates but with some problems that occurred in the process.
    */
-  ISSUED = 1,
+  ISSUED = 2,
 }
 
 /**
@@ -100,30 +86,25 @@ export interface CommandGroup {
   /**
    * The command constructor.
    */
-  command: HashiSlashCommand;
+  command: Command;
   /**
-   * The subcommand group constructor.
+   * The base metadata for the command.
    */
-  subcommandGroup?: HashiSlashSubcommandGroup;
+  metadata: CommandMetadata;
   /**
-   * The subcommand constructor.
+   * The subcommand group metadata.
    */
-  subcommand?: HashiSlashSubcommand;
+  subcommandGroup?: CommandMetadataSubgroup;
+  /**
+   * The subcommand metadata.
+   */
+  subcommand?: CommandMetadataBase;
 }
-
-/**
- * The type that represents an element of CommandGroup.
- */
-export type CommandGroupValue = CommandGroup[keyof CommandGroup];
 
 /**
  * The interface that represents a command metadata.
  */
-export interface CommandMetadata {
-  /**
-   * The type of the command.
-   */
-  type: HashiCommandType;
+export interface CommandMetadataBase {
   /**
    * The name of the command.
    */
@@ -132,27 +113,43 @@ export interface CommandMetadata {
    * The commands that must be executed before this one.
    * If one of the interfering commands is same-time running, this command will be ignored.
    */
-  interferingCommands: ChatInputApplicationCommandData['name'][];
+  interferingCommands?: ChatInputApplicationCommandData['name'][];
   /**
    * The amount of time before running the command again. Must be between 0 and 300 seconds.
    */
-  coolDown: number;
+  coolDown?: number;
   /**
    * The external data for the command.
    */
   privileges?: CommandPrivileges;
+}
+
+/**
+ * The interface that represents a command metadata.
+ */
+export interface CommandMetadata extends CommandMetadataBase {
   /**
    * The command data for the hashi slash command.
    */
-  src?: APIApplicationCommandPrefilled;
+  src: APIApplicationCommandPrefilled;
   /**
    * The subcommand groups of the command.
    */
-  subcommandGroups?: (typeof HashiSlashSubcommandGroup)[];
+  subcommandGroups?: CommandMetadataSubgroup[];
   /**
    * The subcommands of the command.
    */
-  subcommands?: (typeof HashiSlashSubcommand)[];
+  subcommands?: CommandMetadataBase[];
+}
+
+/**
+ * The interface that represents a command metadata.
+ */
+export interface CommandMetadataSubgroup extends CommandMetadataBase {
+  /**
+   * The subcommands of the command.
+   */
+  subcommands: CommandMetadata['subcommands'];
 }
 
 /**
@@ -217,17 +214,9 @@ export type CoolDownsQueueElement = [
 ];
 
 /**
- * A default callback function used when nothing is set.
- * @returns Nothing.
+ * The options for the Client. It extends the ClientOptions from discord.js and implements extra options for the Hashi module.
  */
-export async function defaultEventCallback(): Promise<void> {
-  return void setTimeout((): null => null);
-}
-
-/**
- * The options for the HashiClient. It extends the ClientOptions from discord.js and implements extra options for the Hashi module.
- */
-export interface HashiClientOptions extends ClientOptions {
+export interface ClientOptions extends DiscordClientOptions {
   /**
    * The name of the project/process you're in.
    */
@@ -235,7 +224,7 @@ export interface HashiClientOptions extends ClientOptions {
   /**
    * The Discord channels where the bot can be configured/logged.
    */
-  configChannels: HashiClientChannelsOption;
+  configChannels: ClientChannelsOption;
   /**
    * The mongoose connection information.
    */
@@ -258,7 +247,7 @@ export interface HashiClientOptions extends ClientOptions {
 /**
  * The Discord channels where the bot can be configured/logged.
  */
-export interface HashiClientChannelsOption {
+export interface ClientChannelsOption {
   /**
    * The channel for the bot status.
    */
@@ -266,40 +255,9 @@ export interface HashiClientChannelsOption {
 }
 
 /**
- * The different values of for the HashiCommandType type.
- */
-export const HashiCommandValues: string[] = ['message', 'slash', 'sub', 'group'];
-
-/**
- * The different types of command.
- */
-export type HashiCommandType = (typeof HashiCommandValues)[number];
-
-/**
  * Represents an error.
  */
 export type HashiError = Error | DiscordjsError | DiscordAPIError;
-
-/**
- * The model of a callback function for an event.
- * @param client The client instance.
- * @param args The command args.
- */
-export type HashiEventCallbackFunction = (client: HashiClient, ...args: any[]) => void;
-
-/**
- * Represents the function called back when the command is triggered.
- *
- * @param client The client that instanced the process.
- * @param interaction The associated interaction.
- * @param context The front-end class to manage interactions.
- * @returns COMMAND_END The exit command code.
- */
-export type HashiSlashCommandCallbackFunction = (
-  client: HashiClient,
-  interaction: ChatInputCommandInteraction,
-  context: Context,
-) => Promise<COMMAND_END>;
 
 /**
  * Represents an element in the interfering commands queue.
@@ -322,3 +280,17 @@ export type InterferingQueueElement = [
 export type StructureColumnOrChild =
   | { [key: string]: SuperModelColumn<any> | StructureColumnOrChild }
   | SuperModelColumn<any>;
+
+/**
+ * The bits value for each command privileges key.
+ */
+export const bitRecord: Record<CommandPrivilegesKey, string> = {
+  forbiddenUsers: '0b10000000',
+  uniqueUsers: '0b1000000',
+  forbiddenGuilds: '0b100000',
+  uniqueGuilds: '0b10000',
+  forbiddenRoles: '0b1000',
+  uniqueRoles: '0b100',
+  forbiddenChannels: '0b10',
+  uniqueChannels: '0b1',
+};

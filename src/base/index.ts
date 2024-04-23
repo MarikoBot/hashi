@@ -1,15 +1,14 @@
 // Global exports (classes only)
 export * from './BaseClient';
 
-export * from './HashiCommandManager';
+export * from './CommandManager';
 export * from './Context';
 
 export * from './DatabaseManager';
 export * from './DataMap';
 
-export * from './HashiEventManager';
+export * from './DiscordEventManager';
 
-export * from './LanguageManager';
 export * from './Logger';
 
 // Shared exports

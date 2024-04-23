@@ -1,5 +1,5 @@
 import { SchemaDefinitionProperty, SchemaDefinitionWithBuiltInClass, Types } from 'mongoose';
-import { Validators, InstanceValidator } from '../decorators';
+import { InstanceValidator, Validators } from '../decorators';
 
 /**
  * The class that represents a column into a SuperModel instance.

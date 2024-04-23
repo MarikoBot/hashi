@@ -1,5 +1,5 @@
 import { BaseClient } from './index';
-import { HashiClient } from '../root';
+import { Client } from '../root';
 import { MessageCreateOptions } from 'discord.js';
 /**
  * The Logger class. Contains multiple functions to log data.
@@ -14,7 +14,7 @@ export declare class Logger extends BaseClient {
      * @param name The name of the project.
      * @param client The client instance.
      */
-    constructor(name: string, client: HashiClient);
+    constructor(name: string, client: Client);
     /**
      * Split a str to make it fit into a given size.
      * @param str The str to crop.
@@ -66,5 +66,5 @@ export declare class Logger extends BaseClient {
      * @param args The data to print.
      * @returns Nothing.
      */
-    private log;
+    log(mode: string, ...args: any[]): void;
 }

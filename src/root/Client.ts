@@ -1,38 +1,31 @@
-import {
-  ActivityType,
-  ApplicationCommandDataResolvable,
-  ChatInputCommandInteraction,
-  Client,
-  PresenceData,
-} from 'discord.js';
+import { ActivityType, ApplicationCommandDataResolvable, Client as DiscordClient, PresenceData } from 'discord.js';
 import * as dotenv from 'dotenv';
 import {
-  HashiCommandManager,
   DatabaseManager,
   DataMap,
   DATAMAP_INTENTS,
-  HashiEventManager,
-  LanguageManager,
+  DiscordEventManager,
+  CommandManager,
   Logger,
   TypedDataMapStored,
 } from '../base/';
-import { Validators, InstanceValidator, InstanceValidatorReturner } from '../decorators';
-import { CommandGroup, HashiClientOptions, COMMAND_END, HashiSlashCommand, HashiClientChannelsOption } from './';
+import { InstanceValidator, InstanceValidatorReturner, Validators } from '../decorators';
+import { ClientChannelsOption, ClientOptions } from './';
 
 dotenv.config();
 
 /**
- * The HashiClient class. It extends the Client class from discord.js and implements extra methods for the Hashi module.
+ * The Client class. It extends the Client class from discord.js and implements extra methods for the Hashi module.
  */
-export class HashiClient {
+export class Client {
   /**
    * The Discord Client instance.
    */
-  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(Client))
-  public readonly src: Client;
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(DiscordClient))
+  public readonly src: DiscordClient;
 
   /**
-   * The logger for the HashiClient.
+   * The logger for the Client.
    */
   @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(Logger))
   public readonly logger: Logger;
@@ -40,20 +33,14 @@ export class HashiClient {
   /**
    * The command manager instance.
    */
-  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(HashiCommandManager))
-  public readonly commands: HashiCommandManager = new HashiCommandManager(this);
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(CommandManager))
+  public readonly commands: CommandManager = new CommandManager(this);
 
   /**
    * The event manager instance.
    */
-  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(HashiEventManager))
-  public readonly events: HashiEventManager = new HashiEventManager(this);
-
-  /**
-   * The language manager for accessing strings.
-   */
-  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(LanguageManager))
-  public readonly languageManager: LanguageManager = new LanguageManager(this);
+  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(DiscordEventManager))
+  public readonly events: DiscordEventManager = new DiscordEventManager(this);
 
   /**
    * The database manager for accessing data maps/lakes.
@@ -71,13 +58,13 @@ export class HashiClient {
    * The Discord channels where the bot can be configured/logged.
    */
   @(<InstanceValidator>Validators.ObjectValidator.KeyStringPair)
-  public readonly configChannels: Partial<HashiClientChannelsOption>;
+  public readonly configChannels: Partial<ClientChannelsOption>;
 
   /**
-   * @param options The options for the HashiClient.
+   * @param options The options for the Client.
    */
-  constructor(options: HashiClientOptions) {
-    this.src = new Client({
+  constructor(options: ClientOptions) {
+    this.src = new DiscordClient({
       intents: options.intents || 3276799,
       failIfNotExists: options.failIfNotExists || false,
       presence:
@@ -141,17 +128,5 @@ export class HashiClient {
     this.logger.info(`The client is successfully launched on Discord as ${this.src.user.tag}.`);
 
     return '0';
-  }
-
-  // noinspection JSUnusedGlobalSymbols
-  /**
-   * Function that encapsulates the command detection, authorization and execution.
-   * @param interaction The associated interaction.
-   * @returns The issue of the command.
-   */
-  public async detectAndLaunchSlashCommand(interaction: ChatInputCommandInteraction): Promise<COMMAND_END> {
-    const CommandGroup: CommandGroup = this.commands.getCommandFromInteraction(interaction);
-    if (CommandGroup.command) return HashiSlashCommand.launch(this, interaction, CommandGroup);
-    return COMMAND_END.SUCCESS;
   }
 }

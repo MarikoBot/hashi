@@ -8,41 +8,6 @@ export const ObjectValidator: {
   readonly [validatorName: string]: InstanceValidator | ((...args: any[]) => InstanceValidator);
 } = {
   /**
-   * Verify if a value is an CommandGroupValue initial type instance.
-   * @param hashiSlashCommand The first class constructor.
-   * @param hashiSlashSubcommand The second class constructor.
-   * @param hashiSlashSubcommandGroup The third class constructor.
-   */
-  CommandGroupValueInitial: (
-    hashiSlashCommand: Constructable<any>,
-    hashiSlashSubcommand: Constructable<any>,
-    hashiSlashSubcommandGroup: Constructable<any>,
-  ): InstanceValidator => {
-    return function (target: object, key: string): void {
-      let value: any;
-
-      const setter = (newValue: any): void => {
-        if (
-          typeof newValue !== 'object' ||
-          (!(newValue instanceof hashiSlashCommand) &&
-            !(newValue instanceof hashiSlashSubcommand) &&
-            !(newValue instanceof hashiSlashSubcommandGroup))
-        )
-          throw new Error(
-            `The property ${target.constructor.name}.${key} must be an instance of one of the CommandGroupValue initial type classes.`,
-          );
-        value = newValue;
-      };
-
-      Object.defineProperty(target, key, {
-        get: (): typeof value => value,
-        set: setter,
-        enumerable: true,
-        configurable: true,
-      });
-    };
-  },
-  /**
    * Verify if a value is an ContextChannel initial type instance.
    * @param target The class instance.
    * @param key The attribute to set.

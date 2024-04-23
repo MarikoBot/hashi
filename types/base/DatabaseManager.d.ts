@@ -24,8 +24,8 @@
 /// <reference types="mongoose/types/inferschematype" />
 import { ConnectOptions, Model, SchemaDefinition } from 'mongoose';
 import { BaseClient, DataMap, DataMapsObject, TypedDataMapStored } from './';
-import { SuperModelInjectorTarget } from '../decorators';
-import { HashiClient, SuperModel } from '../root';
+import { InstanceInjector } from '../decorators';
+import { Client, SuperModel } from '../root';
 /**
  * The class who manages the database of the project.
  */
@@ -53,7 +53,7 @@ export declare class DatabaseManager extends BaseClient {
     /**
      * @param client The client instance.
      */
-    constructor(client: HashiClient);
+    constructor(client: Client);
     /**
      * Build and save a data map.
      * @param name The name of the collection.
@@ -70,7 +70,7 @@ export declare class DatabaseManager extends BaseClient {
      * @param name The name of the super-SuperModel.
      * @returns The decorator.
      */
-    inject(name: string): (target: SuperModelInjectorTarget) => void;
+    inject(name: string): InstanceInjector;
     /**
      * Get a table and its model.
      * @param name The name of the table.

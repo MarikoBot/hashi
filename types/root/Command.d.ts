@@ -1,26 +1,18 @@
 import { ChatInputApplicationCommandData, ChatInputCommandInteraction } from 'discord.js';
 import { Context } from '../base';
-import { COMMAND_END, CommandGroup, CommandPrivileges, HashiClient, HashiCommandType, HashiError, HashiSlashCommandCallbackFunction } from './';
+import { COMMAND_END, CommandGroup, CommandPrivileges, Client, HashiError, CommandMetadata } from './';
 /**
  * The class that includes many useful functions shared between HashiMessageCommand and SlashCommand.
  */
-export declare class HashiCommandBase {
-    /**
-     * The type of the command.
-     */
-    readonly type: HashiCommandType;
+export declare class Command {
     /**
      * The client instance.
      */
-    client: HashiClient;
+    client: Client;
     /**
      * The name of the command.
      */
     id: string;
-    /**
-     * The full name of the command.
-     */
-    fullName: string;
     /**
      * The description of the command.
      */
@@ -47,14 +39,17 @@ export declare class HashiCommandBase {
      */
     privileges: CommandPrivileges;
     /**
-     * The callback function called.
+     * @param metadata The metadata of the command.
      */
-    callback: HashiSlashCommandCallbackFunction;
+    constructor(metadata: CommandMetadata);
     /**
-     * The base constructor of a command.
-     * @param type The type of the command.
+     * The callback function called.
+     * @param client The client instance.
+     * @param interaction The associated interaction.
+     * @param context The associated context.
+     * @returns If the command ran successfully or not.
      */
-    constructor(type?: HashiCommandBase['type']);
+    callback(client: Client, interaction: ChatInputCommandInteraction, context: Context): Promise<COMMAND_END>;
     /**
      * The function who MUST be called at the end of your program in the call back function. IT IS REALLY IMPORTANT!
      *
@@ -65,41 +60,40 @@ export declare class HashiCommandBase {
      * Returns a boolean value. If the user is authorized to run the command.
      *
      * @param interaction The interaction of the command.
+     * @param metadata The metadata to check the command with.
      * @returns If the user can execute the command.
      */
-    isAuthorized(interaction: ChatInputCommandInteraction): Promise<boolean>;
+    isAuthorized(interaction: ChatInputCommandInteraction, metadata: CommandMetadata): Promise<boolean>;
     /**
      * Verify if the cool downs, and the interfering commands of the command are ready to call the command again.
      *
      * @param client The client that instanced the event.
      * @param interaction The associated interaction.
      * @param ctx The context within the call.
+     * @param metadata The command metadata.
      * @returns If the wall is passed or not.
      */
-    static flowControlWall(client: HashiClient, interaction: ChatInputCommandInteraction, ctx: Context): Promise<boolean>;
+    flowControlWall(client: Client, interaction: ChatInputCommandInteraction, ctx: Context, metadata: CommandMetadata): Promise<boolean>;
     /**
      * Registers the cool down and the interfering commands.
-     *
      * @param client The client that instanced the event.
      * @param interaction The associated interaction.
-     * @param CommandGroup The hashiCommand [subclass] instance.
+     * @param commandGroup The Command [subclass] instance.
      * @returns Nothing.
      */
-    static flowControlRegister(client: HashiClient, interaction: ChatInputCommandInteraction, CommandGroup: CommandGroup): Promise<void>;
+    flowControlRegister(client: Client, interaction: ChatInputCommandInteraction, commandGroup: CommandGroup): Promise<void>;
     /**
      * Launch the basic and starting verifications.
-     *
      * @param client The client that instanced the event.
      * @param interaction The associated interaction.
-     * @param CommandGroup The hashiCommand [subclass] instance.
+     * @param commandGroup The command group.
      * @returns If the command executed successfully.
      */
-    static launch(client: HashiClient, interaction: ChatInputCommandInteraction, CommandGroup: CommandGroup): Promise<COMMAND_END>;
+    launch(client: Client, interaction: ChatInputCommandInteraction, commandGroup: CommandGroup): Promise<COMMAND_END>;
     /**
-     * Refreshes the context (avoid unreadable code in the bellow method).
-     * @param commandGroupValue The command block value to refresh with.
+     * Refreshes the context.
      * @param context The context to refresh with.
-     * @returns The new context and the new command.
+     * @returns The class instance.
      */
-    private static refreshContext;
+    private refreshContext;
 }

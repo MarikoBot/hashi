@@ -1,4 +1,4 @@
-import { AnyCommandConstructor, HashiEvent, SuperModel } from '../root';
+import { Command, DiscordEvent, SuperModel } from '../root';
 
 /**
  * The function that returns if a value is a constructor or a constructed.
@@ -45,16 +45,14 @@ export type InstanceInjector = (target: object) => void;
 export type InstanceValidatorReturner = (...args: any[]) => InstanceValidator;
 
 /**
- * The target type for the HashiEventInjector.
+ * The target type for the DiscordEventInjector.
  */
-export type HashiEventInjectorTarget = new () => HashiEvent;
+export type DiscordEventInjectorTarget = new () => DiscordEvent;
 
 /**
- * The target type for the HashiCommandInjector.
+ * The target type for the CommandInjector.
  */
-export type HashiCommandInjectorTarget<T extends AnyCommandConstructor = AnyCommandConstructor> = new (
-  ...args: any[]
-) => T;
+export type CommandInjectorTarget<T extends Command = Command> = new (...args: any[]) => T;
 
 /**
  * The target type for the SuperModelInjector.

@@ -3,12 +3,9 @@ export * from './CoolDownManager';
 
 export * from './DataMapEntry';
 
-export * from './HashiClient';
-export * from './HashiCommandBase';
-export * from './HashiEvent';
-export * from './HashiSlashCommand';
-export * from './HashiSlashSubcommand';
-export * from './HashiSlashSubcommandGroup';
+export * from './Client';
+export * from './Command';
+export * from './DiscordEvent';
 
 export * from './InterferingManager';
 

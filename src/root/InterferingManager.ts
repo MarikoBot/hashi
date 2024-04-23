@@ -1,6 +1,7 @@
 import { ChatInputCommandInteraction, Collection, Snowflake } from 'discord.js';
-import { Validators, InstanceValidatorReturner } from '../decorators';
+import { InstanceValidator, InstanceValidatorReturner, Validators } from '../decorators';
 import { InterferingQueueElement } from './';
+import { Context } from '../base';
 
 /**
  * The main class who manages the active cool downs for commands.
@@ -11,6 +12,23 @@ export class InterferingManager {
    */
   @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(Collection))
   public readonly queue: Collection<Snowflake, InterferingQueueElement[]> = new Collection();
+
+  /**
+   * The function that is called when the interfering manager authorization does not pass.
+   */
+  @(<InstanceValidator>Validators.FunctionValidator.Matches)
+  public callback: (context: Context, interferingCommands: string[]) => Promise<void> = async (
+    context: Context,
+    interferingCommands: string[],
+  ): Promise<void> => {
+    await context.reply({
+      content: `<:MarikoCross:1191675946353299456> **Error** → interfering commands are already running:\n${interferingCommands.join(
+        '\n',
+      )}`,
+      ephemeral: true,
+    });
+    return void 0;
+  };
 
   /**
    * Register an interfering command when this command is triggered.
@@ -25,6 +43,16 @@ export class InterferingManager {
     currentCoolDowns.push([commandName, interaction]);
 
     this.queue.set(userId, currentCoolDowns);
+  }
+
+  /**
+   * Set the callback function when the interfering manager is triggered on.
+   * @param callback The function to set.
+   * @returns The class instance.
+   */
+  public on(callback: (context: Context, interferingCommands: string[]) => Promise<void>): this {
+    this.callback = callback;
+    return this;
   }
 
   /**

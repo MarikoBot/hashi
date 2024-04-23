@@ -1,7 +1,6 @@
-import { Query } from 'mongoose';
 import { BaseClient, DATAMAP_INTENTS, TypedDataMapStored } from './';
-import { Validators, InstanceValidator, InstanceValidatorReturner } from '../decorators';
-import { DataMapEntry, HashiClient, SuperModel } from '../root';
+import { InstanceValidator, InstanceValidatorReturner, Validators } from '../decorators';
+import { DataMapEntry, Client, SuperModel } from '../root';
 
 /**
  * The main class. Represents a data map technology.
@@ -36,7 +35,7 @@ export class DataMap<DataStructure extends TypedDataMapStored> extends BaseClien
    * @param client The client instance.
    * @param name The name of the collection.
    */
-  constructor(client: HashiClient, name: string) {
+  constructor(client: Client, name: string) {
     super(client);
     this.name = name;
   }

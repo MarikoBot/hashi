@@ -1,9 +1,8 @@
 import * as chalk from 'chalk';
 import { BaseClient } from './index';
-import { Validators, InstanceValidator } from '../decorators';
-import { HashiClient } from '../root';
+import { InstanceValidator, Validators } from '../decorators';
+import { Client } from '../root';
 import { Channel, MessageCreateOptions, TextChannel } from 'discord.js';
-import { RESTPostAPIChannelMessageJSONBody } from 'discord-api-types/rest';
 
 /**
  * The Logger class. Contains multiple functions to log data.
@@ -19,7 +18,7 @@ export class Logger extends BaseClient {
    * @param name The name of the project.
    * @param client The client instance.
    */
-  constructor(name: string, client: HashiClient) {
+  constructor(name: string, client: Client) {
     super(client);
     this.projectName = name;
   }
@@ -30,7 +29,8 @@ export class Logger extends BaseClient {
    * @param max The max length limit.
    * @returns The cropped (or not) string.
    */
-  private static crop(str: string, max: number): string {
+  private static crop(str: string, max: number | 'flex'): string {
+    if (max === 'flex') return str;
     return str.length > max ? str.slice(0, max - 3) + '...' : str + '.'.repeat(max - str.length);
   }
 
@@ -41,7 +41,7 @@ export class Logger extends BaseClient {
    * @returns The prefix (str).
    */
   public prefix(mode: string, str: string = this.projectName.toLowerCase()): string {
-    return `(${Logger.crop(mode, 8)}) ${Logger.crop(str, 24)}`;
+    return `(${Logger.crop(mode, 'flex')}) ${Logger.crop(str, 'flex')}`;
   }
 
   /**
@@ -100,9 +100,9 @@ export class Logger extends BaseClient {
    * @param args The data to print.
    * @returns Nothing.
    */
-  private log(mode: string, ...args: any[]): void {
+  public log(mode: string, ...args: any[]): void {
     let color: string = 'white';
-    let background: string = 'DEFAULT';
+    const background: string = 'DEFAULT';
 
     switch (mode) {
       case 'info':
@@ -112,19 +112,19 @@ export class Logger extends BaseClient {
         color = 'grey';
         break;
       case 'test':
-        color = 'red';
+        color = 'yellow';
         break;
       case 'error':
         color = 'red';
-        background = 'bgYellow';
         break;
     }
 
     const assets: chalk.Chalk = background === 'DEFAULT' ? chalk[color] : chalk[background][color];
 
-    args.forEach((arg: any): any => {
-      console.log(assets(`「 ${this.prefix(mode, this.projectName.toLowerCase())} 」`), assets(arg.message || arg));
-      if (arg.message) console.log(arg);
-    });
+    console.log(assets(''));
+    console.log(
+      assets(`${this.prefix(mode, this.projectName.toLowerCase())} → `),
+      assets(args.map((arg: any): string[] => arg.map((argShard: string): string => argShard).join('')).join('')),
+    );
   }
 }

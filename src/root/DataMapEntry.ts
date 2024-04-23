@@ -1,5 +1,5 @@
 import { DataMap, TypedDataMapStored } from '../base/';
-import { Validators, InstanceValidatorReturner } from '../decorators';
+import { InstanceValidatorReturner, Validators } from '../decorators';
 
 /**
  * The base class that represents a data map class object.
