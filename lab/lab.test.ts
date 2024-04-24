@@ -87,9 +87,9 @@ class InteractionCreate extends DiscordEvent {
   }
 })
 class Ping extends Command {
-  async callback(client: Client, interaction: ChatInputCommandInteraction, context: Context): Promise<COMMAND_END> {
-    await interaction.reply('https://tenor.com/view/demon-slayer-tengen-uzui-kimetsu-no-yaiba-gif-24115545').catch(client.logger.clean);
-    return 0;
+  async callback(client: Client, ctx: Context): Promise<COMMAND_END> {
+    await ctx.reply('https://tenor.com/view/demon-slayer-tengen-uzui-kimetsu-no-yaiba-gif-24115545').catch(client.logger.clean);
+    return this.end();
   }
 }
 

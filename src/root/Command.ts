@@ -81,16 +81,11 @@ export class Command {
   /**
    * The callback function called.
    * @param client The client instance.
-   * @param interaction The associated interaction.
-   * @param context The associated context.
+   * @param ctx The associated context.
    * @returns If the command ran successfully or not.
    */
-  public async callback(
-    client: Client,
-    interaction: ChatInputCommandInteraction,
-    context: Context,
-  ): Promise<COMMAND_END> {
-    this.client.logger.info(client, interaction, context);
+  public async callback(client: Client, ctx: Context): Promise<COMMAND_END> {
+    this.client.logger.info(client, ctx);
     return COMMAND_END.SUCCESS;
   }
 
@@ -101,7 +96,7 @@ export class Command {
    * @returns The exit code of the command.
    */
   public end(): COMMAND_END {
-    this.client.commands.interfering.removeInterfering(this.context.interaction.user.id, this.context.interaction.id);
+    this.client.commands.interfering.removeInterfering(this.context.interaction.user.id, this.id);
     return this.errors.length === 0 ? COMMAND_END.SUCCESS : COMMAND_END.ISSUED;
   }
 
@@ -161,7 +156,7 @@ export class Command {
       const errorCode: string = `${missing.length}${missing
         .map((e: CommandPrivilegesKey) => Number(bitRecord[e]))
         .reduce((acc: number, val: number) => acc + val, 0)}`;
-      console.log(missing);
+      this.client.logger.debug(missing);
       void this.client.commands.authorizationCallback(this.context, errorCode);
     }
 
@@ -272,13 +267,8 @@ export class Command {
 
     await this.flowControlRegister(client, interaction, commandGroup);
 
-    let commandWall: COMMAND_END;
-    commandWall = (await commandGroup.command.callback(client, interaction, ctx)) as COMMAND_END;
-    if (commandWall === COMMAND_END.ERROR) return commandWall;
-
-    void this.callback(this.client, interaction, ctx);
-
-    return commandWall;
+    const commandWall: Promise<COMMAND_END> = commandGroup.command.callback(client, ctx);
+    return await commandWall;
   }
 
   /**

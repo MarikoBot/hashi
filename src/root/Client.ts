@@ -83,6 +83,8 @@ export class Client {
     this.projectName = options.projectName || '`unknown`';
     this.logger = new Logger(this.projectName, this);
 
+    this.logger.info(`Process initialization.`);
+
     this.db.dbName = options.mongoose.dbName || 'main';
     this.db.connectOptions = options.mongoose.connectOptions || { dbName: this.db.dbName };
     if (options.mongoose.connectionURI) this.db.connectionURI = options.mongoose.connectionURI;
@@ -103,7 +105,7 @@ export class Client {
   public async connectDatabase(): Promise<void> {
     this.logger.info('Database is connecting...');
     await this.db.connect();
-    this.logger.info('Database is connected.');
+    this.logger.success('Database is connected.');
   }
 
   /**
@@ -112,11 +114,14 @@ export class Client {
    * @returns Nothing.
    */
   public async login(token: string = process.env.TOKEN || process.env.token || process.env.Token): Promise<string> {
+    this.logger.info('Bot is connecting...');
     await this.src.login(token);
+    this.logger.success('Bot is connected.');
 
     void (await this.src.application.commands.set(
       <readonly ApplicationCommandDataResolvable[]>this.commands.discordCommandsData,
     ));
+    this.logger.success('Commands loaded.');
 
     let i: number = -1;
     let dataMap: DataMap<TypedDataMapStored>;

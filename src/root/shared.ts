@@ -294,3 +294,13 @@ export const bitRecord: Record<CommandPrivilegesKey, string> = {
   forbiddenChannels: '0b10',
   uniqueChannels: '0b1',
 };
+
+/**
+ * The list of mode-colors for logging assets.
+ */
+export const loggerModes = ['error', 'success', 'warning', 'info', 'debug', 'test', 'clean'] as const;
+
+/**
+ * The type that represent a logger mode-color.
+ */
+export type LoggerMode = (typeof loggerModes)[number];

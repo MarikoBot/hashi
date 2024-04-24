@@ -45,11 +45,10 @@ export declare class Command {
     /**
      * The callback function called.
      * @param client The client instance.
-     * @param interaction The associated interaction.
-     * @param context The associated context.
+     * @param ctx The associated context.
      * @returns If the command ran successfully or not.
      */
-    callback(client: Client, interaction: ChatInputCommandInteraction, context: Context): Promise<COMMAND_END>;
+    callback(client: Client, ctx: Context): Promise<COMMAND_END>;
     /**
      * The function who MUST be called at the end of your program in the call back function. IT IS REALLY IMPORTANT!
      *

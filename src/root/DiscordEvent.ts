@@ -25,7 +25,7 @@ export class DiscordEvent {
    */
   @Validators.FunctionValidator.Matches
   public callback(client: Client, ...args: any[]): Promise<void> | void {
-    console.log(client, args);
+    this.client.logger.debug(client, args);
     return null;
   }
 

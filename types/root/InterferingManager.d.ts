@@ -41,5 +41,5 @@ export declare class InterferingManager {
      * @param key The value to search for; either the name of the command or the interaction id.
      * @returns Nothing.
      */
-    removeInterfering(userId: Snowflake, key: string | Snowflake): void;
+    removeInterfering(userId: Snowflake, key: string): void;
 }

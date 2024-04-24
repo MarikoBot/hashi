@@ -38,11 +38,11 @@ export class InterferingManager {
    * @returns Nothing.
    */
   public registerInterfering(userId: Snowflake, commandName: string, interaction: ChatInputCommandInteraction): void {
-    const currentCoolDowns: InterferingQueueElement[] = this.values(userId);
+    const currentInterfering: InterferingQueueElement[] = this.values(userId);
 
-    currentCoolDowns.push([commandName, interaction]);
+    currentInterfering.push([commandName, interaction]);
 
-    this.queue.set(userId, currentCoolDowns);
+    this.queue.set(userId, currentInterfering);
   }
 
   /**
@@ -64,11 +64,11 @@ export class InterferingManager {
   public values(userId: Snowflake, ...commands: string[]): InterferingQueueElement[] {
     const currentInterfering: InterferingQueueElement[] | [] = this.queue.get(userId) || [];
 
-    if (commands.length > 0) {
+    if (commands.length > 0)
       return currentInterfering.filter((queueElement: InterferingQueueElement): boolean =>
         commands.some((cmd: string) => queueElement[0].startsWith(cmd)),
       );
-    }
+
     return currentInterfering;
   }
 
@@ -79,13 +79,13 @@ export class InterferingManager {
    * @param key The value to search for; either the name of the command or the interaction id.
    * @returns Nothing.
    */
-  public removeInterfering(userId: Snowflake, key: string | Snowflake): void {
+  public removeInterfering(userId: Snowflake, key: string): void {
     const currentInterfering: InterferingQueueElement[] = this.values(userId);
 
     this.queue.set(
       userId,
       currentInterfering.filter((queueElement: InterferingQueueElement): boolean => {
-        return queueElement[1].id !== key;
+        return queueElement[0] !== key;
       }),
     );
   }

@@ -1,7 +1,7 @@
 import * as chalk from 'chalk';
 import { BaseClient } from './index';
 import { InstanceValidator, Validators } from '../decorators';
-import { Client } from '../root';
+import { Client, LoggerMode, loggerModes } from '../root';
 import { Channel, MessageCreateOptions, TextChannel } from 'discord.js';
 
 /**
@@ -45,6 +45,33 @@ export class Logger extends BaseClient {
   }
 
   /**
+   * Logs something in the console using the error assets.
+   * @param args The data to print.
+   * @returns Nothing.
+   */
+  public error(...args: any[]): void {
+    this.log('error', args);
+  }
+
+  /**
+   * Logs something in the console using the success assets.
+   * @param args The data to print.
+   * @returns Nothing.
+   */
+  public success(...args: any[]): void {
+    this.log('success', args);
+  }
+
+  /**
+   * Logs something in the console using the warning assets.
+   * @param args The data to print.
+   * @returns Nothing.
+   */
+  public warning(...args: any[]): void {
+    this.log('warning', args);
+  }
+
+  /**
    * Logs something in the console using the info assets.
    * @param args The data to print.
    * @returns Nothing.
@@ -54,12 +81,12 @@ export class Logger extends BaseClient {
   }
 
   /**
-   * Logs something in the console using the clean assets.
+   * Logs something in the console using the debug assets.
    * @param args The data to print.
    * @returns Nothing.
    */
-  public clean(...args: any[]): void {
-    this.log('clean', args);
+  public debug(...args: any[]): void {
+    this.log('debug', args);
   }
 
   /**
@@ -72,12 +99,12 @@ export class Logger extends BaseClient {
   }
 
   /**
-   * Logs something in the console using the error assets.
+   * Logs something in the console using the clean assets.
    * @param args The data to print.
    * @returns Nothing.
    */
-  public error(...args: any[]): void {
-    this.log('error', args);
+  public clean(...args: any[]): void {
+    this.log('clean', args);
   }
 
   /**
@@ -100,30 +127,24 @@ export class Logger extends BaseClient {
    * @param args The data to print.
    * @returns Nothing.
    */
-  public log(mode: string, ...args: any[]): void {
-    let color: string = 'white';
+  public log(mode: LoggerMode | string, ...args: any[]): void {
+    const color: string = loggerModes.includes(<LoggerMode>mode)
+      ? {
+          error: 'red',
+          success: 'green',
+          warning: 'yellow',
+          info: 'blue',
+          debug: 'magenta',
+          test: 'cyan',
+          clean: 'gray',
+        }[mode]
+      : 'white';
     const background: string = 'DEFAULT';
-
-    switch (mode) {
-      case 'info':
-        color = 'blue';
-        break;
-      case 'clean':
-        color = 'grey';
-        break;
-      case 'test':
-        color = 'yellow';
-        break;
-      case 'error':
-        color = 'red';
-        break;
-    }
 
     const assets: chalk.Chalk = background === 'DEFAULT' ? chalk[color] : chalk[background][color];
 
-    console.log(assets(''));
     console.log(
-      assets(`${this.prefix(mode, this.projectName.toLowerCase())} → `),
+      assets(`${this.prefix(mode, this.projectName.toLowerCase())} →`),
       assets(args.map((arg: any): string[] => arg.map((argShard: string): string => argShard).join('')).join('')),
     );
   }

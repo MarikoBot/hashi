@@ -286,3 +286,11 @@ export type StructureColumnOrChild = {
  * The bits value for each command privileges key.
  */
 export declare const bitRecord: Record<CommandPrivilegesKey, string>;
+/**
+ * The list of mode-colors for logging assets.
+ */
+export declare const loggerModes: readonly ["error", "success", "warning", "info", "debug", "test", "clean"];
+/**
+ * The type that represent a logger mode-color.
+ */
+export type LoggerMode = (typeof loggerModes)[number];

@@ -1,5 +1,5 @@
 import { BaseClient } from './index';
-import { Client } from '../root';
+import { Client, LoggerMode } from '../root';
 import { MessageCreateOptions } from 'discord.js';
 /**
  * The Logger class. Contains multiple functions to log data.
@@ -30,17 +30,35 @@ export declare class Logger extends BaseClient {
      */
     prefix(mode: string, str?: string): string;
     /**
+     * Logs something in the console using the error assets.
+     * @param args The data to print.
+     * @returns Nothing.
+     */
+    error(...args: any[]): void;
+    /**
+     * Logs something in the console using the success assets.
+     * @param args The data to print.
+     * @returns Nothing.
+     */
+    success(...args: any[]): void;
+    /**
+     * Logs something in the console using the warning assets.
+     * @param args The data to print.
+     * @returns Nothing.
+     */
+    warning(...args: any[]): void;
+    /**
      * Logs something in the console using the info assets.
      * @param args The data to print.
      * @returns Nothing.
      */
     info(...args: any[]): void;
     /**
-     * Logs something in the console using the clean assets.
+     * Logs something in the console using the debug assets.
      * @param args The data to print.
      * @returns Nothing.
      */
-    clean(...args: any[]): void;
+    debug(...args: any[]): void;
     /**
      * Logs something in the console using the test assets.
      * @param args The data to print.
@@ -48,11 +66,11 @@ export declare class Logger extends BaseClient {
      */
     test(...args: any[]): void;
     /**
-     * Logs something in the console using the error assets.
+     * Logs something in the console using the clean assets.
      * @param args The data to print.
      * @returns Nothing.
      */
-    error(...args: any[]): void;
+    clean(...args: any[]): void;
     /**
      * Logs something in the Discord "status" channel.
      * @param channelIdentifier The channel identifier into the config object.
@@ -66,5 +84,5 @@ export declare class Logger extends BaseClient {
      * @param args The data to print.
      * @returns Nothing.
      */
-    log(mode: string, ...args: any[]): void;
+    log(mode: LoggerMode | string, ...args: any[]): void;
 }
