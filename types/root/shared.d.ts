@@ -1,29 +1,4 @@
-/// <reference types="mongoose/types/aggregate" />
-/// <reference types="mongoose/types/callback" />
-/// <reference types="mongoose/types/collection" />
-/// <reference types="mongoose/types/connection" />
-/// <reference types="mongoose/types/cursor" />
-/// <reference types="mongoose/types/document" />
-/// <reference types="mongoose/types/error" />
-/// <reference types="mongoose/types/expressions" />
-/// <reference types="mongoose/types/helpers" />
-/// <reference types="mongoose/types/middlewares" />
-/// <reference types="mongoose/types/indexes" />
-/// <reference types="mongoose/types/models" />
-/// <reference types="mongoose/types/mongooseoptions" />
-/// <reference types="mongoose/types/pipelinestage" />
-/// <reference types="mongoose/types/populate" />
-/// <reference types="mongoose/types/query" />
-/// <reference types="mongoose/types/schemaoptions" />
-/// <reference types="mongoose/types/schematypes" />
-/// <reference types="mongoose/types/session" />
-/// <reference types="mongoose/types/types" />
-/// <reference types="mongoose/types/utility" />
-/// <reference types="mongoose/types/validation" />
-/// <reference types="mongoose/types/virtuals" />
-/// <reference types="mongoose/types/inferschematype" />
-import { APIApplicationCommandOption, ChatInputApplicationCommandData, ChatInputCommandInteraction, ClientOptions as DiscordClientOptions, DiscordAPIError, DiscordjsError, LocalizationMap } from 'discord.js';
-import { ConnectOptions } from 'mongoose';
+import { APIApplicationCommandOption, ChatInputApplicationCommandData, ChatInputCommandInteraction, ClientOptions as DiscordClientOptions, DiscordAPIError, DiscordjsError, LocalizationMap, Snowflake } from 'discord.js';
 import { Command, SuperModelColumn } from './';
 /**
  * Prefilled version of the Discord.<APIApplicationCommand>
@@ -224,30 +199,9 @@ export type CoolDownsQueueElement = [
  */
 export interface ClientOptions extends DiscordClientOptions {
     /**
-     * The name of the project/process you're in.
+     * The configuration content (JSON).
      */
-    projectName: string;
-    /**
-     * The Discord channels where the bot can be configured/logged.
-     */
-    configChannels: ClientChannelsOption;
-    /**
-     * The mongoose connection information.
-     */
-    mongoose: {
-        /**
-         * The database name. Not useful to change it (only for MongoDB). Default: main.
-         */
-        dbName?: string;
-        /**
-         * The connection URI.
-         */
-        connectionURI: string;
-        /**
-         * The options for the connection.
-         */
-        connectOptions: ConnectOptions;
-    };
+    config: JSONHashiConfigStructure;
 }
 /**
  * The Discord channels where the bot can be configured/logged.
@@ -256,7 +210,53 @@ export interface ClientChannelsOption {
     /**
      * The channel for the bot status.
      */
-    status: string;
+    status: Snowflake;
+}
+/**
+ * The configuration file (JSON Schema) adapted on TypeScript.
+ */
+export interface JSONHashiConfigStructure {
+    /**
+     * The (possible) path to the JSON Schema.
+     */
+    $schema?: string;
+    /**
+     * The Discord channels where the bot can be configured/logged.
+     */
+    channels?: ClientChannelsOption;
+    /**
+     * The mongoose connection information.
+     */
+    database: {
+        /**
+         * The address family (IPv4 or IPv6).
+         */
+        addressFamily: 'IPv4' | 'IPv6';
+        /**
+         * The connection URI.
+         */
+        connectionURI: string;
+        /**
+         * The name of the database.
+         */
+        databaseName: string;
+    };
+    /**
+     * The list of default features for the bot.
+     */
+    defaultFeatures: ('Command:help' | 'Command:ping' | 'Event:commands')[];
+    /**
+     * The path to the environment variables file.
+     */
+    envPath: string;
+    /**
+     * The Discord Client intents.
+     */
+    intents: ClientOptions['intents'];
+    /**
+     * The name of the project/process you're in.
+     */
+    projectName: string;
 }
 /**
  * Represents an error.

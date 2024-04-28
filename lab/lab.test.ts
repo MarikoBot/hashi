@@ -2,27 +2,15 @@
 import * as dotenv from 'dotenv';
 dotenv.config({ path: `${__dirname}/../.env` });
 
-import {Client, SuperModel, SuperModelColumn, DiscordEvent, Command, Context} from '../src';
+import { Client, SuperModel, SuperModelColumn, DiscordEvent, Command, Context, JSONHashiConfigStructure } from '../src';
 import { COMMAND_END } from '../types';
 import {
   ApplicationCommandOptionType,
   ApplicationCommandType,
   BaseInteraction,
-  ChatInputCommandInteraction,
 } from 'discord.js';
 
-const client: Client = new Client({
-  intents: 3276799,
-  projectName: 'MarikoBot-Hashi',
-  configChannels: {
-    status: '1228631187459670046'
-  },
-  mongoose: {
-    dbName: 'dev',
-    connectionURI: 'mongodb://127.0.0.1:27017/',
-    connectOptions: { dbName: 'hashi-dev', family: 4 },
-  },
-});
+const client: Client = new Client({ ...(require('./hashi.config.json')) });
 void client.connectDatabase();
 
 @client.events.inject('ready')
@@ -101,7 +89,6 @@ class User extends SuperModel {
     };
   }
 }
-
 
 void client.db.get('user').create({
   discordId: '1146145475683164273'

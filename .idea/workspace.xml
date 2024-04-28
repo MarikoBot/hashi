@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="ANALYZE_INJECTED_CODE" value="false" />
+    <option name="SCOPE_TYPE" value="3" />
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="89d49a08-5718-4cd2-b2f0-33ca857296b3" name="Changes" comment="Updated documentation">
+      <change afterPath="$PROJECT_DIR$/hashi.config.schema.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab/hashi.config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/discord.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/git_toolbox_prj.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/marikobot-hashi.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CODE_OF_CONDUCT.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab/lab.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lab/lab.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/base/Logger.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/base/Logger.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/root/Client.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/root/Client.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/base/Logger.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/base/Logger.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/root/Client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/root/Client.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/root/shared.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/root/shared.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/base/Logger.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/types/base/Logger.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/root/Client.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/types/root/Client.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/root/shared.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/types/root/shared.d.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="5" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2f3CrPiujC9F0RlBKSbN4k4nDzI" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;workspace&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/panda/OneDrive/Documents/customers/angular-three&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.publish-major.executor&quot;: &quot;Run&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\panda\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mongo&quot;
+    ]
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\panda\OneDrive\Documents\projects\mariko\hashi\marikobot-hashi" />
+      <recent name="C:\Users\panda\OneDrive\Documents\projects\mariko\hashi\marikobot-hashi\lab" />
+      <recent name="C:\Users\panda\OneDrive\Documents\projects\mariko\hashi\marikobot-hashi\src\base" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="publish-major" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="publish-major" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.publish-major" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="89d49a08-5718-4cd2-b2f0-33ca857296b3" name="Changes" comment="" />
+      <created>1713020573561</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1713020573561</updated>
+      <workItem from="1713020576812" duration="13432000" />
+      <workItem from="1713083417949" duration="1584000" />
+      <workItem from="1713085453713" duration="16530000" />
+      <workItem from="1713111203233" duration="201000" />
+      <workItem from="1713112267046" duration="5797000" />
+      <workItem from="1713174352492" duration="148000" />
+      <workItem from="1713175055931" duration="744000" />
+      <workItem from="1713205721467" duration="4928000" />
+      <workItem from="1713303130263" duration="597000" />
+      <workItem from="1713374133003" duration="4672000" />
+      <workItem from="1713383672450" duration="2113000" />
+      <workItem from="1713425640894" duration="3000" />
+      <workItem from="1713541435007" duration="487000" />
+      <workItem from="1713612426920" duration="7517000" />
+      <workItem from="1713641693052" duration="5096000" />
+      <workItem from="1713704711204" duration="211000" />
+      <workItem from="1713704936313" duration="175000" />
+      <workItem from="1713707913241" duration="9192000" />
+      <workItem from="1713850535840" duration="352000" />
+      <workItem from="1713866463227" duration="332000" />
+      <workItem from="1713888275615" duration="1355000" />
+      <workItem from="1713981130860" duration="6253000" />
+      <workItem from="1713988052807" duration="12000" />
+      <workItem from="1713988084216" duration="132000" />
+      <workItem from="1713988958615" duration="1543000" />
+      <workItem from="1714235241763" duration="2996000" />
+      <workItem from="1714292718285" duration="2833000" />
+      <workItem from="1714297955518" duration="8990000" />
+    </task>
+    <task id="LOCAL-00001" summary="Le big commit">
+      <option name="closed" value="true" />
+      <created>1713093736080</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1713093736080</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Removed useless env variable">
+      <option name="closed" value="true" />
+      <created>1713094230825</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1713094230825</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Command handler (missing removing interfering)">
+      <option name="closed" value="true" />
+      <created>1713866775551</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1713866775551</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Push before the template building">
+      <option name="closed" value="true" />
+      <created>1713986396183</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1713986396183</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Updated documentation">
+      <option name="closed" value="true" />
+      <created>1713986497023</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1713986497023</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Le big commit" />
+    <MESSAGE value="Removed useless env variable" />
+    <MESSAGE value="Command handler (missing removing interfering)" />
+    <MESSAGE value="Push before the template building" />
+    <MESSAGE value="Updated documentation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated documentation" />
+  </component>
+</project>

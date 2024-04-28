@@ -1,4 +1,10 @@
-import { ActivityType, ApplicationCommandDataResolvable, Client as DiscordClient, PresenceData } from 'discord.js';
+import {
+  ActivityType,
+  ApplicationCommandDataResolvable,
+  Client as DiscordClient,
+  PresenceData,
+  ClientOptions as DiscordClientOptions,
+} from 'discord.js';
 import * as dotenv from 'dotenv';
 import {
   DatabaseManager,
@@ -10,9 +16,7 @@ import {
   TypedDataMapStored,
 } from '../base/';
 import { InstanceValidator, InstanceValidatorReturner, Validators } from '../decorators';
-import { ClientChannelsOption, ClientOptions } from './';
-
-dotenv.config();
+import { ClientOptions, JSONHashiConfigStructure } from './';
 
 /**
  * The Client class. It extends the Client class from discord.js and implements extra methods for the Hashi module.
@@ -49,21 +53,17 @@ export class Client {
   public readonly db: DatabaseManager = new DatabaseManager(this);
 
   /**
-   * The name of the project/process you're in.
+   * Configuration JSON content.
    */
-  @(<InstanceValidator>Validators.StringValidator.ValidId)
-  public readonly projectName: string;
-
-  /**
-   * The Discord channels where the bot can be configured/logged.
-   */
-  @(<InstanceValidator>Validators.ObjectValidator.KeyStringPair)
-  public readonly configChannels: Partial<ClientChannelsOption>;
+  @(<InstanceValidator>Validators.ObjectValidator.Matches)
+  public readonly config: JSONHashiConfigStructure;
 
   /**
    * @param options The options for the Client.
    */
-  constructor(options: ClientOptions) {
+  constructor(options: ClientOptions | (JSONHashiConfigStructure & DiscordClientOptions)) {
+    options = Client.formatOptions(options);
+
     this.src = new DiscordClient({
       intents: options.intents || 3276799,
       failIfNotExists: options.failIfNotExists || false,
@@ -79,23 +79,36 @@ export class Client {
           ],
         },
     });
+    dotenv.config({ path: options.config.envPath });
+    this.config = options.config;
 
-    this.projectName = options.projectName || '`unknown`';
-    this.logger = new Logger(this.projectName, this);
-
+    this.logger = new Logger(this);
     this.logger.info(`Process initialization.`);
 
-    this.db.dbName = options.mongoose.dbName || 'main';
-    this.db.connectOptions = options.mongoose.connectOptions || { dbName: this.db.dbName };
-    if (options.mongoose.connectionURI) this.db.connectionURI = options.mongoose.connectionURI;
-
-    this.configChannels = options.configChannels || {};
+    this.db.dbName = options.config.database.databaseName || 'main';
+    this.db.connectionURI = options.config.database.connectionURI;
+    this.db.connectOptions = {
+      dbName: options.config.database.databaseName,
+      family: Number(options.config.database.addressFamily.replace('IPv', '')),
+    };
 
     process.on('unhandledRejection', (reason: object & { stack: any }) => this.logger.error(reason?.stack || reason));
     process.on('uncaughtException', (err: Error, origin: NodeJS.UncaughtExceptionOrigin): void => {
       this.logger.error(err);
       this.logger.error(origin);
     });
+  }
+
+  /**
+   * Converts the constructor argument into a valid format if it is not.
+   * @param options The options for the Client.
+   * @returns The formatted object.
+   */
+  public static formatOptions(
+    options: ClientOptions | (JSONHashiConfigStructure & DiscordClientOptions),
+  ): ClientOptions {
+    if ('config' in options) return <ClientOptions>options;
+    else return <ClientOptions>{ config: options, ...options };
   }
 
   /**

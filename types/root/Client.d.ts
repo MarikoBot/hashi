@@ -1,6 +1,6 @@
-import { Client as DiscordClient } from 'discord.js';
+import { Client as DiscordClient, ClientOptions as DiscordClientOptions } from 'discord.js';
 import { DatabaseManager, DiscordEventManager, CommandManager, Logger } from '../base/';
-import { ClientChannelsOption, ClientOptions } from './';
+import { ClientOptions, JSONHashiConfigStructure } from './';
 /**
  * The Client class. It extends the Client class from discord.js and implements extra methods for the Hashi module.
  */
@@ -26,17 +26,19 @@ export declare class Client {
      */
     readonly db: DatabaseManager;
     /**
-     * The name of the project/process you're in.
+     * Configuration JSON content.
      */
-    readonly projectName: string;
-    /**
-     * The Discord channels where the bot can be configured/logged.
-     */
-    readonly configChannels: Partial<ClientChannelsOption>;
+    readonly config: JSONHashiConfigStructure;
     /**
      * @param options The options for the Client.
      */
-    constructor(options: ClientOptions);
+    constructor(options: ClientOptions | (JSONHashiConfigStructure & DiscordClientOptions));
+    /**
+     * Converts the constructor argument into a valid format if it is not.
+     * @param options The options for the Client.
+     * @returns The formatted object.
+     */
+    static formatOptions(options: ClientOptions | (JSONHashiConfigStructure & DiscordClientOptions)): ClientOptions;
     /**
      * Connect the database.
      * @returns Nothing.

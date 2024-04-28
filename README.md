@@ -4,8 +4,6 @@
 Hashi is a NPM package that wraps and implements features from Discord.js library.
 Including a command handler, an event handler, integrated database system, and more.
 
-
-
 ## Authors
 
 - [@elouannh](https://www.github.com/elouannh)

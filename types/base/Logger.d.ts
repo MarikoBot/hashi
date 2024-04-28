@@ -10,11 +10,9 @@ export declare class Logger extends BaseClient {
      */
     readonly projectName: string;
     /**
-     * The constructor of the Logger class.
-     * @param name The name of the project.
      * @param client The client instance.
      */
-    constructor(name: string, client: Client);
+    constructor(client: Client);
     /**
      * Split a str to make it fit into a given size.
      * @param str The str to crop.
