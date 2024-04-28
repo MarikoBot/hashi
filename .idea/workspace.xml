@@ -9,32 +9,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="89d49a08-5718-4cd2-b2f0-33ca857296b3" name="Changes" comment="Updated documentation">
-      <change afterPath="$PROJECT_DIR$/hashi.config.schema.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab/hashi.config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/discord.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/git_toolbox_prj.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/marikobot-hashi.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CODE_OF_CONDUCT.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab/lab.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lab/lab.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/base/Logger.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/base/Logger.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/root/Client.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/root/Client.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/base/Logger.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/base/Logger.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/root/Client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/root/Client.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/root/shared.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/root/shared.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/base/Logger.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/types/base/Logger.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/root/Client.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/types/root/Client.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/root/shared.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/types/root/shared.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,30 +37,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;workspace&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/panda/OneDrive/Documents/customers/angular-three&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;npm.publish-major.executor&quot;: &quot;Run&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\panda\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "workspace",
+    "ignore.virus.scanning.warn.message": "true",
+    "javascript.nodejs.core.library.configured.version": "22.0.0",
+    "javascript.nodejs.core.library.typings.version": "20.12.7",
+    "last_opened_file_path": "C:/Users/panda/OneDrive/Documents/customers/angular-three",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.publish-major.executor": "Run",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "settings.nodejs",
+    "ts.external.directory.path": "C:\\Users\\panda\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mongo&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mongo"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\panda\OneDrive\Documents\projects\mariko\hashi\marikobot-hashi" />
@@ -146,6 +123,7 @@
       <workItem from="1714235241763" duration="2996000" />
       <workItem from="1714292718285" duration="2833000" />
       <workItem from="1714297955518" duration="8990000" />
+      <workItem from="1714311832193" duration="1166000" />
     </task>
     <task id="LOCAL-00001" summary="Le big commit">
       <option name="closed" value="true" />
