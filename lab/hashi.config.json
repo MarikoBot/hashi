@@ -6,10 +6,9 @@
   "intents": 0,
   "database": {
     "addressFamily": "IPv4",
-    "connectionURI": "mongo://localhost:27017/",
+    "connectionURI": "mongodb://localhost:27017/",
     "databaseName": "hashi-plate"
   },
   "defaultFeatures": ["Command:help", "Command:ping", "Event:commands"],
-  "envPath": "./.env",
   "projectName": "MarikoBot-Hashi"
 }

@@ -48,15 +48,15 @@
     "run-builder": "node builder.js",
     "prettier": "prettier -w src",
     "lint": "tslint --config tslint.json --project tsconfig.json 'src/**/*.ts' > linter-output.txt",
-    "clean": "npm run prettier && npm run lint",
-    "build": "npm run clean && npm run run-builder && tsc && git add .",
-    "prepublish": "npm run build && git commit -m \"[BUILD] Automatic build\"",
+    "clean": "pnpm run prettier && pnpm run lint",
+    "build": "pnpm run clean && pnpm run run-builder && tsc && git add .",
+    "prepublish": "pnpm run build && git commit -m \"[BUILD] Automatic build\"",
     "test-ts": "ts-node lab/lab.test.ts",
-    "post-version-push": "git push && npm publish && git push --tags",
-    "publish-patch": "npm version patch && npm run post-version-push",
-    "publish-minor": "npm version minor && npm run post-version-push",
-    "publish-major": "npm version major && npm run post-version-push",
-    "publish-prerel": "npm version prerelease --preid=prerelease && npm run post-version-push"
+    "post-version-push": "git push && pnpm publish && git push --tags",
+    "publish-patch": "pnpm version patch && pnpm run post-version-push",
+    "publish-minor": "pnpm version minor && pnpm run post-version-push",
+    "publish-major": "pnpm version major && pnpm run post-version-push",
+    "publish-prerel": "pnpm version prerelease --preid=prerelease && pnpm run post-version-push"
   },
   "dependencies": {
     "chalk": "^4.1.2",

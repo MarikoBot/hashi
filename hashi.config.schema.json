@@ -59,7 +59,6 @@
       "type": "string",
       "title": "Env File",
       "description": "The environment variables file relative path.",
-      "pattern": "^((.\/)|(..\/)*).env$",
       "minLength": 6,
       "maxLength": 16
     },

@@ -1,6 +1,6 @@
 // tslint:disable:max-classes-per-file
 import * as dotenv from 'dotenv';
-dotenv.config({ path: `${__dirname}/../.env` });
+dotenv.config({ path: `${__dirname}/.env` });
 
 import { Client, SuperModel, SuperModelColumn, DiscordEvent, Command, Context, JSONHashiConfigStructure } from '../src';
 import { COMMAND_END } from '../types';
@@ -10,6 +10,7 @@ import {
   BaseInteraction,
 } from 'discord.js';
 
+console.log({ ...(require('./hashi.config.json')) });
 const client: Client = new Client({ ...(require('./hashi.config.json')) });
 void client.connectDatabase();
 

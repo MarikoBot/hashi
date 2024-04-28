@@ -5,7 +5,6 @@ import {
   PresenceData,
   ClientOptions as DiscordClientOptions,
 } from 'discord.js';
-import * as dotenv from 'dotenv';
 import {
   DatabaseManager,
   DataMap,
@@ -79,7 +78,6 @@ export class Client {
           ],
         },
     });
-    dotenv.config({ path: options.config.envPath });
     this.config = options.config;
 
     this.logger = new Logger(this);
