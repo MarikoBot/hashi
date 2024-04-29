@@ -1,13 +1,14 @@
 .git
 .idea
-src/models
+lab
 node_modules
 src
 
 .gitignore
 .prettierrc
 builder.js
-lab/build.test.js
+eslint.json
+linter-output.txt
 package-lock.json
+pnpm-lock.yaml
 tsconfig.json
-tslint.json

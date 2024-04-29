@@ -47,7 +47,7 @@
   "scripts": {
     "run-builder": "node builder.js",
     "prettier": "prettier -w src",
-    "lint": "tslint --config tslint.json --project tsconfig.json 'src/**/*.ts' > linter-output.txt",
+    "lint": "npx eslint src/**/*.ts --output-file linter-output.txt",
     "clean": "pnpm run prettier && pnpm run lint",
     "build": "pnpm run clean && pnpm run run-builder && tsc && git add .",
     "prepublish": "pnpm run build && git commit -m \"[BUILD] Automatic build\"",
@@ -66,14 +66,17 @@
     "mongoose": "^7.2.2"
   },
   "devDependencies": {
-    "eslint": "^8.53.0",
+    "@eslint/js": "^9.1.1",
+    "eslint": "^8.57.0",
     "prettier": "^2.8.4",
     "ts-node": "^10.9.2",
-    "tslint": "^6.1.3",
-    "tslint-config-prettier": "^1.18.0"
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.7.1"
   },
   "engines": {
-    "node": ">=21.1.0",
-    "npm": ">=10.2.0"
+    "node": ">=20.12.2",
+    "npm": ">=10.2.0",
+    "pnpm": ">=9.0.6"
   }
 }

@@ -1,6 +1,7 @@
 .git
+.idea
 node_modules
 
-lab/.env
-package-lock.json
 linter-output.txt
+package-lock.json
+pnpm-lock.yaml
