@@ -9,11 +9,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="89d49a08-5718-4cd2-b2f0-33ca857296b3" name="Changes" comment="Some build">
-      <change afterPath="$PROJECT_DIR$/lab/.env.example" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab/lib/lab/lab.test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab/types/lab/lab.test.d.ts" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,7 +148,7 @@
       <workItem from="1714380083819" duration="24000" />
       <workItem from="1714423537505" duration="824000" />
       <workItem from="1714495122197" duration="1974000" />
-      <workItem from="1714508014013" duration="7565000" />
+      <workItem from="1714508014013" duration="8095000" />
     </task>
     <task id="LOCAL-00001" summary="Le big commit">
       <option name="closed" value="true" />
