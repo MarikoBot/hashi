@@ -246,10 +246,6 @@ export interface JSONHashiConfigStructure {
      */
     defaultFeatures: ('Command:help' | 'Command:ping' | 'Event:commands')[];
     /**
-     * The path to the environment variables file.
-     */
-    envPath: string;
-    /**
      * The Discord Client intents.
      */
     intents: ClientOptions['intents'];

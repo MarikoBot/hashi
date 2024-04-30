@@ -13,9 +13,12 @@ import {
   CommandManager,
   Logger,
   TypedDataMapStored,
+  Context,
 } from '../base/';
 import { InstanceValidator, InstanceValidatorReturner, Validators } from '../decorators';
-import { ClientOptions, JSONHashiConfigStructure } from './';
+import * as Features from '../features';
+import { ClientOptions, Command, DiscordEvent, JSONHashiConfigStructure } from './';
+import { CommandDefaultFeature, EventDefaultFeature } from '../features/shared';
 
 /**
  * The Client class. It extends the Client class from discord.js and implements extra methods for the Hashi module.
@@ -83,6 +86,8 @@ export class Client {
     this.logger = new Logger(this);
     this.logger.info(`Process initialization.`);
 
+    void this.loadDefaultFeatures(this.config.defaultFeatures);
+
     this.db.dbName = options.config.database.databaseName || 'main';
     this.db.connectionURI = options.config.database.connectionURI;
     this.db.connectOptions = {
@@ -107,6 +112,46 @@ export class Client {
   ): ClientOptions {
     if ('config' in options) return <ClientOptions>options;
     else return <ClientOptions>{ config: options, ...options };
+  }
+
+  /**
+   * Tries something and returns null if it does not exist.
+   * @param func The function to call.
+   * @param args The args associated to the function.
+   * @returns The func callback or null.
+   */
+  public static tryTo(func: Function, ...args: any[]): any | null {
+    try {
+      return func(...args);
+    } catch {
+      return null;
+    }
+  }
+
+  /**
+   * Load the default features if there are one specified into the package.
+   * @param defaultFeatures The list of default features to load.
+   * @returns Nothing.
+   */
+  public loadDefaultFeatures(defaultFeatures: JSONHashiConfigStructure['defaultFeatures']): void {
+    for (let feature of defaultFeatures) {
+      if (feature.startsWith('Command:')) {
+        let featureName: string = feature.replace('Command:', '');
+        let data: CommandDefaultFeature;
+
+        if (featureName === 'help') data = Features.Commands.HelpDefault.default(Command, Client, Context);
+        if (featureName === 'ping') data = Features.Commands.PingDefault.default(Command, Client, Context);
+
+        this.commands.inject(data.metadata)(data.default);
+      } else if (feature.startsWith('Event:')) {
+        let featureName: string = feature.replace('Event:', '');
+        let data: EventDefaultFeature;
+
+        if (featureName === 'commands') data = Features.Events.CommandsDefault.default(DiscordEvent, Client);
+
+        this.events.inject(data.eventName)(data.default);
+      }
+    }
   }
 
   /**

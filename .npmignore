@@ -4,11 +4,12 @@ lab
 node_modules
 src
 
+.eslintignore
+.eslintrc
 .gitignore
 .prettierrc
 builder.js
-eslint.json
-linter-output.txt
+eslint.config.mjs
 package-lock.json
 pnpm-lock.yaml
 tsconfig.json

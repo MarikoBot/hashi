@@ -10,9 +10,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv = require("dotenv");
 dotenv.config({ path: `${__dirname}/.env` });
 const src_1 = require("../src");
-const discord_js_1 = require("discord.js");
-console.log({ ...(require('./hashi.config.json')) });
-const client = new src_1.Client({ ...(require('./hashi.config.json')) });
+const client = new src_1.Client({ ...(require('./hashi.config.json')), failIfNotExists: false });
 void client.connectDatabase();
 let Ready = class Ready extends src_1.DiscordEvent {
     callback(client) {
@@ -22,70 +20,6 @@ let Ready = class Ready extends src_1.DiscordEvent {
 Ready = __decorate([
     client.events.inject('ready')
 ], Ready);
-let InteractionCreate = class InteractionCreate extends src_1.DiscordEvent {
-    async callback(client, interaction) {
-        if (interaction.isChatInputCommand())
-            await client.commands.detectAndLaunchSlashCommand(interaction);
-    }
-};
-InteractionCreate = __decorate([
-    client.events.inject('interactionCreate')
-], InteractionCreate);
-let Ping = class Ping extends src_1.Command {
-    async callback(client, ctx) {
-        await ctx.reply('https://tenor.com/view/demon-slayer-tengen-uzui-kimetsu-no-yaiba-gif-24115545').catch(client.logger.clean);
-        return this.end();
-    }
-};
-Ping = __decorate([
-    client.commands.inject({
-        id: 'ping',
-        interferingCommands: [],
-        coolDown: 3,
-        subcommands: [
-            { id: 'ping hi' }
-        ],
-        subcommandGroups: [
-            {
-                id: 'ping group',
-                subcommands: [
-                    { id: 'ping group hello' },
-                    { id: 'ping group world' }
-                ]
-            }
-        ],
-        src: {
-            name: 'ping',
-            description: 'Replies with pong!',
-            default_member_permissions: null,
-            type: discord_js_1.ApplicationCommandType.ChatInput,
-            options: [
-                {
-                    name: 'hi',
-                    description: 'Say hi!',
-                    type: discord_js_1.ApplicationCommandOptionType.Subcommand,
-                },
-                {
-                    name: 'group',
-                    description: 'Group commands!',
-                    type: discord_js_1.ApplicationCommandOptionType.SubcommandGroup,
-                    options: [
-                        {
-                            name: 'hello',
-                            description: 'Say hello!',
-                            type: discord_js_1.ApplicationCommandOptionType.Subcommand,
-                        },
-                        {
-                            name: 'world',
-                            description: 'Say world!',
-                            type: discord_js_1.ApplicationCommandOptionType.Subcommand,
-                        }
-                    ]
-                }
-            ]
-        }
-    })
-], Ping);
 let User = class User extends src_1.SuperModel {
     onLoaded() {
         return {

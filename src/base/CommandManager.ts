@@ -101,9 +101,9 @@ export class CommandManager extends BaseClient {
       subcommandGroup: null,
     };
 
-    const [maybeSub, maybeGroup]: [string, string] = [
-      interaction.options.getSubcommand(),
-      interaction.options.getSubcommandGroup(),
+    let [maybeSub, maybeGroup]: [string, string] = [
+      Client.tryTo(interaction.options.getSubcommand),
+      Client.tryTo(interaction.options.getSubcommandGroup),
     ];
 
     if (maybeSub) {

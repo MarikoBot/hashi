@@ -55,13 +55,6 @@
       "minItems": 0,
       "maxItems": 3
     },
-    "envPath": {
-      "type": "string",
-      "title": "Env File",
-      "description": "The environment variables file relative path.",
-      "minLength": 6,
-      "maxLength": 16
-    },
     "intents": {
       "oneOf": [
         {
@@ -88,5 +81,5 @@
       "maxLength": 18
     }
   },
-  "required": ["channels", "database", "defaultFeatures", "envPath", "intents", "projectName"]
+  "required": ["channels", "database", "defaultFeatures", "intents", "projectName"]
 }

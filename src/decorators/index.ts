@@ -1,4 +1,4 @@
-// Global exports
+// Named exports
 export * as Validators from './validators';
 
 // Shared exports

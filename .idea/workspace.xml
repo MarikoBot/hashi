@@ -8,13 +8,56 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89d49a08-5718-4cd2-b2f0-33ca857296b3" name="Changes" comment="Updated documentation">
-      <change afterPath="$PROJECT_DIR$/eslint.config.js" afterDir="false" />
+    <list default="true" id="89d49a08-5718-4cd2-b2f0-33ca857296b3" name="Changes" comment="Some build">
+      <change afterPath="$PROJECT_DIR$/.eslintignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.eslintrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eslint.config.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/features/commands/Help.default.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/features/commands/Ping.default.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/features/commands/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/features/events/Commands.default.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/features/events/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/features/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/features/shared.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/features/commands/Help.default.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/features/commands/Ping.default.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/features/commands/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/features/events/Commands.default.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/features/events/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/features/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/features/shared.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/types/features/commands/Help.default.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/types/features/commands/Ping.default.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/types/features/commands/index.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/types/features/events/Commands.default.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/types/features/events/index.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/types/features/index.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/types/features/shared.d.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.npmignore" beforeDir="false" afterPath="$PROJECT_DIR$/.npmignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eslint.config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hashi.config.schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/hashi.config.schema.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab/build.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab/lab.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lab/lab.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab/lib/lab/lab.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/lab/lib/lab/lab.test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/base/CommandManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/base/CommandManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/base/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/base/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/decorators/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/decorators/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/root/Client.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/root/Client.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tslint.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/base/CommandManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/base/CommandManager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/base/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/base/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/decorators/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/decorators/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/root/Client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/root/Client.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/root/shared.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/root/shared.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/types/index.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/root/Client.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/types/root/Client.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/root/shared.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/types/root/shared.d.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +68,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JavaScript File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -42,7 +86,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -61,18 +105,18 @@
     "ignore.virus.scanning.warn.message": "true",
     "javascript.nodejs.core.library.configured.version": "22.0.0",
     "javascript.nodejs.core.library.typings.version": "20.12.7",
-    "last_opened_file_path": "C:/Users/panda/OneDrive/Documents/customers/angular-three",
+    "last_opened_file_path": "C:/Users/panda/OneDrive/Documents/projects/mariko/hashi/marikobot-hashi/src",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
     "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "",
+    "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.standard": "",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_interpreter_path": "node",
     "nodejs_package_manager_path": "pnpm",
     "npm.publish-major.executor": "Run",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "settings.sync",
+    "settings.editor.selected.configurable": "settings.javascript.linters.eslint",
     "ts.external.directory.path": "C:\\Users\\panda\\OneDrive\\Documents\\projects\\mariko\\hashi\\marikobot-hashi\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   },
@@ -147,7 +191,9 @@
       <workItem from="1714331861860" duration="1813000" />
       <workItem from="1714334385869" duration="1793000" />
       <workItem from="1714380083819" duration="24000" />
-      <workItem from="1714423537505" duration="778000" />
+      <workItem from="1714423537505" duration="824000" />
+      <workItem from="1714495122197" duration="1974000" />
+      <workItem from="1714508014013" duration="7276000" />
     </task>
     <task id="LOCAL-00001" summary="Le big commit">
       <option name="closed" value="true" />
@@ -189,7 +235,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713986497023</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Some build">
+      <option name="closed" value="true" />
+      <created>1714424363212</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1714424363212</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -201,6 +255,7 @@
     <MESSAGE value="Command handler (missing removing interfering)" />
     <MESSAGE value="Push before the template building" />
     <MESSAGE value="Updated documentation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated documentation" />
+    <MESSAGE value="Some build" />
+    <option name="LAST_COMMIT_MESSAGE" value="Some build" />
   </component>
 </project>

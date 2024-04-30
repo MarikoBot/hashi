@@ -2,6 +2,5 @@
 .idea
 node_modules
 
-linter-output.txt
 package-lock.json
 pnpm-lock.yaml

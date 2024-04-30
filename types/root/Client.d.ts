@@ -40,6 +40,19 @@ export declare class Client {
      */
     static formatOptions(options: ClientOptions | (JSONHashiConfigStructure & DiscordClientOptions)): ClientOptions;
     /**
+     * Tries something and returns null if it does not exist.
+     * @param func The function to call.
+     * @param args The args associated to the function.
+     * @returns The func callback or null.
+     */
+    static tryTo(func: Function, ...args: any[]): any | null;
+    /**
+     * Load the default features if there are one specified into the package.
+     * @param defaultFeatures The list of default features to load.
+     * @returns Nothing.
+     */
+    loadDefaultFeatures(defaultFeatures: JSONHashiConfigStructure['defaultFeatures']): void;
+    /**
      * Connect the database.
      * @returns Nothing.
      */
