@@ -2,18 +2,18 @@ import {
   ActivityType,
   ApplicationCommandDataResolvable,
   Client as DiscordClient,
-  PresenceData,
   ClientOptions as DiscordClientOptions,
+  PresenceData,
 } from 'discord.js';
 import {
+  CommandManager,
+  Context,
   DatabaseManager,
   DataMap,
   DATAMAP_INTENTS,
   DiscordEventManager,
-  CommandManager,
   Logger,
   TypedDataMapStored,
-  Context,
 } from '../base/';
 import { InstanceValidator, InstanceValidatorReturner, Validators } from '../decorators';
 import * as Features from '../features';

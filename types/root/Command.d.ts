@@ -1,6 +1,6 @@
 import { ChatInputApplicationCommandData, ChatInputCommandInteraction } from 'discord.js';
 import { Context } from '../base';
-import { COMMAND_END, CommandGroup, CommandPrivileges, Client, HashiError, CommandMetadata } from './';
+import { Client, COMMAND_END, CommandGroup, CommandMetadata, CommandPrivileges, HashiError } from './';
 /**
  * The class that includes many useful functions shared between HashiMessageCommand and SlashCommand.
  */

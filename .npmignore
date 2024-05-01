@@ -5,7 +5,6 @@ node_modules
 src
 
 .eslintignore
-.eslintrc
 .gitignore
 .prettierrc
 builder.js

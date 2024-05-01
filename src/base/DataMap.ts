@@ -1,6 +1,6 @@
 import { BaseClient, DATAMAP_INTENTS, TypedDataMapStored } from './';
 import { InstanceValidator, InstanceValidatorReturner, Validators } from '../decorators';
-import { DataMapEntry, Client, SuperModel } from '../root';
+import { Client, DataMapEntry, SuperModel } from '../root';
 
 /**
  * The main class. Represents a data map technology.

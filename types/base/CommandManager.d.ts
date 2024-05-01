@@ -1,7 +1,7 @@
 import { APIApplicationCommand, ChatInputCommandInteraction, Collection } from 'discord.js';
 import { BaseClient, Context } from './';
 import { InstanceInjector } from '../decorators';
-import { CommandMetadata, CoolDownManager, Client, InterferingManager, Command, COMMAND_END, CommandGroup } from '../root';
+import { Client, Command, COMMAND_END, CommandGroup, CommandMetadata, CoolDownManager, InterferingManager } from '../root';
 /**
  * Represents the command manager of the client. This class manages the slash and message commands for the project.
  */

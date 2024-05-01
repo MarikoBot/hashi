@@ -8,7 +8,6 @@ import {
   LocalizationMap,
   Snowflake,
 } from 'discord.js';
-import { ConnectOptions } from 'mongoose';
 import { Command, SuperModelColumn } from './';
 
 /**

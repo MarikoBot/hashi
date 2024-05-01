@@ -8,8 +8,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89d49a08-5718-4cd2-b2f0-33ca857296b3" name="Changes" comment="Some build">
+    <list default="true" id="89d49a08-5718-4cd2-b2f0-33ca857296b3" name="Changes" comment="Config file">
+      <change beforePath="$PROJECT_DIR$/.eslintrc" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.npmignore" beforeDir="false" afterPath="$PROJECT_DIR$/.npmignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/base/CommandManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/base/CommandManager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/base/DataMap.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/base/DataMap.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/base/DiscordEventManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/base/DiscordEventManager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/shared.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/shared.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/root/Client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/root/Client.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/root/Command.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/root/Command.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/root/shared.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/root/shared.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/base/CommandManager.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/types/base/CommandManager.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/base/DataMap.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/types/base/DataMap.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/base/DiscordEventManager.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/types/base/DiscordEventManager.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/root/Client.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/types/root/Client.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/root/Command.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/types/root/Command.d.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,35 +63,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "workspace",
-    "ignore.virus.scanning.warn.message": "true",
-    "javascript.nodejs.core.library.configured.version": "22.0.0",
-    "javascript.nodejs.core.library.typings.version": "20.12.7",
-    "last_opened_file_path": "C:/Users/panda/OneDrive/Documents/projects/mariko/hashi/marikobot-hashi/lab",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.standard": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.standard": "",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_interpreter_path": "node",
-    "nodejs_package_manager_path": "pnpm",
-    "npm.publish-major.executor": "Run",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "settings.javascript.linters.eslint",
-    "ts.external.directory.path": "C:\\Users\\panda\\OneDrive\\Documents\\projects\\mariko\\hashi\\marikobot-hashi\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;workspace&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;22.0.0&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;20.12.7&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/panda/OneDrive/Documents/projects/mariko/hashi/marikobot-hashi/lab&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;pnpm&quot;,
+    &quot;npm.publish-major.executor&quot;: &quot;Run&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.linters.eslint&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\panda\\OneDrive\\Documents\\projects\\mariko\\hashi\\marikobot-hashi\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mongo"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mongo&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\panda\OneDrive\Documents\projects\mariko\hashi\marikobot-hashi\lab" />
@@ -148,7 +162,8 @@
       <workItem from="1714380083819" duration="24000" />
       <workItem from="1714423537505" duration="824000" />
       <workItem from="1714495122197" duration="1974000" />
-      <workItem from="1714508014013" duration="8095000" />
+      <workItem from="1714508014013" duration="8403000" />
+      <workItem from="1714584507638" duration="284000" />
     </task>
     <task id="LOCAL-00001" summary="Le big commit">
       <option name="closed" value="true" />
@@ -198,7 +213,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714424363212</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Config file">
+      <option name="closed" value="true" />
+      <created>1714516295088</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1714516295088</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -211,6 +234,7 @@
     <MESSAGE value="Push before the template building" />
     <MESSAGE value="Updated documentation" />
     <MESSAGE value="Some build" />
-    <option name="LAST_COMMIT_MESSAGE" value="Some build" />
+    <MESSAGE value="Config file" />
+    <option name="LAST_COMMIT_MESSAGE" value="Config file" />
   </component>
 </project>

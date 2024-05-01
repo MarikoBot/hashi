@@ -2,16 +2,16 @@ import { ChatInputApplicationCommandData, ChatInputCommandInteraction, GuildMemb
 import { Context } from '../base';
 import { InstanceValidator, InstanceValidatorReturner, Validators } from '../decorators';
 import {
+  bitRecord,
+  Client,
   COMMAND_END,
   CommandGroup,
+  CommandMetadata,
   CommandPrivileges,
   CommandPrivilegesKey,
   CoolDownsQueueElement,
-  Client,
   HashiError,
   InterferingQueueElement,
-  CommandMetadata,
-  bitRecord,
 } from './';
 
 /**

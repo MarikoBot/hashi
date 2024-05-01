@@ -8,15 +8,15 @@ import {
   Validators,
 } from '../decorators';
 import {
-  CommandMetadata,
-  CoolDownManager,
   Client,
-  InterferingManager,
   Command,
   COMMAND_END,
   CommandGroup,
+  CommandMetadata,
   CommandMetadataBase,
   CommandMetadataSubgroup,
+  CoolDownManager,
+  InterferingManager,
 } from '../root';
 
 /**

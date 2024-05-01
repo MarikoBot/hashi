@@ -1,4 +1,4 @@
-import { Command, CommandMetadata, DiscordEvent } from '../root';
+import { CommandMetadata } from '../root';
 import { ClientEvents } from 'discord.js';
 
 /**

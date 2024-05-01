@@ -1,5 +1,5 @@
 import { Client as DiscordClient, ClientOptions as DiscordClientOptions } from 'discord.js';
-import { DatabaseManager, DiscordEventManager, CommandManager, Logger } from '../base/';
+import { CommandManager, DatabaseManager, DiscordEventManager, Logger } from '../base/';
 import { ClientOptions, JSONHashiConfigStructure } from './';
 /**
  * The Client class. It extends the Client class from discord.js and implements extra methods for the Hashi module.

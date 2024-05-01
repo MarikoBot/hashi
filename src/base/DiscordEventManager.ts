@@ -1,7 +1,7 @@
 import { Collection } from 'discord.js';
 import { BaseClient } from './';
 import { DiscordEventInjectorTarget, InstanceInjector, InstanceValidatorReturner, Validators } from '../decorators';
-import { DiscordEvent, Client } from '../root';
+import { Client, DiscordEvent } from '../root';
 
 /**
  * Represents the event manager for the client service.
