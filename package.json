@@ -30,10 +30,11 @@
   ],
   "files": [
     "lib",
-    "package.json",
-    "README.md",
+    "types",
+    "hashi.config.schema.json",
     "LICENSE",
-    "types"
+    "package.json",
+    "README.md"
   ],
   "main": "lib/index.js",
   "types": "types/index.d.ts",
@@ -45,19 +46,9 @@
     "url": "git+https://github.com/MarikoBot/marikobot-hashi.git"
   },
   "scripts": {
-    "run-builder": "node builder.js",
     "prettier": "prettier -w src",
     "lint": "eslint",
-    "clean": "pnpm run prettier && pnpm run lint",
-    "build": "pnpm run clean && pnpm run run-builder && tsc && git add .",
-    "prepublish": "pnpm run build && git commit -m \"[BUILD] Automatic build\"",
-    "test-ts": "ts-node lab/lab.test.ts",
-    "dev": "pnpm run build && ts-node lab/lab.test.ts",
-    "post-version-push": "git push && pnpm publish && git push --tags",
-    "publish-patch": "pnpm version patch && pnpm run post-version-push",
-    "publish-minor": "pnpm version minor && pnpm run post-version-push",
-    "publish-major": "pnpm version major && pnpm run post-version-push",
-    "publish-prerel": "pnpm version prerelease --preid=prerelease && pnpm run post-version-push"
+    "clean": "npm run prettier && npm run lint"
   },
   "dependencies": {
     "chalk": "^4.1.2",
