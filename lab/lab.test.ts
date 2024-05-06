@@ -3,6 +3,7 @@ import * as dotenv from 'dotenv';
 dotenv.config({ path: `${__dirname}/.env` });
 
 import { Client, SuperModel, SuperModelColumn, DiscordEvent } from '../src';
+import { SchemaTypes } from 'mongoose';
 
 const client: Client = new Client({ ...(require('./hashi.config.json')), failIfNotExists: false });
 void client.connectDatabase();
@@ -18,13 +19,13 @@ class Ready extends DiscordEvent {
 class User extends SuperModel {
   onLoaded() {
     return {
-      discordId: new SuperModelColumn(String)
+      arcId: new SuperModelColumn(String),
+      name: new SuperModelColumn(String),
+      coverUrl: new SuperModelColumn(String),
+      chapters: new SuperModelColumn([String]),
+      visibility: new SuperModelColumn(String),
     };
   }
 }
-
-void client.db.get('user').create({
-  discordId: '1146145475683164273'
-});
 
 void client.login();

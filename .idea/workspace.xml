@@ -9,9 +9,80 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="89d49a08-5718-4cd2-b2f0-33ca857296b3" name="Changes" comment="Config file">
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab/lab.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lab/lab.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/base/BaseClient.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/base/CommandManager.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/base/Context.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/base/DataMap.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/base/DatabaseManager.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/base/DiscordEventManager.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/base/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/base/shared.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/decorators/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/decorators/shared.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/decorators/validators/ArrayValidator.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/decorators/validators/FunctionValidator.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/decorators/validators/NumberValidator.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/decorators/validators/ObjectValidator.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/decorators/validators/StringValidator.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/decorators/validators/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/features/commands/Help.default.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/features/commands/Ping.default.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/features/commands/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/features/events/Commands.default.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/features/events/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/features/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/features/shared.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/public/PublicChatInputCommandInteraction.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/public/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/root/Client.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/root/Client.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/root/Command.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/root/CoolDownManager.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/root/DataMapEntry.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/root/DiscordEvent.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/root/InterferingManager.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/root/Placeholder.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/root/SuperModel.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/root/SuperModelColumn.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/root/shared.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/root/Client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/root/Client.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/base/BaseClient.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/base/CommandManager.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/base/Context.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/base/DataMap.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/base/DatabaseManager.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/base/DiscordEventManager.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/base/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/base/shared.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/decorators/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/decorators/shared.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/decorators/validators/ArrayValidator.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/decorators/validators/FunctionValidator.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/decorators/validators/NumberValidator.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/decorators/validators/ObjectValidator.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/decorators/validators/StringValidator.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/decorators/validators/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/features/commands/Help.default.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/features/commands/Ping.default.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/features/commands/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/features/events/Commands.default.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/features/events/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/features/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/features/shared.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/public/PublicChatInputCommandInteraction.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/public/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/root/Command.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/root/CoolDownManager.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/root/DataMapEntry.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/root/DiscordEvent.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/root/InterferingManager.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/root/Placeholder.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/root/SuperModel.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/root/SuperModelColumn.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/root/shared.d.ts" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +142,7 @@
     "npm.publish-major.executor": "Run",
     "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "settings.javascript.linters.eslint",
-    "ts.external.directory.path": "C:\\Users\\panda\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "ts.external.directory.path": "C:\\Users\\panda\\OneDrive\\Documents\\projects\\mariko\\hashi\\marikobot-hashi\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -151,7 +222,9 @@
       <workItem from="1714423537505" duration="824000" />
       <workItem from="1714495122197" duration="1974000" />
       <workItem from="1714508014013" duration="8403000" />
-      <workItem from="1714584507638" duration="1990000" />
+      <workItem from="1714584507638" duration="2934000" />
+      <workItem from="1714675628006" duration="5000" />
+      <workItem from="1715033265708" duration="490000" />
     </task>
     <task id="LOCAL-00001" summary="Le big commit">
       <option name="closed" value="true" />

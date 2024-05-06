@@ -99,6 +99,7 @@ export class Client {
     process.on('uncaughtException', (err: Error, origin: NodeJS.UncaughtExceptionOrigin): void => {
       this.logger.error(err);
       this.logger.error(origin);
+      console.log(err, origin);
     });
   }
 
