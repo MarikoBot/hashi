@@ -22,7 +22,7 @@ export interface EventDefaultFeature {
   /**
    * The class constructor.
    */
-  default: new (...args: any[]) => any;
+  default: (client: any, ...args: any[]) => Promise<void> | void;
   /**
    * The metadata to inject (the name).
    */

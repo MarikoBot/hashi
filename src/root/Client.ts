@@ -148,9 +148,9 @@ export class Client {
         let featureName: string = feature.replace('Event:', '');
         let data: EventDefaultFeature;
 
-        if (featureName === 'commands') data = Features.Events.CommandsDefault.default(DiscordEvent, Client);
+        if (featureName === 'commands') data = Features.Events.CommandsDefault.default(Client);
 
-        this.events.inject(data.eventName)(data.default);
+        this.events.inject(data.eventName, data.default);
       }
     }
   }

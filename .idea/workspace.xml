@@ -9,15 +9,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="89d49a08-5718-4cd2-b2f0-33ca857296b3" name="Changes" comment="Config file">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.eslintignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.npmignore" beforeDir="false" afterPath="$PROJECT_DIR$/.npmignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eslint.config.mjs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lab/lab.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lab/lab.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab/lib/lab/lab.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/lab/lib/lab/lab.test.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/base/BaseClient.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/base/CommandManager.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/base/Context.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/base/DataMap.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/base/DatabaseManager.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/base/DiscordEventManager.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/base/Logger.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/base/index.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/base/shared.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/decorators/index.js" beforeDir="false" />
@@ -35,9 +40,10 @@
       <change beforePath="$PROJECT_DIR$/lib/features/events/index.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/features/index.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/features/shared.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/index.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/public/PublicChatInputCommandInteraction.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/public/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/root/Client.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/root/Client.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/root/Client.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/root/Command.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/root/CoolDownManager.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/root/DataMapEntry.js" beforeDir="false" />
@@ -46,15 +52,23 @@
       <change beforePath="$PROJECT_DIR$/lib/root/Placeholder.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/root/SuperModel.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/root/SuperModelColumn.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/root/index.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/root/shared.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/base/DatabaseManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/base/DatabaseManager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/base/DiscordEventManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/base/DiscordEventManager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/events/Commands.default.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/events/Commands.default.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/shared.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/shared.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/root/Client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/root/Client.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/root/Command.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/root/Command.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/root/SuperModel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/root/SuperModel.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/types/base/BaseClient.d.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/types/base/CommandManager.d.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/types/base/Context.d.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/types/base/DataMap.d.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/types/base/DatabaseManager.d.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/types/base/DiscordEventManager.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/base/Logger.d.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/types/base/index.d.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/types/base/shared.d.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/types/decorators/index.d.ts" beforeDir="false" />
@@ -72,8 +86,10 @@
       <change beforePath="$PROJECT_DIR$/types/features/events/index.d.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/types/features/index.d.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/types/features/shared.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/index.d.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/types/public/PublicChatInputCommandInteraction.d.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/types/public/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/root/Client.d.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/types/root/Command.d.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/types/root/CoolDownManager.d.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/types/root/DataMapEntry.d.ts" beforeDir="false" />
@@ -82,6 +98,7 @@
       <change beforePath="$PROJECT_DIR$/types/root/Placeholder.d.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/types/root/SuperModel.d.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/types/root/SuperModelColumn.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/root/index.d.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/types/root/shared.d.ts" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -130,6 +147,7 @@
     "ignore.virus.scanning.warn.message": "true",
     "javascript.nodejs.core.library.configured.version": "22.0.0",
     "javascript.nodejs.core.library.typings.version": "20.12.7",
+    "js.linters.configure.manually.selectedeslint": "true",
     "last_opened_file_path": "C:/Users/panda/OneDrive/Documents/projects/mariko/hashi/marikobot-hashi/lab",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
@@ -224,7 +242,9 @@
       <workItem from="1714508014013" duration="8403000" />
       <workItem from="1714584507638" duration="2934000" />
       <workItem from="1714675628006" duration="5000" />
-      <workItem from="1715033265708" duration="490000" />
+      <workItem from="1715033265708" duration="822000" />
+      <workItem from="1715034226679" duration="213000" />
+      <workItem from="1715101597361" duration="7115000" />
     </task>
     <task id="LOCAL-00001" summary="Le big commit">
       <option name="closed" value="true" />
@@ -287,6 +307,11 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/lab/lab.test.js" />
+      </list>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Le big commit" />

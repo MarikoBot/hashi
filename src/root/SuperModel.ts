@@ -43,28 +43,18 @@ export class SuperModel {
   public defaultValues: { [p: string]: any };
 
   /**
-   * The default columns loading fonction of the model.
-   * @returns Nothing.
-   */
-  @Validators.FunctionValidator.Matches
-  public onLoaded(): void | object {
-    return void 0;
-  }
-
-  /**
    * @param name The name of the model.
+   * @param tableStructure The structure of the columns.
    */
-  constructor(name: string) {
+  constructor(name: string, tableStructure: StructureColumnOrChild) {
     this.name = name;
-
-    const loaded: void | object = this.onLoaded();
-    if (loaded) this.columns = <StructureColumnOrChild>loaded;
+    this.columns = <StructureColumnOrChild>tableStructure;
 
     this.structure = SuperModel.diveObject(this.columns, 'data');
     this.defaultValues = SuperModel.diveObject(this.columns, 'defaultValue');
 
     this.schema = new Schema<typeof this.structure>(this.structure, this.defaultValues);
-    this.model = model<SchemaDefinition & Document & typeof this.structure>(this.name, this.schema);
+    this.model = model<Document & typeof this.structure>(this.name, this.schema);
   }
 
   /**

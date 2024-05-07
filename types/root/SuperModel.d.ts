@@ -57,14 +57,10 @@ export declare class SuperModel {
         [p: string]: any;
     };
     /**
-     * The default columns loading fonction of the model.
-     * @returns Nothing.
-     */
-    onLoaded(): void | object;
-    /**
      * @param name The name of the model.
+     * @param tableStructure The structure of the columns.
      */
-    constructor(name: string);
+    constructor(name: string, tableStructure: StructureColumnOrChild);
     /**
      * Generates a new object based on the property you chose to take into the current instance-value.
      * @param obj The object to dive in.

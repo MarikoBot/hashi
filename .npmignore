@@ -8,7 +8,7 @@ src
 .gitignore
 .prettierrc
 builder.js
-eslint.config.mjs
+eslint.config.js
 package-lock.json
 pnpm-lock.yaml
 tsconfig.json

@@ -91,8 +91,8 @@ export class Command {
 
   // noinspection JSUnusedGlobalSymbols
   /**
-   * The function who MUST be called at the end of your program in the call back function. IT IS REALLY IMPORTANT!
-   *
+   * The function who MUST be called at the end of your program in the callback function.
+   * IT IS REALLY IMPORTANT!
    * @returns The exit code of the command.
    */
   public end(): COMMAND_END {
@@ -102,7 +102,6 @@ export class Command {
 
   /**
    * Returns a boolean value. If the user is authorized to run the command.
-   *
    * @param interaction The interaction of the command.
    * @param metadata The metadata to check the command with.
    * @returns If the user can execute the command.
@@ -165,7 +164,6 @@ export class Command {
 
   /**
    * Verify if the cool downs, and the interfering commands of the command are ready to call the command again.
-   *
    * @param client The client that instanced the event.
    * @param interaction The associated interaction.
    * @param ctx The context within the call.

@@ -25,15 +25,17 @@ export class DiscordEventManager extends BaseClient {
   /**
    * The decorator to inject metadata into the constructor of DiscordEvent.
    * @param name The name of the event.
+   * @param callback The called function when the event is triggered.
    * @returns The decorator.
    */
-  public inject(name: string): InstanceInjector {
-    const instance: DiscordEventManager = this;
-    return function (target: DiscordEventInjectorTarget): void {
-      instance.client.logger.info(`Bound event: ${name}`);
-      instance.client.src[name === 'ready' ? 'once' : 'on'](name, (...args: any[]) =>
-        new target().callback(instance.client, ...args),
-      );
-    };
+  public inject(name: string, callback: (client: Client, ...args: any[]) => Promise<void> | void): DiscordEvent {
+    this.client.logger.info(`Bound event: ${name}`);
+
+    const event: DiscordEvent = new DiscordEvent(name);
+    event.callback = callback;
+
+    this.client.src[name === 'ready' ? 'once' : 'on'](name, (...args: any[]) => event.callback(this.client, ...args));
+
+    return event;
   }
 }

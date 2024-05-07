@@ -47,9 +47,7 @@
   },
   "scripts": {
     "prettier": "prettier -w src",
-    "lint": "eslint",
-    "clean": "npm run prettier && npm run lint",
-    "dev": "npm run prettier && npm run lint && node builder.js && ts-node lab/lab.test.ts"
+    "dev": "npm run prettier && node builder.js && ts-node lab/lab.test.ts"
   },
   "dependencies": {
     "chalk": "^4.1.2",
@@ -59,16 +57,10 @@
     "mongoose": "^7.2.2"
   },
   "devDependencies": {
-    "@eslint/js": "^9.1.1",
-    "@typescript-eslint/eslint-plugin": "^7.8.0",
-    "@typescript-eslint/parser": "^7.8.0",
-    "eslint": "^8.57.0",
-    "globals": "^15.1.0",
     "prettier": "^2.8.4",
     "ts-node": "^10.9.2",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^5.4.5",
-    "typescript-eslint": "^7.7.1"
+    "typescript": "^5.4.5"
   },
   "engines": {
     "node": ">=20.12.2",

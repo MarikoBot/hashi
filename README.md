@@ -37,7 +37,7 @@ npm install marikobot-hashi@latest
 
 First, let's build the package:
 ```bash
-npm run clean; node builder.js; tsc; git add .
+npm run prettier; node builder.js; tsc; git add .
 ```
 
 Secondly, let's box our files into a commit:
