@@ -26,6 +26,10 @@ export declare class Context extends BaseClient {
      */
     buttonInteraction: ButtonInteraction;
     /**
+     * The reply message data.
+     */
+    replyData: void | Message<boolean> | InteractionResponse<boolean>;
+    /**
      * @param client The client instance.
      * @param options The context options.
      */

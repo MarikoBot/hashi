@@ -46,6 +46,12 @@ export class Context extends BaseClient {
   public buttonInteraction: ButtonInteraction = null;
 
   /**
+   * The reply message data.
+   */
+  @(<InstanceValidator>Validators.ObjectValidator.Matches)
+  public replyData: void | Message<boolean> | InteractionResponse<boolean> = void null;
+
+  /**
    * @param client The client instance.
    * @param options The context options.
    */
@@ -77,6 +83,8 @@ export class Context extends BaseClient {
         (await interaction.reply(messageData).catch(this.command.client.logger.clean)) ||
         (await interaction.followUp(messageData).catch(this.command.client.logger.clean));
       if (!message) return null;
+
+      this.replyData = message;
     } catch (error: unknown) {
       this.command.client.logger.clean(error);
       return null;
