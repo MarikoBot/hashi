@@ -1,9 +1,11 @@
 import {
   ButtonInteraction,
   ChatInputCommandInteraction,
+  InteractionEditReplyOptions,
   InteractionReplyOptions,
   InteractionResponse,
   Message,
+  MessagePayload,
   User,
 } from 'discord.js';
 import { BaseClient, ContextChannel, ContextOptions } from './';
@@ -82,6 +84,32 @@ export class Context extends BaseClient {
       message =
         (await interaction.reply(messageData).catch(this.command.client.logger.clean)) ||
         (await interaction.followUp(messageData).catch(this.command.client.logger.clean));
+      if (!message) return null;
+
+      this.replyData = message;
+    } catch (error: unknown) {
+      this.command.client.logger.error(error);
+      return null;
+    }
+
+    return message;
+  }
+
+  /**
+   * Edit the reply to an interaction.
+   * @param messageData The message data to send (Discord.<BaseMessageOptions>).
+   * @param interaction The interaction to reply to.
+   * @returns The message instance, or null if not sent.
+   */
+  public async editReply(
+    messageData: InteractionEditReplyOptions | MessagePayload | string,
+    interaction: Context['interaction'] = this.interaction,
+  ): Promise<Message | InteractionResponse | null> {
+    if (!this.channel.isTextBased()) return null;
+    let message: void | InteractionResponse | Message;
+
+    try {
+      message = await interaction.editReply(messageData).catch(this.command.client.logger.clean);
       if (!message) return null;
 
       this.replyData = message;

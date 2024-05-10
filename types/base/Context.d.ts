@@ -1,4 +1,4 @@
-import { ButtonInteraction, ChatInputCommandInteraction, InteractionReplyOptions, InteractionResponse, Message, User } from 'discord.js';
+import { ButtonInteraction, ChatInputCommandInteraction, InteractionEditReplyOptions, InteractionReplyOptions, InteractionResponse, Message, MessagePayload, User } from 'discord.js';
 import { BaseClient, ContextChannel, ContextOptions } from './';
 import { Client, Command } from '../root';
 /**
@@ -41,4 +41,11 @@ export declare class Context extends BaseClient {
      * @returns The message instance, or null if not sent.
      */
     reply(messageData: InteractionReplyOptions | string, interaction?: Context['interaction']): Promise<Message | InteractionResponse | null>;
+    /**
+     * Edit the reply to an interaction.
+     * @param messageData The message data to send (Discord.<BaseMessageOptions>).
+     * @param interaction The interaction to reply to.
+     * @returns The message instance, or null if not sent.
+     */
+    editReply(messageData: InteractionEditReplyOptions | MessagePayload | string, interaction?: Context['interaction']): Promise<Message | InteractionResponse | null>;
 }
