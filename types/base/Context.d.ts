@@ -32,9 +32,9 @@ export declare class Context extends BaseClient {
     /**
      * The list of standalone components (ref to MarikoBot).
      */
-    standaloneComponents: new (...args: any[]) => any & {
+    standaloneComponents: (new (...args: any[]) => any & {
         component: AnyComponentBuilder;
-    };
+    })[];
     /**
      * @param client The client instance.
      * @param options The context options.
