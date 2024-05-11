@@ -57,7 +57,7 @@ export class Context extends BaseClient {
   /**
    * The list of standalone components (ref to MarikoBot).
    */
-  public standaloneComponents: object & { component?: AnyComponentBuilder }[];
+  public standaloneComponents: object & { component?: AnyComponentBuilder }[] = [];
 
   /**
    * @param client The client instance.
