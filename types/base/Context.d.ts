@@ -1,4 +1,4 @@
-import { ButtonInteraction, ChatInputCommandInteraction, InteractionEditReplyOptions, InteractionReplyOptions, InteractionResponse, Message, MessagePayload, User } from 'discord.js';
+import { AnyComponentBuilder, ButtonInteraction, ChatInputCommandInteraction, InteractionEditReplyOptions, InteractionReplyOptions, InteractionResponse, Message, MessagePayload, User } from 'discord.js';
 import { BaseClient, ContextChannel, ContextOptions } from './';
 import { Client, Command } from '../root';
 /**
@@ -29,6 +29,12 @@ export declare class Context extends BaseClient {
      * The reply message data.
      */
     replyData: void | Message<boolean> | InteractionResponse<boolean>;
+    /**
+     * The list of standalone components (ref to MarikoBot).
+     */
+    standaloneComponents: new (...args: any[]) => any & {
+        component: AnyComponentBuilder;
+    };
     /**
      * @param client The client instance.
      * @param options The context options.

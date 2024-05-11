@@ -1,4 +1,5 @@
 import {
+  AnyComponentBuilder,
   ButtonInteraction,
   ChatInputCommandInteraction,
   InteractionEditReplyOptions,
@@ -52,6 +53,11 @@ export class Context extends BaseClient {
    */
   @(<InstanceValidator>Validators.ObjectValidator.Matches)
   public replyData: void | Message<boolean> | InteractionResponse<boolean> = void null;
+
+  /**
+   * The list of standalone components (ref to MarikoBot).
+   */
+  public standaloneComponents: new (...args: any[]) => any & { component: AnyComponentBuilder };
 
   /**
    * @param client The client instance.
