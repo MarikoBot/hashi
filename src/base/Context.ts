@@ -7,6 +7,7 @@ import {
   InteractionResponse,
   Message,
   MessagePayload,
+  SelectMenuInteraction,
   User,
 } from 'discord.js';
 import { BaseClient, ContextChannel, ContextOptions } from './';
@@ -47,6 +48,12 @@ export class Context extends BaseClient {
    */
   @(<InstanceValidator>Validators.ObjectValidator.Matches)
   public buttonInteraction: ButtonInteraction = null;
+
+  /**
+   * The interaction dropdown, if there is one.
+   */
+  @(<InstanceValidator>Validators.ObjectValidator.Matches)
+  public dropdownInteraction: SelectMenuInteraction = null;
 
   /**
    * The reply message data.

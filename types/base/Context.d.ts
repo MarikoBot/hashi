@@ -1,4 +1,4 @@
-import { ButtonInteraction, ChatInputCommandInteraction, InteractionEditReplyOptions, InteractionReplyOptions, InteractionResponse, Message, MessagePayload, User } from 'discord.js';
+import { ButtonInteraction, ChatInputCommandInteraction, InteractionEditReplyOptions, InteractionReplyOptions, InteractionResponse, Message, MessagePayload, SelectMenuInteraction, User } from 'discord.js';
 import { BaseClient, ContextChannel, ContextOptions } from './';
 import { Client, Command } from '../root';
 /**
@@ -25,6 +25,10 @@ export declare class Context extends BaseClient {
      * The interaction button, if there is one.
      */
     buttonInteraction: ButtonInteraction;
+    /**
+     * The interaction dropdown, if there is one.
+     */
+    dropdownInteraction: SelectMenuInteraction;
     /**
      * The reply message data.
      */
