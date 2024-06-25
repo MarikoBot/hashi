@@ -73,5 +73,5 @@ export declare class SuperModel {
      * @param queryParameters The options usually passed into the findOne function.
      * @returns The fetched data as the correct type.
      */
-    findOne<ReturnType extends unknown>(...queryParameters: unknown[]): ReturnType;
+    findOne<ReturnType extends unknown>(...queryParameters: unknown[]): Promise<ReturnType>;
 }

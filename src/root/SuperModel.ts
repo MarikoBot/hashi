@@ -83,7 +83,7 @@ export class SuperModel {
    * @param queryParameters The options usually passed into the findOne function.
    * @returns The fetched data as the correct type.
    */
-  public findOne<ReturnType extends unknown>(...queryParameters: unknown[]): ReturnType {
-    return <ReturnType>this.model.findOne(...queryParameters);
+  public async findOne<ReturnType extends unknown>(...queryParameters: unknown[]): Promise<ReturnType> {
+    return <ReturnType>await this.model.findOne(...queryParameters).exec();
   }
 }
