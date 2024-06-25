@@ -77,4 +77,13 @@ export class SuperModel {
 
     return obj;
   }
+
+  /**
+   * Get data from the object based on the type of data that will be used after. Optimize the type forcing.
+   * @param queryParameters The options usually passed into the findOne function.
+   * @returns The fetched data as the correct type.
+   */
+  public findOne<ReturnType extends unknown>(...queryParameters: unknown[]): ReturnType {
+    return <ReturnType>this.model.findOne(...queryParameters);
+  }
 }

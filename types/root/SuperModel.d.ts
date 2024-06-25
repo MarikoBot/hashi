@@ -68,4 +68,10 @@ export declare class SuperModel {
      * @returns An object (the finale one or a child).
      */
     private static diveObject;
+    /**
+     * Get data from the object based on the type of data that will be used after. Optimize the type forcing.
+     * @param queryParameters The options usually passed into the findOne function.
+     * @returns The fetched data as the correct type.
+     */
+    findOne<ReturnType extends unknown>(...queryParameters: unknown[]): ReturnType;
 }
