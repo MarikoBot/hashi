@@ -1,10 +1,8 @@
-import { BaseClient } from './index';
-import { Client, LoggerMode } from '../root';
-import { MessageCreateOptions } from 'discord.js';
+import { LoggerMode } from '../root';
 /**
  * The Logger class. Contains multiple functions to log data.
  */
-export declare class Logger extends BaseClient {
+export declare class Logger {
     /**
      * Split a str to make it fit into a given size.
      * @param str The str to crop.
@@ -61,14 +59,6 @@ export declare class Logger extends BaseClient {
      * @returns Nothing.
      */
     static clean(...args: any[]): void;
-    /**
-     * Logs something in the Discord "status" channel.
-     * @param client The associated client.
-     * @param channelIdentifier The channel identifier into the config object.
-     * @param messages The messages data to send.
-     * @returns Nothing.
-     */
-    static sendTo(client: Client, channelIdentifier: string, ...messages: MessageCreateOptions[]): Promise<void>;
     /**
      * Logs something in the console using the chosen assets.
      * @param mode The mode (assets pack).

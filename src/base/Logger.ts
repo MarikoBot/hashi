@@ -1,13 +1,10 @@
 import * as chalk from 'chalk';
-import { BaseClient } from './index';
-import { InstanceValidator, Validators } from '../decorators';
-import { Client, LoggerMode, loggerModes } from '../root';
-import { Channel, MessageCreateOptions, TextChannel } from 'discord.js';
+import { LoggerMode, loggerModes } from '../root';
 
 /**
  * The Logger class. Contains multiple functions to log data.
  */
-export class Logger extends BaseClient {
+export class Logger {
   /**
    * Split a str to make it fit into a given size.
    * @param str The str to crop.
@@ -90,25 +87,6 @@ export class Logger extends BaseClient {
    */
   public static clean(...args: any[]): void {
     this.log('clean', args);
-  }
-
-  /**
-   * Logs something in the Discord "status" channel.
-   * @param client The associated client.
-   * @param channelIdentifier The channel identifier into the config object.
-   * @param messages The messages data to send.
-   * @returns Nothing.
-   */
-  public static async sendTo(
-    client: Client,
-    channelIdentifier: string,
-    ...messages: MessageCreateOptions[]
-  ): Promise<void> {
-    const channel: Channel = await client.src.channels.fetch(client.config.channels[channelIdentifier]);
-
-    if (channel instanceof TextChannel) {
-      for (const msg of messages) await channel.send(msg).catch(this.clean);
-    }
   }
 
   /**
