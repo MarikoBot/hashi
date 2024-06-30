@@ -32,7 +32,7 @@ export class Logger {
    * @returns Nothing.
    */
   public static error(...args: any[]): void {
-    Logger.log('error', args);
+    Logger.log('error', ...args);
   }
 
   /**
@@ -41,7 +41,7 @@ export class Logger {
    * @returns Nothing.
    */
   public static success(...args: any[]): void {
-    Logger.log('success', args);
+    Logger.log('success', ...args);
   }
 
   /**
@@ -50,7 +50,7 @@ export class Logger {
    * @returns Nothing.
    */
   public static warning(...args: any[]): void {
-    Logger.log('warning', args);
+    Logger.log('warning', ...args);
   }
 
   /**
@@ -59,7 +59,7 @@ export class Logger {
    * @returns Nothing.
    */
   public static info(...args: any[]): void {
-    Logger.log('info', args);
+    Logger.log('info', ...args);
   }
 
   /**
@@ -68,7 +68,7 @@ export class Logger {
    * @returns Nothing.
    */
   public static debug(...args: any[]): void {
-    Logger.log('debug', args);
+    Logger.log('debug', ...args);
   }
 
   /**
@@ -77,7 +77,7 @@ export class Logger {
    * @returns Nothing.
    */
   public static test(...args: any[]): void {
-    Logger.log('test', args);
+    Logger.log('test', ...args);
   }
 
   /**
@@ -86,7 +86,7 @@ export class Logger {
    * @returns Nothing.
    */
   public static clean(...args: any[]): void {
-    Logger.log('clean', args);
+    Logger.log('clean', ...args);
   }
 
   /**
@@ -111,11 +111,11 @@ export class Logger {
 
     const assets: chalk.Chalk = background === 'DEFAULT' ? chalk[color] : chalk[background][color];
 
-    console.log(
-      assets(`${this.prefix(mode, process.env.PROJECT_NAME.toLowerCase())} →`),
-      assets(args.map((arg: any): string[] => arg.map((argShard: string): string => argShard).join('')).join('')),
-    );
-    console.log(process.env.DEV_MODE);
-    if (process.env.DEV_MODE === 'true') console.log(args);
+    if (process.env.DEV_MODE === 'false')
+      console.log(assets(`${this.prefix(mode, process.env.PROJECT_NAME.toLowerCase())} →`), assets(...args));
+    if (process.env.DEV_MODE === 'true') {
+      console.log(assets(`${this.prefix(mode, process.env.PROJECT_NAME.toLowerCase())} ↵`));
+      console.log(...args);
+    }
   }
 }

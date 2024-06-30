@@ -2,7 +2,7 @@
 import * as dotenv from 'dotenv';
 dotenv.config({ path: `${__dirname}/.env` });
 
-import { Client, SuperModel, SuperModelColumn, DiscordEvent } from '../src';
+import { Client, SuperModel, SuperModelColumn } from '../src';
 import { Logger } from '../types';
 
 const client: Client = new Client({ ...(require('./hashi.config.json')), failIfNotExists: false });
@@ -11,7 +11,7 @@ void client.connectDatabase();
 client.events.inject(
   'ready',
   function callback(client: Client): void {
-    void Logger.sendTo(client, 'status', { content: '<:MarikoOnline:1186296992629014558> The bot is now **online**.' });
+    // void Logger.sendTo(client, 'status', { content: '<:MarikoOnline:1186296992629014558> The bot is now **online**.' });
   },
 );
 

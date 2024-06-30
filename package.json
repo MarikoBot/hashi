@@ -47,7 +47,7 @@
   },
   "scripts": {
     "prettier": "prettier -w src",
-    "dev": "npm run prettier && node builder.js && ts-node lab/lab.test.ts"
+    "dev": "npm run prettier && node builder.js && tsc && ts-node lab/lab.test.ts"
   },
   "dependencies": {
     "chalk": "^4.1.2",
