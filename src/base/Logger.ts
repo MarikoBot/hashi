@@ -9,12 +9,6 @@ import { Channel, MessageCreateOptions, TextChannel } from 'discord.js';
  */
 export class Logger extends BaseClient {
   /**
-   * The name of the project.
-   */
-  @(<InstanceValidator>Validators.StringValidator.NotEmpty)
-  public static readonly projectName: string = process.env.PROJECT_NAME;
-
-  /**
    * Split a str to make it fit into a given size.
    * @param str The str to crop.
    * @param max The max length limit.
@@ -31,7 +25,7 @@ export class Logger extends BaseClient {
    * @param str The string to split to fit a given size.
    * @returns The prefix (str).
    */
-  public static prefix(mode: string, str: string = this.projectName.toLowerCase()): string {
+  public static prefix(mode: string, str: string = process.env.PROJECT_NAME.toLowerCase()): string {
     return `(${Logger.crop(mode, 'flex')}) ${Logger.crop(str, 'flex')}`;
   }
 
@@ -140,7 +134,7 @@ export class Logger extends BaseClient {
     const assets: chalk.Chalk = background === 'DEFAULT' ? chalk[color] : chalk[background][color];
 
     console.log(
-      assets(`${this.prefix(mode, this.projectName.toLowerCase())} →`),
+      assets(`${this.prefix(mode, process.env.PROJECT_NAME.toLowerCase())} →`),
       assets(args.map((arg: any): string[] => arg.map((argShard: string): string => argShard).join('')).join('')),
     );
   }

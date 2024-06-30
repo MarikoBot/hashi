@@ -6,10 +6,6 @@ import { MessageCreateOptions } from 'discord.js';
  */
 export declare class Logger extends BaseClient {
     /**
-     * The name of the project.
-     */
-    static readonly projectName: string;
-    /**
      * Split a str to make it fit into a given size.
      * @param str The str to crop.
      * @param max The max length limit.
