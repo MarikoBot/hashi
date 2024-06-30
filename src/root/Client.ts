@@ -95,10 +95,12 @@ export class Client {
       family: Number(options.config.database.addressFamily.replace('IPv', '')),
     };
 
-    process.on('unhandledRejection', (reason: object & { stack: any }) => this.logger.error(reason?.stack || reason));
+    process.on('unhandledRejection', (reason: object & { stack: any }) =>
+      new Logger(this).error(reason?.stack || reason),
+    );
     process.on('uncaughtException', (err: Error, origin: NodeJS.UncaughtExceptionOrigin): void => {
-      this.logger.error(err);
-      this.logger.error(origin);
+      new Logger(this).error(err);
+      new Logger(this).error(origin);
       console.log(err, origin);
     });
   }

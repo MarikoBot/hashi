@@ -9,7 +9,8 @@
     "declaration": true,
     "declarationDir": "./types",
     "skipLibCheck": true,
-    "typeRoots": ["node_modules/@types", "./types/index.d.ts"]
+    "typeRoots": ["node_modules/@types", "./types/index.d.ts"],
+    "newLine": "crlf"
   },
   "include": [
     "./src/*.ts",
