@@ -96,11 +96,11 @@ export class Client {
     };
 
     process.on('unhandledRejection', (reason: object & { stack: any }) =>
-      new Logger(this).error(reason?.stack || reason),
+      new Logger(this).log('error', reason?.stack || reason),
     );
     process.on('uncaughtException', (err: Error, origin: NodeJS.UncaughtExceptionOrigin): void => {
-      new Logger(this).error(err);
-      new Logger(this).error(origin);
+      new Logger(this).log('error', err);
+      new Logger(this).log('error', origin);
       console.log(err, origin);
     });
   }
