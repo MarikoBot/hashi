@@ -1,12 +1,6 @@
-import { connect, ConnectOptions, Model, SchemaDefinition, SchemaDefinitionProperty } from 'mongoose';
-import { BaseClient, DataMap, DataMapsObject, TypedDataMapStored } from './';
-import {
-  InstanceInjector,
-  InstanceValidator,
-  InstanceValidatorReturner,
-  SuperModelInjectorTarget,
-  Validators,
-} from '../decorators';
+import { connect, ConnectOptions, Model } from 'mongoose';
+import { BaseClient, DataMap, DataMapsObject, Logger, TypedDataMapStored } from './';
+import { InstanceValidator, InstanceValidatorReturner, Validators } from '../decorators';
 import { Client, StructureColumnOrChild, SuperModel } from '../root';
 
 /**
@@ -83,7 +77,7 @@ export class DatabaseManager extends BaseClient {
    * @returns The decorator.
    */
   public inject(name: string, columns: StructureColumnOrChild): SuperModel {
-    this.client.logger.info(`Bound model: ${name}`);
+    Logger.info(`Bound model: ${name}`);
 
     this.dataMaps[name] = new DataMap<TypedDataMapStored>(this.client, name);
     this.createDataMap(name);

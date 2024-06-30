@@ -1,5 +1,4 @@
 import {
-  AnyComponentBuilder,
   ButtonInteraction,
   ChatInputCommandInteraction,
   InteractionEditReplyOptions,
@@ -10,7 +9,7 @@ import {
   SelectMenuInteraction,
   User,
 } from 'discord.js';
-import { BaseClient, ContextChannel, ContextOptions } from './';
+import { BaseClient, ContextChannel, ContextOptions, Logger } from './';
 import { InstanceValidator, InstanceValidatorReturner, Validators } from '../decorators';
 import { PublicChatInputCommandInteraction } from '../public';
 import { Client, Command } from '../root';
@@ -95,13 +94,13 @@ export class Context extends BaseClient {
 
     try {
       message =
-        (await interaction.reply(messageData).catch(this.command.client.logger.clean)) ||
-        (await interaction.followUp(messageData).catch(this.command.client.logger.clean));
+        (await interaction.reply(messageData).catch(Logger.clean)) ||
+        (await interaction.followUp(messageData).catch(Logger.clean));
       if (!message) return null;
 
       this.replyData = message;
     } catch (error: unknown) {
-      this.command.client.logger.error(error);
+      Logger.error(error);
       return null;
     }
 
@@ -122,12 +121,12 @@ export class Context extends BaseClient {
     let message: void | InteractionResponse | Message;
 
     try {
-      message = await interaction.editReply(messageData).catch(this.command.client.logger.clean);
+      message = await interaction.editReply(messageData).catch(Logger.clean);
       if (!message) return null;
 
       this.replyData = message;
     } catch (error: unknown) {
-      this.command.client.logger.clean(error);
+      Logger.clean(error);
       return null;
     }
 

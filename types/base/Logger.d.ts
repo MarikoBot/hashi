@@ -8,11 +8,7 @@ export declare class Logger extends BaseClient {
     /**
      * The name of the project.
      */
-    readonly projectName: string;
-    /**
-     * @param client The client instance.
-     */
-    constructor(client: Client);
+    static readonly projectName: string;
     /**
      * Split a str to make it fit into a given size.
      * @param str The str to crop.
@@ -26,61 +22,62 @@ export declare class Logger extends BaseClient {
      * @param str The string to split to fit a given size.
      * @returns The prefix (str).
      */
-    prefix(mode: string, str?: string): string;
+    static prefix(mode: string, str?: string): string;
     /**
      * Logs something in the console using the error assets.
      * @param args The data to print.
      * @returns Nothing.
      */
-    error(...args: any[]): void;
+    static error(...args: any[]): void;
     /**
      * Logs something in the console using the success assets.
      * @param args The data to print.
      * @returns Nothing.
      */
-    success(...args: any[]): void;
+    static success(...args: any[]): void;
     /**
      * Logs something in the console using the warning assets.
      * @param args The data to print.
      * @returns Nothing.
      */
-    warning(...args: any[]): void;
+    static warning(...args: any[]): void;
     /**
      * Logs something in the console using the info assets.
      * @param args The data to print.
      * @returns Nothing.
      */
-    info(...args: any[]): void;
+    static info(...args: any[]): void;
     /**
      * Logs something in the console using the debug assets.
      * @param args The data to print.
      * @returns Nothing.
      */
-    debug(...args: any[]): void;
+    static debug(...args: any[]): void;
     /**
      * Logs something in the console using the test assets.
      * @param args The data to print.
      * @returns Nothing.
      */
-    test(...args: any[]): void;
+    static test(...args: any[]): void;
     /**
      * Logs something in the console using the clean assets.
      * @param args The data to print.
      * @returns Nothing.
      */
-    clean(...args: any[]): void;
+    static clean(...args: any[]): void;
     /**
      * Logs something in the Discord "status" channel.
+     * @param client The associated client.
      * @param channelIdentifier The channel identifier into the config object.
      * @param messages The messages data to send.
      * @returns Nothing.
      */
-    sendTo(channelIdentifier: string, ...messages: MessageCreateOptions[]): Promise<void>;
+    static sendTo(client: Client, channelIdentifier: string, ...messages: MessageCreateOptions[]): Promise<void>;
     /**
      * Logs something in the console using the chosen assets.
      * @param mode The mode (assets pack).
      * @param args The data to print.
      * @returns Nothing.
      */
-    log(mode: LoggerMode | string, ...args: any[]): void;
+    static log(mode: LoggerMode | string, ...args: any[]): void;
 }

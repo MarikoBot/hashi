@@ -1,5 +1,5 @@
 import { ChatInputApplicationCommandData, ChatInputCommandInteraction, GuildMemberRoleManager } from 'discord.js';
-import { Context } from '../base';
+import { Context, Logger } from '../base';
 import { InstanceValidator, InstanceValidatorReturner, Validators } from '../decorators';
 import {
   bitRecord,
@@ -85,7 +85,7 @@ export class Command {
    * @returns If the command ran successfully or not.
    */
   public async callback(client: Client, ctx: Context): Promise<COMMAND_END> {
-    this.client.logger.info(client, ctx);
+    Logger.info(client, ctx);
     return COMMAND_END.SUCCESS;
   }
 
@@ -155,7 +155,7 @@ export class Command {
       const errorCode: string = `${missing.length}${missing
         .map((e: CommandPrivilegesKey) => Number(bitRecord[e]))
         .reduce((acc: number, val: number) => acc + val, 0)}`;
-      this.client.logger.debug(missing);
+      Logger.debug(missing);
       void this.client.commands.authorizationCallback(this.context, errorCode);
     }
 

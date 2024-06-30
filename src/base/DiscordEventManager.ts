@@ -1,6 +1,6 @@
 import { Collection } from 'discord.js';
-import { BaseClient } from './';
-import { DiscordEventInjectorTarget, InstanceInjector, InstanceValidatorReturner, Validators } from '../decorators';
+import { BaseClient, Logger } from './';
+import { InstanceValidatorReturner, Validators } from '../decorators';
 import { Client, DiscordEvent } from '../root';
 
 /**
@@ -29,7 +29,7 @@ export class DiscordEventManager extends BaseClient {
    * @returns The decorator.
    */
   public inject(name: string, callback: (client: Client, ...args: any[]) => Promise<void> | void): DiscordEvent {
-    this.client.logger.info(`Bound event: ${name}`);
+    Logger.info(`Bound event: ${name}`);
 
     const event: DiscordEvent = new DiscordEvent(name);
     event.callback = callback;

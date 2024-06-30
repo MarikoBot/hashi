@@ -71,15 +71,7 @@
           "pattern": "[0-9]"
         }
       ]
-    },
-    "projectName": {
-      "type": "string",
-      "title": "Project Name",
-      "description": "The name of the project (used into the logger).",
-      "pattern": "^[a-zA-Z_0-9][a-zA-Z0-9_ -]{2,62}[a-zA-Z_0-9]$",
-      "minLength": 3,
-      "maxLength": 18
     }
   },
-  "required": ["channels", "database", "defaultFeatures", "intents", "projectName"]
+  "required": ["channels", "database", "defaultFeatures", "intents"]
 }

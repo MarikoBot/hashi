@@ -12,14 +12,7 @@ export class Logger extends BaseClient {
    * The name of the project.
    */
   @(<InstanceValidator>Validators.StringValidator.NotEmpty)
-  public readonly projectName: string;
-  /**
-   * @param client The client instance.
-   */
-  constructor(client: Client) {
-    super(client);
-    this.projectName = client.config.projectName;
-  }
+  public static readonly projectName: string = process.env.PROJECT_NAME;
 
   /**
    * Split a str to make it fit into a given size.
@@ -38,7 +31,7 @@ export class Logger extends BaseClient {
    * @param str The string to split to fit a given size.
    * @returns The prefix (str).
    */
-  public prefix(mode: string, str: string = this.projectName.toLowerCase()): string {
+  public static prefix(mode: string, str: string = this.projectName.toLowerCase()): string {
     return `(${Logger.crop(mode, 'flex')}) ${Logger.crop(str, 'flex')}`;
   }
 
@@ -47,7 +40,7 @@ export class Logger extends BaseClient {
    * @param args The data to print.
    * @returns Nothing.
    */
-  public error(...args: any[]): void {
+  public static error(...args: any[]): void {
     this.log('error', args);
   }
 
@@ -56,7 +49,7 @@ export class Logger extends BaseClient {
    * @param args The data to print.
    * @returns Nothing.
    */
-  public success(...args: any[]): void {
+  public static success(...args: any[]): void {
     this.log('success', args);
   }
 
@@ -65,7 +58,7 @@ export class Logger extends BaseClient {
    * @param args The data to print.
    * @returns Nothing.
    */
-  public warning(...args: any[]): void {
+  public static warning(...args: any[]): void {
     this.log('warning', args);
   }
 
@@ -74,7 +67,7 @@ export class Logger extends BaseClient {
    * @param args The data to print.
    * @returns Nothing.
    */
-  public info(...args: any[]): void {
+  public static info(...args: any[]): void {
     this.log('info', args);
   }
 
@@ -83,7 +76,7 @@ export class Logger extends BaseClient {
    * @param args The data to print.
    * @returns Nothing.
    */
-  public debug(...args: any[]): void {
+  public static debug(...args: any[]): void {
     this.log('debug', args);
   }
 
@@ -92,7 +85,7 @@ export class Logger extends BaseClient {
    * @param args The data to print.
    * @returns Nothing.
    */
-  public test(...args: any[]): void {
+  public static test(...args: any[]): void {
     this.log('test', args);
   }
 
@@ -101,19 +94,23 @@ export class Logger extends BaseClient {
    * @param args The data to print.
    * @returns Nothing.
    */
-  public clean(...args: any[]): void {
-    console.log("it's clean!");
+  public static clean(...args: any[]): void {
     this.log('clean', args);
   }
 
   /**
    * Logs something in the Discord "status" channel.
+   * @param client The associated client.
    * @param channelIdentifier The channel identifier into the config object.
    * @param messages The messages data to send.
    * @returns Nothing.
    */
-  public async sendTo(channelIdentifier: string, ...messages: MessageCreateOptions[]): Promise<void> {
-    const channel: Channel = await this.client.src.channels.fetch(this.client.config.channels[channelIdentifier]);
+  public static async sendTo(
+    client: Client,
+    channelIdentifier: string,
+    ...messages: MessageCreateOptions[]
+  ): Promise<void> {
+    const channel: Channel = await client.src.channels.fetch(client.config.channels[channelIdentifier]);
 
     if (channel instanceof TextChannel) {
       for (const msg of messages) await channel.send(msg).catch(this.clean);
@@ -126,7 +123,7 @@ export class Logger extends BaseClient {
    * @param args The data to print.
    * @returns Nothing.
    */
-  public log(mode: LoggerMode | string, ...args: any[]): void {
+  public static log(mode: LoggerMode | string, ...args: any[]): void {
     const color: string = loggerModes.includes(<LoggerMode>mode)
       ? {
           error: 'red',

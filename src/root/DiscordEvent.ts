@@ -1,5 +1,6 @@
 import { InstanceValidator, InstanceValidatorReturner, Validators } from '../decorators';
 import { Client } from './';
+import { Logger } from '../base';
 
 /**
  * Represents an Event on client service.
@@ -25,7 +26,7 @@ export class DiscordEvent {
    */
   @Validators.FunctionValidator.Matches
   public callback(client: Client, ...args: any[]): Promise<void> | void {
-    this.client.logger.debug(client, args);
+    Logger.debug(client, args);
     return null;
   }
 

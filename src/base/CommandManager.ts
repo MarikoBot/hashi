@@ -1,5 +1,5 @@
 import { APIApplicationCommand, ChatInputCommandInteraction, Collection } from 'discord.js';
-import { BaseClient, Context } from './';
+import { BaseClient, Context, Logger } from './';
 import {
   CommandInjectorTarget,
   InstanceInjector,
@@ -142,7 +142,7 @@ export class CommandManager extends BaseClient {
   public inject(metadata: CommandMetadata): InstanceInjector {
     const instance: CommandManager = this;
     return function (target: CommandInjectorTarget): void {
-      instance.client.logger.info(`Bound command: ${metadata.id}`);
+      Logger.info(`Bound command: ${metadata.id}`);
 
       if (!('src' in metadata)) throw new Error(`A slash-based command shall have a 'src' property into its metadata.`);
 

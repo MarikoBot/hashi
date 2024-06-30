@@ -17,7 +17,7 @@ import {
 } from '../base/';
 import { InstanceValidator, InstanceValidatorReturner, Validators } from '../decorators';
 import * as Features from '../features';
-import { ClientOptions, Command, DiscordEvent, JSONHashiConfigStructure } from './';
+import { ClientOptions, Command, JSONHashiConfigStructure } from './';
 import { CommandDefaultFeature, EventDefaultFeature } from '../features/shared';
 
 /**
@@ -83,8 +83,7 @@ export class Client {
     });
     this.config = options.config;
 
-    this.logger = new Logger(this);
-    this.logger.info(`Process initialization.`);
+    Logger.info(`Process initialization.`);
 
     void this.loadDefaultFeatures(this.config.defaultFeatures);
 
@@ -95,12 +94,10 @@ export class Client {
       family: Number(options.config.database.addressFamily.replace('IPv', '')),
     };
 
-    process.on('unhandledRejection', (reason: object & { stack: any }) =>
-      new Logger(this).log('error', reason?.stack || reason),
-    );
+    process.on('unhandledRejection', (reason: object & { stack: any }) => Logger.log('error', reason?.stack || reason));
     process.on('uncaughtException', (err: Error, origin: NodeJS.UncaughtExceptionOrigin): void => {
-      new Logger(this).log('error', err);
-      new Logger(this).log('error', origin);
+      Logger.log('error', err);
+      Logger.log('error', origin);
       console.log(err, origin);
     });
   }
@@ -162,9 +159,9 @@ export class Client {
    * @returns Nothing.
    */
   public async connectDatabase(): Promise<void> {
-    this.logger.info('Database is connecting...');
+    Logger.info('Database is connecting...');
     await this.db.connect();
-    this.logger.success('Database is connected.');
+    Logger.success('Database is connected.');
   }
 
   /**
@@ -173,14 +170,14 @@ export class Client {
    * @returns Nothing.
    */
   public async login(token: string = process.env.TOKEN || process.env.token || process.env.Token): Promise<string> {
-    this.logger.info('Bot is connecting...');
+    Logger.info('Bot is connecting...');
     await this.src.login(token);
-    this.logger.success('Bot is connected.');
+    Logger.success('Bot is connected.');
 
     void (await this.src.application.commands.set(
       <readonly ApplicationCommandDataResolvable[]>this.commands.discordCommandsData,
     ));
-    this.logger.success('Commands loaded.');
+    Logger.success('Commands loaded.');
 
     let i: number = -1;
     let dataMap: DataMap<TypedDataMapStored>;
@@ -189,7 +186,7 @@ export class Client {
       if (dataMap.intents.includes(DATAMAP_INTENTS.CORE)) await dataMap.refreshCore();
     }
 
-    this.logger.info(`The client is successfully launched on Discord as ${this.src.user.tag}.`);
+    Logger.info(`The client is successfully launched on Discord as ${this.src.user.tag}.`);
 
     return '0';
   }

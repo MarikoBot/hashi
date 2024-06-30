@@ -9,6 +9,5 @@
     "connectionURI": "mongodb://localhost:27017/",
     "databaseName": "hashi-plate"
   },
-  "defaultFeatures": ["Command:help", "Command:ping", "Event:commands"],
-  "projectName": "MarikoBot-Hashi"
+  "defaultFeatures": ["Command:help", "Command:ping", "Event:commands"]
 }
