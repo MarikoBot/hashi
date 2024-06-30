@@ -115,5 +115,6 @@ export class Logger {
       assets(`${this.prefix(mode, process.env.PROJECT_NAME.toLowerCase())} →`),
       assets(args.map((arg: any): string[] => arg.map((argShard: string): string => argShard).join('')).join('')),
     );
+    if (process.env.DEV_MODE) console.log(args);
   }
 }
