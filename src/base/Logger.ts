@@ -102,6 +102,7 @@ export class Logger extends BaseClient {
    * @returns Nothing.
    */
   public clean(...args: any[]): void {
+    console.log("it's clean!");
     this.log('clean', args);
   }
 
