@@ -94,10 +94,14 @@ export class Client {
       family: Number(options.config.database.addressFamily.replace('IPv', '')),
     };
 
-    process.on('unhandledRejection', (reason: Error) => {
+    process.on('unhandledRejection', (reason: Error): void => {
+      Logger.log('error', reason);
+      Logger.log('error', reason.stack);
       console.log(reason, reason.stack);
     });
     process.on('uncaughtException', (err: Error, origin: NodeJS.UncaughtExceptionOrigin): void => {
+      Logger.log('error', err);
+      Logger.log('error', origin);
       console.log(err, origin);
     });
   }

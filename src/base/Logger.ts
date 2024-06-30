@@ -32,7 +32,8 @@ export class Logger {
    * @returns Nothing.
    */
   public static error(...args: any[]): void {
-    this.log('error', args);
+    console.log('error call', args);
+    Logger.log('error', args);
   }
 
   /**
@@ -41,7 +42,8 @@ export class Logger {
    * @returns Nothing.
    */
   public static success(...args: any[]): void {
-    this.log('success', args);
+    console.log('success call', args);
+    Logger.log('success', args);
   }
 
   /**
@@ -50,7 +52,8 @@ export class Logger {
    * @returns Nothing.
    */
   public static warning(...args: any[]): void {
-    this.log('warning', args);
+    console.log('warning call', args);
+    Logger.log('warning', args);
   }
 
   /**
@@ -59,7 +62,8 @@ export class Logger {
    * @returns Nothing.
    */
   public static info(...args: any[]): void {
-    this.log('info', args);
+    console.log('info call', args);
+    Logger.log('info', args);
   }
 
   /**
@@ -68,7 +72,8 @@ export class Logger {
    * @returns Nothing.
    */
   public static debug(...args: any[]): void {
-    this.log('debug', args);
+    console.log('debug call', args);
+    Logger.log('debug', args);
   }
 
   /**
@@ -77,7 +82,8 @@ export class Logger {
    * @returns Nothing.
    */
   public static test(...args: any[]): void {
-    this.log('test', args);
+    console.log('test call', args);
+    Logger.log('test', args);
   }
 
   /**
@@ -86,7 +92,8 @@ export class Logger {
    * @returns Nothing.
    */
   public static clean(...args: any[]): void {
-    this.log('clean', args);
+    console.log('clean call', args);
+    Logger.log('clean', args);
   }
 
   /**
