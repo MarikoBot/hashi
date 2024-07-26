@@ -47,19 +47,22 @@
   },
   "scripts": {
     "prettier": "prettier -w src",
-    "dev": "npm run prettier && node builder.js && tsc && ts-node lab/lab.test.ts"
+    "dev": "npm run prettier && node builder.js && tsc && ts-node lab/lab.test.ts",
+    "doc": "node doc.builder.js"
   },
   "dependencies": {
     "chalk": "^4.1.2",
     "discord-api-types": "^0.37.38",
     "discord.js": "^14.12.1",
     "dotenv": "^16.3.1",
-    "mongoose": "^7.2.2"
+    "mongoose": "^7.2.2",
+    "typedoc-material-theme": "^1.1.0"
   },
   "devDependencies": {
     "prettier": "^2.8.4",
     "ts-node": "^10.9.2",
     "tslint-config-prettier": "^1.18.0",
+    "typedoc": "^0.26.5",
     "typescript": "^5.4.5"
   },
   "engines": {

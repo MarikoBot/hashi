@@ -1,5 +1,6 @@
 .git
 .idea
+docs
 lab
 node_modules
 src
