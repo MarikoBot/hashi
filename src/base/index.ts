@@ -1,4 +1,4 @@
-// Global exports (classes only)
+// Global exports
 export * from './BaseClient';
 
 export * from './CommandManager';

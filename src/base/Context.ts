@@ -1,12 +1,15 @@
 import {
   ButtonInteraction,
   ChatInputCommandInteraction,
+  InteractionEditReplyOptions,
   InteractionReplyOptions,
   InteractionResponse,
   Message,
+  MessagePayload,
+  SelectMenuInteraction,
   User,
 } from 'discord.js';
-import { BaseClient, ContextChannel, ContextOptions } from './';
+import { BaseClient, ContextChannel, ContextOptions, Logger } from './';
 import { InstanceValidator, InstanceValidatorReturner, Validators } from '../decorators';
 import { PublicChatInputCommandInteraction } from '../public';
 import { Client, Command } from '../root';
@@ -46,6 +49,23 @@ export class Context extends BaseClient {
   public buttonInteraction: ButtonInteraction = null;
 
   /**
+   * The interaction dropdown, if there is one.
+   */
+  @(<InstanceValidator>Validators.ObjectValidator.Matches)
+  public dropdownInteraction: SelectMenuInteraction = null;
+
+  /**
+   * The reply message data.
+   */
+  @(<InstanceValidator>Validators.ObjectValidator.Matches)
+  public replyData: void | Message<boolean> | InteractionResponse<boolean> = void null;
+
+  /**
+   * The list of standalone components (ref to MarikoBot).
+   */
+  public standaloneComponents: object & { [k: string]: any }[][] = [];
+
+  /**
    * @param client The client instance.
    * @param options The context options.
    */
@@ -74,11 +94,39 @@ export class Context extends BaseClient {
 
     try {
       message =
-        (await interaction.reply(messageData).catch(this.command.client.logger.clean)) ||
-        (await interaction.followUp(messageData).catch(this.command.client.logger.clean));
+        (await interaction.reply(messageData).catch(Logger.clean)) ||
+        (await interaction.followUp(messageData).catch(Logger.clean));
       if (!message) return null;
+
+      this.replyData = message;
     } catch (error: unknown) {
-      this.command.client.logger.clean(error);
+      Logger.error(error);
+      return null;
+    }
+
+    return message;
+  }
+
+  /**
+   * Edit the reply to an interaction.
+   * @param messageData The message data to send (Discord.<BaseMessageOptions>).
+   * @param interaction The interaction to reply to.
+   * @returns The message instance, or null if not sent.
+   */
+  public async editReply(
+    messageData: InteractionEditReplyOptions | MessagePayload | string,
+    interaction: Context['interaction'] = this.interaction,
+  ): Promise<Message | InteractionResponse | null> {
+    if (!this.channel.isTextBased()) return null;
+    let message: void | InteractionResponse | Message;
+
+    try {
+      message = await interaction.editReply(messageData).catch(Logger.clean);
+      if (!message) return null;
+
+      this.replyData = message;
+    } catch (error: unknown) {
+      Logger.clean(error);
       return null;
     }
 

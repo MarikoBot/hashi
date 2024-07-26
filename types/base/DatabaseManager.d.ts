@@ -22,10 +22,9 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { ConnectOptions, Model, SchemaDefinition } from 'mongoose';
+import { ConnectOptions, Model } from 'mongoose';
 import { BaseClient, DataMap, DataMapsObject, TypedDataMapStored } from './';
-import { InstanceInjector } from '../decorators';
-import { Client, SuperModel } from '../root';
+import { Client, StructureColumnOrChild, SuperModel } from '../root';
 /**
  * The class who manages the database of the project.
  */
@@ -68,13 +67,14 @@ export declare class DatabaseManager extends BaseClient {
     /**
      * The decorator to inject metadata into the constructor of an extension of SuperModel.
      * @param name The name of the super-SuperModel.
+     * @param columns The columns object.
      * @returns The decorator.
      */
-    inject(name: string): InstanceInjector;
+    inject(name: string, columns: StructureColumnOrChild): SuperModel;
     /**
      * Get a table and its model.
      * @param name The name of the table.
      * @returns The model of the table.
      */
-    get(name: string): Model<SchemaDefinition & Document & any>;
+    get(name: string): Model<any>;
 }

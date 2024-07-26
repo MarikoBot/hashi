@@ -1,28 +1,10 @@
 import * as chalk from 'chalk';
-import { BaseClient } from './index';
-import { InstanceValidator, Validators } from '../decorators';
-import { Client, LoggerMode, loggerModes } from '../root';
-import { Channel, MessageCreateOptions, TextChannel } from 'discord.js';
+import { LoggerMode, loggerModes } from '../root';
 
 /**
  * The Logger class. Contains multiple functions to log data.
  */
-export class Logger extends BaseClient {
-  /**
-   * The name of the project.
-   */
-  @(<InstanceValidator>Validators.StringValidator.NotEmpty)
-  public readonly projectName: string;
-  /**
-   * The constructor of the Logger class.
-   * @param name The name of the project.
-   * @param client The client instance.
-   */
-  constructor(name: string, client: Client) {
-    super(client);
-    this.projectName = name;
-  }
-
+export class Logger {
   /**
    * Split a str to make it fit into a given size.
    * @param str The str to crop.
@@ -40,7 +22,7 @@ export class Logger extends BaseClient {
    * @param str The string to split to fit a given size.
    * @returns The prefix (str).
    */
-  public prefix(mode: string, str: string = this.projectName.toLowerCase()): string {
+  public static prefix(mode: string, str: string = process.env.PROJECT_NAME.toLowerCase()): string {
     return `(${Logger.crop(mode, 'flex')}) ${Logger.crop(str, 'flex')}`;
   }
 
@@ -49,8 +31,8 @@ export class Logger extends BaseClient {
    * @param args The data to print.
    * @returns Nothing.
    */
-  public error(...args: any[]): void {
-    this.log('error', args);
+  public static error(...args: any[]): void {
+    Logger.log('error', ...args);
   }
 
   /**
@@ -58,8 +40,8 @@ export class Logger extends BaseClient {
    * @param args The data to print.
    * @returns Nothing.
    */
-  public success(...args: any[]): void {
-    this.log('success', args);
+  public static success(...args: any[]): void {
+    Logger.log('success', ...args);
   }
 
   /**
@@ -67,8 +49,8 @@ export class Logger extends BaseClient {
    * @param args The data to print.
    * @returns Nothing.
    */
-  public warning(...args: any[]): void {
-    this.log('warning', args);
+  public static warning(...args: any[]): void {
+    Logger.log('warning', ...args);
   }
 
   /**
@@ -76,8 +58,8 @@ export class Logger extends BaseClient {
    * @param args The data to print.
    * @returns Nothing.
    */
-  public info(...args: any[]): void {
-    this.log('info', args);
+  public static info(...args: any[]): void {
+    Logger.log('info', ...args);
   }
 
   /**
@@ -85,8 +67,8 @@ export class Logger extends BaseClient {
    * @param args The data to print.
    * @returns Nothing.
    */
-  public debug(...args: any[]): void {
-    this.log('debug', args);
+  public static debug(...args: any[]): void {
+    Logger.log('debug', ...args);
   }
 
   /**
@@ -94,8 +76,8 @@ export class Logger extends BaseClient {
    * @param args The data to print.
    * @returns Nothing.
    */
-  public test(...args: any[]): void {
-    this.log('test', args);
+  public static test(...args: any[]): void {
+    Logger.log('test', ...args);
   }
 
   /**
@@ -103,22 +85,8 @@ export class Logger extends BaseClient {
    * @param args The data to print.
    * @returns Nothing.
    */
-  public clean(...args: any[]): void {
-    this.log('clean', args);
-  }
-
-  /**
-   * Logs something in the Discord "status" channel.
-   * @param channelIdentifier The channel identifier into the config object.
-   * @param messages The messages data to send.
-   * @returns Nothing.
-   */
-  public async sendTo(channelIdentifier: string, ...messages: MessageCreateOptions[]): Promise<void> {
-    const channel: Channel = await this.client.src.channels.fetch(this.client.configChannels[channelIdentifier]);
-
-    if (channel instanceof TextChannel) {
-      for (const msg of messages) await channel.send(msg).catch(this.clean);
-    }
+  public static clean(...args: any[]): void {
+    Logger.log('clean', ...args);
   }
 
   /**
@@ -127,7 +95,7 @@ export class Logger extends BaseClient {
    * @param args The data to print.
    * @returns Nothing.
    */
-  public log(mode: LoggerMode | string, ...args: any[]): void {
+  public static log(mode: LoggerMode | string, ...args: any[]): void {
     const color: string = loggerModes.includes(<LoggerMode>mode)
       ? {
           error: 'red',
@@ -143,9 +111,11 @@ export class Logger extends BaseClient {
 
     const assets: chalk.Chalk = background === 'DEFAULT' ? chalk[color] : chalk[background][color];
 
-    console.log(
-      assets(`${this.prefix(mode, this.projectName.toLowerCase())} →`),
-      assets(args.map((arg: any): string[] => arg.map((argShard: string): string => argShard).join('')).join('')),
-    );
+    if (process.env.DEV_MODE === 'false')
+      console.log(assets(`${this.prefix(mode, process.env.PROJECT_NAME.toLowerCase())} →`), assets(...args));
+    if (process.env.DEV_MODE === 'true') {
+      console.log(assets(`${this.prefix(mode, process.env.PROJECT_NAME.toLowerCase())} ↵`));
+      console.log(...args);
+    }
   }
 }

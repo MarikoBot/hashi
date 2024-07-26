@@ -1,6 +1,6 @@
-import { BaseClient, DATAMAP_INTENTS, TypedDataMapStored } from './';
+import { BaseClient, DATAMAP_INTENTS, Logger, TypedDataMapStored } from './';
 import { InstanceValidator, InstanceValidatorReturner, Validators } from '../decorators';
-import { DataMapEntry, Client, SuperModel } from '../root';
+import { Client, DataMapEntry, SuperModel } from '../root';
 
 /**
  * The main class. Represents a data map technology.
@@ -47,7 +47,7 @@ export class DataMap<DataStructure extends TypedDataMapStored> extends BaseClien
    */
   public async getRaw(key: string = this.definition.defaultValues[this.primaryKey]): Promise<TypedDataMapStored> {
     const value: TypedDataMapStored = null;
-    this.client.logger.debug(key, value);
+    Logger.debug(key, value);
     return value;
   }
 
@@ -59,7 +59,7 @@ export class DataMap<DataStructure extends TypedDataMapStored> extends BaseClien
     if (!this.intents.includes(DATAMAP_INTENTS.CORE)) return;
 
     const currentData: TypedDataMapStored = await this.getRaw(this.definition.defaultValues[this.primaryKey]);
-    this.client.logger.debug(currentData);
+    Logger.debug(currentData);
   }
 
   /**
@@ -74,7 +74,7 @@ export class DataMap<DataStructure extends TypedDataMapStored> extends BaseClien
     data: TypedDataMapStored,
     path?: string,
   ): Promise<void> {
-    this.client.logger.debug(key, data, path);
+    Logger.debug(key, data, path);
   }
 
   /**

@@ -1,13 +1,7 @@
-import { connect, ConnectOptions, Model, SchemaDefinition } from 'mongoose';
-import { BaseClient, DataMap, DataMapsObject, TypedDataMapStored } from './';
-import {
-  InstanceInjector,
-  InstanceValidator,
-  InstanceValidatorReturner,
-  SuperModelInjectorTarget,
-  Validators,
-} from '../decorators';
-import { Client, SuperModel } from '../root';
+import { connect, ConnectOptions, Model } from 'mongoose';
+import { BaseClient, DataMap, DataMapsObject, Logger, TypedDataMapStored } from './';
+import { InstanceValidator, InstanceValidatorReturner, Validators } from '../decorators';
+import { Client, StructureColumnOrChild, SuperModel } from '../root';
 
 /**
  * The class who manages the database of the project.
@@ -79,17 +73,19 @@ export class DatabaseManager extends BaseClient {
   /**
    * The decorator to inject metadata into the constructor of an extension of SuperModel.
    * @param name The name of the super-SuperModel.
+   * @param columns The columns object.
    * @returns The decorator.
    */
-  public inject(name: string): InstanceInjector {
-    const instance: DatabaseManager = this;
-    return function (target: SuperModelInjectorTarget): void {
-      instance.client.logger.info(`Bound model: ${name}`);
-      target.prototype.name = name;
-      instance.dataMaps[name] = new DataMap<TypedDataMapStored>(instance.client, name);
-      instance.createDataMap(name);
-      instance.dataMaps[name].definition = new target(name);
-    };
+  public inject(name: string, columns: StructureColumnOrChild): SuperModel {
+    Logger.info(`Bound model: ${name}`);
+
+    this.dataMaps[name] = new DataMap<TypedDataMapStored>(this.client, name);
+    this.createDataMap(name);
+
+    const superModel: SuperModel = new SuperModel(name, columns);
+    this.dataMaps[name].definition = superModel;
+
+    return superModel;
   }
 
   /**
@@ -97,7 +93,7 @@ export class DatabaseManager extends BaseClient {
    * @param name The name of the table.
    * @returns The model of the table.
    */
-  public get(name: string): Model<SchemaDefinition & Document & any> {
+  public get(name: string): Model<any> {
     const table: DataMap<any> = this.dataMaps[name];
     if (!table) return null;
 

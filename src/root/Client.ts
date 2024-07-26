@@ -1,18 +1,24 @@
-import { ActivityType, ApplicationCommandDataResolvable, Client as DiscordClient, PresenceData } from 'discord.js';
-import * as dotenv from 'dotenv';
 import {
+  ActivityType,
+  ApplicationCommandDataResolvable,
+  Client as DiscordClient,
+  ClientOptions as DiscordClientOptions,
+  PresenceData,
+} from 'discord.js';
+import {
+  CommandManager,
+  Context,
   DatabaseManager,
   DataMap,
   DATAMAP_INTENTS,
   DiscordEventManager,
-  CommandManager,
   Logger,
   TypedDataMapStored,
 } from '../base/';
 import { InstanceValidator, InstanceValidatorReturner, Validators } from '../decorators';
-import { ClientChannelsOption, ClientOptions } from './';
-
-dotenv.config();
+import * as Features from '../features';
+import { ClientOptions, Command, JSONHashiConfigStructure } from './';
+import { CommandDefaultFeature, EventDefaultFeature } from '../features/shared';
 
 /**
  * The Client class. It extends the Client class from discord.js and implements extra methods for the Hashi module.
@@ -49,21 +55,17 @@ export class Client {
   public readonly db: DatabaseManager = new DatabaseManager(this);
 
   /**
-   * The name of the project/process you're in.
+   * Configuration JSON content.
    */
-  @(<InstanceValidator>Validators.StringValidator.ValidId)
-  public readonly projectName: string;
-
-  /**
-   * The Discord channels where the bot can be configured/logged.
-   */
-  @(<InstanceValidator>Validators.ObjectValidator.KeyStringPair)
-  public readonly configChannels: Partial<ClientChannelsOption>;
+  @(<InstanceValidator>Validators.ObjectValidator.Matches)
+  public readonly config: JSONHashiConfigStructure;
 
   /**
    * @param options The options for the Client.
    */
-  constructor(options: ClientOptions) {
+  constructor(options: ClientOptions | (JSONHashiConfigStructure & DiscordClientOptions)) {
+    options = Client.formatOptions(options);
+
     this.src = new DiscordClient({
       intents: options.intents || 3276799,
       failIfNotExists: options.failIfNotExists || false,
@@ -79,23 +81,81 @@ export class Client {
           ],
         },
     });
+    this.config = options.config;
 
-    this.projectName = options.projectName || '`unknown`';
-    this.logger = new Logger(this.projectName, this);
+    Logger.info(`Process initialization.`);
 
-    this.logger.info(`Process initialization.`);
+    void this.loadDefaultFeatures(this.config.defaultFeatures);
 
-    this.db.dbName = options.mongoose.dbName || 'main';
-    this.db.connectOptions = options.mongoose.connectOptions || { dbName: this.db.dbName };
-    if (options.mongoose.connectionURI) this.db.connectionURI = options.mongoose.connectionURI;
+    this.db.dbName = options.config.database.databaseName || 'main';
+    this.db.connectionURI = options.config.database.connectionURI;
+    this.db.connectOptions = {
+      dbName: options.config.database.databaseName,
+      family: Number(options.config.database.addressFamily.replace('IPv', '')),
+    };
 
-    this.configChannels = options.configChannels || {};
-
-    process.on('unhandledRejection', (reason: object & { stack: any }) => this.logger.error(reason?.stack || reason));
-    process.on('uncaughtException', (err: Error, origin: NodeJS.UncaughtExceptionOrigin): void => {
-      this.logger.error(err);
-      this.logger.error(origin);
+    process.on('unhandledRejection', (reason: Error): void => {
+      Logger.log('error', reason);
+      Logger.log('error', reason.stack);
+      console.log(reason, reason.stack);
     });
+    process.on('uncaughtException', (err: Error, origin: NodeJS.UncaughtExceptionOrigin): void => {
+      Logger.log('error', err);
+      Logger.log('error', origin);
+      console.log(err, origin);
+    });
+  }
+
+  /**
+   * Converts the constructor argument into a valid format if it is not.
+   * @param options The options for the Client.
+   * @returns The formatted object.
+   */
+  public static formatOptions(
+    options: ClientOptions | (JSONHashiConfigStructure & DiscordClientOptions),
+  ): ClientOptions {
+    if ('config' in options) return <ClientOptions>options;
+    else return <ClientOptions>{ config: options, ...options };
+  }
+
+  /**
+   * Tries something and returns null if it does not exist.
+   * @param func The function to call.
+   * @param args The args associated to the function.
+   * @returns The func callback or null.
+   */
+  public static tryTo(func: Function, ...args: any[]): any | null {
+    try {
+      return func(...args);
+    } catch {
+      return null;
+    }
+  }
+
+  /**
+   * Load the default features if there are one specified into the package.
+   * @param defaultFeatures The list of default features to load.
+   * @returns Nothing.
+   */
+  public loadDefaultFeatures(defaultFeatures: JSONHashiConfigStructure['defaultFeatures']): void {
+    for (let feature of defaultFeatures) {
+      if (feature.startsWith('Command:')) {
+        let featureName: string = feature.replace('Command:', '');
+        let data: CommandDefaultFeature;
+
+        if (featureName === 'help') data = Features.Commands.HelpDefault.default(Command, Client, Context);
+        if (featureName === 'ping') data = Features.Commands.PingDefault.default(Command, Client, Context);
+
+        this.commands.inject(data.metadata)(data.default);
+      } else if (feature.startsWith('Event:')) {
+        let featureName: string = feature.replace('Event:', '');
+        let data: EventDefaultFeature;
+
+        if (featureName === 'commands') data = Features.Events.CommandsDefault.default(Client);
+
+        this.events.inject(data.eventName, data.default);
+      }
+    }
   }
 
   /**
@@ -103,9 +163,9 @@ export class Client {
    * @returns Nothing.
    */
   public async connectDatabase(): Promise<void> {
-    this.logger.info('Database is connecting...');
+    Logger.info('Database is connecting...');
     await this.db.connect();
-    this.logger.success('Database is connected.');
+    Logger.success('Database is connected.');
   }
 
   /**
@@ -114,14 +174,14 @@ export class Client {
    * @returns Nothing.
    */
   public async login(token: string = process.env.TOKEN || process.env.token || process.env.Token): Promise<string> {
-    this.logger.info('Bot is connecting...');
+    Logger.info('Bot is connecting...');
     await this.src.login(token);
-    this.logger.success('Bot is connected.');
+    Logger.success('Bot is connected.');
 
     void (await this.src.application.commands.set(
       <readonly ApplicationCommandDataResolvable[]>this.commands.discordCommandsData,
     ));
-    this.logger.success('Commands loaded.');
+    Logger.success('Commands loaded.');
 
     let i: number = -1;
     let dataMap: DataMap<TypedDataMapStored>;
@@ -130,7 +190,7 @@ export class Client {
       if (dataMap.intents.includes(DATAMAP_INTENTS.CORE)) await dataMap.refreshCore();
     }
 
-    this.logger.info(`The client is successfully launched on Discord as ${this.src.user.tag}.`);
+    Logger.info(`The client is successfully launched on Discord as ${this.src.user.tag}.`);
 
     return '0';
   }

@@ -1,17 +1,17 @@
 import { ChatInputApplicationCommandData, ChatInputCommandInteraction, GuildMemberRoleManager } from 'discord.js';
-import { Context } from '../base';
+import { Context, Logger } from '../base';
 import { InstanceValidator, InstanceValidatorReturner, Validators } from '../decorators';
 import {
+  bitRecord,
+  Client,
   COMMAND_END,
   CommandGroup,
+  CommandMetadata,
   CommandPrivileges,
   CommandPrivilegesKey,
   CoolDownsQueueElement,
-  Client,
   HashiError,
   InterferingQueueElement,
-  CommandMetadata,
-  bitRecord,
 } from './';
 
 /**
@@ -85,14 +85,14 @@ export class Command {
    * @returns If the command ran successfully or not.
    */
   public async callback(client: Client, ctx: Context): Promise<COMMAND_END> {
-    this.client.logger.info(client, ctx);
+    Logger.info(client, ctx);
     return COMMAND_END.SUCCESS;
   }
 
   // noinspection JSUnusedGlobalSymbols
   /**
-   * The function who MUST be called at the end of your program in the call back function. IT IS REALLY IMPORTANT!
-   *
+   * The function who MUST be called at the end of your program in the callback function.
+   * IT IS REALLY IMPORTANT!
    * @returns The exit code of the command.
    */
   public end(): COMMAND_END {
@@ -102,7 +102,6 @@ export class Command {
 
   /**
    * Returns a boolean value. If the user is authorized to run the command.
-   *
    * @param interaction The interaction of the command.
    * @param metadata The metadata to check the command with.
    * @returns If the user can execute the command.
@@ -156,7 +155,7 @@ export class Command {
       const errorCode: string = `${missing.length}${missing
         .map((e: CommandPrivilegesKey) => Number(bitRecord[e]))
         .reduce((acc: number, val: number) => acc + val, 0)}`;
-      this.client.logger.debug(missing);
+      Logger.debug(missing);
       void this.client.commands.authorizationCallback(this.context, errorCode);
     }
 
@@ -165,7 +164,6 @@ export class Command {
 
   /**
    * Verify if the cool downs, and the interfering commands of the command are ready to call the command again.
-   *
    * @param client The client that instanced the event.
    * @param interaction The associated interaction.
    * @param ctx The context within the call.

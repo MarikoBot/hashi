@@ -1,5 +1,5 @@
 import { APIApplicationCommand, ChatInputCommandInteraction, Collection } from 'discord.js';
-import { BaseClient, Context } from './';
+import { BaseClient, Context, Logger } from './';
 import {
   CommandInjectorTarget,
   InstanceInjector,
@@ -8,15 +8,15 @@ import {
   Validators,
 } from '../decorators';
 import {
-  CommandMetadata,
-  CoolDownManager,
   Client,
-  InterferingManager,
   Command,
   COMMAND_END,
   CommandGroup,
+  CommandMetadata,
   CommandMetadataBase,
   CommandMetadataSubgroup,
+  CoolDownManager,
+  InterferingManager,
 } from '../root';
 
 /**
@@ -101,9 +101,9 @@ export class CommandManager extends BaseClient {
       subcommandGroup: null,
     };
 
-    const [maybeSub, maybeGroup]: [string, string] = [
-      interaction.options.getSubcommand(),
-      interaction.options.getSubcommandGroup(),
+    let [maybeSub, maybeGroup]: [string, string] = [
+      Client.tryTo(interaction.options.getSubcommand),
+      Client.tryTo(interaction.options.getSubcommandGroup),
     ];
 
     if (maybeSub) {
@@ -142,7 +142,7 @@ export class CommandManager extends BaseClient {
   public inject(metadata: CommandMetadata): InstanceInjector {
     const instance: CommandManager = this;
     return function (target: CommandInjectorTarget): void {
-      instance.client.logger.info(`Bound command: ${metadata.id}`);
+      Logger.info(`Bound command: ${metadata.id}`);
 
       if (!('src' in metadata)) throw new Error(`A slash-based command shall have a 'src' property into its metadata.`);
 

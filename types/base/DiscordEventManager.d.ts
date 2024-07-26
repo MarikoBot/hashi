@@ -1,7 +1,6 @@
 import { Collection } from 'discord.js';
 import { BaseClient } from './';
-import { InstanceInjector } from '../decorators';
-import { DiscordEvent, Client } from '../root';
+import { Client, DiscordEvent } from '../root';
 /**
  * Represents the event manager for the client service.
  */
@@ -18,7 +17,8 @@ export declare class DiscordEventManager extends BaseClient {
     /**
      * The decorator to inject metadata into the constructor of DiscordEvent.
      * @param name The name of the event.
+     * @param callback The called function when the event is triggered.
      * @returns The decorator.
      */
-    inject(name: string): InstanceInjector;
+    inject(name: string, callback: (client: Client, ...args: any[]) => Promise<void> | void): DiscordEvent;
 }

@@ -1,6 +1,6 @@
 {
   "name": "marikobot-hashi",
-  "version": "4.0.0",
+  "version": "4.8.1",
   "description": "A discord.js wrapper to create bots in a simpler way. Used for MarikoBot.",
   "keywords": [
     "discord",
@@ -30,10 +30,11 @@
   ],
   "files": [
     "lib",
-    "package.json",
-    "README.md",
+    "types",
+    "hashi.config.schema.json",
     "LICENSE",
-    "types"
+    "package.json",
+    "README.md"
   ],
   "main": "lib/index.js",
   "types": "types/index.d.ts",
@@ -45,35 +46,28 @@
     "url": "git+https://github.com/MarikoBot/marikobot-hashi.git"
   },
   "scripts": {
-    "run-builder": "node builder.js",
     "prettier": "prettier -w src",
-    "lint": "tslint --config tslint.json --project tsconfig.json 'src/**/*.ts' > linter-output.txt",
-    "clean": "npm run prettier && npm run lint",
-    "build": "npm run clean && npm run run-builder && tsc && git add .",
-    "prepublish": "npm run build && git commit -m \"[BUILD] Automatic build\"",
-    "test-ts": "ts-node lab/lab.test.ts",
-    "post-version-push": "git push && npm publish && git push --tags",
-    "publish-patch": "npm version patch && npm run post-version-push",
-    "publish-minor": "npm version minor && npm run post-version-push",
-    "publish-major": "npm version major && npm run post-version-push",
-    "publish-prerel": "npm version prerelease --preid=prerelease && npm run post-version-push"
+    "dev": "npm run prettier && node builder.js && tsc && ts-node lab/lab.test.ts",
+    "doc": "node doc.builder.js"
   },
   "dependencies": {
     "chalk": "^4.1.2",
     "discord-api-types": "^0.37.38",
     "discord.js": "^14.12.1",
     "dotenv": "^16.3.1",
-    "mongoose": "^7.2.2"
+    "mongoose": "^7.2.2",
+    "typedoc-material-theme": "^1.1.0"
   },
   "devDependencies": {
-    "eslint": "^8.53.0",
     "prettier": "^2.8.4",
     "ts-node": "^10.9.2",
-    "tslint": "^6.1.3",
-    "tslint-config-prettier": "^1.18.0"
+    "tslint-config-prettier": "^1.18.0",
+    "typedoc": "^0.26.5",
+    "typescript": "^5.4.5"
   },
   "engines": {
-    "node": ">=21.1.0",
-    "npm": ">=10.2.0"
+    "node": ">=20.12.2",
+    "npm": ">=10.2.0",
+    "pnpm": ">=9.0.6"
   }
 }
