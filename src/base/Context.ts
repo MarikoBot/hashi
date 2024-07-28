@@ -73,7 +73,7 @@ export class Context extends BaseClient {
 	public replyData: null | Message<boolean> | InteractionResponse<boolean> = void null;
 
 	/**
-	 * The list of standalone components (ref to MarikoBot).
+	 * The list of standalone components (future update).
 	 */
 	public standaloneComponents: object & Record<string, unknown>[][] = [];
 

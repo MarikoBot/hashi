@@ -1,6 +1,6 @@
 {
   "name": "hashi",
-  "version": "4.8.1",
+  "version": "5.0.0",
   "description": "A discord.js wrapper to create bots in a simpler way.",
   "keywords": [
     "discord",

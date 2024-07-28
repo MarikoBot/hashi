@@ -38,7 +38,7 @@ export class InterferingManager {
 	): Promise<void> => {
 		await context.reply({
 			content:
-				`<:MarikoCross:1191675946353299456> **Error** → interfering commands ` +
+				`❌ **Error** → interfering commands ` +
 				`are already running:\n${interferingCommands.join('\n')}`,
 			ephemeral: true,
 		});

@@ -34,7 +34,7 @@ export declare class Context extends BaseClient {
      */
     replyData: null | Message<boolean> | InteractionResponse<boolean>;
     /**
-     * The list of standalone components (ref to MarikoBot).
+     * The list of standalone components (future update).
      */
     standaloneComponents: object & Record<string, unknown>[][];
     /**

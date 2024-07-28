@@ -38,7 +38,7 @@ export class CoolDownManager {
 	): Promise<void> => {
 		await context.reply({
 			content:
-				`<:MarikoCross:1191675946353299456> **Error** → cool down is running. ` +
+				`❌ **Error** → cool down is running. ` +
 				`Please wait **\`${((finishTimestamp - Date.now()) / 1000).toFixed(1)}\`**s.`,
 			ephemeral: true,
 		});

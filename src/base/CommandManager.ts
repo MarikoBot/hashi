@@ -71,7 +71,7 @@ export class CommandManager extends BaseClient {
 	): Promise<void> => {
 		await context.reply({
 			content:
-				`<:MarikoCross:1191675946353299456> **Error** → missing privileges ` +
+				`❌ **Error** → missing privileges ` +
 				`authorizations. (privileges error code: **\`${errorCode}\`**)`,
 			ephemeral: true,
 		});
