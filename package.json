@@ -1,6 +1,6 @@
 {
   "name": "hashishin",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A discord.js wrapper to create bots in a simpler way.",
   "keywords": [
     "discord",
