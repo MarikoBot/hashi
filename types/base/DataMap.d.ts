@@ -17,7 +17,8 @@ export declare class DataMap<DataStructure extends TypedDataMapStored> extends B
      */
     definition: SuperModel;
     /**
-     * Intents for the database. Be careful! Those intents MUST BE set before the launch of the process.
+     * Intents for the database. Be careful! Those intents MUST BE set before the launch of the
+     * process.
      */
     intents: DATAMAP_INTENTS[];
     /**
@@ -31,7 +32,7 @@ export declare class DataMap<DataStructure extends TypedDataMapStored> extends B
      * @param key The key to look for.
      * @returns The data if found.
      */
-    getRaw(key?: string): Promise<TypedDataMapStored>;
+    getRaw(key?: NonNullable<unknown>): Promise<TypedDataMapStored>;
     /**
      * Automatically refreshes the data map if the data is core flagged.
      * @returns Nothing.
@@ -44,11 +45,11 @@ export declare class DataMap<DataStructure extends TypedDataMapStored> extends B
      * @param path The path if the data is SQLite.
      * @returns Nothing.
      */
-    update(key: string, data: TypedDataMapStored, path?: string): Promise<void>;
+    update(key: NonNullable<unknown>, data: TypedDataMapStored, path?: string): Promise<void>;
     /**
      * Refresh the data in the database if the structure is detected to be different.
      * @param key The key to look who applies changes on.
      * @returns The player data.
      */
-    protected get(key?: string): Promise<TypedDataMapStored | DataMapEntry<DataStructure>>;
+    protected get(key?: NonNullable<unknown>): Promise<TypedDataMapStored | DataMapEntry<DataStructure>>;
 }

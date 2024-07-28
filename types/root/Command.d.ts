@@ -2,7 +2,8 @@ import { ChatInputApplicationCommandData, ChatInputCommandInteraction } from 'di
 import { Context } from '../base';
 import { Client, COMMAND_END, CommandGroup, CommandMetadata, CommandPrivileges, HashiError } from './';
 /**
- * The class that includes many useful functions shared between HashiMessageCommand and SlashCommand.
+ * The class that includes many useful functions shared between HashiMessageCommand and
+ * SlashCommand.
  */
 export declare class Command {
     /**
@@ -63,7 +64,8 @@ export declare class Command {
      */
     isAuthorized(interaction: ChatInputCommandInteraction, metadata: CommandMetadata): Promise<boolean>;
     /**
-     * Verify if the cool downs, and the interfering commands of the command are ready to call the command again.
+     * Verify if the cool downs, and the interfering commands of the command are ready to call
+     * the command again.
      * @param client The client that instanced the event.
      * @param interaction The associated interaction.
      * @param ctx The context within the call.

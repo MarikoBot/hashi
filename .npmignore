@@ -1,15 +1,17 @@
 .git
 .idea
+.vscode
 docs
 lab
 node_modules
+scripts
 src
 
-.eslintignore
+.editorconfig
 .gitignore
 .prettierrc
 builder.js
-eslint.config.js
-package-lock.json
+doc.builder.js
+eslint.config.mjs
 pnpm-lock.yaml
 tsconfig.json

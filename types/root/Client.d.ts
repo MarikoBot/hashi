@@ -2,7 +2,8 @@ import { Client as DiscordClient, ClientOptions as DiscordClientOptions } from '
 import { CommandManager, DatabaseManager, DiscordEventManager, Logger } from '../base/';
 import { ClientOptions, JSONHashiConfigStructure } from './';
 /**
- * The Client class. It extends the Client class from discord.js and implements extra methods for the Hashi module.
+ * The Client class. It extends the Client class from discord.js and implements extra methods
+ * for the Hashi module.
  */
 export declare class Client {
     /**
@@ -45,13 +46,7 @@ export declare class Client {
      * @param args The args associated to the function.
      * @returns The func callback or null.
      */
-    static tryTo(func: Function, ...args: any[]): any | null;
-    /**
-     * Load the default features if there are one specified into the package.
-     * @param defaultFeatures The list of default features to load.
-     * @returns Nothing.
-     */
-    loadDefaultFeatures(defaultFeatures: JSONHashiConfigStructure['defaultFeatures']): void;
+    static tryTo(func: (...args: unknown[]) => unknown, ...args: unknown[]): unknown | null;
     /**
      * Connect the database.
      * @returns Nothing.

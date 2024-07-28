@@ -1,7 +1,7 @@
 {
-  "name": "marikobot-hashi",
-  "version": "4.8.1",
-  "description": "A discord.js wrapper to create bots in a simpler way. Used for MarikoBot.",
+  "name": "hashishin",
+  "version": "1.0.0",
+  "description": "A discord.js wrapper to create bots in a simpler way.",
   "keywords": [
     "discord",
     "bot",
@@ -9,9 +9,9 @@
     "discord.js",
     "wrapper"
   ],
-  "homepage": "https://github.com/MarikoBot/marikobot-hashi#readme",
+  "homepage": "https://github.com/MarikoBot/hashi#readme",
   "bugs": {
-    "url": "https://github.com/MarikoBot/marikobot-hashi/issues"
+    "url": "https://github.com/MarikoBot/hashi/issues"
   },
   "license": "MIT",
   "author": "Elouann H. (https://github.com/elouannh)",
@@ -43,11 +43,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MarikoBot/marikobot-hashi.git"
+    "url": "git+https://github.com/MarikoBot/hashi.git"
   },
   "scripts": {
     "prettier": "prettier -w src",
-    "dev": "npm run prettier && node builder.js && tsc && ts-node lab/lab.test.ts",
+    "lint": "eslint src",
+    "dev": "./scripts/build.sh && ts-node lab/lab.test.ts",
+    "windev": ".\\scripts\\build.bat && ts-node lab/lab.test.ts",
     "doc": "node doc.builder.js"
   },
   "dependencies": {
@@ -59,11 +61,15 @@
     "typedoc-material-theme": "^1.1.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.7.0",
+    "@types/eslint__js": "^8.42.3",
+    "eslint": "^9.7.0",
     "prettier": "^2.8.4",
     "ts-node": "^10.9.2",
     "tslint-config-prettier": "^1.18.0",
     "typedoc": "^0.26.5",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.17.0"
   },
   "engines": {
     "node": ">=20.12.2",

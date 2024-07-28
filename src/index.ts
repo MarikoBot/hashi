@@ -1,10 +1,16 @@
-// Named exports
-export * as Base from './base';
-export * as Decorators from './decorators';
-export * as Features from './features';
-export * as Root from './root';
-export * as Public from './public';
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   index.ts                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/27 20:08:51 by ehosta            #+#    #+#             */
+/*   Updated: 2024/07/28 14:21:07 by ehosta           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// Global exports
 export * from './base';
+export * from './decorators';
 export * from './root';
+export * from './public';

@@ -1,7 +1,5 @@
 import { InstanceValidator } from '../shared';
 /**
- * All the object type validators.
+ * All the object type
  */
-export declare const ObjectValidator: {
-    readonly [validatorName: string]: InstanceValidator | ((...args: any[]) => InstanceValidator);
-};
+export declare const ObjectValidator: Record<string, InstanceValidator>;

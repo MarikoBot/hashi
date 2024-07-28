@@ -1,7 +1,5 @@
 import { InstanceValidator } from '../shared';
 /**
- * All the array type validators.
+ * All the array type
  */
-export declare const ArrayValidator: {
-    readonly [validatorName: string]: InstanceValidator;
-};
+export declare const ArrayValidator: Record<string, InstanceValidator>;

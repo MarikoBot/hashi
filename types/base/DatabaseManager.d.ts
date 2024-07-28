@@ -24,7 +24,7 @@
 /// <reference types="mongoose/types/inferschematype" />
 import { ConnectOptions, Model } from 'mongoose';
 import { BaseClient, DataMap, DataMapsObject, TypedDataMapStored } from './';
-import { Client, StructureColumnOrChild, SuperModel } from '../root';
+import { StructureColumnOrChild, SuperModel } from '../root';
 /**
  * The class who manages the database of the project.
  */
@@ -50,10 +50,6 @@ export declare class DatabaseManager extends BaseClient {
      */
     sleepingSuperModels: SuperModel[];
     /**
-     * @param client The client instance.
-     */
-    constructor(client: Client);
-    /**
      * Build and save a data map.
      * @param name The name of the collection.
      */
@@ -76,5 +72,5 @@ export declare class DatabaseManager extends BaseClient {
      * @param name The name of the table.
      * @returns The model of the table.
      */
-    get(name: string): Model<any>;
+    get(name: string): Model<NonNullable<unknown>>;
 }

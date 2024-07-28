@@ -17,7 +17,7 @@ export declare class DiscordEvent {
      * @param args The arguments.
      * @returns Nothing.
      */
-    callback(client: Client, ...args: any[]): Promise<void> | void;
+    callback(client: Client, ...args: unknown[]): Promise<void> | void;
     /**
      * The constructor of the event.
      * @param name The event name.
