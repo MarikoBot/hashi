@@ -1,13 +1,15 @@
 import { APIApplicationCommand, ChatInputCommandInteraction, Collection } from 'discord.js';
 import { BaseClient, Context } from './';
 import { InstanceInjector } from '../decorators';
-import { Client, Command, COMMAND_END, CommandGroup, CommandMetadata, CoolDownManager, InterferingManager } from '../root';
+import { Command, COMMAND_END, CommandGroup, CommandMetadata, CoolDownManager, InterferingManager } from '../root';
 /**
- * Represents the command manager of the client. This class manages the slash and message commands for the project.
+ * Represents the command manager of the client. This class manages the slash and message commands
+ * for the project.
  */
 export declare class CommandManager extends BaseClient {
     /**
-     * The cool downs' manager instance, to get access to the different delays of the current command.
+     * The cool downs' manager instance, to get access to the different delays of the current
+     * command.
      */
     readonly coolDowns: CoolDownManager;
     /**
@@ -26,10 +28,6 @@ export declare class CommandManager extends BaseClient {
      * The function that is called when the cool down manager authorization does not pass.
      */
     authorizationCallback: (context: Context, errorCode: string) => Promise<void>;
-    /**
-     * @param client The client instance.
-     */
-    constructor(client: Client);
     /**
      * Set the callback function when the authorizations do not pass.
      * @param callback The function to set.

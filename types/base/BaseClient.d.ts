@@ -1,11 +1,12 @@
 import { Client } from '../root';
 /**
- * Represents the base class for each class of the package base.
+ * The base class for each class of the ./base folder. Each class from (this) the src/base folder
+ * is an extend of this class.
  */
 export declare class BaseClient {
     client: Client;
     /**
-     * Initialize the base class, and, if needed, the client instance.
+     * Initialize the base class with the main client instance.
      * @param client The client instance.
      */
     constructor(client: Client);

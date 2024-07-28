@@ -26,20 +26,22 @@ import { SchemaDefinitionProperty, SchemaDefinitionWithBuiltInClass } from 'mong
 /**
  * The class that represents a column into a SuperModel instance.
  */
-export declare class SuperModelColumn<T extends SchemaDefinitionProperty | SchemaDefinitionWithBuiltInClass<any> | 'MongooseId'> {
+export declare class SuperModelColumn<T extends SchemaDefinitionProperty | SchemaDefinitionWithBuiltInClass<unknown> | 'MongooseId'> {
     /**
-     * The data of the column. This property is used to store the mongoose schema definition without editing the
+     * The data of the column. This property is used to store the mongoose schema definition
+     * without editing the
      * "possible" already existing properties.
      */
     readonly data: SchemaDefinitionProperty | SchemaDefinitionWithBuiltInClass<T>;
     /**
      * The default value for the column.
      */
-    readonly defaultValue: any;
+    readonly defaultValue: unknown;
     /**
      * @param schemaColumnProperty The list of properties.
-     * @param defaultValue The default value for the column (if empty, replaced with "None"). Different from the
-     * mongoose default, this one is not written into the database, just as a filler when the data is returned.
+     * @param defaultValue The default value for the column (if empty, replaced with "None").
+     * Different from the mongoose default, this one is not written into the database, just as
+     * a filler when the data is returned.
      */
-    constructor(schemaColumnProperty: SchemaDefinitionProperty | SchemaDefinitionWithBuiltInClass<T> | 'MongooseId', defaultValue?: any);
+    constructor(schemaColumnProperty: SchemaDefinitionProperty | SchemaDefinitionWithBuiltInClass<T> | 'MongooseId', defaultValue?: unknown);
 }

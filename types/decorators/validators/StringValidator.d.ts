@@ -1,13 +1,9 @@
 import { InstanceValidator } from '../shared';
 /**
- * All the string type validators.
+ * All the string type
  */
-export declare const StringValidator: {
-    readonly [validatorName: string]: InstanceValidator | ((...args: any[]) => InstanceValidator);
-};
+export declare const StringValidator: Record<string, InstanceValidator>;
 /**
  * All the regular expressions for the string validator.
  */
-export declare const StringValidatorRegExp: {
-    readonly [validatorName: string]: RegExp;
-};
+export declare const StringValidatorRegExp: Record<string, RegExp>;

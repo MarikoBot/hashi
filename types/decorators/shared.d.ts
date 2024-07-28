@@ -4,15 +4,11 @@ import { Command, DiscordEvent, SuperModel } from '../root';
  * @param value The value to check.
  * @returns If the value is a constructor.
  */
-export declare function isConstructor(value: any): boolean;
+export declare function isConstructor(value: Constructable<NonNullable<unknown>>): boolean;
 /**
  * Represents a constructable class.
  */
-export type Constructable<T extends object> = new (...args: any[]) => T;
-/**
- * Represents a constructible value.
- */
-export type Constructible = new (...args: any[]) => any;
+export type Constructable<T extends object> = new (...args: unknown[]) => T;
 /**
  * Represents a function returned for a validator decorator.
  * @param target The class instance.
@@ -29,7 +25,7 @@ export type InstanceInjector = (target: object) => void;
  * @param target The class instance.
  * @param key The attribute to set.
  */
-export type InstanceValidatorReturner = (...args: any[]) => InstanceValidator;
+export type InstanceValidatorReturner = (...args: unknown[]) => InstanceValidator;
 /**
  * The target type for the DiscordEventInjector.
  */
@@ -37,8 +33,8 @@ export type DiscordEventInjectorTarget = new () => DiscordEvent;
 /**
  * The target type for the CommandInjector.
  */
-export type CommandInjectorTarget<T extends Command = Command> = new (...args: any[]) => T;
+export type CommandInjectorTarget<T extends Command = Command> = new (...args: unknown[]) => T;
 /**
  * The target type for the SuperModelInjector.
  */
-export type SuperModelInjectorTarget<T extends SuperModel = SuperModel> = new (...args: any[]) => T;
+export type SuperModelInjectorTarget<T extends SuperModel = SuperModel> = new (...args: unknown[]) => T;

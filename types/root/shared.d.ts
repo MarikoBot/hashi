@@ -10,7 +10,8 @@ export interface APIApplicationCommandPrefilled {
      */
     type: 1;
     /**
-     * 1-32 character name; `CHAT_INPUT` command names must be all lowercase matching `^[-_\p{L}\p{N}\p{sc=Deva}\p{sc=Thai}]{1,32}$`
+     * 1-32 character name; `CHAT_INPUT` command names must be all lowercase matching
+     * `^[-_\p{L}\p{N}\p{sc=Deva}\p{sc=Thai}]{1,32}$`
      */
     name: string;
     /**
@@ -18,11 +19,13 @@ export interface APIApplicationCommandPrefilled {
      */
     name_localizations?: LocalizationMap | null;
     /**
-     * 1-100 character description for `CHAT_INPUT` commands, empty string for `USER` and `MESSAGE` commands
+     * 1-100 character description for `CHAT_INPUT` commands, empty string for
+     * `USER` and `MESSAGE` commands
      */
     description: string;
     /**
-     * Localization dictionary for the description field. Values follow the same restrictions as description
+     * Localization dictionary for the description field. Values follow the same restrictions
+     * as description
      */
     description_localizations?: LocalizationMap | null;
     /**
@@ -34,7 +37,8 @@ export interface APIApplicationCommandPrefilled {
      */
     default_member_permissions: Permissions | null;
     /**
-     * Indicates whether the command is available in DMs with the app, only for globally-scoped commands. By default, commands are visible
+     * Indicates whether the command is available in DMs with the app, only for globally-scoped
+     * commands. By default, commands are visible
      */
     dm_permission?: boolean;
     /**
@@ -195,7 +199,8 @@ export type CoolDownsQueueElement = [
     number
 ];
 /**
- * The options for the Client. It extends the ClientOptions from discord.js and implements extra options for the Hashi module.
+ * The options for the Client. It extends the ClientOptions from discord.js and implements
+ * extra options for the Hashi module.
  */
 export interface ClientOptions extends DiscordClientOptions {
     /**
@@ -242,13 +247,9 @@ export interface JSONHashiConfigStructure {
         databaseName: string;
     };
     /**
-     * The list of default features for the bot.
-     */
-    defaultFeatures: ('Command:help' | 'Command:ping' | 'Event:commands')[];
-    /**
      * The Discord Client intents.
      */
-    intents: ClientOptions['intents'];
+    intents: ClientOptions['config']['intents'];
     /**
      * The name of the project/process you're in.
      */
@@ -276,8 +277,8 @@ export type InterferingQueueElement = [
  * A type-structure that represents a column or an object of columns.
  */
 export type StructureColumnOrChild = {
-    [key: string]: SuperModelColumn<any> | StructureColumnOrChild;
-} | SuperModelColumn<any>;
+    [key: string]: SuperModelColumn<unknown> | StructureColumnOrChild;
+} | SuperModelColumn<unknown>;
 /**
  * The bits value for each command privileges key.
  */

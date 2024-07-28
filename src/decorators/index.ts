@@ -1,5 +1,14 @@
-// Named exports
-export * as Validators from './validators';
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   index.ts                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/27 20:06:51 by ehosta            #+#    #+#             */
+/*   Updated: 2024/07/28 14:20:35 by ehosta           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// Shared exports
+export * from './validators';
 export * from './shared';

@@ -43,18 +43,6 @@
       },
       "required": ["addressFamily", "connectionURI", "databaseName"]
     },
-    "defaultFeatures": {
-      "type": "array",
-      "title": "Default Features",
-      "description": "The default features to add to the bot.",
-      "items": {
-        "type": "string",
-        "enum": ["Command:help", "Command:ping", "Event:commands"],
-        "description": "The default features to add to the bot."
-      },
-      "minItems": 0,
-      "maxItems": 3
-    },
     "intents": {
       "oneOf": [
         {
@@ -73,5 +61,5 @@
       ]
     }
   },
-  "required": ["channels", "database", "defaultFeatures", "intents"]
+  "required": ["channels", "database", "intents"]
 }

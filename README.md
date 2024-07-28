@@ -1,8 +1,9 @@
 
-# Hashi (marikobot-hashi)
+# Hashi
 
 Hashi is a NPM package that wraps and implements features from Discord.js library.
 Including a command handler, an event handler, integrated database system, and more.
+Documentation link: (hashi.marikobot.com)[https://hashi.marikobot.com/]
 
 ## Authors
 
@@ -16,28 +17,33 @@ Including a command handler, an event handler, integrated database system, and m
 <a><img src="https://media.botmarket.ovh/8vrpcv.png" width="55px"/></a>
 
 We recommand using TypeScript to take benefits with all of our exported types that could simplify your programming experience.
+(Anyway, TypeScript is better :>)
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
 
 ## Requirements
 
-Node.js and a package manager (Yarn, PNPM, NPM) installed in your environment.
+Node.js and a package manager (Yarn, PNPM, NPM) installed in your environment. We recommand using PNPM.
 
 ## Installation
 
 Simply run the command:
 ```bash
-npm install marikobot-hashi@latest
+pnpm install hashi@latest
 ```
-
-## Contributing
 
 ### Creating a new version
 
 First, let's build the package:
+> On Windows (burk):
+```batch
+.\scripts\build.bat ; git add .
+```
+> On Linux/Mac (gigachad):
 ```bash
-npm run prettier; node builder.js; tsc; git add .
+./scripts/build.sh && git add .
 ```
 
 Secondly, let's box our files into a commit:
@@ -63,10 +69,8 @@ To run the code placed into the lab/ folder, just run:
 ```bash
 ts-node lab/lab.test.ts
 ```
+(Don't forget to build just before running it.)
 
-## Used By
+## Used by
 
-This project is used by the following projects:
-
-- [MarikoBot](https://github.com/MarikoBot/mariko)
-
+You? What are you waiting for?

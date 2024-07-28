@@ -47,31 +47,30 @@ export declare class SuperModel {
     /**
      * The structure of the model.
      */
-    structure: {
-        [p: string]: SchemaDefinitionProperty;
-    };
+    structure: Record<string, SchemaDefinitionProperty>;
     /**
      * The default values of the model.
      */
-    defaultValues: {
-        [p: string]: any;
-    };
+    defaultValues: Record<string, NonNullable<unknown>>;
     /**
      * @param name The name of the model.
      * @param tableStructure The structure of the columns.
      */
     constructor(name: string, tableStructure: StructureColumnOrChild);
     /**
-     * Generates a new object based on the property you chose to take into the current instance-value.
+     * Generates a new object based on the property you chose to take into the current
+     * instance-value.
      * @param obj The object to dive in.
-     * @param propertyName The name of the property to take into the value. If it is empty, the function won't touch the source.
+     * @param propertyName The name of the property to take into the value. If it is empty,
+     * the function won't touch the source.
      * @returns An object (the finale one or a child).
      */
     private static diveObject;
     /**
-     * Get data from the object based on the type of data that will be used after. Optimize the type forcing.
+     * Get data from the object based on the type of data that will be used after.
+     * Optimize the type forcing.
      * @param queryParameters The options usually passed into the findOne function.
      * @returns The fetched data as the correct type.
      */
-    findOne<ReturnType extends unknown>(...queryParameters: unknown[]): Promise<ReturnType>;
+    findOne<ReturnType extends NonNullable<Document>>(...queryParameters: unknown[]): Promise<ReturnType>;
 }

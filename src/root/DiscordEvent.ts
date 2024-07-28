@@ -1,4 +1,16 @@
-import { InstanceValidator, InstanceValidatorReturner, Validators } from '../decorators';
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   DiscordEvent.ts                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/27 20:08:04 by ehosta            #+#    #+#             */
+/*   Updated: 2024/07/28 15:07:25 by ehosta           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+import { StringValidator, ObjectDeepValidator, FunctionValidator } from '../decorators';
 import { Client } from './';
 import { Logger } from '../base';
 
@@ -6,35 +18,35 @@ import { Logger } from '../base';
  * Represents an Event on client service.
  */
 export class DiscordEvent {
-  /**
-   * The client instance.
-   */
-  @((<InstanceValidatorReturner>Validators.ObjectValidator.IsInstanceOf)(Client))
-  public client: Client;
+	/**
+	 * The client instance.
+	 */
+	@ObjectDeepValidator.IsInstanceOf(Client)
+	public client: Client;
 
-  /**
-   * The event name.
-   */
-  @(<InstanceValidator>Validators.StringValidator.ValidId)
-  public name: string;
+	/**
+	 * The event name.
+	 */
+	@StringValidator.ValidId
+	public name: string;
 
-  /**
-   * The callback function.
-   * @param client The client instance.
-   * @param args The arguments.
-   * @returns Nothing.
-   */
-  @Validators.FunctionValidator.Matches
-  public callback(client: Client, ...args: any[]): Promise<void> | void {
-    Logger.debug(client, args);
-    return null;
-  }
+	/**
+	 * The callback function.
+	 * @param client The client instance.
+	 * @param args The arguments.
+	 * @returns Nothing.
+	 */
+	@FunctionValidator.Matches
+	public callback(client: Client, ...args: unknown[]): Promise<void> | void {
+		new Logger().log('debug', client, args);
+		return null;
+	}
 
-  /**
-   * The constructor of the event.
-   * @param name The event name.
-   */
-  constructor(name: string) {
-    this.name = name;
-  }
+	/**
+	 * The constructor of the event.
+	 * @param name The event name.
+	 */
+	constructor(name: string) {
+		this.name = name;
+	}
 }
