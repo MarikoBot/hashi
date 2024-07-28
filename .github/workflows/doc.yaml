@@ -1,31 +1,34 @@
 name: Deploy Documentation to GitHub Pages
 
 on:
-  push:
-    branches:
-      - main
+	push:
+		branches:
+			- main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+	build:
+		runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+		steps:
+			- name: Checkout repository
+				uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '22'  # Choisissez la version de Node.js appropriée
+			- name: Set up Node.js
+				uses: actions/setup-node@v2
+				with:
+					node-version: '22'  # Choisissez la version de Node.js appropriée
 
-      - name: Install dependencies
-        run: npm install
+			- name: Set up PNPM
+				run: npm install -g pnpm
 
-      - name: Run documentation script
-        run: npm run doc
+			- name: Install dependencies
+				run: pnpm install
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs
+			- name: Run documentation script
+				run: pnpm doc
+
+			- name: Deploy to GitHub Pages
+				uses: peaceiris/actions-gh-pages@v3
+				with:
+					github_token: ${{ secrets.GITHUB_TOKEN }}
+					publish_dir: ./docs
