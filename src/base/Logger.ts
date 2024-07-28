@@ -73,7 +73,6 @@ export class Logger {
 
 	/**
 	 * Logs something in the console using the clean assets.
-	 * @param mode The mode (assets pack).
 	 * @param args The data to print.
 	 * @returns Nothing.
 	 */

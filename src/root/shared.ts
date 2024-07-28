@@ -23,8 +23,8 @@ import {
 import { Command, SuperModelColumn } from './';
 
 /**
- * Prefilled version of the Discord.<APIApplicationCommand>
- * @link https://discord.com/developers/docs/interactions/application-commands#application-command-object
+ * Prefilled version of the Discord.<APIApplicationCommand>. See more here :
+ * https://discord.com/developers/docs/interactions/application-commands#application-command-object
  */
 export interface APIApplicationCommandPrefilled {
 	/**

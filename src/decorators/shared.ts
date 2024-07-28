@@ -46,8 +46,7 @@ export type InstanceInjector = (target: object) => void;
 
 /**
  * Represents a deferred (with parameters) function returned for a decorator.
- * @param target The class instance.
- * @param key The attribute to set.
+ * @param args The required arguments for the function.
  */
 export type InstanceValidatorReturner = (...args: unknown[]) => InstanceValidator;
 
